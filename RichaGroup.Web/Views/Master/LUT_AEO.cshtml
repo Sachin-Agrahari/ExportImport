@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "LUT / AEO Master";
+    ViewData["Heading"] = "LUT / AEO Master";
+}
+<div class="bd_mainContainer">
+    <div class="page">
+        <section class="card">
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">LUT / AEO Master</h2>
+                </div>
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button class="btn btn-primary btn-sm" id="btnAdd">＋ Add</button>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="table-wrap">
+                    <table id="tblLutAeoMaster" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th width="80px">Action</th>
+                                <th>Company Code</th>
+                                <th>Type</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Invoice Unit</th>
+                                <th>Number</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblbodyLutAeoMaster"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">LUT / AEO Master</div>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2">
+                 
+                <div class="grid cols-3">
+                    
+                    <div class="field">
+                        <label for="txtCmpCode" class="form-label">Company Code</label>
+                        <input type="text" id="txtCmpCode" placeholder="Enter Company Code" />
+                    </div>
+
+                    <div class="field">
+                        <label for="ddlType" class="form-label">Type</label>
+                        <select id="ddlType">
+                            <option value="">Select Type</option>
+                            <option value="LUT">LUT</option>
+                            <option value="AEO">AEO</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="txtFrom" class="form-label">From</label>
+                        <input class="form-Flatdate" id="txtFrom" placeholder="DD/MMM/YYYY" />
+                    </div>
+
+                    <div class="field">
+                        <label for="txtTo" class="form-label">To</label>
+                        <input class="form-Flatdate" id="txtTo" placeholder="DD/MMM/YYYY"/>
+                    </div>
+
+                    <div class="field">
+                        <label for="txtInvUnit" class="form-label">Invoice Unit</label>
+                        <input type="text" id="txtInvUnit" placeholder="Enter Invoice Unit" />
+                    </div>
+
+                    <div class="field">
+                        <label for="txtNumber" class="form-label">Number</label>
+                        <input type="text" id="txtNumber" placeholder="Enter LUT / AEO Number" />
+                    </div>
+
+                </div> 
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/pages/mastersjs/LUT_AEO.js" asp-append-version="true"></script>

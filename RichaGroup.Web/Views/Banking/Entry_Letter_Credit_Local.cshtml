@@ -1,0 +1,498 @@
+﻿@{
+	ViewData["Title"] = "Entry Letter Credit Local";
+	ViewData["Heading"] = "Entry Letter Credit Local";
+}
+
+<link href="~/css/pages/banking/entry_letter_credit_local.css" rel="stylesheet" asp-append-version="true"/>
+
+
+<div class="bd_mainContainer">
+    <div class="page">
+
+        <section class="card">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">LC Local</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnAdd">
+                        ＋ Add
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-cancel-custom"
+                            id="btnCancel">
+                        ✕ Cancel
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="grid cols-6">
+                    <div class="field">
+                        <label>Party</label>
+
+                        <input type="text"
+                               id="txtParty_LCLocal"
+                               placeholder="Enter Party..." />
+                    </div>
+                    <div class="field">
+                        <label>
+                            LC No
+                            <button id="btnLCHelp" class="help-link">Help</button>
+                        </label>
+
+                        <input type="text"
+                               id="txtLC_LCLocal"
+                               placeholder="Enter LC No..." />
+                    </div>
+                    <div class="field">
+                        <label>Open Date</label>
+
+                        <input type="text"
+                               id="txtOpenDate_LCLocal"
+                               placeholder="Select Open Date..." />
+                    </div>
+                    <div class="field">
+                        <label>Ship On Date</label>
+
+                        <input type="text"
+                               id="txtShipOnDate_LCLocal"
+                               class="form-Flatdate"
+                               placeholder="Select Ship On Date..." />
+                    </div>
+                    <div class="field">
+                        <label>Bank Charges</label>
+
+                        <input type="text"
+                               id="txtbankCharges_LCLocal"
+                               placeholder="Enter Bank Charges..." />
+                    </div>
+                    <div class="field">
+                        <label>Bank Charges Date</label>
+
+                        <input type="text"
+                               id="txtbankDt_LCLocal"
+                               class="form-Flatdate"
+                               placeholder="Select Ship On Date..." />
+                    </div>
+                    <div class="field">
+                        <label>Amount</label>
+
+                        <input type="text"
+                               id="txtAmt_LCLocal"
+                               placeholder="Enter Amount..." />
+                    </div>
+                    <div class="field">
+                        <label>Expiry On Date</label>
+
+                        <input type="text"
+                               id="txtExpiryOnDate_LCLocal"
+                               placeholder="Select Expiry On Date..." />
+                    </div>
+                    <div class="field">
+                        <label>P. Terms</label>
+
+                        <input type="text"
+                               id="txtPTerms_LCLocal"
+                               placeholder="Enter P Terms..." />
+                    </div>
+                    <div class="field span-2">
+                        <label>Remark</label>
+
+                        <input type="text"
+                               id="txtRemark_LCLocal"
+                               placeholder="Enter Remarks..." />
+                    </div>
+                    <div class="field span-2">
+                        <label>In Favour</label>
+
+                        <input type="text"
+                               id="txtfavour_LCLocal"
+                               placeholder="Enter In Favour..." />
+                    </div>
+
+                    @* <div class="d-flex justify-content-start align-items-end">
+            <button type="button"
+                    class="btn btn-primary btn-sm fs-6"
+                    id="btnAdd_LCLocal">
+                Add
+            </button>
+        </div> *@
+                </div>
+            </div>
+
+        </section>
+        
+        <section class="card">
+            <div class="card-head">
+                <div class="d-flex justify-content-end align-items-center w-100 p-1 me-3">
+                    <button type="button"
+                            class="btn btn-primary btn-sm me-2"
+                            id="btnAddNewRecord">
+                        Add Record
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary btn-sm me-2"
+                            id="btnCopyRecord">
+                        Copy
+                    </button>
+                    <button type="button"
+                            class="btn btn-outline-danger btn px-2"
+                            id="btnDeleteRecord">
+                        Delete
+                    </button>
+                  
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div class="table-wrap">
+                    <table id="tblLCLocal" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                 <th>Action</th>
+                                <th>Delivery Date</th>
+                                <th>Bank Reference No</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Payment Status</th>
+                                <th>Bank Reference Date</th>
+                                <th>Bill Due Date</th>
+                                <th>Payment Date</th>
+                                <th>Amount</th>
+                                <th>Debit Amt</th>
+                                <th>Consent Req to Bnk</th>
+                                <th>Req Date</th>
+                                <th>Remark</th>
+                                <th>LC Status</th>
+                            
+                             
+
+                            </tr>
+                        </thead>
+                        <tbody id="tblbodyLCLocal"></tbody>
+                    </table>
+                    <div class="d-flex justify-content-end mt-3">
+
+                        <div class="lc-balance-box">
+
+                            <span class="lc-balance-label">
+                                Balance
+                            </span>
+
+                            <span class="lc-balance-value"
+                                  id="lblBalance_LCLocal">
+                                1,625,223.00
+                            </span>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+    </div>
+</div>
+
+
+
+@* <div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+						Entry Letter Credit Local
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2">
+                @await Html.PartialAsync("_EntryLetterLocal")
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div> *@
+
+@*edit modal open *@
+
+<div class="modal fade"
+     id="EditMenuModal"
+     tabindex="-1"
+     aria-labelledby="EditMenuModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+
+        <div class="modal-content modal-box">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+
+                <div class="modal-header-text">
+                    <div class="modal-title"
+                         id="addMenuModalLabel">
+                       Edit Letter Credit Local
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body px-2">
+                @await Html.PartialAsync("_EditEntryLetterCreditLocal")
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-outline-secondary btn-sm"
+                        data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveEntryLetterLocal">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* debite note help *@
+
+<div class="modal fade"
+     id="debitNoteHelpModal"
+     tabindex="-1"
+     aria-labelledby="debitNoteHelpModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title"
+                    id="debitNoteHelpModalLabel">
+                    Select Debit Note
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-sm table-bordered align-middle mb-0">
+
+                        <thead class="table-primary">
+                            <tr>
+                                <th class="text-center">
+                                    Action
+                                </th>
+
+                                <th>
+                                    Debit Note No
+                                </th>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th class="text-end">
+                                    Amount
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbody_DebitNoteHelp">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@* open help for LC No *@
+
+<div class="modal fade"
+     id="debitLCHelpModal"
+     tabindex="-1"
+     aria-labelledby="debitLCHelpModal"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title"
+                    id="debitLCHelpModalLabel">
+                   LC Help
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                @await Html.PartialAsync("_EntryLetterCreditHelpLC")
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveLCNoHelp">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script src="~/js/pages/banking/entry_letter_credit_local.js" asp-append-version="true"></script>

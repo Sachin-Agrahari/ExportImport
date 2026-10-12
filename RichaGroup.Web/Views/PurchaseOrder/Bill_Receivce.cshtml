@@ -1,0 +1,182 @@
+﻿@{
+    ViewData["Title"] = "Bill Receiving";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/pages/bill_receive.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="page-view active" id="route-bill-receiving">
+    <header class="page-header">
+        <div class="header-inner">
+            <div class="header-left">
+                <div class="header-logo">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="16" rx="2" />
+                        <line x1="3" y1="9" x2="21" y2="9" />
+                        <line x1="7" y1="14" x2="13" y2="14" />
+                    </svg>
+                </div>
+                <div class="header-title">Bill Receive</div>
+            </div>
+            <div class="header-right">
+                <button class="btn-icon" title="Add" id="brBtnAdd">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                    <span>Add</span>
+                </button>
+                <button class="btn-icon" title="Confirm" id="brBtnConfirm">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span>Confirm</span>
+                </button>
+                <button class="btn-icon" title="Save" id="brBtnSave">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                        <polyline points="17 21 17 13 7 13 7 21" />
+                        <polyline points="7 3 7 8 15 8" />
+                    </svg>
+                    <span>Save</span>
+                </button>
+                <button class="btn-icon" title="Delete" id="brBtnDelete">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                    <span>Delete</span>
+                </button>
+                <button class="btn-icon" title="Print" id="brBtnPrint">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="6 9 6 2 18 2 18 9" />
+                        <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
+                        <rect x="6" y="14" width="12" height="8" />
+                    </svg>
+                    <span>Print</span>
+                </button>
+                <button class="btn-icon" title="Clear" id="brBtnClear">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="1 4 1 10 7 10" />
+                        <path d="M3.51 15a9 9 0 1 0 .49-3.43" />
+                    </svg>
+                    <span>Refresh</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="card">
+            <div class="mode-bar">
+                <button id="brEditModeBtn" class="toggle-btn active">
+                    <svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;">
+                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+                    </svg>
+                    Edit Mode
+                </button>
+            </div>
+
+            <div class="card-header">
+                <div class="card-header-left">
+                    <div class="card-header-dot"></div>
+                    <span class="card-header-title">Bill Receive</span>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="form-grid form-grid-4">
+                    <div class="form-group">
+                        <label class="form-label">Receive No.</label>
+                        <select id="brReceiveNo">
+                            <option value="RCPT22-25-09009" selected>RCPT22-25-09009</option>
+                            <option value="RCPT22-25-09008">RCPT22-25-09008</option>
+                            <option value="RCPT22-25-09007">RCPT22-25-09007</option>
+                        </select>
+                    </div>
+                    <div class="form-group span-2">
+                        <label class="form-label">Party Name</label>
+                        <select id="brPartyName">
+                            <option value="1" selected>COMMITTED CARGO CARE LTD.</option>
+                            <option value="2">ORIENT ACCESSORIES LTD</option>
+                            <option value="3">METRO GARMENT SUPPLIERS</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Receive Dt.</label>
+                        <input type="text" id="brReceiveDate" class="form-input" value="16-Jan-2023" disabled />
+                    </div>
+                </div>
+
+                <div class="form-grid form-grid-4" style="margin-top: 12px">
+                    <div class="form-group">
+                        <label class="form-label">Invoice Type</label>
+                        <div class="br-radio-toggle" id="brInvoiceTypeToggle">
+                            <input type="radio" name="brInvoiceType" id="brInvExport" value="Export">
+                            <label for="brInvExport">Export</label>
+                            <input type="radio" name="brInvoiceType" id="brInvImport" value="Import" checked>
+                            <label for="brInvImport">Import</label>
+                            <span class="br-radio-slider"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Invoice Mode</label>
+                        <div class="br-radio-toggle" id="brInvoiceModeToggle">
+                            <input type="radio" name="brInvoiceMode" id="brModeSingle" value="Single">
+                            <label for="brModeSingle">Single</label>
+                            <input type="radio" name="brInvoiceMode" id="brModeMultiple" value="Multiple" checked>
+                            <label for="brModeMultiple">Multiple</label>
+                            <span class="br-radio-slider"></span>
+                        </div>
+                    </div>
+                    <div class="form-group span-2">
+                        <label class="form-label">Bill Type</label>
+                        <select id="brBillType">
+                            <option value="CHA" selected>CHA</option>
+                            <option value="FREIGHT">FREIGHT</option>
+                            <option value="TRANSPORT">TRANSPORT</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <div class="card-header-dot" style="background: var(--clr-neutral-soft)"></div>
+                    <span class="card-header-title">Bill Line Items</span>
+                </div>
+            </div>
+
+            <div class="table-card-body">
+                <div class="table-scroll-wrapper">
+                    <table id="brTable" class="display table-design" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th class="text-center"><input type="checkbox" id="brCheckAll" /></th>
+                                <th>Bill No.</th>
+                                <th>Bill Date</th>
+                                <th>CI Type</th>
+                                <th class="td-number">Bill Amount</th>
+                                <th class="td-number">Debit Amt.</th>
+                                <th>CI/GRN No.</th>
+                                <th>CI/GRN Date</th>
+                                <th>PINO</th>
+                                <th>Premises</th>
+                                <th>Buyer</th>
+                                <th>Style No</th>
+                                <th class="td-number">Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody id="brTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/pages/bill_receivce.js" asp-append-version="true"></script>

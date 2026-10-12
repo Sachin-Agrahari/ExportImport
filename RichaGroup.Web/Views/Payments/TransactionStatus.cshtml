@@ -1,0 +1,421 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* <link href="~/css/pages/Payments/TransactionStatus.css" rel="stylesheet" asp-append-version="true" /> *@
+
+<div class="bd_mainContainer" id="route-transaction-status">
+
+    <div class="page">
+
+        <section class="card">
+
+            <!-- HEADER -->
+            <div class="card-head">
+
+                <div class="d-flex flex-row " style="width: auto;">
+
+                    <h2 class="mt-2" id="txtHeaderMain">Advance Licensce</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Add" id="btnAdd">
+                        <span>Add</span>
+                    </button>
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Save" id="btnSave">
+
+                        <img src="~/assets/icon/save.svg" alt="save-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Save</span>
+                    </button>
+                    <button class="btn-outline-danger d-flex flex-row align-center justify-content-center" title="clr" id="btnDelete">
+
+                        <img src="~/assets/icon/refresh.svg" alt="refresh-icon" class="w-50 h-50 me-1 white-icon" />
+                        <span>CLR</span>
+                    </button>
+
+                    
+                    <button class="btn btn-secondary btn-sm  d-flex flex-row align-center justify-content-center" title="Print" id="btnPrint">
+
+                        <img src="~/assets/icon/print.svg" alt="print-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Print</span>
+                    </button>
+                   
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="grid cols-6">
+                    <div class="field">
+                        <label class="form-label">Full Use</label>
+                        <select id="ddlSearchCategory" class="form-select">
+                            <option value="">Select Category</option>
+                            <option value="A">ACCESSORY</option>
+                            <option value="F">FABRIC</option>
+                            <option value="M">MACHINE</option>
+                        </select>
+                      </div>
+                    <div class="field">
+                        <label class="form-label">Company</label>
+                        <select id="ddlCurrency" class="form-select">
+                            <option value="1">All</option>
+                            <option value="2">RICHACO EXPORTS PRIVATE LIMOTED (GURUGRAM)</option>
+                            <option value="3">RICHACO EXPORTS PRIVATE LIMOTED (GURUGRAM)</option>
+                            <option value="4">RICHACO EXPORTS PRIVATE LIMOTED (GURUGRAM)</option>
+                        </select>
+                      </div>
+                    <div class="field">
+                        <label class="form-label">Dates Search</label>
+                        <select id="ddlDatesSerach" class="form-select">
+                            <option value="COPMLETE">COPMLETE</option>
+                            <option value="DEPT I">DEPT I</option>
+                            <option value="DEPT II">DEPT II</option>
+                            <option value="DEPT III">DEPT III</option>
+                            <option value="DEPT IV">DEPT IV</option>
+                            <option value="DEPT V">DEPT V</option>
+                        </select>
+                      </div>
+                    <div class="field">
+                        <label class="form-label">Order Search</label>
+                        <select id="ddlOrderSearch" class="form-select">
+                            <option value="BOTH">BOTH</option>
+                            <option value="CLEARED">CLEARED</option>
+                            <option value="UNCLEARED">UNCLEARED</option>
+
+                        </select>
+                      </div>
+                    <div class="field mt-3">
+                        <div class="border border-primary-subtle bg-primary bg-opacity-10 rounded p-2">
+                            <div class="form-check d-flex align-items-center gap-2 mb-0">
+
+                                <input type="checkbox"
+                                       id="chkAllCompany"
+                                       class="form-check-input w-auto m-0 flex-shrink-0">
+
+                                <label for="chkAllCompany"
+                                       class="form-check-label mb-0">
+                                    All Company
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field mt-3">
+                        <div class="border border-primary-subtle bg-primary bg-opacity-10 rounded p-2">
+                            <div class="form-check d-flex align-items-center gap-2 mb-0">
+                                <input type="checkbox" id="chkAllUnit" class="form-check-input w-auto m-0 flex-shrink-0" />
+                                <label for="checkbox-Bond" class="form-check-label mb-0">All Unit</label>
+                            </div>
+                        </div>
+                     </div>
+                    <div class="field mt-3">
+                        <button class="btn btn-primary btn-sm" id="btnSerach">
+                            <svg viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 width="18"
+                                 height="18">
+                                <circle cx="11" cy="11" r="7"></circle>
+                                <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+                            </svg>
+                            SEARCH
+                        </button>
+                     </div>
+
+
+                </div>
+            </div>
+         </section>
+
+         <section class="card">
+            <div class="card-body">
+                <div class="table-wrap">
+                    <table class="table-component table-component--bordered">
+                        <thead>
+                            <tr>
+                                <th>BLANK</th>
+                                <th>SRNO$</th>
+                                <th>CHANAME</th>
+                                <th>CHADATE</th>
+                                <th>FORWARDERNV</th>
+                                <th>VENDOR</th>
+                                <th>CI NO</th>
+                                <th>CI DT. #</th>
+                                <th>CIAMOUT$</th>
+                                <th>CURRENCY</th>
+                                <th>IMPORTDUTY$</th>
+                                <th>CTRN$</th>
+                                <th>CRTNWEIGHT$</th>
+                                <th>SHIPMODE</th>
+                                <th>FOB</th>
+                                <th>AWB</th>
+                                <th>AWBDATE#</th>
+                                <th>HAWB</th>
+                                <th>HAWBDT#</th>
+                                <th>DEPT STATUS</th>
+                                <th>DEPTDATE#</th>
+                                <th>SNO</th>
+                                <th>USERNAME</th>
+                                <th>COMPANY</th>
+                                <th>UNIT</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblBody">
+                            <tr>
+                                <td style="font-size:1rem; font-weight:bold; color:red; text-align:center" colspan="24"> Data Not Found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+         </section>
+    </div>
+
+    @* <header class="page-header">
+        <div class="header-inner">
+            <div class="header-left">
+                <div class="header-logo">
+                    <img src="~/assets/icons/logo.svg" alt="header-icon" />
+                </div>
+                <div class="header-title fs-5">Advance Licence</div>
+            </div>
+
+            <div class="header-right">
+
+                <button class="btn-icon" title="Add" id="btnAdd">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                    Add
+                </button>
+
+                <button class="btn-icon" title="Save" id="btnSave">
+                    <img src="~/assets/icons/save.svg" alt="save-icon" />
+                    SAVE
+                </button>
+
+                <button class="btn-icon" title="Delete" id="btnDelete">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                    CLR
+                </button>
+
+                <button class="btn-icon" title="Print" id="btnPrint">
+                    <img src="~/assets/icons/print.svg" alt="print-icon" />
+                    PRINT
+                </button>
+ 
+            </div>
+        </div>
+    </header> *@
+
+    @* <main class="main-container">
+
+        <!-- LICENCE HEADER INFORMATION -->
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                     
+                    <div class="col-2">
+                        <label class="form-label">Full Use</label>
+                        <select id="ddlSearchCategory" class="select2">
+                            <option value="">Select Category</option>
+                            <option value="A">ACCESSORY</option>
+                            <option value="F">FABRIC</option>
+                            <option value="M">MACHINE</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-3">
+                        <label class="form-label">Company</label>
+                        <select id="ddlCurrency" class="select2">
+                            <option value="1">All</option>
+                            <option value="2">RICHACO EXPORTS PRIVATE LIMOTED (GURUGRAM)</option>
+                            <option value="3">RICHACO EXPORTS PRIVATE LIMOTED (GURUGRAM)</option>
+                            <option value="4">RICHACO EXPORTS PRIVATE LIMOTED (GURUGRAM)</option>
+                        </select>
+                    </div>
+  
+                    <div class="col-2">
+                        <label class="form-label">Dates Search</label>
+                        <select id="ddlDatesSerach" class="select2">
+                            <option value="COPMLETE">COPMLETE</option>
+                            <option value="DEPT I">DEPT I</option>
+                            <option value="DEPT II">DEPT II</option>
+                            <option value="DEPT III">DEPT III</option>
+                            <option value="DEPT IV">DEPT IV</option>
+                            <option value="DEPT V">DEPT V</option>
+                        </select>
+                    </div>
+
+                    <div class="col-2">
+                        <label class="form-label">Order Search</label>
+                        <select id="ddlOrderSearch" class="select2">
+                            <option value="BOTH">BOTH</option>
+                            <option value="CLEARED">CLEARED</option>
+                            <option value="UNCLEARED">UNCLEARED</option>
+                             
+                        </select>
+                    </div>
+
+                    <div class="col-1 d-flex align-items-end">
+                        <div class="checkbox-card">
+                            <input type="checkbox" id="chkAllCompany" />
+                            <label for="checkbox-Bond">All Company</label>
+                        </div>
+                    </div>
+
+                    <div class="col-1 d-flex align-items-end">
+                        <div class="checkbox-card">
+                            <input type="checkbox" id="chkAllUnit" />
+                            <label for="checkbox-Bond">All Unit</label>
+                        </div>
+                    </div>
+
+                    <div class="col-1 d-flex align-items-end justify-content-end">
+                        <button class="btn btn-primary" id="btnSerach">
+                            <svg viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 width="18"
+                                 height="18">
+                                <circle cx="11" cy="11" r="7"></circle>
+                                <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+                            </svg>
+                            SEARCH
+                        </button>
+                    </div>
+                </div>
+                 
+            </div>
+        </div>
+          
+        <div class="card-body">
+            <div class="table-wrap">
+                        <table class="table-component table-component--bordered">
+                            <thead>
+                                <tr>
+                                    <th>BLANK</th>
+                                    <th>SRNO$</th>
+                                    <th>CHANAME</th>
+                                    <th>CHADATE</th>
+                                    <th>FORWARDERNV</th>
+                                    <th>VENDOR</th>
+                                    <th>CI NO</th>
+                                    <th>CI DT. #</th>
+                                    <th>CIAMOUT$</th>
+                                    <th>CURRENCY</th>
+                                    <th>IMPORTDUTY$</th>
+                                    <th>CTRN$</th>
+                                    <th>CRTNWEIGHT$</th>
+                                    <th>SHIPMODE</th>
+                                    <th>FOB</th>
+                                    <th>AWB</th>
+                                    <th>AWBDATE#</th>
+                                    <th>HAWB</th>
+                                    <th>HAWBDT#</th>
+                                    <th>DEPT STATUS</th>
+                                    <th>DEPTDATE#</th>
+                                    <th>SNO</th>
+                                    <th>USERNAME</th>
+                                    <th>COMPANY</th>
+                                    <th>UNIT</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tblBody">
+                                <tr>
+                                    <td style="font-size:1rem; font-weight:bold; color:red; text-align:center" colspan="24"> Data Not Found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main> *@
+</div>
+
+
+<div class="modal fade" id="ChekclistModal" tabindex="-1" aria-labelledby="ChekclistModal" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content checklist-modal">
+            <div class="modal-header checklist-modal-header">
+
+                <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row g-3">
+
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <div class="card">
+                            <div class="card-header px-3 py-2">
+                                <div class="fw-semibold text-primary">
+                                    Search Parameters
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="checklist-box" id="Search_ParametrsList"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <div class="card">
+                            <div class="card-header px-3 py-2">
+                            <div class="fw-semibold text-primary">
+                                Search Values
+                            </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="checklist-box" id="Search_ValuesList"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <div class="card">
+                            <div class="card-header px-3 py-2">
+                                <div class="fw-semibold text-primary">
+                                Added Search Values
+                            </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="checklist-box" id="Added_Search_ValuesList"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row mt-3 d-flex justify-content-center align-content-center">
+                    <div class="col-1">
+                        <button class="btn btn-primary btn-sm" id="btnExecute">
+                            Execute
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="module" src="~/js/pages/import/transactionstatus.js" asp-append-version="true"></script>
+
+@* 
+<script type="module" src="~/js/pages/Payments/TransactionStatus.js" asp-append-version="true"></script> *@

@@ -1,0 +1,394 @@
+﻿/*tablele design */
+
+.table-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    -webkit-overflow-scrolling: touch;
+}
+
+    .table-wrap table {
+        width: 100%;
+/*        min-width: 1000px;*/
+        border-collapse: collapse;
+        font-size: .85rem;
+    }
+
+thead th {
+    background: var(--teal-tint) !important;
+    border: 1px solid var(--line-strong) !important;
+    color: var( --text-color-header-table) !important;
+    font-size: .80rem !important;
+    font-weight: 700;
+    text-transform: uppercase;
+  /*  text-align: left !important;*/
+    letter-spacing: .04em;
+    padding: 8px 10px !important;
+    white-space: nowrap;
+}
+
+    thead th.r, td.r {
+        text-align: right
+    }
+
+    thead th.c, td.c {
+        text-align: center
+    }
+
+thead tr.groups th {
+    text-align: center;
+    border-bottom: none;
+    padding-bottom: 2px;
+    color: var(--ink)
+}
+
+    thead tr.groups th.gline {
+        border-bottom: 2px solid var(--teal)
+    }
+
+/*tbody td {
+    padding: 2px 14px !important;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    white-space: nowrap;*/
+  /*  text-align: left !important;*/
+/*}*/
+tbody td {
+    padding: 1px 7px !important;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    white-space: nowrap;
+    font-size: 14px;
+    /* text-align: left !important; */
+}
+
+    tbody td.num {
+        font-variant-numeric: tabular-nums
+    }
+
+tbody tr:hover {
+    background: var(--teal-tint-light) !important;
+}
+
+tbody tr.selected {
+    background: var(--teal-tint)
+}
+
+tbody tr:last-child td {
+    border-bottom: none
+}
+
+tbody input, tbody select {
+    font: inherit;
+    font-size: .72rem;
+    padding: 6px 9px;
+    border: 1px solid var(--line-strong);
+    border-radius: 0px;
+    /*width: 100%;
+    min-width: 84px*/
+}
+
+    tbody input.num {
+        font-variant-numeric: tabular-nums;
+        text-align: right
+    }
+
+    tbody input:focus, tbody select:focus {
+        outline: none;
+        border-color: var(--teal);
+        box-shadow: 0 0 0 2px rgba(14,124,114,.15)
+    }
+
+tfoot td {
+    padding: 11px 13px;
+    font-weight: 600;
+    background: #f7f9fc;
+    border-top: 2px solid var(--line-strong);
+    font-variant-numeric: tabular-nums
+}
+
+/*datatable pagination styling*/
+div.dt-container div.dt-paging {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: end !important;
+    gap: 3px !important;
+}
+
+    /* ALL PAGINATION BUTTONS */
+    div.dt-container div.dt-paging button.dt-paging-button {
+        min-width: 38px !important;
+        height: 38px !important;
+        margin: 0 !important;
+        padding: 6px 11px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border: 1px solid transparent !important;
+        border-radius: 3px !important;
+        background: transparent !important;
+        background-image: none !important;
+        color: #111 !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        box-shadow: none !important;
+        cursor: pointer !important;
+        transition: all .15s ease-in-out !important;
+    }
+
+        div.dt-container div.dt-paging button.dt-paging-button:hover {
+            border-color: #8fbaf0 !important;
+            background: linear-gradient( to bottom, var(--teal) 0%, rgba(119, 172, 240, 0.85) 100% ) !important;
+            background-image: linear-gradient( to bottom, var(--teal) 0%, rgba(119, 172, 240, 0.85) 100% ) !important;
+            /*            background: linear-gradient( to bottom, rgba(119, 172, 240, 0.99) 0%, rgba(143, 200, 251, 0.62) 100% ) !important;
+            background-image: linear-gradient( to bottom, rgba(119, 172, 240, 0.99) 0%, rgba(143, 200, 251, 0.62) 100% ) !important;*/
+            color: var(--text-color-white) !important;
+            box-shadow: none !important;
+        }
+
+
+        div.dt-container div.dt-paging button.dt-paging-button.current,
+        div.dt-container div.dt-paging button.dt-paging-button.current:hover {
+            border: 1px solid #6fa8df !important;
+            background: linear-gradient( to bottom, var(--teal) 0%, rgba(119, 172, 240, 0.85) 100% ) !important;
+            background-image: linear-gradient( to bottom, var(--teal) 0%, rgba(119, 172, 240, 0.85) 100% ) !important;
+            /*            background: linear-gradient( to bottom, rgba(119, 172, 240, 0.99) 0%, rgba(143, 200, 251, 0.62) 100% ) !important;
+            background-image: linear-gradient( to bottom, rgba(119, 172, 240, 0.99) 0%, rgba(143, 200, 251, 0.62) 100% ) !important;*/
+            color: var(--text-color-white) !important;
+            font-weight: 500 !important;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25) !important;
+        }
+
+        div.dt-container div.dt-paging button.dt-paging-button.disabled,
+        div.dt-container div.dt-paging button.dt-paging-button.disabled:hover {
+            background: transparent !important;
+            background-image: none !important;
+            border-color: transparent !important;
+            color: #999 !important;
+            cursor: default !important;
+            box-shadow: none !important;
+        }
+       
+
+        div.dt-container div.dt-paging button.dt-paging-button:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+/*select2*/
+
+/*select 2 styling common*/
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 39px;
+    position: absolute;
+    top: -1px;
+    right: 7px;
+    width: 35px;
+}
+
+ 
+/* Dropdown panel */
+.select2-dropdown {
+    border: 1px solid var(--line-strong) !important;
+    border-radius: 8px !important;
+    overflow: hidden;
+    font-family: var(--font-body) !important;
+    font-size: .86rem !important;
+    box-shadow: var(--shadow-lg);
+    z-index: 3000 !important;
+}
+
+.select2-search--dropdown {
+    padding: 2px !important;
+    border-bottom: 1px solid var(--line) !important;
+    background: var(--teal-tint-light);
+}
+
+.select2-search--dropdown .select2-search__field {
+    border: 1px solid var(--line-strong) !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+    font-family: var(--font-body) !important;
+    font-size: .84rem !important;
+    outline: none !important;
+}
+
+.select2-search--dropdown .select2-search__field:focus {
+    border-color: var(--teal) !important;
+    box-shadow: 0 0 0 3px rgba(14, 124, 114, .15) !important;
+}
+
+.select2-results__option {
+    padding: 5px 13px !important;
+    font-size: .86rem !important;
+}
+
+.select2-results__option--highlighted[aria-selected] {
+    background: var(--teal) !important;
+    color: #fff !important;
+}
+
+.select2-results__option[aria-selected="true"] {
+    background: var( --teal-tint-light) !important;
+    color: var(--teal-dark) !important;
+    font-weight: 600;
+}
+
+
+.select2-container .select2-selection--single {
+    height: 36px !important;
+    border: 1.5px solid var(--clr-neutral-faint) !important;
+    border-radius: 0px !important;
+    font-size: .8rem !important;
+    padding: 0 10px !important;
+    color: var(--clr-neutral);
+    transition: var(--transition);
+}
+
+.modal-body .form-input, .modal-body .select2-container .select2-selection--single {
+    height: 41px !important;
+    border: 1.5px solid var(--clr-neutral-faint) !important;
+    border-radius: 0px !important;
+    font-size: .8rem !important;
+    padding: 0 10px !important;
+    color: var(--clr-neutral);
+    transition: var(--transition);
+}
+
+
+/*date calender*/
+
+/*faltpicker design shart here*/
+
+.flatpickr-calendar {
+    font-family: var(--font-body) !important;
+    border: 1px solid var(--line-strong) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--shadow-lg) !important;
+    padding: 4px;
+    overflow: hidden;
+}
+
+    .flatpickr-calendar.arrowTop:before,
+    .flatpickr-calendar.arrowTop:after {
+        display: none;
+    }
+
+.flatpickr-months {
+    background: var(--teal);
+    border-radius: 8px 8px 0 0;
+    padding: 8px 4px;
+}
+
+    .flatpickr-months .flatpickr-month {
+        color: #fff;
+        fill: #fff;
+        height: 34px;
+    }
+
+    .flatpickr-months .flatpickr-current-month {
+        /*        font-size: .92rem;*/
+    }
+
+        .flatpickr-months .flatpickr-current-month input.cur-year,
+        .flatpickr-months .flatpickr-current-month .flatpickr-monthDropdown-months {
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+    .flatpickr-months .flatpickr-prev-month,
+    .flatpickr-months .flatpickr-next-month {
+        fill: #fff;
+        color: #fff;
+        padding: 6px !important;
+        border-radius: 6px;
+        margin-top: 10px !important;
+    }
+
+        .flatpickr-months .flatpickr-prev-month:hover,
+        .flatpickr-months .flatpickr-next-month:hover {
+            background: rgba(255, 255, 255, .18);
+        }
+
+        .flatpickr-months .flatpickr-prev-month svg,
+        .flatpickr-months .flatpickr-next-month svg {
+            fill: #fff;
+        }
+
+/* Weekday row */
+.flatpickr-weekdays {
+    background: var(--teal-tint);
+}
+
+span.flatpickr-weekday {
+    color: var(--text-color-white);
+    font-weight: 600;
+    font-size: .90rem;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    background: var(--teal-tint);
+}
+
+.flatpickr-day {
+    border-radius: 6px;
+    font-size: .84rem;
+    color: var(--text);
+}
+
+    .flatpickr-day:hover {
+        background: var(--teal-tint);
+        border-color: var(--teal-tint);
+        color: var(--teal-dark);
+    }
+
+    .flatpickr-day.today {
+        border-color: var(--teal);
+    }
+
+        .flatpickr-day.today:hover {
+            background: var(--teal-tint);
+            color: var(--teal-dark);
+        }
+
+    .flatpickr-day.selected,
+    .flatpickr-day.selected:hover,
+    .flatpickr-day.selected:focus {
+        background: var(--teal) !important;
+        border-color: var(--teal) !important;
+        color: #fff !important;
+        font-weight: 700;
+    }
+
+    .flatpickr-day.flatpickr-disabled,
+    .flatpickr-day.flatpickr-disabled:hover,
+    .flatpickr-day.prevMonthDay,
+    .flatpickr-day.nextMonthDay {
+        color: #c3cad6;
+    }
+
+/* Time / footer (if enabled) */
+.flatpickr-time input:hover,
+.flatpickr-time .flatpickr-am-pm:hover,
+.flatpickr-time input:focus,
+.flatpickr-time .flatpickr-am-pm:focus {
+    background: var(--teal-tint);
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month {
+    background-color: var(--teal);
+}
+.flatpickr-current-month .numInputWrapper {
+    width: 8ch;
+}
+.swal2-container {
+    z-index: 99999 !important;
+}
+
+.swal2-popup {
+    z-index: 100000 !important;
+}

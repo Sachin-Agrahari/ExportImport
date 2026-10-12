@@ -1,0 +1,26 @@
+﻿.payment-request-no {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+    .payment-request-no input {
+        width: 60px;
+        height: 36px;
+        text-align: center;
+        padding: 4px 6px;
+    }
+.draft-inline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .draft-inline label {
+        margin: 0;
+        white-space: nowrap;
+    }
+
+    .draft-inline input {
+        width: 205px;
+    }

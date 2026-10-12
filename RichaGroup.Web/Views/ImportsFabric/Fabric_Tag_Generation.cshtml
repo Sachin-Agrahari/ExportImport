@@ -1,0 +1,626 @@
+﻿@{
+    ViewData["Title"] = "Fabric Tag Generation";
+    ViewData["Heading"] = "Fabric Tag Generation";
+}
+
+<div class="bd_mainContainer">
+    <div class="page">
+        <section class="card">
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Fabric Tag Generation</h2>
+                </div>
+
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                     
+                    <button type="button"
+                                 class="btn btn-primary btn-sm"
+                                 id="btnSave_BOEAgainstFabric"
+                                 title="Save">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+                <button type="button"
+                        class="btn btn-outline-danger btn-sm"
+                        id="btnRefresh_BOEAgainstFabric">
+                    ↻ Refresh
+                </button>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="grid cols-6">
+
+
+                    <!-- IMPORT # -->
+                    <div class="field">
+                        <label>Import # <button id="btnhelpImport" class="help-link">Help</button></label>
+
+                        <input type="text"
+                               id="txtImportNo_fabricTagGeneration"
+                               placeholder="Enter Import No..." />
+                    </div>
+
+
+                    <!-- DATE -->
+                    <div class="field">
+                        <label>Date</label>
+
+                        <input type="text"
+                               id="txtDate_fabricTagGeneration"
+                               placeholder="Select Date..." />
+                    </div>
+
+
+                    <!-- BUYER -->
+                    <div class="field">
+                        <label>Buyer</label>
+
+                        <input type="text"
+                               id="txtBuyer_fabricTagGeneration"
+                               placeholder="Enter Buyer..." />
+                    </div>
+
+
+                    <!-- STYLE -->
+                    <div class="field">
+                        <label>Style</label>
+
+                        <input type="text"
+                               id="txtStyle_fabricTagGeneration"
+                               placeholder="Enter Style..." />
+                    </div>
+
+
+                    <!-- WASTAGE -->
+                    <div class="field">
+                        <label>Wastage</label>
+
+                        <input type="text"
+                               id="txtWastage_fabricTagGeneration"
+                               placeholder="Enter Wastage..." />
+                    </div>
+
+
+                    <!-- ITEM -->
+                    <div class="field">
+                        <label>Item</label>
+
+                        <input type="text"
+                               id="txtItem_fabricTagGeneration"
+                               placeholder="Enter Item..." />
+                    </div>
+
+                    <div class="field">
+
+                        <div class="yn-field">
+
+                            <label>
+                                Imported<span class="text-danger">*</span>
+                            </label>
+
+                            <div class="yn-checkbox">
+                                <label>
+                                    <input type="radio" name="BoHelp" class="rdoBoHelp" value="Y">
+                                    <span>Y</span>
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="BoHelp" class="rdoBoHelp" value="N">
+                                    <span>N</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- I_SL # -->
+                    <div class="field">
+                        <label>Import Serial No. #</label>
+
+                        <input type="text"
+                               id="txtISlNo_fabricTagGeneration"
+                               placeholder="Enter I_Sl. No..." />
+                    </div>
+
+
+                    <!-- E_SL # -->
+                    <div class="field">
+                        <label>Export Serial No. #</label>
+
+                        <input type="text"
+                               id="txtESlNo_fabricTagGeneration"
+                               placeholder="Enter E_Sl. No..." />
+                    </div>
+
+
+                    <!-- PER PCS QTY -->
+                    <div class="field">
+                        <label>Per Pcs Qty</label>
+
+                        <input type="text"
+                               id="txtPerPcsQty_fabricTagGeneration"
+                               placeholder="Enter Qty..." />
+                    </div>
+
+
+                    <!-- TYPE -->
+                    <div class="field">
+                        <label>Type</label>
+
+                        <input type="text"
+                               id="txtType_fabricTagGeneration"
+                               placeholder="Enter Type..." />
+                    </div>
+
+
+                    <!-- KGS QTY -->
+                    <div class="field">
+                        <label>Kgs Qty</label>
+
+                        <input type="text"
+                               id="txtKgsQty_fabricTagGeneration"
+                               placeholder="Enter Kgs Qty..." />
+                    </div>
+
+
+                    <!-- KGS TYPE -->
+                    <div class="field">
+                        <label>Kgs Type</label>
+
+                        <input type="text"
+                               id="txtKgsType_fabricTagGeneration"
+                               placeholder="Enter Type..." />
+                    </div>
+
+
+                    <!-- VALUE INR -->
+                    <div class="field">
+                        <label>Value (INR)</label>
+
+                        <input type="text"
+                               id="txtValueINR_fabricTagGeneration"
+                               placeholder="Enter Value..." />
+                    </div>
+
+
+                    <!-- IMPORT FOR COMPANY -->
+                    <div class="field">
+                        <label>Import for Company</label>
+
+                        <select id="ddlImportCompany_fabricTagGeneration"
+                                class="select2-field">
+
+                            <option value="">Select</option>
+
+                            <option value="01">
+                                01
+                            </option>
+
+                            <option value="21">
+                                21
+                            </option>
+
+                        </select>
+                    </div>
+
+
+                    <!-- THIRD PARTY -->
+                    <div class="field">
+                        <label>Third Party</label>
+
+                        <select id="ddlThirdParty_fabricTagGeneration"
+                                class="select2-field">
+
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+
+                        </select>
+                    </div>
+                    <div class="field d-none" id="paymentRequestReasonField">
+
+                        <label class="form-label">
+                            Reason
+                        </label>
+
+                        <input type="text"
+                               id="txtPaymentRequestReason"
+                               class="form-control"
+                               placeholder="Reason"
+                               readonly>
+
+                    </div>
+                 
+                </div>
+
+            </div>
+
+        </section>
+
+ <section class="card">
+
+    <div class="card-body">
+
+        <div class="table-wrap">
+
+            <table class="table table-sm table-bordered align-middle mb-0"
+                   id="tblBOEDetails_fabricTagGeneration">
+
+                <thead>
+                    <tr>
+
+                        <th>Sr No</th>
+                        <th>BOE #</th>
+                        <th>DTD.</th>
+                        <th>Qty.</th>
+                        <th>PCS.</th>
+
+                        <th>Sr No</th>
+                        <th>BOE #</th>
+                        <th>DTD.</th>
+                        <th>Qty.</th>
+                        <th>PCS.</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @for (int i = 1; i <= 6; i++)
+                    {
+                        int rightNo = i + 6;
+
+                        <tr>
+
+                            <!-- LEFT SIDE -->
+                            <td>
+                                @i
+                            </td>
+
+                            <td>
+                                <input type="text"
+                                       id="txtBOENo_@(i)_fabricTagGeneration"
+                                       class="form-control form-control-sm"
+                                       placeholder="BOE #" />
+                            </td>
+
+                            <td>
+                                <input type="text"
+                                       id="txtBOEDate_@(i)_fabricTagGeneration"
+                                       class="form-control form-control-sm"
+                                       placeholder="Date" />
+                            </td>
+
+                            <td>
+                                <input type="text"
+                                       id="txtBOEQty_@(i)_fabricTagGeneration"
+                                       class="form-control form-control-sm"
+                                       placeholder="Qty" />
+                            </td>
+
+                            <td>
+                                <input type="text"
+                                       id="txtBOEPcs_@(i)_fabricTagGeneration"
+                                       class="form-control form-control-sm"
+                                       placeholder="PCS" />
+                            </td>
+
+
+                            <!-- RIGHT SIDE -->
+                            <td>
+                                @rightNo
+                            </td>
+
+                            <td>
+                                <input type="text"
+                                       id="txtBOENo_@(rightNo)_fabricTagGeneration"
+                                       class="form-control form-control-sm"
+                                       placeholder="BOE #" />
+                            </td>
+
+                            <td>
+                                <input type="text"
+                                       id="txtBOEDate_@(rightNo)_fabricTagGeneration"
+                                       class="form-control form-control-sm"
+                                       placeholder="Date" />
+                            </td>
+
+                            <td>
+                                <input type="text"
+                                       id="txtBOEQty_@(rightNo)_fabricTagGeneration"
+                                       class="form-control form-control-sm"
+                                       placeholder="Qty" />
+                            </td>
+
+                            <td>
+                                <input type="text"
+                                       id="txtBOEPcs_@(rightNo)_fabricTagGeneration"
+                                       class="form-control form-control-sm"
+                                       placeholder="PCS" />
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+    
+
+        <section class="card">
+
+            <div class="card-body">
+
+                <div class="grid cols-6">
+
+
+                    <!-- LIC TYPE -->
+                    <div class="field">
+                        <label>Lic. Type</label>
+
+                        <input type="text"
+                               id="txtLicType_fabricTagGeneration"
+                               value="SPL.ADV.LIC."
+                               placeholder="License Type..." />
+                    </div>
+
+
+                    <!-- LICENSE NO -->
+                    <div class="field">
+                        <label>Lic. #</label>
+
+                        <input type="text"
+                               id="txtLicNo_fabricTagGeneration"
+                               placeholder="Enter License No..." />
+                    </div>
+
+
+                    <!-- IGST -->
+                    <div class="field">
+                        <label>IGST</label>
+
+                        <select id="ddlIGST_fabricTagGeneration"
+                                class="select2-field">
+
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+
+                        </select>
+                    </div>
+
+
+                    <!-- LICENSE DATE -->
+                    <div class="field">
+                        <label>Date</label>
+
+                        <input type="text"
+                               id="txtLicenseDate_fabricTagGeneration"
+                               placeholder="Select Date..." />
+                    </div>
+
+
+                    <!-- GARMENT DESC -->
+                    <div class="field span-2">
+                        <label>Garment Desc.</label>
+
+                        <input type="text"
+                               id="txtGarmentDesc_fabricTagGeneration"
+                               placeholder="Enter Garment Description..." />
+                    </div>
+
+
+                    <!-- GSM -->
+                    <div class="field">
+                        <label>GSM</label>
+
+                        <input type="text"
+                               id="txtGSM_fabricTagGeneration"
+                               placeholder="Enter GSM..." />
+                    </div>
+
+
+                    <!-- I/E # -->
+                    <div class="field">
+                        <label>I/E #</label>
+
+                        <input type="text"
+                               id="txtIENo_fabricTagGeneration"
+                               placeholder="Enter I/E No..." />
+                    </div>
+
+
+                    <!-- WT/PC -->
+                    <div class="field">
+                        <label>Wt/Pc</label>
+
+                        <input type="text"
+                               id="txtWtPc_fabricTagGeneration"
+                               placeholder="Enter Weight/Pc..." />
+                    </div>
+
+
+                    <!-- TOTAL QUANTITY -->
+                    <div class="field">
+                        <label>Total Quantity</label>
+
+                        <input type="text"
+                               id="txtTotalQuantity_fabricTagGeneration"
+                               placeholder="Total Quantity..." />
+                    </div>
+
+
+                    <!-- TOTAL DUTY -->
+                    <div class="field">
+                        <label>Total Duty</label>
+
+                        <input type="text"
+                               id="txtTotalDuty_fabricTagGeneration"
+                               placeholder="Total Duty..." />
+                    </div>
+
+
+                    <!-- DUTY PAID -->
+                    <div class="field">
+                        <label>Duty Paid</label>
+
+                        <select id="ddlDutyPaid_fabricTagGeneration"
+                                class="select2-field">
+
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+
+                        </select>
+                    </div>
+
+
+                    <!-- CONTENT -->
+                    <div class="field span-4">
+                        <label>Content</label>
+
+                        <input type="text"
+                               id="txtContent_fabricTagGeneration"
+                               placeholder="Enter Content..." />
+                    </div>
+
+
+                    <!-- AFTER GSM -->
+                    <div class="field span-4">
+                        <label>After GSM</label>
+
+                        <input type="text"
+                               id="txtAfterGSM_fabricTagGeneration"
+                               placeholder="Enter After GSM..." />
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+</div>
+
+@* modal open for the help  *@
+
+
+
+<div class="modal fade" id="addMenuModalImportHelp" tabindex="-1" aria-labelledby="addMenuModalImportHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalImportHelpLabel">
+                        Entry help
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2">
+                <div class="table-responsive">
+
+                    <table id="tblLCHelpDutyPayment" class="table table-sm table-bordered align-middle mb-0">
+
+                        <thead class="table-primary">
+                            <tr>
+                                <th class="text-center">
+                                    Select
+                                </th>
+
+                                <th>
+                                   Import#
+                                </th>
+
+                                <th>
+                                    Invoice Date
+                                </th>
+
+                                <th>
+                                   Entered By
+                                </th>
+                                <th>
+                                    Updated By
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyLCHelpDutyPayment">
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveImportHelp">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/js/pages/importsfabric/fabric_tag_generation.js" asp-append-version="true"></script>

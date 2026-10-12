@@ -1,0 +1,143 @@
+﻿@{
+	ViewData["Title"] = "Service Charges Bill";
+	ViewData["Heading"] = "Service Charges Bill";
+}
+
+
+
+<div class="bd_mainContainer">
+    <div class="page">
+            
+        <section class="card">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Service Charges Bill</h2>
+                </div>
+
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave_BOEAgainstFabric"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+                    <button type="button"
+                            class="btn btn-outline-danger btn-sm"
+                            id="btnRefresh_BOEAgainstFabric">
+                        ↻ Refresh
+                    </button>
+                </div>
+
+            </div>
+
+            
+            <div class="card-body">
+
+                <div class="grid cols-6">
+
+                    <div class="field">
+                        <label>Entry</label>
+                        <input type="text"
+                               class="form-control"
+                               id="txtEntry_ServiceChargesBill"
+                               placeholder="Enter Entry" 
+                               readonly />
+                    </div>
+
+                    <div class="field">
+                        <label>Date</label>
+                        <input type="text"
+                               class="form-control"
+                               id="txtdate_ServiceChargesBill"
+                               placeholder="Select Date .." 
+                               readonly />
+                    </div>
+
+                    <div class="field">
+                        <label>Supplier</label>
+                        <input type="text"
+                               class="form-control"
+                               id="txtSupplier_ServiceChargesBill"
+                               placeholder="Enter ServiceChargesBill..." 
+                               readonly />
+                    </div>
+
+                    
+
+                    <div class="field">
+                        <label>Invoice Number</label>
+                        <input type="text"
+                               class="form-control"
+                               id="txtInvNo_ServiceChargesBill"
+                               placeholder="Enter Invoice Number .." 
+                               readonly/>
+                    </div>
+
+                    @* <div class="d-flex justify-content-start mt-2 align-items-end">
+                        <button type="button"
+                                class="btn btn-primary btn-sm fs-6"
+                                id="btnAdd_ServiceChargesBill">
+                            Add
+                        </button>
+                    </div> *@
+                </div>
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="table-wrap">
+                    <table id="tblServiceChargesBill" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Company</th>
+                                <th>Final Bill Pass</th>
+                                <th>Bill Pass</th>
+                                <th>GRN No</th>
+                                <th>Net Amount</th>
+                                <th>Bill Number</th>
+                                <th>Bill Date</th>
+                                <th>Bill Amount</th>
+                                <th>Ass Value</th>
+                                <th>Party</th>
+                                <th>Party Name</th>
+                                @* <th>Action</th> *@
+                            </tr>
+                        </thead>
+                        <tbody id="tblbodyServiceChargesBill" class="text-truncate"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        @* <section class="card">
+
+        </section> *@
+
+    
+    </div>
+</div>
+
+<script src="~/js/pages/importsfabric/service_charges_bill.js" asp-append-version="true"></script>

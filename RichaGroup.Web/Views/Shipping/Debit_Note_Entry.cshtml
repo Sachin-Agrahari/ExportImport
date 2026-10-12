@@ -1,0 +1,298 @@
+﻿@{
+    ViewData["Title"] = "Debit Note Entry";
+    ViewData["Heading"] = "Debit Note Entry";
+}
+
+<div class="bd_mainContainer">
+    <div class="page">
+
+        <section class="card">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Debit Note Entry</h2>
+                </div>
+
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+
+                    <button class="btn btn-primary btn-sm"
+                            id="btnAdd">
+                        Search
+                    </button>
+                    @*     <button class="btn btn-primary btn-sm"
+								id="btnSearch">
+					 +	Add
+						</button> *@
+
+                    <button type="button"
+                            class="btn btn-cancel-custom"
+                            id="btnCancel">
+                        ✕ Cancel
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="grid cols-6">
+
+                    <!-- Debit Note -->
+                    <div class="field">
+                        <label class="form-label">
+                            Debit Note
+                        </label>
+
+                        <input type="text"
+                               id="txtDebitNote"
+                               class="form-input"
+                               placeholder="Enter Debit Note">
+                    </div>
+
+                    <!-- Debit Note Date -->
+                    <div class="field">
+                        <label class="form-label">
+                            Debit Note Date
+                        </label>
+
+                        <input type="text"
+                               id="txtDebitNoteDate"
+                               class="form-input form-Flatdate"
+                               placeholder="Select Debit Note Date">
+                    </div>
+
+
+                    <div class="field">
+                        <label class="form-label">
+                            Option
+                        </label>
+                        <select id="ddlOption" class="form-select">
+                            <option value="">Select Option</option>
+                            <option value="PoNo">PoNo</option>
+                            <option value="Invoice No">Invoice No</option>
+
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">
+                            Amount
+                        </label>
+
+                        <input type="text"
+                               id="txtDebitNoteAmount"
+                               class="form-input"
+                               placeholder="Enter Debit Note Amount">
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        @*   <!-- Bond entries --> *@
+        <section class="card  d-none" id="debitNoteEntrySection">
+            <div class="card-body">
+                <div class=" d-flex justify-content-between">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="tick"></span>
+                        <h4 class="">
+                        </h4>
+                    </div>
+                    <div class="d-flex justify-content-end align-items-end">
+
+
+
+                        <button type="button" class="btn btn-primary btn-sm" id="btnAddGSPInvoice">
+
+                            <svg class="svg-inline--fa fa-plus" data-prefix="fas" data-icon="plus" role="img" viewBox="0 0 448 512" aria-hidden="true" data-fa-i2svg=""><path fill="currentColor" d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"></path></svg><!-- <i class="fa-solid fa-plus"></i> Font Awesome fontawesome.com -->
+                            Add
+                        </button>
+
+                    </div>
+
+                </div>
+                <div class="table-wrap">
+                    <table id="tblDebitNoteEntry" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style=" width: 50px !important;">Action</th>
+                                <th>PoNo</th>
+                                <th>Invoice No</th>
+                                <th>Description</th>
+                                <th class="r num " >Qty</th>
+                                <th class="r num">Amount</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tblbody_DebitNoteEntry"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+@* po no help modal  *@
+<div class="modal fade"
+     id="poNoHelpModal"
+     tabindex="-1"
+     aria-labelledby="poNoHelpModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+
+        <div class="modal-content modal-box">
+
+            <!-- Header -->
+            <div class="modal-header">
+
+                <div class="modal-header-text">
+                    <div class="modal-title" id="poNoHelpModalLabel">
+                        PO No Help
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+
+                <div class="table-wrap">
+
+                    <table id="tblPoNoHelp"
+                           class="display"
+                           style="width:100%">
+
+                        <thead>
+                            <tr>
+                                <th class="text-center">Action</th>
+                                <th>Invoice No</th>
+                                <th>PO No</th>
+                                <th>Delay Reason</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyPoNoHelp"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+@* Add / Edit entry modal *@
+<div class="modal fade" id="debitNoteItemModal" tabindex="-1" aria-labelledby="debitNoteItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="debitNoteItemModalLabel">Debit Note Entry</div>
+                </div>
+                <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <div class="field">
+                            <label class="form-label">PO No</label>
+                            <div class="input-group">
+                                <input type="text" id="txtDebitNotePoNo" class="form-input" placeholder="Enter PO No">
+                                @*    <button type="button" class="btn btn-primary btn-sm" id="btnPoNohelp" title="PO No Help">?</button> *@
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="field">
+                            <label class="form-label">Invoice No</label>
+                            <input type="text" id="txtDebitNoteInvoiceNo" class="form-input" placeholder="Enter Invoice No">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="field">
+                            <label class="form-label">Description</label>
+                            <input type="text" id="txtDebitNoteDesc" class="form-input" placeholder="Enter Description">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="field">
+                            <label class="form-label">Qty</label>
+                            <input type="number" id="txtDebitNoteQty" class="form-input" placeholder="Qty" min="0">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="field">
+                            <label class="form-label">Amount</label>
+                            <input type="text" id="txtDebitNoteItemAmount" class="form-input text-end" placeholder="0.00">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary btn-sm" id="btnSaveDebitNoteItem">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/js/pages/shipping/debit_note_entry.js" asp-append-version="true"></script>

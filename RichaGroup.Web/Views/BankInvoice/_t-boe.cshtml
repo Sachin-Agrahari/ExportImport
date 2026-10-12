@@ -1,0 +1,247 @@
+﻿<div class="grid cols-8">
+
+    <div class="field">
+        <label>Pick in BOE</label>
+        <select>
+            <option selected>FOB</option>
+            <option>CIF</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>FOBC</label>
+        <select>
+            <option selected>0.00</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>FOB</label>
+        <input class="num" value="350.00">
+    </div>
+
+    <div class="field">
+        <label>C&amp;F</label>
+        <input class="num" value="0.00">
+    </div>
+
+    <div class="field">
+        <label>CIF</label>
+        <input class="num" value="0.00">
+    </div>
+
+    <div class="field">
+        <label>Insurance</label>
+        <input class="num" value="0.00">
+    </div>
+
+    <div class="field">
+        <label>Freight</label>
+        <input class="num" value="0.00">
+    </div>
+
+
+    <div class="field">
+        <label>Commission Currency</label>
+            <input class="num" value="0.00">
+    </div>
+    <div class="field">
+        <label>Commission INR</label>
+            <input value="INR">
+    </div>
+
+    <div class="field">
+        <label>Discount Currency</label>
+       
+            <input class="num" value="0.00">
+            
+    </div>
+    <div class="field">
+        <label>Discount INR</label>
+            <input value="INR">
+    </div>
+
+    <div class="field">
+        <label>Commission for BOE</label>
+        <input class="num" value="0.00">
+    </div>
+
+    <div class="field">
+        <label>Discount for BOE</label>
+        <input class="num" value="0.00">
+    </div>
+
+    <div class="field">
+        <label>Pick in BRC</label>
+        <select>
+            <option selected>FOB</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>BRC Amount</label>
+        <input class="num" value="350.00">
+    </div>
+
+</div>
+
+<div class="charges">
+    <div class="panel">
+        <h4>Deductions</h4>
+        <div class="rows">
+            <div class="charge-row">
+                <span class="lbl">Commission %</span>
+                <div class="d-flex align-items-center gap-2">
+
+                    <select id="ddl_Style_poNo_commission" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <select id="ddl_Style_poNo_commission2" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>+</option>
+                        <option>-</option>
+                    </select>
+
+                    <input type="text"
+                           id="txt_Style_poNo_commission"
+                           value="0.00"
+                           class="form-control form-control-sm"
+                           style="width:200px;" />
+
+                </div>
+            </div>
+            <div class="charge-row">
+                <span class="lbl">Discount %</span>
+                <div class="d-flex align-items-center gap-2">
+
+ 
+                    <select id="ddl_Style_poNo_commission" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <select id="ddl_Style_poNo_commission2" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>+</option>
+                        <option>-</option>
+                    </select>
+
+                    <input type="text"
+                           id="txt_Style_poNo_commission"
+                           value="0.00"
+                           class="form-control form-control-sm"
+                           style="width:200px;" />
+
+                        
+                       
+                </div>
+            </div>
+            <div class="charge-row">
+                <span class="lbl">Discount</span>
+                <div class="d-flex align-items-center gap-2">
+
+                    <select id="ddl_Style_poNo_discount" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <select id="ddl_Style_poNo_discountt2" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>+</option>
+                        <option>-</option>
+                    </select>
+
+                    <input type="text"
+                           id="txt_Style_poNo_discount"
+                           value="0.00"
+                           class="form-control form-control-sm"
+                           style="width:200px;" />
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h4>Additions</h4>
+        <div class="rows">
+            <div class="charge-row">
+                <span class="lbl">Freight</span>
+                <div class="d-flex align-items-center gap-2">
+
+                    <select id="ddl_Style_poNo_freight" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <select id="ddl_Style_poNo_freight2" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>+</option>
+                        <option>-</option>
+                    </select>
+
+                    <input type="text"
+                           id="txt_Style_poNo_freight"
+                           value="0.00"
+                           class="form-control"
+                           style="width:200px;" />
+
+                </div>
+
+            </div>
+            <div class="charge-row">
+                <span class="lbl">Other</span>
+                <div class="d-flex align-items-center gap-2">
+
+                    <select id="ddl_Style_poNo_freight" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <select id="ddl_Style_poNo_freight2" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>+</option>
+                        <option>-</option>
+                    </select>
+
+                    <input type="text"
+                           id="txt_Style_poNo_freight"
+                           value="0.00"
+                           class="form-control"
+                           style="width:200px;" />
+
+                </div>
+            </div>
+            <div class="charge-row">
+                <span class="lbl">Insurance</span>
+                <div class="d-flex align-items-center gap-2">
+
+                    <select id="ddl_Style_poNo_freight" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <select id="ddl_Style_poNo_freight2" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>+</option>
+                        <option>-</option>
+                    </select>
+
+                    <input type="text"
+                           id="txt_Style_poNo_freight"
+                           value="0.00"
+                           class="form-control"
+                           style="width:200px;" />
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="totals">
+        <div class="t-row"><span>Total Quantity</span><b id="lbl_Style_poNo_Quantity">3,612</b></div>
+        <div class="t-row"><span>Total Amount</span><b id="lbl_Style_poNo_Amount">38,106.60</b></div>
+        <div class="t-row mr-5"><span> Amount In Words :</span> <b class="text-danger ms-5" id="lbl_Style_poNo_Word"> Thrity Eight Thousand One hunderd Six and Sixty Paise Only </b> </div>
+        <div class="t-row net"><span>Net Amount</span><b id="lbl_Style_poNo_NetAmu">0.00</b></div>
+    </div>
+
+                
+</div>
+
+ 

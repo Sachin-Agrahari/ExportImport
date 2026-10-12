@@ -1,0 +1,273 @@
+﻿@{
+	ViewData["Title"] = "Port Drawback Master";
+}
+
+<div class="bd_mainContainer">
+	<div class="page">
+
+		<section class="card">
+			<!-- HEADER -->
+			<div class="card-head">
+
+				<div>
+					<span class="tick"></span>
+					<h2 class="mt-2" id="txtHeaderMain">Port Drawback Master</h2>
+				</div>
+
+				<div class="d-flex gap-2">
+					<div class="d-flex gap-2">
+						@await Html.PartialAsync("Components/_CheckBoxComponent")
+						@await Html.PartialAsync("Components/_UploadAndViewButtons")
+						<button class="btn btn-primary btn-sm"
+								id="btnAdd">
+							＋ Add
+						</button>
+					</div>
+
+				</div>
+
+			</div>
+			<div class="card-body">
+
+				<div class="table-wrap">
+					<table id="tblAdvMaster" class="display" style="width:100%">
+						<thead>
+							<tr>
+								<th style="width:50px !important;">Action</th>
+								<th style="width:50px !important; text-align:right !important;">S.No</th>
+								<th style="text-align:right !important;">Port Number</th>
+								<th>Ship Mode</th>
+								<th>Port Code</th>
+								<th>Port</th>
+								<th>Ship Mode</th>
+								<th>DBK A/c</th>
+								@* <th>Bank Address1</th>
+								<th>Bank Address2</th>
+								<th>Bank Address3</th> *@
+								<th>City Name</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody id="tblbodyAdvMaster" class="text-truncate"></tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+
+
+
+
+<div class="modal fade" id="addPortDrawbackMasterModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content modal-box">
+			<div class="modal-header">
+				<div class="modal-header-text">
+					<div class="modal-title" id="addMenuModalLabel">
+						Port Drawback Master
+					</div>
+				</div>
+				<div class="d-flex gap-2">
+
+					
+
+					<button type="button"
+							style=" "
+							class="modal-close"
+							data-bs-dismiss="modal"
+							aria-label="Close">
+						<svg viewBox="0 0 24 24">
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+					</button>
+				</div>
+				<div class="app-modal-header-actions">
+				</div>
+			</div>
+
+			<div class="modal-body p-2">
+
+				
+					<div class="grid cols-4">
+
+						<div class="field">
+
+							<label for="ddlPortName" class="form-label">
+								Port Name
+							</label>
+
+							<select id="ddlPortName"
+									class="form-select">
+
+								<option value="">--Choose One--</option>
+								<option value="3">3</option>
+								<option value="34">34</option>
+								<option value="35">35</option>
+
+							</select>
+
+						</div>
+
+						@* <div class="field">
+
+							<label for="ddlBankName" class="form-label">
+								Bank Name
+							</label>
+
+							<select id="ddlBankName"
+									class="form-select">
+
+								<option value="">--Choose One--</option>
+								<option value="SBI">SBI</option>
+								<option value="HDFC">HDFC</option>
+								<option value="Yes Bank">Yes Bank</option>
+
+							</select>
+
+
+						</div> *@
+
+						@* <div class="field">
+
+							<label for="txtAccountNumber" class="form-label">
+
+								Account Number
+								<span class="text-danger">*</span>
+							</label>
+
+
+							<input type="text"
+								   id="txtAccountNumber"
+								   class="form-control"
+								   placeholder="Enter Account Number" />
+
+
+						</div> *@
+
+						<div class="field">
+
+							<label for="ddlShipMode" class="form-label">
+								Ship Mode
+							</label>
+
+							<select id="ddlShipMode"
+									class="form-select">
+
+								<option value="">--Choose One--</option>
+								<option value="By Sea">By Sea</option>
+								<option value="By Air">By Air</option>
+								<option value="By Road">By Road</option>
+
+							</select>
+						</div>
+
+						 <div class="field">
+							     <label for="txtPortCode_Add_DBKPortMaster">Port Code</label>
+							     <input type="text" id="txtPortCode_Add_DBKPortMaster" placeholder="Enter Port Code" />
+							 </div>
+
+							 <div class="field">
+							     <label for="txtPort_Add_DBKPortMaster">Port</label>
+							     <input type="text" id="txtPort_Add_DBKPortMaster" placeholder="Enter Port" />
+							 </div>
+  
+							 <div class="field">
+							     <label for="txtShipMode_Add_DBKPortMaster">Ship Mode</label>
+							     <input type="text" id="txtShipMode_Add_DBKPortMaster" placeholder="Enter Enter Ship Mode" />
+							 </div>
+
+							 <div class="field">
+							     <label for="txtDBKAc_Add_DBKPortMaster">DBK A/c</label>
+							     <input type="text" id="txtDBKAc_Add_DBKPortMaster" placeholder="Enter DBK Account " />
+							 </div>         
+							
+						
+
+						@* <div class="grid cols-4 mt-3"> *@
+
+							 <div class="field">
+							     <label for="txtBankAdd1_Add_DBKPortMaster">Bank Address 1</label>
+							     <input type="text" id="txtBankAdd1_Add_DBKPortMaster" placeholder="Enter Bank Address 1" />
+							 </div>
+
+							 <div class="field">
+							     <label for="txtBankAdd2_Add_DBKPortMaster">Bank Address 2</label>
+							     <input type="text" id="txtBankAdd2_Add_DBKPortMaster" placeholder="Enter Bank Address 2" />
+							 </div>
+
+							 <div class="field">
+							     <label for="txtBankAdd3_Add_DBKPortMaster">Bank Address 3</label>
+							     <input type="text" id="txtBankAdd3_Add_DBKPortMaster" placeholder="Enter Bank Address 3" />
+							 </div>
+
+							 <div class="field">
+							     <label for="ddlCity">City Name</label>
+							     <select id="ddlCity"
+							       class="form-select">
+							         <option value="">Select City</option>
+							         <option value="Gurguram">Gurguram</option>
+							         <option value="Mumbai">Mumbai</option>
+							         <option value="Kolkata">Kolkata</option>
+							       
+							     </select>
+							 </div>
+					
+
+						<div class="field">
+
+							<label for="ddlStatus" class="form-label">
+								Status
+							</label>
+
+							<select id="ddlStatus"
+									class="form-select">
+
+								<option value="">--Choose One--</option>
+								<option value="Active">Active</option>
+								<option value="Pending">Pending</option>
+								<option value="InActive">InActive</option>
+
+							</select>
+
+
+						</div>
+
+						   
+				
+			</div>
+
+			<div class="modal-footer">
+
+				<button type="button"
+						class="btn btn-primary btn-sm"
+						id="btnSave">
+
+					<svg width="14"
+						 height="14"
+						 viewBox="0 0 24 24"
+						 fill="none"
+						 stroke="currentColor"
+						 stroke-width="2"
+						 stroke-linecap="round"
+						 stroke-linejoin="round">
+
+						<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+						<polyline points="17 21 17 13 7 13 7 21"></polyline>
+						<polyline points="7 3 7 8 15 8"></polyline>
+
+					</svg>
+
+					Save
+				</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<script src="~/js/pages/mastersjs/portdrawbackmaster.js" asp-append-version="true"></script>

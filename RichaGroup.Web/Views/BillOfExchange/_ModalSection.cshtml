@@ -1,0 +1,697 @@
+﻿<div class="modal fade" id="appliedAdjustment" tabindex="-1" aria-labelledby="appliedAdjustment" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+
+                <div class="modal-header-text">
+                    <div class="modal-title" id="appliedAdjustmentLabel">
+                        Applied Adjustments
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+
+            </div>
+
+            <div class="modal-body p-2">
+                <div class="grid cols-4" style="margin-bottom:18px">
+
+                    <div class="field">
+                        <label>Adjustment Required / Type</label>
+                        <div class="pair">
+
+                            <select style="height:35px !important">
+                                <option selected>Yes</option>
+                                <option>No</option>
+                            </select>
+
+                            <select id="ddlModalAdvance" style="height:35px !important">
+                                <option value="advance" selected>Advance</option>
+                                <option value="currency">Currency</option>
+                                <option value="pcfc">PCFC</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Conversion Rate</label>
+                        <input class="num" value="1">
+                    </div>
+
+                    <div class="field">
+                        <label>Amount</label>
+                        <input class="num" value="2,50,000">
+                    </div>
+
+                    <div class="field">
+                        <label>From Date</label>
+                        <input class="form-Flatdate" td="txtFromDatate" value="2017-07-09">
+                    </div>
+
+
+                </div>
+
+                <div class="invoice-details-table-wrap">
+
+                    <table id="tblAdjustmentLookup" style="min-width:100%">
+                        <thead id="tblAdjustmentLookupHead">
+                        </thead>
+
+                        <tbody id="tblAdjustmentLookupBody">
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="invoice-details-table-wrap mt-2">
+
+                    <table id="tblAdjustmentLookup" style="min-width:100%">
+                        <thead>
+                            <tr>
+                                <th class="c" width="80px">Actions</th>
+                                <th class="r">Conversion Rate</th>
+                                <th class="r">Amount</th>
+                                <th class="r">Sum Amount</th>
+                                <th>Date</th>
+                                <th class="r">INR Amount</th>
+                                <th>Adjustment Type</th>
+                                <th class="c">Required</th>
+                                <th class="r">Number</th>
+                                <th>Date</th>
+                                <th class="r">Amount</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyAppliedAdjustments">
+                            <!-- rows rendered from appliedAdjustmentsData via renderAppliedAdjustmentsTable() -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>Total(USD): </td>
+                                <td colspan="4">512$</td>
+                                <td>Total(INR):</td>
+                                <td colspan="5"> 49,474.82</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="buyerLookupModal" tabindex="-1" aria-labelledby="buyerLookupModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+
+                <div class="modal-header-text">
+                    <div class="modal-title" id="buyerLookupModalLabel">
+                        Buyer Lookup
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+
+            </div>
+
+            <div class="modal-body p-2">
+                <div class="invoice-details-table-wrap">
+                    <table class="table table-sm table-bordered align-middle mb-0" id="tblBuyerLookup">
+                        <thead>
+                            <tr>
+                                <th style="width:60px;" class="text-center">#</th>
+                                <th>Buyer Name</th>
+                                <th>Alias</th>
+                                <th>Code</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyBuyerLookup">
+                            <!-- rows rendered from buyerLookupData via renderBuyerLookupTable() -->
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="selectBankModal" tabindex="-1" aria-labelledby="selectBankModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+
+                <div class="modal-header-text">
+                    <div class="modal-title" id="selectBankModalLabel">
+                        Select Bank
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 align-items-center">
+
+                    <select class="form-select form-select-sm"
+                            id="ddlBankModal"
+                            style="width:140px;">
+                        <option selected>HDFC</option>
+                        <option>SBI</option>
+                        <option>ICICI</option>
+                        <option>AXIS</option>
+                    </select>
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="modal-body p-2">
+
+                <div class="invoice-details-table-wrap">
+
+                    <table class="table table-sm table-bordered align-middle mb-0"
+                           id="tblBankDetails">
+
+                        <thead>
+                            <tr>
+                                <th>Ref No.</th>
+                                <th>Ref Date</th>
+                                <th>Buyer Name</th>
+                                <th class="text-end">Amount</th>
+                                <th>Bank Ref No.</th>
+                                <th class="text-center">Paperless</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyBankDetails">
+                            <!-- rows rendered from bankDetailsData via renderBankDetailsTable() -->
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <div class="grid cols-2 mt-3">
+
+                    <div class="field">
+                        <label class="form-label">
+                            LC/TT Number
+                        </label>
+
+                        <input type="text"
+                               id="txtLCTTNumber"
+                               class="form-control"
+                               placeholder="Enter LC/TT Number..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">
+                            Bank Name
+                        </label>
+
+                        <input type="text"
+                               id="txtBankName"
+                               class="form-control"
+                               placeholder="Enter Bank Name..." />
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ══════════ MODAL &middot; Add Invoice ══════════ -->
+<div class="modal fade" id="addInvoiceModal" tabindex="-1" aria-labelledby="addInvoiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addInvoiceModalLabel">
+                        Add Invoice
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body p-2">
+
+                <div class="invoice-details-table-wrap">
+
+                    <table class="table table-sm table-bordered align-middle mb-0"
+                           id="tblAddInvoice">
+
+                        <thead>
+                            <tr>
+                                <th class="c">Actions</th>
+                                <th>Invoice No.</th>
+                                <th>Invoice Date</th>
+                                <th class="text-end">SB No</th>
+                                <th>SB Date</th>
+                                <th class="text-center">E-BRC</th>
+                                <th>E-BRC Need On</th>
+                                <th class="text-end">Amount</th>
+                                <th class="text-center">I Rcvd</th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyAddInvoice">
+                            <!-- rows rendered from addInvoiceData via renderAddInvoiceTable() -->
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ══════════ MODAL &middot; Log Details ══════════ -->
+<div class="modal fade" id="logDetailsModal" tabindex="-1" aria-labelledby="logDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+
+                <div class="modal-header-text">
+                    <div class="modal-title" id="logDetailsModalLabel">
+                        Log Details
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body p-2">
+
+                <div class="invoice-details-table-wrap">
+
+                    <table class="table table-sm table-bordered align-middle mb-0"
+                           id="tblLogDetails">
+
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Ref No.</th>
+                                <th>Bank Ref No.</th>
+                                <th>Bank Ref Date</th>
+                                <th>FR</th>
+                                <th class="text-end">RLZ Rate</th>
+                                <th class="text-end">RLZ Amount</th>
+                                <th>YN1</th>
+                                <th>P/F/A</th>
+                                <th>D Date 1</th>
+                                <th>Log User</th>
+                                <th>Log Date</th>
+                                <th>Log Time</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyLogDetails">
+                            <!-- rows rendered from logDetailsData via renderLogDetailsTable() -->
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ══════════ MODAL &middot; BOE Summary ══════════ -->
+<div class="modal fade" id="boeSummaryModal" tabindex="-1" aria-labelledby="boeSummaryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+
+                <div class="modal-header-text">
+                    <div class="modal-title" id="boeSummaryModalLabel">
+                        Bill of Exchange - Summary
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body p-2">
+
+                <div class="invoice-details-table-wrap">
+
+                    <table class="table table-sm table-bordered align-middle mb-0"
+                           id="tblBoeSummary">
+
+                        <thead>
+                            <tr>
+                                <th>Ref No.</th>
+                                <th>Ref Date</th>
+                                <th>Buyer Name</th>
+                                <th class="text-end">Amount</th>
+                                <th>Bank Ref No.</th>
+                                <th class="text-center">Paperless</th>
+                                <th class="text-end">Payment Rcvd</th>
+                                <th class="text-end">Bank Charge</th>
+                                <th class="text-end">Extra Amount</th>
+                                <th class="text-center">BRC</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyBoeSummary">
+                            <!-- rows rendered from boeSummaryData via renderBoeSummaryTable() -->
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════ MODAL &middot; Inward Details ══════════ -->
+<div class="modal fade" id="inwardDetailsModal" tabindex="-1" aria-labelledby="inwardDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+
+                <div class="modal-header-text">
+                    <div class="modal-title" id="inwardDetailsModalLabel">
+                        Inward Details
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body p-2">
+
+                <div class="invoice-details-table-wrap">
+
+                    <table class="table table-sm table-bordered align-middle mb-0"
+                           id="tblInwardDetails">
+
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th>Inward No</th>
+                                <th>Date</th>
+                                <th class="text-end">Amount</th>
+                                <th class="text-end">Extra Amount</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyInwardDetails">
+                            <!-- rows rendered from inwardDetailsData via renderInwardDetailsTable() -->
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <div class="grid cols-2 mt-3">
+
+                    <div class="field">
+                        <label class="form-label">Buyer Name</label>
+                        <input type="text"
+                               class="form-control"
+                               value="Abercrombie & Fitch Trading Co., US">
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Address</label>
+                        <input type="text"
+                               class="form-control"
+                               value="New Albany, OH 43054-6301">
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Remitter</label>
+
+                        <select class="form-select">
+                            <option selected>1013</option>
+                            <option>1014</option>
+                            <option>1015</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Tenor</label>
+                        <input type="text"
+                               class="form-control"
+                               value="30 Days">
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Country</label>
+                        <input type="text"
+                               class="form-control"
+                               value="USA">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

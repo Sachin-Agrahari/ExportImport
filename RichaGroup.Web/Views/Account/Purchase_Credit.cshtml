@@ -1,0 +1,141 @@
+﻿@{
+    ViewData["Title"] = "Purchase Credit Account";
+    ViewData["Heading"] = "Purchase Credit Account";
+}
+@* <link href="~/css/site.css" rel="stylesheet" asp-append-version="true"/>
+<link href="~/css/pages/accounts/purchase_credit.css" rel="stylesheet" asp-append-version="true"/> *@
+
+<div class="bd_mainContainer">
+    <div class="page">
+
+        <section class="card">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Purchase Credit </h2>
+                </div>
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button class="btn btn-primary btn-sm"
+                            id="btnAdd">
+                        ＋ Add
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-wrap">
+                    <table id="tblPurchaseCredit" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width:50px !important;">Action</th>
+                                <th>Entry Number</th>
+                                <th>Date</th>
+                                <th>GST Number</th>
+                                <th class="r num">Amounts</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblbody_PurchaseCredit"></tbody>
+                    </table>
+                </div>
+            </div> 
+        </section>
+
+     
+    </div>
+</div>
+
+
+<div class="modal fade" id="addPurchaseCreditModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                        Purchase Credit
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="button"
+                            style=" "
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="app-modal-header-actions">
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+
+                <div class="grid cols-3">
+                    <div class="field">
+                        <label>Entry Number</label>
+                        <input type="text" id="txtEntryNo_PurchaseCredit" value="" placeholder="Enter Number .. " />
+                    </div>
+                    <div class="field">
+                        <label>Date</label>
+                        <input type="text" id="txtdate_PurchaseCredit" class="form-Flatdate" placeholder="Select Date.. " />
+                    </div>
+                    <div class="field">
+                        <label>GST Number</label>
+                        <input type="text" id="txtGstNo_PurchaseCredit" value="" placeholder="Enter GST Number... " />
+                    </div>
+                    <div class="field">
+                        <label>Amount</label>
+                        <input type="text" class="r num" id="txtAmount_PurchaseCredit" value="" placeholder="Enter Amount... " />
+                    </div>
+                    <div class="field span-2">
+                        <label>Remarks</label>
+                        <input type="text" id="txtRemarks_PurchaseCredit" value="" placeholder="Enter Remarks.. " />
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave"
+                        title="Save">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script src="~/js/pages/accounts/purchase_credit.js" asp-append-version="true"></script>

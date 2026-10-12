@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/png" href="~/favicon.jpg" />
+		<title>@ViewData["Title"] &mdash; Richa Group</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		@await Html.PartialAsync("Components/_CommonResources")
+
+		<style>
+
+			body {
+				display: block;
+			}
+
+		</style>
+
+	</head>
+
+	<body>
+	
+		<main>
+			<div class="page">
+				@RenderBody()
+			</div>
+	 
+		</main>
+	  
+		<div id="globalLoader" class="gl-overlay">
+	
+			<div class="gl-box">
+	
+				<div id="globalLottieLoader" class="gl-lottie-loader"></div>
+	
+				<div class="gl-text" id="globalLoaderText">
+					Loading, please wait...
+				</div>
+	
+			</div>
+	
+		</div>
+		 
+		<div id="globalLoader" class="gl-overlay">
+	
+			<div class="gl-box">
+	
+				<div id="globalLottieLoader" class="gl-lottie-loader"></div>
+	
+				<div class="gl-text" id="globalLoaderText">
+					Loading, please wait...
+				</div>
+	
+			</div>
+	
+		</div>
+		  
+	</body>
+</html>

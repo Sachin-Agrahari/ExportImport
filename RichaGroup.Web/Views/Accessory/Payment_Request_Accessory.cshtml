@@ -1,0 +1,110 @@
+﻿@{
+    ViewData["Title"] = "Payment Request Accessory";
+    ViewData["Heading"] = "Payment Request Accessory";
+}
+<link href="~/css/pages/accessory/payment_request_accessory.css" rel="stylesheet" asp-append-version="true"/>
+
+
+<div class="bd_mainContainer">
+    <div class="page">
+        <section class="card">
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Payment Accessory</h2>
+                </div>
+
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-cancel-custom"
+                            id="btnCancel">
+                        ✕ Cancel
+                    </button>
+                     
+                </div>
+            </div>
+            <div class="card-body" style="padding: 15px 22px 24px;">
+                <div class="grid cols-6">
+                    <div class="field">
+                        <label>Entry No</label>
+                        <input type="text" id="txtEntryNo_PR_Accessory" value="" placeholder="Enter Entry No"/>
+                    </div>
+                    <div class="field">
+                        <label>Date</label>
+                        <input type="text" id="txtdate_PR_Accessory" placeholder="Select date"/>
+                    </div>
+                    <div class="field span-2">
+                        <label>Party Name</label>
+                        <input type="text" id="txtPartyName_PR_Accessory" value="" placeholder="Enter Party Name"/>
+                    </div>
+                    <div class="field">
+                        <label>Payment For </label>
+                        <input type="text" id="txtPaymentfor_PR_Accessory" value="" placeholder="Enter Payment for."/>
+                    </div>
+                    <div class="field">
+                        <label>CHA Name</label>
+                        <input type="text" id="txtCHAName_PR_Accessory" value="" placeholder="Enter CHA Nmae..." />
+                    </div> 
+                    <div class="field">
+                        <label>Port</label>
+                        <input type="text" id="txtPort_PR_Accessory" value="" placeholder="Enter Port "/>
+                    </div>
+                   
+
+                </div>
+                 
+            </div>
+        </section>
+
+        <!-- Bond entries -->
+        <section class="card">
+            <div class="card-body">
+
+                <div class="table-wrap">
+                    <table id="tblPR_Accessory" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th class="c">Item</th>
+                                <th>Invoice No</th>
+                                <th>Invoice Date</th>
+                                <th>BOE</th>
+                                <th>BOE Date</th>
+                                <th>Amount</th>
+                                <th class="r">Unit</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblbodyPR_Accessory"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script src="~/js/pages/accessory/payment_request_accesory.js" asp-append-version="true"></script>

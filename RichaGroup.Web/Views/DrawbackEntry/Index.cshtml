@@ -1,0 +1,1069 @@
+@{
+    ViewData["Title"] = "Drawback Entry";
+    ViewData["Heading"] = "Drawback Entry";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/drawback-entry.css" asp-append-version="true">
+}
+ 
+<!-- ════════ Tab switcher ════════ -->
+<div class="card boe-tabbar">
+    <div class="card-head">
+        <div class="screen-switch" role="tablist" aria-label="Views">
+            <button type="button" class="on" data-view="list">
+                Drawback
+            </button>
+            <button type="button" data-view="partial">
+                Partial
+            </button>
+            <button type="button" data-view="supp">
+                Supplementary
+            </button>
+            <button type="button" data-view="advance">
+                Advance Drawback
+            </button>
+            <button type="button" data-view="excel">
+                Excel Import
+            </button>
+        </div>
+    </div>
+</div>
+ 
+@* ════════════════════════════════════════════════════════════
+   VIEW · Drawback list
+   ════════════════════════════════════════════════════════════ *@
+<div class="view on" id="view-list">
+
+    <section class="card">
+        <div class="card-head">
+            <div>
+                <span class="tick"></span>
+                <h2 class="mt-2" id="txtHeaderMain">Drawback Entry</h2>
+            </div>
+
+            <div class="d-flex gap-2">
+                @await Html.PartialAsync("Components/_CheckBoxComponent")
+                @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave"
+                        title="Save">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+                <button class="btn btn-primary btn-sm" onclick="EditDrawback()"
+                        id="btnAdd">
+                    ＋ Add
+                </button>
+
+                <button type="button"
+                        class="btn btn-cancel-custom"
+                        id="btnCancel">
+                    ✕ Cancel
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="grid cols-5">
+
+                <div class="field">
+                    <label>Consignee</label>
+                    <select>
+                        <option selected>Choose one&hellip;</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>From Date</label>
+                    <input type="text" class="form-Flatdate" value="2014-01-03">
+                </div>
+
+                <div class="field">
+                    <label>To Date</label>
+                    <input type="text" class="form-Flatdate" value="2014-03-31">
+                </div>
+
+                <div class="checkbox" style="padding-top:26px">
+                    <input type="checkbox" id="pend">
+                    <label for="pend" style="all:unset;cursor:pointer">Pending only</label>
+                </div>
+
+                <div class="field" style="align-self:end">
+                   <div class="grid cols-3">
+                       <div class="field"></div>
+                       <div class="field"></div> 
+                       <div class="field">
+                            <button class="btn btn-primary" style="width:100%">Search</button>
+                       </div>
+                   </div>
+                </div>
+
+            </div>
+        </div>
+ 
+        <div class="table-wrap m-3" style="border:none;border-radius:0">
+            <table style="min-width:1250px">
+                <thead>
+                    <tr>
+                        <th class="c">Actions</th>
+                        <th>Invoice No</th>
+                        <th>GST Invoice No</th>
+                        <th>Rel Date</th>
+                        <th>Shipping Bill No</th>
+                        <th>Shipping Bill Date</th>
+                        <th>Mode</th>
+                        <th class="r">DBK Rec</th>
+                        <th>EP Date</th>
+                        <th>DBK Type</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody id="tblbodyDrawbackEntries"></tbody>
+            </table>
+        </div>
+
+    </section>
+ 
+</div>
+ 
+
+@* ════════════════════════════════════════════════════════════
+   VIEW · Partial
+   ════════════════════════════════════════════════════════════ *@
+<div class="view" id="view-partial">
+     
+    <section class="card">
+        <div class="card-head">
+            <div>
+                <span class="tick"></span>
+                <h1>DBK for Invoice</h1>
+
+            </div>
+
+
+            <div class="d-flex gap-2">
+                
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave"
+                        title="Save">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+                <button type="button"
+                        class="btn btn-cancel-custom"
+                        id="btnCancel">
+                    ✕ Cancel
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="grid cols-4">
+
+                <div class="field">
+                    <label>Invoice No  <button class="help-link" id="btnInvNo">Help</button></label>
+                    <input value="RG/INV/0004/13-14">
+                </div>
+
+                <div class="field">
+                    <label>Invoice Date</label>
+                    <input type="text" class="form-Flatdate" value="2013-10-03">
+                </div>
+
+                <div class="field">
+                    <label>Consignee Name</label>
+                    <input value="Sanjeev">
+                </div>
+
+            </div>
+
+            <hr />
+
+            <div class="grid cols-4">
+
+                <div class="field">
+                    <label>EP Copy Rcvd</label>
+                    <input value="18-10-2023">
+                </div>
+
+                <div class="field">
+                    <label>Total FOB</label>
+                    <input class="num" value="31,32,362.52">
+                </div>
+
+                <div class="field">
+                    <label>FOB for DBK</label>
+                    <input class="num" value="31,32,362.52">
+                </div>
+
+                <div class="field">
+                    <label>DBK Applied</label>
+                    <input class="num" value="90,839.00">
+                </div>
+
+                <div class="field">
+                    <label>Recd Amount / Date</label>
+                    <div class="pair">
+                        <input class="num" value="90,839.00">
+                        <input type="text" class="form-Flatdate" value="2023-10-09">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Flag</label>
+                    <select disabled>
+                        <option>&mdash;</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Statement Date</label>
+                    <input type="text" class="form-Flatdate" value="2023-10-09">
+                </div>
+
+                <div class="field">
+                    <label>Realization Date</label>
+                    <input type="text" class="form-Flatdate" value="2023-10-09">
+                </div>
+
+                <div class="field">
+                    <label>Cheque Number / Date</label>
+                    <div class="pair">
+                        <input disabled placeholder="&mdash;">
+                        <input type="text" class="form-Flatdate" disabled>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Agent Report / Date</label>
+                    <div class="pair">
+                        <select>
+                            <option selected>No</option>
+                            <option>Yes</option>
+                        </select>
+                        <input type="text" class="form-Flatdate" disabled>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Status</label>
+                    <div class="pair">
+                        <select disabled>
+                            <option>&mdash;</option>
+                        </select>
+                        <select disabled>
+                            <option>&mdash;</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Current Status</label>
+                    <select>
+                        <option selected>No EGM</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Write Off Date</label>
+                    <input type="text" class="form-Flatdate" disabled>
+                </div>
+
+                <div class="field">
+                    <label>Less Value Remarks</label>
+                    <input disabled placeholder="&mdash;">
+                </div>
+
+                <div class="field">
+                    <label>Query Remarks</label>
+                    <input disabled placeholder="&mdash;">
+                </div>
+
+                <div class="field">
+                    <label>After Remarks</label>
+                    <input disabled placeholder="&mdash;">
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+      
+</div>
+
+@* ════════════════════════════════════════════════════════════
+   VIEW · Supplementary
+   ════════════════════════════════════════════════════════════ *@
+<div class="view" id="view-supp">
+     
+    <section class="card">
+        <div class="card-head">
+            <div>
+                <span class="tick"></span>
+                <h1>Supplementary DBK for Invoice</h1>
+
+            </div>
+
+
+            <div class="d-flex gap-2">
+                 
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave"
+                        title="Save">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+                <button type="button"
+                        class="btn btn-cancel-custom"
+                        id="btnCancel">
+                    ✕ Cancel
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="grid cols-4">
+
+                <div class="field">
+                    <label>Invoice No <button class="help-link" id="btninvoiceNo">Help</button></label>
+                    <input value="RC/3223/07-08">
+                </div>
+
+                <div class="field">
+                    <label>Invoice Date</label>
+                    <input type="text" class="form-Flatdate" value="2007-10-29">
+                </div>
+
+                <div class="field">
+                    <label>Buyer Name</label>
+                    <input value="CSI Industries, Inc.">
+                </div>
+
+                <div class="field">
+                    <label>Supplementary DBK Type</label>
+                    <select>
+                        <option selected>&mdash;</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>SB Bill / Date</label>
+                    <div class="pair">
+                        <input class="num" value="1785722">
+                        <input type="text" class="form-Flatdate" value="2007-11-14">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Frt</label>
+                    <input class="num" value="0.00">
+                </div>
+
+                <div class="field">
+                    <label>PC</label>
+                    <input class="num" value="0.00">
+                </div>
+
+                <div class="field">
+                    <label>Amount</label>
+                    <input class="num" disabled placeholder="0.00">
+                </div>
+
+            </div>
+
+            <hr />
+
+            <div class="table-wrap mt-3" style="border:none;border-radius:0">
+                <table style="min-width:1250px">
+                    <thead>
+                        <tr>
+                            <th>Filed On</th>
+                            <th>S. Chq</th>
+                            <th>Chq Date</th>
+                            <th class="r">Amount</th>
+                            <th>Stat. Date</th>
+                            <th>Rlzn Date</th>
+                            <th class="r">Spl. Value</th>
+                            <th class="r">Received</th>
+                            <th>RCV Date</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filingHistoryBody"></tbody>
+                </table>
+            </div>
+ 
+        </div>
+    </section>
+     
+</div>
+
+@* ════════════════════════════════════════════════════════════
+   VIEW · Advance drawback
+   ════════════════════════════════════════════════════════════ *@
+<div class="view" id="view-advance">
+     
+    <section class="card">
+        <div class="card-head">
+            <div>
+                <span class="tick"></span>
+                <h1>Advance Drawback</h1>
+
+            </div>
+
+
+            <div class="d-flex gap-2">
+                 
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave"
+                        title="Save">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+                <button type="button"
+                        class="btn btn-cancel-custom"
+                        id="btnCancel">
+                    ✕ Cancel
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="grid cols-5">
+
+                <div class="field">
+                    <label>Entry No. <button class="help-link" id="btnEntryHelp">Help</button></label>
+                    <input class="num" value="8310">
+                </div>
+
+                <div class="field">
+                    <label>SB No.</label>
+                    <input class="num" value="4953128">
+                </div>
+
+                <div class="field">
+                    <label>SB Date</label>
+                    <input type="text" class="form-Flatdate" value="2014-03-31">
+                </div>
+
+                <div class="field">
+                    <label>Rcvd Amount</label>
+                    <input class="num" value="4,887.99">
+                </div>
+
+                <div class="field">
+                    <label>Stat Date</label>
+                    <input type="text" class="form-Flatdate" value="2014-01-03">
+                </div>
+
+                <div class="field">
+                    <label>Relzn Date</label>
+                    <input type="text" class="form-Flatdate" value="2014-01-03">
+                </div>
+
+                <div class="field">
+                    <label>Port</label>
+                    <input value="Ballabhgarh">
+                </div>
+
+                <div class="field">
+                    <label>Rcvd Date</label>
+                    <input type="text" class="form-Flatdate" value="2014-01-03">
+                </div>
+
+                <div class="field">
+                    <label>For Posting Fill Date</label>
+                    <input type="text" class="form-Flatdate">
+                </div>
+
+                <div class="field" style="align-self:end">
+                    <div class="grid cols-3">
+                        <div class="field"></div>
+                        <div class="field"></div>
+                        <div class="field">
+                            <button class="btn btn-primary" style="width:100%">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr />
+
+            <div class="table-wrap mt-3" style="border:none;border-radius:0">
+                <table style="min-width:900px">
+                    <thead>
+                        <tr>
+                            <th class="c">#</th>
+                            <th>Invoice No.</th>
+                            <th class="r">Drawback Amount (Invoice-wise)</th>
+                            <th>Posted On</th>
+                            <th>Drawback Rcv Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblbodyAdvanceDrawbackInvoices"></tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+ 
+</div>
+ 
+<div class="view" id="view-excel">
+
+    <section class="card"> 
+        <div class="card-head">
+            <div>
+                <span class="tick"></span>
+                <h1>Excel Import</h1>
+            </div>
+
+            <div class="d-flex gap-2">
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave"
+                        title="Save">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+                <button type="button"
+                        class="btn btn-cancel-custom"
+                        id="btnCancel">
+                    ✕ Cancel
+                </button>
+
+            </div>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body"> 
+            <div class="excel-import-container">
+                 
+                <div class="excel-upload-box" id="excelDropZone">
+
+                    <div class="excel-upload-icon">
+                        <svg width="30"
+                             height="30"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="1.8"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+
+                            <path d="M8 13h8"></path>
+                            <path d="M8 17h5"></path>
+
+                        </svg>
+                    </div>
+
+                    <div class="excel-upload-content">
+
+                        <div class="excel-upload-title">
+                            <span class="excel-browse" id="btnBrowseExcel">
+                                Click to browse
+                            </span>
+
+                            <span>
+                                or drag &amp; drop an Excel file here
+                            </span>
+                        </div>
+
+                        <div class="excel-upload-info">
+                            Accepted: .xlsx, .xls
+                            <span>•</span>
+                            Max 10 MB
+                        </div>
+
+                        <div class="excel-file-name" id="excelFileName" style="display:none;"> </div>
+
+                    </div> 
+                    <input type="file" id="excelFile" accept=".xlsx,.xls" class="d-none" /> 
+                </div>
+                 
+                <div class="excel-actions">
+
+                    <button type="button" class="btn btn-outline" id="btnDownloadTemplate">
+                        Download Template
+                    </button>
+
+                    <button type="button" class="btn btn-primary" id="btnImportExcel">
+                        Import
+                    </button>
+
+                </div> 
+            </div> 
+        </div> 
+    </section> 
+</div>
+ 
+<!-- Modals -->
+ 
+<div class="modal fade" id="DrawbackModal" tabindex="-1" aria-labelledby="adDrawbackModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xxl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="DrawbackModalLabel">
+                        Drawback Detail <span class="chip">RG/INV/0004/13-14</span>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                @await Html.PartialAsync("_drawbackDetail")
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary btn-sm" id="btnROCTL"> 
+                    ROCTL Value
+                </button>
+
+                <button type="button" class="btn btn-primary btn-sm" id="btnMEIS"> 
+                    MEIS Detail
+                </button>
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+ 
+<div class="modal fade" id="DrawbackRoctlModal" tabindex="-1" aria-labelledby="DrawbackRoctlModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="DrawbackRoctlLabel">
+                        ROCTL Detail 
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                <div class="table-wrap">
+                    <table id="tblRosctlDtls" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Desc</th>
+                                <th>Qty</th>
+                                <th>Total Weight</th>
+                                <th>Rate</th>
+                                <th>Amount</th>
+                                <th>Discount</th>
+                                <th>Rosctl SlNo</th>
+                                <th>Rosctl Amt</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblbodyRosctlDtls"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+ 
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveRoctDtls">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+ 
+<div class="modal fade" id="DrawbackMeisModal" tabindex="-1" aria-labelledby="DrawbackMeisModal" aria-hidden="true"> 
+    <div class="modal-dialog modal-dialog-centered modal-xl"> 
+        <div class="modal-content modal-box"> 
+            <div class="modal-header"> 
+                <div class="modal-header-text"> 
+                    <div class="modal-title" id="DrawbackMeisLabel">
+                        MEIS Detail
+                    </div> 
+                </div>
+
+                <div class="d-flex gap-2"> 
+                    <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close"> 
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line> 
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+
+                    </button> 
+                </div> 
+            </div>
+             
+            <div class="modal-body p-2"> 
+                <div class="table-wrap"> 
+                    <table id="tblMeisDtls" class="display" style="width:100%"> 
+                        <thead> 
+                            <tr> 
+                                <th>Desc</th> 
+                                <th>Qty</th> 
+                                <th>Rate</th> 
+                                <th>Amount</th> 
+                                <th>Discount</th> 
+                                <th>ItChsCode</th> 
+                                <th>Meis Amt</th> 
+                                <th>Percentage</th> 
+                                <th>MESI Hanger</th> 
+                                <th>Hanger ItChs</th> 
+                                <th>Hanger Meis Amt</th> 
+                                <th>Percentage</th> 
+                            </tr> 
+                        </thead> 
+                        <tbody id="tblbodyMeisDtls"></tbody> 
+                    </table> 
+                </div> 
+            </div>
+             
+            <div class="modal-footer"> 
+                <button type="button" class="btn btn-primary btn-sm" id="btnSaveMeisDtls"> 
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path> 
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline> 
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg> 
+                    Save 
+                </button>
+
+            </div> 
+        </div> 
+    </div> 
+</div>
+
+@* open a modal on click of help  *@
+
+
+<div class="modal fade" id="addMenuModalInvoiceHelp" tabindex="-1" aria-labelledby="addMenuModalInvoiceHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalInvoiceHelpLabel">
+                      Help of Invoice
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2">
+                <div class="d-flex justify-content-end align-items-center mb-3">
+                    <div class="position-relative" style="width: 260px;">
+                        <i class="fa-solid fa-magnifying-glass position-absolute"
+                           style="left: 12px; top: 50%; transform: translateY(-50%); color: #6c757d;">
+                        </i>
+                        <input type="text"
+                               id="txtSearchInvoiceHelp"
+                               class="form-control ps-5"
+                               placeholder="Search invoice..." />
+                    </div>
+                </div>
+                 <div class="table-wrap">
+                    <table id="tblInvoiceHelp" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Invoice No</th>
+                                <th>GST Inv#</th>
+                                <th>SB No</th>
+                                <th>SB Date</th>
+                                <th>DBK Rcvd</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="tblbodyInvoiceHelp"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveInvoiceHelp">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* entry No help open modal open  *@
+
+<div class="modal fade" id="addMenuModalEntryHelp" tabindex="-1" aria-labelledby="addMenuModalEntryHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalEntryHelpLabel">
+                      Help of Entry
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2">
+                <div class="d-flex justify-content-end align-items-center mb-3">
+                    <div class="position-relative" style="width: 260px;">
+                        <i class="fa-solid fa-magnifying-glass position-absolute"
+                           style="left: 12px; top: 50%; transform: translateY(-50%); color: #6c757d;">
+                        </i>
+                        <input type="text"
+                               id="txtSearchInvoiceHelp"
+                               class="form-control ps-5"
+                               placeholder="Search invoice..." />
+                    </div>
+                </div>
+                 <div class="table-wrap">
+                    <table id="tblInvoiceHelp" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Invoice No</th>
+                                <th>Invoice Date</th>
+                                <th>SB No</th>
+                                <th>SB Date</th>
+                                <th>DBK Amount</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="tblbodyEntryHelp"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveEntryHelp">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/pages/drawback-entry.js" asp-append-version="true"></script>
+}

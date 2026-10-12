@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AEPC Invoice — Richa Group (Redesign)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16233a; --ink-soft:#22334f;
+    --paper:#f3f5f8; --card:#ffffff;
+    --line:#dde3ec; --line-strong:#c6cfdc;
+    --text:#243044; --muted:#6b7a90;
+    --teal:#0e7c72; --teal-dark:#0b6159; --teal-tint:#e6f2f0;
+    --amber:#b45309; --amber-tint:#fdf3e3;
+    --red:#b3363d; --red-tint:#fbebec;
+    --disabled:#eef1f5;
+    --radius:10px;
+    --shadow:0 1px 2px rgba(22,35,58,.06), 0 4px 14px rgba(22,35,58,.05);
+    --shadow-lg:0 8px 20px rgba(22,35,58,.14), 0 20px 60px rgba(22,35,58,.18);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:var(--paper);color:var(--text);display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+
+  aside{background:var(--ink);color:#c9d4e5;padding:20px 0 28px;position:sticky;top:0;height:100vh;overflow-y:auto}
+  .brand{display:flex;align-items:center;gap:10px;padding:4px 22px 20px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:14px}
+  .brand-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#0e7c72,#28a598);display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;color:#fff;font-size:15px}
+  .brand-name{font-family:'Space Grotesk';font-weight:600;color:#fff;font-size:1.02rem}
+  nav a{display:flex;align-items:center;gap:10px;padding:9px 22px;color:#aebad0;text-decoration:none;font-size:.88rem;border-left:3px solid transparent;transition:background .15s,color .15s}
+  nav a:hover{background:rgba(255,255,255,.05);color:#fff}
+  nav a:focus-visible{outline:2px solid #28a598;outline-offset:-2px}
+  nav .group{padding:16px 22px 6px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#5d6d88;font-weight:600}
+  nav a.sub{padding-left:38px;font-size:.84rem}
+  nav a.active{background:rgba(14,124,114,.18);border-left-color:#28a598;color:#fff;font-weight:500}
+  .caret{margin-left:auto;font-size:.7rem;opacity:.6}
+
+  main{display:flex;flex-direction:column;min-width:0}
+  header.topbar{background:var(--card);border-bottom:1px solid var(--line);padding:12px 32px;display:flex;align-items:center;justify-content:flex-end;gap:14px;position:sticky;top:0;z-index:20}
+  .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;cursor:pointer;position:relative;color:var(--muted)}
+  .icon-btn:hover{border-color:var(--line-strong);color:var(--ink)}
+  .dot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--amber);border:1.5px solid #fff}
+  .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#22334f,#0e7c72);color:#fff;display:grid;place-items:center;font-weight:600;font-size:.8rem}
+
+  .page{padding:26px 32px 110px;max-width:1500px;width:100%}
+  .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+  .crumbs{font-size:.76rem;color:var(--muted);margin-bottom:6px}
+  .crumbs b{color:var(--teal);font-weight:500}
+  h1{font-family:'Space Grotesk';font-weight:700;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em}
+  .chip{display:inline-block;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--amber-tint);color:var(--amber);border-radius:99px;padding:3px 10px;margin-left:8px;vertical-align:middle}
+
+  .btn{font-family:'IBM Plex Sans';font-size:.86rem;font-weight:600;border-radius:8px;padding:10px 20px;cursor:pointer;border:1px solid transparent;transition:all .15s}
+  .btn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+  .btn-primary{background:var(--teal);color:#fff}
+  .btn-primary:hover{background:var(--teal-dark)}
+  .btn-outline{background:#fff;color:var(--teal);border-color:var(--teal)}
+  .btn-outline:hover{background:var(--teal-tint)}
+  .btn-ghost{background:var(--ink);color:#fff}
+  .btn-ghost:hover{background:var(--ink-soft)}
+  .btn-sm{padding:6px 13px;font-size:.78rem}
+
+  section.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:10px;padding:14px 22px;border-bottom:1px solid var(--line);background:linear-gradient(to bottom,#fbfcfe,#f7f9fc)}
+  .card-head .tick{width:4px;height:18px;border-radius:2px;background:var(--teal)}
+  .card-head h2{font-family:'Space Grotesk';font-size:.95rem;font-weight:600;color:var(--ink)}
+  .card-head .hint{margin-left:auto;font-size:.74rem;color:var(--muted)}
+
+  details.hgroup{border-bottom:1px solid var(--line)}
+  details.hgroup:last-of-type{border-bottom:none}
+  details.hgroup summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:13px 22px;font-family:'Space Grotesk';font-size:.86rem;font-weight:600;color:var(--ink)}
+  details.hgroup summary::-webkit-details-marker{display:none}
+  details.hgroup summary::before{content:"▸";color:var(--teal);font-size:.8rem;transition:transform .15s}
+  details.hgroup[open] summary::before{transform:rotate(90deg)}
+  details.hgroup summary .count{margin-left:auto;font-family:'IBM Plex Sans';font-size:.72rem;font-weight:500;color:var(--muted)}
+  details.hgroup .hgroup-body{padding:4px 22px 22px}
+
+  .grid{display:grid;gap:16px 20px}
+  .cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .span-2{grid-column:span 2}
+  .field label{display:flex;align-items:center;gap:6px;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .field input,.field select,.field textarea{width:100%;font:inherit;font-size:.88rem;color:var(--text);padding:9px 12px;border:1px solid var(--line-strong);border-radius:8px;background:#fff;transition:border-color .15s,box-shadow .15s;resize:vertical}
+  .field input:hover:not(:disabled),.field select:hover:not(:disabled){border-color:#a7b4c6}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,124,114,.15)}
+  .field input:disabled,.field select:disabled,.field textarea:disabled{background:var(--disabled);color:#94a1b3;border-color:var(--line);cursor:not-allowed}
+  .field .num{font-variant-numeric:tabular-nums;text-align:right}
+  .pair{display:grid;grid-template-columns:1.4fr 1fr;gap:8px}
+  .help-link{font-size:.62rem;font-weight:600;letter-spacing:.05em;color:var(--teal);background:var(--teal-tint);border:none;border-radius:5px;padding:2px 7px;cursor:pointer}
+  .help-link:hover{background:#d5eae7}
+
+  .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);padding:0 22px;background:linear-gradient(to bottom,#fbfcfe,#f7f9fc);overflow-x:auto}
+  .tabs button{font:inherit;font-size:.84rem;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;padding:13px 16px;cursor:pointer;white-space:nowrap}
+  .tabs button:hover{color:var(--ink)}
+  .tabs button.on{color:var(--teal);border-bottom-color:var(--teal)}
+  .tabpane{display:none;padding:20px 22px 24px}
+  .tabpane.on{display:block}
+
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+  table{width:100%;border-collapse:collapse;font-size:.83rem}
+  thead th{font-size:.66rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:10px 13px;background:#f7f9fc;border-bottom:1px solid var(--line);white-space:nowrap}
+  thead th.r,td.r{text-align:right}
+  thead th.c,td.c{text-align:center}
+  tbody td{padding:10px 13px;border-bottom:1px solid var(--line);white-space:nowrap}
+  tbody td.num{font-variant-numeric:tabular-nums}
+  tbody tr:hover{background:#f6faf9}
+  tbody tr.selected{background:var(--teal-tint)}
+  tbody tr:last-child td{border-bottom:none}
+  tfoot td{padding:11px 13px;font-weight:600;background:#f7f9fc;border-top:2px solid var(--line-strong);font-variant-numeric:tabular-nums}
+  .mono{font-variant-numeric:tabular-nums;letter-spacing:.01em}
+  .subhead{font-family:'Space Grotesk';font-size:.88rem;font-weight:600;color:var(--ink);margin:22px 0 12px;display:flex;align-items:center;gap:8px}
+  .subhead::before{content:"";width:4px;height:15px;border-radius:2px;background:var(--teal)}
+  .tab-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+  .divider{border:none;border-top:1px dashed var(--line);margin:20px 0}
+
+  /* Charges & totals panel */
+  .charges{display:grid;grid-template-columns:1fr 1fr 300px;gap:18px;margin-top:20px;align-items:start}
+  .panel{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .panel h4{font-family:'Space Grotesk';font-size:.78rem;font-weight:600;color:var(--ink);padding:10px 14px;background:#f7f9fc;border-bottom:1px solid var(--line)}
+  .panel .rows{padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+  .charge-row{display:grid;grid-template-columns:1fr 58px 1fr;gap:8px;align-items:center;font-size:.8rem}
+  .charge-row .lbl{color:var(--muted);font-weight:500}
+  .charge-row select,.charge-row input{font:inherit;font-size:.82rem;padding:6px 9px;border:1px solid var(--line-strong);border-radius:6px;width:100%}
+  .charge-row input{font-variant-numeric:tabular-nums;text-align:right}
+  .charge-row select:focus,.charge-row input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 2px rgba(14,124,114,.15)}
+  .totals{background:var(--ink);border-radius:8px;color:#fff;padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+  .totals .t-row{display:flex;justify-content:space-between;align-items:baseline;font-size:.8rem;color:#aebad0}
+  .totals .t-row b{font-family:'Space Grotesk';font-size:1.05rem;color:#fff;font-variant-numeric:tabular-nums}
+  .totals .t-row.net b{color:#5fd4c4;font-size:1.2rem}
+
+  .note-box{border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:8px;padding:14px 16px;font-size:.85rem;line-height:1.55;background:#fbfdfd}
+  .note-box b{font-family:'Space Grotesk';display:block;margin-bottom:6px;color:var(--ink)}
+
+  /* Modals */
+  .overlay{position:fixed;inset:0;background:rgba(22,35,58,.5);backdrop-filter:blur(2px);display:none;place-items:center;z-index:100;padding:24px}
+  .overlay.on{display:grid}
+  .modal{background:#fff;border-radius:14px;box-shadow:var(--shadow-lg);width:min(760px,100%);max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
+  .modal-head{display:flex;align-items:center;gap:10px;padding:16px 24px;border-bottom:1px solid var(--line)}
+  .modal-head .tick{width:4px;height:18px;border-radius:2px;background:var(--teal)}
+  .modal-head h3{font-family:'Space Grotesk';font-size:1.02rem;font-weight:600;color:var(--ink)}
+  .modal-close{margin-left:auto;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--muted);font-size:1rem}
+  .modal-close:hover{border-color:var(--red);color:var(--red)}
+  .modal-body{padding:20px 24px;overflow:auto}
+  .modal-foot{padding:14px 24px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px;background:#fbfcfe}
+
+  .savebar{position:fixed;bottom:0;left:248px;right:0;z-index:30;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:14px 32px;display:flex;align-items:center;gap:12px}
+  .savebar .status{margin-right:auto;font-size:.8rem;color:var(--muted)}
+  .savebar .status b{color:var(--teal);font-weight:600}
+
+  @media (max-width:1200px){.cols-5{grid-template-columns:repeat(3,minmax(0,1fr))}.cols-4{grid-template-columns:repeat(2,minmax(0,1fr))}.charges{grid-template-columns:1fr}}
+  @media (max-width:900px){
+    body{grid-template-columns:1fr}aside{display:none}.savebar{left:0}
+    .cols-2,.cols-3,.cols-4,.cols-5{grid-template-columns:1fr}
+    .span-2{grid-column:span 1}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ══════════ Sidebar ══════════ -->
+<aside>
+  <div class="brand"><div class="brand-mark">RG</div><div class="brand-name">Richa Group</div></div>
+  <nav>
+    <a href="#">Dashboard</a>
+    <a href="#">Master <span class="caret">▾</span></a>
+    <div class="group">Transactions</div>
+    <a href="#" class="sub active">Invoice <span class="caret">▾</span></a>
+    <a href="#" class="sub">Carton Details <span class="caret">▾</span></a>
+    <a href="#" class="sub">Shipment Planning</a>
+    <a href="#" class="sub">Sales Register <span class="caret">▾</span></a>
+    <a href="#" class="sub">Doc Sent</a>
+    <a href="#" class="sub">Custom Paper</a>
+    <a href="#" class="sub">CHA Bill Entry</a>
+    <a href="#" class="sub">Buyer Order Maintenance</a>
+    <a href="#" class="sub">Import Accessory Style Detail</a>
+    <a href="#" class="sub">GSP <span class="caret">▾</span></a>
+    <div class="group">General</div>
+    <a href="#">Reports <span class="caret">▾</span></a>
+    <a href="#">Edit</a>
+    <a href="#">Logout</a>
+  </nav>
+</aside>
+
+<!-- ══════════ Main ══════════ -->
+<main>
+  <header class="topbar">
+    <button class="icon-btn" aria-label="Messages">✉<span class="dot"></span></button>
+    <button class="icon-btn" aria-label="Notifications">🔔<span class="dot"></span></button>
+    <div class="avatar">AK</div>
+  </header>
+
+  <div class="page">
+    <div class="page-head">
+      <div>
+        <div class="crumbs">TRX / Invoice / <b>AEPC Invoice</b></div>
+        <h1>AEPC Invoice <span class="chip">RE/2145/23-24</span></h1>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-ghost">← Back</button>
+        <button class="btn btn-primary">+ Add New</button>
+      </div>
+    </div>
+
+    <!-- ════════ Invoice header (grouped, collapsible) ════════ -->
+    <section class="card">
+      <div class="card-head"><span class="tick"></span><h2>Invoice Header</h2><span class="hint">Expand a section to edit</span></div>
+
+      <details class="hgroup" open>
+        <summary>Parties &amp; Addresses <span class="count">consignee · buyer · notify</span></summary>
+        <div class="hgroup-body">
+          <div class="grid cols-4">
+            <div class="field"><label>Invoice Location <button class="help-link">Help</button></label><select><option selected>RC 236</option></select></div>
+            <div class="field"><label>Commercial Inv No &amp; Date</label>
+              <div class="pair"><input value="RE/2145/23-24"><input type="date" value="2023-09-14"></div></div>
+            <div class="field"><label>LUT / IGST</label><select><option selected>IGST</option><option>LUT</option></select></div>
+            <div class="field"><label>Tax Invoice No &amp; Date</label><select><option selected>Choose one…</option></select></div>
+            <div class="field"><label>Consignee Code <button class="help-link">+ Add</button></label><select><option selected>2021</option></select></div>
+            <div class="field span-2"><label>Consignee Address</label>
+              <textarea rows="4">Abercrombie &amp; Fitch Trading
+c/o A&amp;F Distribution Center, DC
+1 8100 Smiths Mall Road
+New Albany, Ohio 43054 (USA)</textarea></div>
+            <div class="field"><label>Exporter Ref</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Buyer (if other than consignee) <button class="help-link">+ Add</button></label><select><option selected>—</option></select></div>
+            <div class="field span-2"><label>Buyer Address</label><textarea rows="3" disabled placeholder="—"></textarea></div>
+            <div class="field"><label>Agreement Code</label><select disabled><option>—</option></select></div>
+            <div class="field"><label>Notify Code <button class="help-link">+ Add</button></label><select><option selected>Choose one…</option></select></div>
+            <div class="field span-2"><label>Notify Address</label><textarea rows="3" disabled placeholder="—"></textarea></div>
+            <div class="field"><label>Buyer Order No &amp; Date</label>
+              <div class="pair"><input disabled placeholder="—"><input type="date" disabled></div></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="hgroup">
+        <summary>Route &amp; Transport <span class="count">origin · ports · vessel</span></summary>
+        <div class="hgroup-body">
+          <div class="grid cols-4">
+            <div class="field"><label>Country of Origin</label><input value="India"></div>
+            <div class="field"><label>Country of Destination (Code &amp; Name)</label>
+              <div class="pair"><select><option selected>USA</option></select><input value="USA"></div></div>
+            <div class="field"><label>Final Destination</label>
+              <div class="pair"><select disabled><option>—</option></select><input disabled placeholder="—"></div></div>
+            <div class="field"><label>Pre-Carriage By</label><select><option selected>China</option></select></div>
+            <div class="field"><label>Port of Loading / Code</label>
+              <div class="pair"><select><option selected>Nhava Sheva</option></select><input disabled placeholder="—"></div></div>
+            <div class="field"><label>Port of Discharge / Code</label>
+              <div class="pair"><select><option selected>Nhava Sheva</option></select><input disabled placeholder="—"></div></div>
+            <div class="field"><label>Vessel / Flight No.</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Place of Receipt</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Shipment Type</label><select disabled><option>—</option></select></div>
+            <div class="field"><label>Freight Terms</label>
+              <div class="pair"><input disabled placeholder="—"><input disabled placeholder="—"></div></div>
+            <div class="field"><label>HAWB Number &amp; Date</label>
+              <div class="pair"><input disabled placeholder="—"><input type="date" disabled></div></div>
+            <div class="field"><label>Shipment Status</label><select disabled><option>—</option></select></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="hgroup">
+        <summary>References &amp; Licences <span class="count">GR · shipping bill · EPCG · LC</span></summary>
+        <div class="hgroup-body">
+          <div class="grid cols-4">
+            <div class="field"><label>GR No &amp; Date</label>
+              <div class="pair"><input disabled placeholder="—"><input type="date" value="2025-02-10"></div></div>
+            <div class="field"><label>Shipping Bill No. &amp; Date</label>
+              <div class="pair"><input disabled placeholder="—"><input type="date" disabled></div></div>
+            <div class="field"><label>EPCG License No. &amp; Date</label>
+              <div class="pair"><select><option selected>Choose one…</option></select><input type="date" disabled></div></div>
+            <div class="field"><label>LC Number &amp; Date</label>
+              <div class="pair"><select disabled><option>—</option></select><input type="date" disabled></div></div>
+            <div class="field"><label>Currency &amp; Date</label>
+              <div class="pair"><select><option selected>Choose one…</option></select><input type="date" disabled></div></div>
+            <div class="field"><label>Terms Conversion</label><input disabled placeholder="—"></div>
+            <div class="field"><label>DBK Type</label><select disabled><option>—</option></select></div>
+            <div class="field"><label>FOB Place</label><select><option selected>Choose one…</option></select></div>
+            <div class="field"><label>RITC No</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Break Discount</label><select><option selected>No</option><option>Yes</option></select></div>
+            <div class="field"><label>DGFT / DGFT Style</label>
+              <div class="pair"><select><option selected>Yes</option><option>No</option></select><input disabled placeholder="—"></div></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="hgroup">
+        <summary>Goods, Weights &amp; Measures <span class="count">description · packages · weights</span></summary>
+        <div class="hgroup-body">
+          <div class="grid cols-4">
+            <div class="field span-2"><label>Description of Goods</label><textarea rows="2" disabled placeholder="—"></textarea></div>
+            <div class="field"><label>Marks &amp; Nos.</label><textarea rows="2" disabled placeholder="—"></textarea></div>
+            <div class="field"><label>No &amp; Kind of Pkgs</label><textarea rows="2" disabled placeholder="—"></textarea></div>
+            <div class="field"><label>Gross Weight</label><input class="num" value="1,091.630 KGS"></div>
+            <div class="field"><label>Net Weight</label><input class="num" value="866.730 KGS"></div>
+            <div class="field"><label>Volume Weight</label><input class="num" value="1,091.630 KGS"></div>
+            <div class="field"><label>CBM</label><input class="num" value="866.730"></div>
+            <div class="field"><label>Total Cartons</label><input class="num" disabled placeholder="—"></div>
+            <div class="field"><label>Quantity / Rate Decimal</label>
+              <div class="pair"><input class="num" disabled placeholder="—"><input class="num" disabled placeholder="—"></div></div>
+            <div class="field span-2"><label>Dimension Details</label><textarea rows="2" disabled placeholder="—"></textarea></div>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- ════════ Tabbed workspace ════════ -->
+    <section class="card">
+      <div class="tabs" role="tablist">
+        <button class="on" data-tab="t-style">Style / PO No</button>
+        <button data-tab="t-carton">Carton Weight</button>
+        <button data-tab="t-bond">License / Bond</button>
+        <button data-tab="t-gst">GST / E-Invoice</button>
+        <button data-tab="t-invd">Invoice Details</button>
+      </div>
+
+      <!-- ── Tab · Style/PO No ── -->
+      <div class="tabpane on" id="t-style">
+        <div style="display:flex;justify-content:flex-end;gap:10px;margin-bottom:12px">
+          <button class="btn btn-sm btn-outline">Remarks</button>
+          <button class="btn btn-sm btn-outline">View Details</button>
+        </div>
+        <div class="table-wrap">
+          <table style="min-width:1500px">
+            <thead><tr>
+              <th class="c">#</th><th>Style</th><th>PO No.</th><th>GST HSN</th><th>HSN Feed</th><th>Category</th>
+              <th>Invoice Desc.</th><th>E-Invoice Desc.</th><th>Art No</th><th class="r">Quantity</th><th>Unit</th>
+              <th class="r">Rate</th><th class="r">Amount</th><th class="r">FOB Rate</th><th class="r">FOB Value</th>
+              <th>GST Item</th><th class="c">Hanger</th><th class="c">Hanger GST HSN</th>
+            </tr></thead>
+            <tbody>
+              <tr class="selected">
+                <td class="c">1</td><td class="mono">14310649</td><td class="mono">2557659-US1BU-L</td><td class="mono">61045300</td><td class="mono">61045300</td><td>USA/NA</td>
+                <td>Ladies Skirt</td><td>Ladies skirt, 92% polyester / 8% elastane, polyknit lining</td><td>—</td>
+                <td class="r num">3,612</td><td>PCS</td><td class="r num">10.55</td><td class="r num">38,106.60</td>
+                <td class="r num">10.55</td><td class="r num">38,106.60</td><td>NA</td><td class="c">N</td><td class="c">N</td>
+              </tr>
+              <tr><td class="c">2</td><td class="mono">14310649</td><td class="mono">2557659-US1BU-L</td><td class="mono">61045300</td><td class="mono">61045300</td><td>USA/NA</td><td>Ladies Skirt</td><td>—</td><td>—</td><td class="r">—</td><td>—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td>—</td><td class="c">—</td><td class="c">—</td></tr>
+              <tr><td class="c">3</td><td class="mono">14310649</td><td class="mono">2557659-US1BU-L</td><td class="mono">61045300</td><td class="mono">61045300</td><td>USA/NA</td><td>Ladies Skirt</td><td>—</td><td>—</td><td class="r">—</td><td>—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td>—</td><td class="c">—</td><td class="c">—</td></tr>
+              <tr><td class="c">4</td><td class="mono">14310649</td><td class="mono">2557659-US1BU-L</td><td class="mono">61045300</td><td class="mono">61045300</td><td>USA/NA</td><td>—</td><td>—</td><td>—</td><td class="r">—</td><td>—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td>—</td><td class="c">—</td><td class="c">—</td></tr>
+            </tbody>
+            <tfoot>
+              <tr><td colspan="9" style="text-align:right">Total</td><td class="r">3,612</td><td></td><td></td><td class="r">38,106.60</td><td></td><td class="r">38,106.60</td><td colspan="3"></td></tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="charges">
+          <div class="panel">
+            <h4>Deductions</h4>
+            <div class="rows">
+              <div class="charge-row"><span class="lbl">Commission %</span><select><option selected>N</option><option>Y</option></select><input value="0.00"></div>
+              <div class="charge-row"><span class="lbl">Discount %</span><select><option selected>Y</option><option>N</option></select><input value="0.00"></div>
+              <div class="charge-row"><span class="lbl">Discount</span><select><option selected>Y</option><option>N</option></select><input value="0.00"></div>
+            </div>
+          </div>
+          <div class="panel">
+            <h4>Additions</h4>
+            <div class="rows">
+              <div class="charge-row"><span class="lbl">Freight</span><select><option selected>Y +</option><option>N</option></select><input value="0.00"></div>
+              <div class="charge-row"><span class="lbl">Other</span><select><option selected>N +</option><option>Y</option></select><input value="0.00"></div>
+              <div class="charge-row"><span class="lbl">Insurance</span><select><option selected>N −</option><option>Y</option></select><input value="0.00"></div>
+            </div>
+          </div>
+          <div class="totals">
+            <div class="t-row"><span>Total Quantity</span><b>3,612</b></div>
+            <div class="t-row"><span>Total Amount</span><b>38,106.60</b></div>
+            <div class="t-row net"><span>Net Amount</span><b>0.00</b></div>
+          </div>
+        </div>
+        <div class="tab-actions"><button class="btn btn-ghost">Back</button><button class="btn btn-primary">Save</button></div>
+      </div>
+
+      <!-- ── Tab · Carton Weight ── -->
+      <div class="tabpane" id="t-carton">
+        <div class="table-wrap">
+          <table style="min-width:1050px">
+            <thead><tr>
+              <th class="c">#</th><th>Carton Type</th><th class="r">Length</th><th class="r">Width</th><th class="r">Height</th><th>UOM</th>
+              <th class="r">Cartons</th><th class="r">Carton GR Wt</th><th class="r">Carton NT Wt</th><th class="r">Carton Wt</th><th class="r">Gross Wt</th>
+            </tr></thead>
+            <tbody>
+              <tr><td class="c">1</td><td class="mono">199</td><td class="r num">50.000</td><td class="r num">28.000</td><td class="r num">23.000</td><td>CMS</td><td class="r num">171</td><td class="r num">1,091.630</td><td class="r num">866.730</td><td class="r num">0.000</td><td class="r num">0.00</td></tr>
+              <tr><td class="c">2</td><td class="mono">199</td><td class="r num">50.000</td><td class="r num">28.000</td><td class="r num">15.000</td><td>CMS</td><td class="r num">2</td><td class="r num">0.000</td><td class="r num">0.000</td><td class="r num">0.000</td><td class="r num">0.000</td></tr>
+              <tr><td class="c">3</td><td>—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td>—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="charges">
+          <div class="panel">
+            <h4>Deductions</h4>
+            <div class="rows">
+              <div class="charge-row"><span class="lbl">Commission %</span><select><option selected>N</option><option>Y</option></select><input value="0.00"></div>
+              <div class="charge-row"><span class="lbl">Discount %</span><select><option selected>Y</option><option>N</option></select><input value="0.00"></div>
+              <div class="charge-row"><span class="lbl">Discount</span><select><option selected>Y</option><option>N</option></select><input value="0.00"></div>
+            </div>
+          </div>
+          <div class="panel">
+            <h4>Additions</h4>
+            <div class="rows">
+              <div class="charge-row"><span class="lbl">Freight</span><select><option selected>Y +</option><option>N</option></select><input value="0.00"></div>
+              <div class="charge-row"><span class="lbl">Other</span><select><option selected>N +</option><option>Y</option></select><input value="0.00"></div>
+              <div class="charge-row"><span class="lbl">Insurance</span><select><option selected>N −</option><option>Y</option></select><input value="0.00"></div>
+            </div>
+          </div>
+          <div class="totals">
+            <div class="t-row"><span>Total Quantity</span><b>3,612</b></div>
+            <div class="t-row"><span>Total Amount</span><b>38,106.60</b></div>
+            <div class="t-row net"><span>Net Amount</span><b>0.00</b></div>
+          </div>
+        </div>
+        <div class="tab-actions"><button class="btn btn-ghost">Back</button><button class="btn btn-primary">Save</button></div>
+      </div>
+
+      <!-- ── Tab · License/Bond ── -->
+      <div class="tabpane" id="t-bond">
+        <div class="table-wrap">
+          <table style="min-width:900px">
+            <thead><tr><th>Bond No</th><th class="r">Bond</th><th class="r">Value</th><th>B/E No / Date &amp; Item Description</th><th class="r">Rate</th><th class="r">Quantity / Unit</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">2002111120</td><td class="r num">30,772.00</td><td class="r num">69,57,281</td><td>Dtd. 20-07-2023 — Interlining AF117 Black</td><td class="r num">1.90 US$</td><td class="r num">500.00 YRD</td></tr>
+              <tr><td class="mono">2002111120</td><td class="r num">55,171.00</td><td class="r num">65,25,859</td><td>Dtd. 22-06-2023 — Hook &amp; Eye M707</td><td class="r num">4.420 US$</td><td class="r num">7,224 PCS</td></tr>
+              <tr><td class="mono">2002111120</td><td class="r num">40,689.00</td><td class="r num">69,27,015</td><td>Dtd. 18-07-2023 — Lining 92% Poly, 8% SPDX</td><td class="r num">1.700 US$</td><td class="r num">2,050.25 YRD</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="grid cols-2" style="margin-top:20px">
+          <div class="note-box">
+            <b>Drawback Details</b>
+            EQV to INR 82.20 per US$ — total FOB value ₹31,32,362.52.<br>
+            DBK &amp; ROSCTL Sl No. 61040303 — DBK for KNT @ 2.90% on FOB value.<br>
+            <b style="margin-top:8px">Total DBK Value: ₹90,838.00</b>
+          </div>
+          <div class="note-box">
+            <b>ROSCTL Details</b>
+            ROSCTL State @ 2.65% &amp; Central @ 2.10% on FOB value.<br>
+            <b style="margin-top:8px">Total ROSCTL Value: ₹1,48,787.00</b>
+          </div>
+        </div>
+        <div class="tab-actions"><button class="btn btn-ghost">Back</button><button class="btn btn-primary">Save</button></div>
+      </div>
+
+      <!-- ── Tab · GST/E-Invoice ── -->
+      <div class="tabpane" id="t-gst">
+        <div class="grid cols-5">
+          <div class="field"><label>Entry Number</label><input class="num" value="0"></div>
+          <div class="field"><label>Date</label><input type="date" value="2025-09-14"></div>
+          <div class="field"><label>Shipping Factory <button class="help-link" onclick="openModal('m-factory')">Help</button></label><input placeholder="Search…"></div>
+          <div class="field"><label>Transport Type</label><select><option selected>Truck</option><option>Rail</option></select></div>
+          <div class="field"><label>Vehicle Number</label><input placeholder="—"></div>
+          <div class="field"><label>Courier Invoice</label><select><option selected>N</option><option>Y</option></select></div>
+          <div class="field"><label>Commercial Invoice No. <button class="help-link" onclick="openModal('m-cominv')">Help</button></label><input placeholder="Search…"></div>
+          <div class="field"><label>Commercial Invoice Date</label><input type="date" disabled></div>
+          <div class="field"><label>GSTIN Invoice No <button class="help-link" onclick="openModal('m-salereturn')">Help</button></label><input disabled placeholder="—"></div>
+          <div class="field"><label>GSTIN Invoice Date</label><input type="date" disabled></div>
+          <div class="field"><label>Eway-Bill Status</label><select disabled><option>—</option></select></div>
+          <div class="field"><label>Eway-Bill Remarks</label><input disabled placeholder="—"></div>
+          <div class="field"><label>Sale Return Date</label>
+            <div class="pair"><input value="F" style="max-width:56px"><input type="date" disabled></div></div>
+          <div class="field"><label>IGST Balance</label><input class="num" disabled placeholder="—"></div>
+        </div>
+        <div class="tab-actions"><button class="btn btn-ghost">Back</button><button class="btn btn-primary">Save</button></div>
+      </div>
+
+      <!-- ── Tab · Invoice Details ── -->
+      <div class="tabpane" id="t-invd">
+        <div class="grid cols-3">
+          <div class="field"><label>CHA / Consolidator</label>
+            <div class="pair"><select><option selected>5437</option></select><input value="ClearFastair Cargo Agencies"></div></div>
+          <div class="field"><label>Mode</label><select><option selected>Transporter</option></select></div>
+          <div class="field"><label>Document Received</label><select><option selected>Y</option><option>N</option></select></div>
+          <div class="field"><label>Cargo By 1</label><select><option selected>Road</option><option>Rail</option></select></div>
+          <div class="field"><label>Cargo By 2</label><select disabled><option>—</option></select></div>
+          <div class="field"><label>Received On</label><input value="17-10-2023"></div>
+          <div class="field"><label>Delivery Type 1</label><select><option selected>5437</option></select></div>
+          <div class="field"><label>Delivery Type 2</label><select disabled><option>—</option></select></div>
+          <div class="field"><label>AWB / SB Status</label><select><option selected>Both</option></select></div>
+          <div class="field"><label>Transporter Name 1</label><select><option selected>Transporter</option></select></div>
+          <div class="field"><label>Transporter Name 2</label><select disabled><option>—</option></select></div>
+          <div class="field"><label>Port</label><input value="Bombay"></div>
+          <div class="field"><label>LR/AWB Number 1 &amp; Date</label>
+            <div class="pair"><input class="num" value="146367"><input type="date" value="2023-09-18"></div></div>
+          <div class="field"><label>LR/AWB Number 2 &amp; Date</label>
+            <div class="pair"><input disabled placeholder="—"><input type="date" disabled></div></div>
+          <div class="field"><label>Invoice Details</label><textarea rows="2" placeholder="—"></textarea></div>
+        </div>
+
+        <div class="subhead">Pick Invoices</div>
+        <div class="table-wrap">
+          <table style="min-width:1000px">
+            <thead><tr>
+              <th class="c">#</th><th class="c">Pick</th><th>Invoice No.</th><th>Invoice Date</th><th>GST Invoice</th>
+              <th class="r">Packages</th><th>Buyer Name</th><th class="r">Invoice Amount</th><th>Cur.</th><th>Initial</th>
+            </tr></thead>
+            <tbody>
+              <tr class="selected"><td class="c">1</td><td class="c"><input type="checkbox" checked></td><td class="mono">RE/2143/23-24</td><td>13-09-2023</td><td class="mono">RE/ES/2717/23-24</td><td class="r">—</td><td>JILL Acquisition LLC</td><td class="r num">31,943.88</td><td>US$</td><td>PP</td></tr>
+              <tr><td class="c">2</td><td class="c"><input type="checkbox"></td><td class="mono">RE/2144/23-24</td><td>13-09-2023</td><td class="mono">RE/ES/2716/23-24</td><td class="r">—</td><td>JILL Acquisition LLC</td><td class="r num">21,861.96</td><td>US$</td><td>PP</td></tr>
+              <tr><td class="c">3</td><td class="c"><input type="checkbox"></td><td class="mono">RE/2145/23-24</td><td>14-09-2023</td><td class="mono">RE/ES/2294/23-24</td><td class="r num">173 PKGS</td><td>Abercrombie &amp; Fitch Trade</td><td class="r num">38,106.60</td><td>US$</td><td>BHAT</td></tr>
+              <tr><td class="c">4</td><td class="c"><input type="checkbox"></td><td class="mono">RE/2146/23-24</td><td>14-09-2023</td><td class="mono">RE/ES/2303/23-24</td><td class="r num">29 PKGS</td><td>Abercrombie &amp; Fitch Trade</td><td class="r num">5,675.90</td><td>US$</td><td>BHAT</td></tr>
+              <tr><td class="c">5</td><td class="c"><input type="checkbox"></td><td class="mono">RE/2147/23-24</td><td>14-09-2023</td><td class="mono">RE/ES/2425/23-24</td><td class="r num">58 PKGS</td><td>The White Company</td><td class="r num">15,808.00</td><td>US$</td><td>PP</td></tr>
+              <tr><td class="c">6</td><td class="c"><input type="checkbox"></td><td class="mono">RE/2148/23-24</td><td>16-09-2023</td><td class="mono">RE/ES/2414/23-24</td><td class="r">—</td><td>Abercrombie &amp; Fitch Trade</td><td class="r num">7,746.90</td><td>US$</td><td>BHAT</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tab-actions"><button class="btn btn-ghost">Back</button><button class="btn btn-primary">Save</button></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Save bar -->
+  <div class="savebar">
+    <span class="status">Editing invoice <b>RE/2145/23-24</b> · unsaved changes</span>
+    <button class="btn btn-ghost">Cancel</button>
+    <button class="btn btn-primary">Save Changes</button>
+  </div>
+</main>
+
+<!-- ══════════ MODAL · Shipping Factory Help ══════════ -->
+<div class="overlay" id="m-factory" role="dialog" aria-modal="true" aria-label="Shipping factory help">
+  <div class="modal">
+    <div class="modal-head"><span class="tick"></span><h3>Shipping Factory Help</h3>
+      <button class="modal-close" onclick="closeModal('m-factory')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="c">#</th><th>Unit</th><th class="r">Branch Code</th><th>Unit Name</th></tr></thead>
+          <tbody>
+            <tr><td class="c">1</td><td class="mono">RC408</td><td class="r num">15</td><td>Richaco Exports Private Limited</td></tr>
+            <tr><td class="c">2</td><td class="mono">RC411</td><td class="r num">07</td><td>Richaco Exports Private Limited</td></tr>
+            <tr><td class="c">3</td><td class="mono">RC461</td><td class="r num">14</td><td>Richaco Exports Private Limited</td></tr>
+            <tr><td class="c">4</td><td class="mono">RC479</td><td class="r num">06</td><td>Richaco Exports Private Limited</td></tr>
+            <tr><td class="c">5</td><td class="mono">RC506</td><td class="r num">18</td><td>Richaco Exports Private Limited</td></tr>
+            <tr><td class="c">6</td><td class="mono">RC76</td><td class="r num">22</td><td>Richaco Exports Private Limited</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-primary" onclick="closeModal('m-factory')">Done</button></div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL · Commercial Invoice Help ══════════ -->
+<div class="overlay" id="m-cominv" role="dialog" aria-modal="true" aria-label="Commercial invoice help">
+  <div class="modal">
+    <div class="modal-head"><span class="tick"></span><h3>Commercial Invoice Help</h3>
+      <button class="modal-close" onclick="closeModal('m-cominv')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="c">#</th><th>Invoice No.</th><th>Invoice Date</th><th>Buyer Name</th></tr></thead>
+          <tbody>
+            <tr><td class="c">1</td><td class="mono">RN/0207/25-26</td><td>29-08-2025</td><td>Abercrombie &amp; Fitch Trading</td></tr>
+            <tr><td class="c">2</td><td class="mono">RN/0208/25-26</td><td>29-08-2025</td><td>AFH International Trading (Shenzhen)</td></tr>
+            <tr><td class="c">3</td><td class="mono">RN/0209/25-26</td><td>29-08-2025</td><td>AFH International Trading (Shenzhen)</td></tr>
+            <tr><td class="c">4</td><td class="mono">RN/0210/25-26</td><td>30-08-2025</td><td>AFH International Trading (Shenzhen)</td></tr>
+            <tr><td class="c">5</td><td class="mono">RN/0211/25-26</td><td>30-08-2025</td><td>Abercrombie &amp; Fitch Trading</td></tr>
+            <tr><td class="c">6</td><td class="mono">RN/0212/25-26</td><td>03-09-2025</td><td>Abercrombie &amp; Fitch Trading</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-primary" onclick="closeModal('m-cominv')">Done</button></div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL · Editing / Sale Return Help ══════════ -->
+<div class="overlay" id="m-salereturn" role="dialog" aria-modal="true" aria-label="Editing / sale return help">
+  <div class="modal">
+    <div class="modal-head"><span class="tick"></span><h3>Editing / Sale Return Help</h3>
+      <button class="modal-close" onclick="closeModal('m-salereturn')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="r">#</th><th>Invoice No.</th><th>GST Invoice No.</th><th>GST Invoice Date</th><th>Fac Unit</th></tr></thead>
+          <tbody>
+            <tr><td class="r num">52779</td><td class="mono">RE/2350/25-26</td><td class="mono">RE/ES/3092/25-26</td><td>02-09-2025</td><td class="mono">RC17</td></tr>
+            <tr><td class="r num">52780</td><td class="mono">RE/2270/25-26</td><td class="mono">RE/ES/3093/25-26</td><td>03-09-2025</td><td class="mono">MAN02</td></tr>
+            <tr><td class="r num">52781</td><td class="mono">RE/2267/25-26</td><td class="mono">RE/ES/3094/25-26</td><td>03-09-2025</td><td class="mono">MAN02</td></tr>
+            <tr><td class="r num">52782</td><td class="mono">RE/2610/25-26</td><td class="mono">RE/ES/3095/25-26</td><td>03-09-2025</td><td class="mono">RC239</td></tr>
+            <tr><td class="r num">52783</td><td class="mono">RE/2352/25-26</td><td class="mono">RE/ES/3096/25-26</td><td>03-09-2025</td><td class="mono">RC17</td></tr>
+            <tr><td class="r num">52784</td><td class="mono">RE/1057/25-26</td><td class="mono">RE/ES/3097/25-26</td><td>04-09-2025</td><td class="mono">MAN30</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-primary" onclick="closeModal('m-salereturn')">Done</button></div>
+  </div>
+</div>
+
+<script>
+  const tabBtns = [...document.querySelectorAll('.tabs button')];
+  tabBtns.forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.tabpane').forEach(p => p.classList.toggle('on', p.id === b.dataset.tab));
+    tabBtns.forEach(x => x.classList.toggle('on', x === b));
+  }));
+  function openModal(id){ document.getElementById(id).classList.add('on'); }
+  function closeModal(id){ document.getElementById(id).classList.remove('on'); }
+  document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e => { if(e.target === o) o.classList.remove('on'); }));
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') document.querySelectorAll('.overlay.on').forEach(o => o.classList.remove('on')); });
+  document.querySelectorAll('tbody input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => cb.closest('tr').classList.toggle('selected', cb.checked));
+  });
+</script>
+</body>
+</html>

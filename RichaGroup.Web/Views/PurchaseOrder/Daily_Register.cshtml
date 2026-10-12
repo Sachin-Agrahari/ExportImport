@@ -1,0 +1,139 @@
+﻿@{
+    ViewData["Title"] = "Register Accessory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/pages/daily_register.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="page-view active" id="route-register-accessory">
+    <header class="page-header">
+        <div class="header-inner">
+            <div class="header-left">
+                <div class="header-logo">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                </div>
+                <div class="header-title">Register Accessory</div>
+            </div>
+            <div class="header-right">
+                <button class="btn-icon" title="Add" id="regBtnAdd">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                    <span>Add</span>
+                </button>
+                <button class="btn-icon" title="Display" id="regBtnDisplay">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    <span>Display</span>
+                </button>
+                <button class="btn-icon" title="Modify" id="regBtnModify">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+                    </svg>
+                    <span>Modify</span>
+                </button>
+                <button class="btn-icon" title="Save" id="regBtnSave">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                        <polyline points="17 21 17 13 7 13 7 21" />
+                        <polyline points="7 3 7 8 15 8" />
+                    </svg>
+                    <span>Save</span>
+                </button>
+                <button class="btn-icon" title="Delete" id="regBtnDelete">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
+                        <path d="M10 11v6M14 11v6" />
+                    </svg>
+                    <span>Delete</span>
+                </button>
+                <button class="btn-icon" title="Refresh" id="regBtnRefresh">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="23 4 23 10 17 10" />
+                        <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10" />
+                    </svg>
+                    <span>Refresh</span>
+                </button>
+                <button class="btn-icon" title="Print" id="regBtnPrint">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="6 9 6 2 18 2 18 9" />
+                        <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
+                        <rect x="6" y="14" width="12" height="8" />
+                    </svg>
+                    <span>Print</span>
+                </button>
+                @* <button class="btn-icon" title="Back" id="regBtnBack">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="19" y1="12" x2="5" y2="12" />
+                        <polyline points="12 19 5 12 12 5" />
+                    </svg>
+                    <span>Back</span>
+                </button> *@
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <!-- CARD 1 : DATE FILTER -->
+        <div class="card">
+            <div class="reg-filter-bar">
+                <div class="reg-filter-field">
+                    <span class="reg-filter-label">Between Dates :</span>
+                    <input type="text" id="regFromDate" class="form-input reg-date-input" value="31-Mar-2026" />
+                </div>
+                <span class="reg-filter-label">And</span>
+                <div class="reg-filter-field">
+                    <input type="text" id="regToDate" class="form-input reg-date-input" value="03-Apr-2026" />
+                </div>
+                <button class="btn btn-primary" id="regBtnDisplayFilter">Display</button>
+                <button class="btn btn-outline" id="regBtnSearchFilter">Search Filter</button>
+            </div>
+        </div>
+
+        <!-- CARD 2 : REGISTER TABLE -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <div class="card-header-dot"></div>
+                    <span class="card-header-title">Register Accessory Records</span>
+                </div>
+            </div>
+
+            <div class="table-card-body">
+                <div class="table-scroll-wrapper">
+                    <table id="regTable" class="display table-design" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th class="td-sr">SNO$</th>
+                                <th>INVOICE_NO</th>
+                                <th>INVOICE_DATE</th>
+                                <th>SUPPLIER</th>
+                                <th>FORWARDER</th>
+                                <th>CHANAM</th>
+                                <th>SHIPMODE</th>
+                                <th class="td-number">TOTAL_</th>
+                                <th class="td-number">TOAL_AMT$</th>
+                                <th>CURRENCY</th>
+                                <th>AWB</th>
+                                <th>AWB DATE</th>
+                            </tr>
+                        </thead>
+                        <tbody id="regTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/pages/daily_register.js" asp-append-version="true"></script>

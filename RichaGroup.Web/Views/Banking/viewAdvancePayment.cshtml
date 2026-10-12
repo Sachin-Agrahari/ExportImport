@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Advance Payment Received";
+    ViewData["Heading"] = "Advance Payment Received";
+}
+
+<div class="bd_mainContainer">
+    <div class="page">
+
+        <div class="card shadow-sm border-0 mt-2">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">
+                        Advance Payment Received
+                    </h2>
+                </div>
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+                    <button class="btn btn-primary btn-sm" id="btnAdd">
+                        ＋ Add
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle table-bordered mb-0"
+                           id="tblAdvancePaymentReceived">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width:80px;">Action</th>
+                                <th>Advance No.</th>
+                                <th>Date</th>
+                                <th>Buyer</th>
+                                <th>Amount</th>
+                                <th>Currency</th>
+                                <th>Avg. Rate</th>
+                                <th>Amount INR</th>
+                                <th>BOE Adjust.</th>
+                                <th>Balance Amt.</th>
+                                <th>IRM Number</th>
+                                <th>IRM Date</th>
+                                <th>Credit Advice No.</th>
+                                <th>Advice Date</th>
+                                <th>Payment Against Export</th>
+                                <th>Option</th>
+                                <th>Invoice Dtl</th>
+                                <th>Adjustment Type</th>
+                                <th>Adjustment Amount</th>
+                                <th>Bank</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblAdvancePaymentReceivedBody">
+                            <!-- Rows injected by JavaScript -->
+                        </tbody>
+
+                    </table>
+
+                    <div id="noRecordsFound_AdvancePaymentReceived"
+                         class="text-center text-muted py-4 d-none">
+                        No matching records found.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/js/pages/Banking/Advance_Payment_Recived.js" asp-append-version="true"></script>

@@ -1,0 +1,1249 @@
+﻿@{
+	ViewData["Title"] = "GSP Invoice Generation";
+	ViewData["Heading"] = "GSP Invoice Generation";
+}
+
+<link href="~/css/pages/aepc-invoice.css" rel="stylesheet" asp-append-version="true" />	
+@* <link href="~/css/pages/shipping/gsp_invoice_generation.css" rel="stylesheet" asp-append-version="true" /> *@
+<style>
+	.table-scroll {
+		max-height: 400px;
+		overflow-y: auto;
+		overflow-x: auto;
+	}
+
+		.table-scroll table {
+			width: 100%;
+			border-collapse: separate;
+			border-spacing: 0;
+		}
+		  
+		.table-scroll thead th {
+			position: sticky !important;
+			top: 0 !important;
+			z-index: 10 !important;
+		}
+</style>
+<div class="bd_mainContainer">
+	<div class="page gsp-page">
+
+
+		<!-- INVOICE HEADER -->
+		<section class="card">
+
+			<div class="card-head">
+				<div>
+
+					<span class="tick"></span>
+					<h2 class="mt-2" id="txtHeaderMain">GSP Generation</h2>
+				</div>
+
+
+				<div class="d-flex gap-2">
+					@await Html.PartialAsync("Components/_CheckBoxComponent")
+					@await Html.PartialAsync("Components/_UploadAndViewButtons")
+					<button type="button"
+							class="btn btn-primary btn-sm"
+							id="btnAdd"
+							title="Add">
+						+
+						Add
+					</button>
+					<button type="button"
+							class="btn btn-primary btn-sm"
+							id="btnSave"
+							title="Save">
+
+						<svg width="14"
+							 height="14"
+							 viewBox="0 0 24 24"
+							 fill="none"
+							 stroke="currentColor"
+							 stroke-width="2"
+							 stroke-linecap="round"
+							 stroke-linejoin="round">
+
+							<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+							<polyline points="17 21 17 13 7 13 7 21"></polyline>
+							<polyline points="7 3 7 8 15 8"></polyline>
+
+						</svg>
+						Save
+					</button>
+
+					<button type="button"
+							class="btn btn-cancel-custom"
+							id="btnCancel">
+						✕ Cancel
+					</button>
+
+				</div>
+			</div>
+
+
+			<div class="card-body collapse show" id="gspInvoiceBody">
+
+				<div class="row g-3">
+					<div class="col-md-12">
+						<div class="row g-2">
+
+
+							<div class=" col-md-1">
+								<div class="field">
+									<label>Invoice No.</label>
+									<input type="text"
+										   id="txtInvoiceNo_GSPInvoice"
+										   placeholder="Enter Invoice No..." />
+								</div>
+							</div>
+
+							<div class=" col-md-1">
+								<div class="field">
+									<label>Invoice Date</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtInvoiceDate_GSPInvoice"
+										   placeholder="Select Invoice Date..." />
+								</div>
+							</div>
+							<div class="col-md-1">
+								<div class="field">
+									<label>Buyer Order No.</label>
+									<input type="text"
+										   id="txtBuyerOrderNo_GSPInvoice"
+										   placeholder="Enter Buyer Order No..." />
+								</div>
+							</div>
+							<div class="col-md-1">
+								<div class="field">
+									<label>Buyer Order Date</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtBuyerOrderDate_GSPInvoice"
+										   placeholder="Select Date..." />
+								</div>
+							</div>
+							<!-- Consignee -->
+							<div class="col-md-2">
+								<div class="field">
+									<label>Consignee</label>
+
+									<select id="ddlConsignee"
+											class="select2-field">
+										<option value="">Select</option>
+										<option value="ABC">ABC</option>
+									</select>
+								</div>
+							</div>
+							<!-- Notify -->
+							<div class="col-md-2">
+								<div class="field">
+									<label>Notify</label>
+									<input type="text"
+										   id="txtNotify_GSPInvoice"
+										   placeholder="Enter Notify..." />
+								</div>
+							</div>
+							<!-- Buyer -->
+							<div class=" col-md-2">
+								<div class="field">
+									<label>Buyer Other Consignee</label>
+									<select id="ddlBuyerOther_GSPInvoice"
+											class="select2-field">
+										<option value="">Select</option>
+										<option value="B">B</option>
+										<option value="Y">Y</option>
+										<option value="N">N</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-md-1">
+								<div class="field">
+									<label>Vessel Flight No</label>
+									<input type="text"
+										   id="txtVesselFlightNo_GSPInvoice"
+										   placeholder="Enter Vessel / Flight..." />
+								</div>
+							</div>
+							<div class=" col-md-1">
+								<div class="field">
+									<label>Exporter's Ref</label>
+									<input type="text"
+										   id="txtExporterRef_GSPInvoice"
+										   placeholder="Enter Exporter's Ref..." />
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div class="row mt-0 g-3">
+
+					<div class="col-md-12">
+
+						<div class="row g-2">
+
+
+							<div class=" col-md-1">
+								<div class="field">
+									<label>Port of Loading</label>
+									<input type="text"
+										   id="txtPortLoading_GSPInvoice"
+										   placeholder="Enter Port..." />
+								</div>
+							</div>
+							<div class="col-md-1">
+								<div class="field">
+									<label>Pre-Carriage by</label>
+									<input type="text"
+										   id="txtPreCarriage_GSPInvoice"
+										   placeholder="Enter Pre-Carriage..." />
+								</div>
+							</div>
+
+
+							<div class="col-md-1">
+								<div class="field">
+									<label>FOB</label>
+									<input type="text"
+										   id="txtFOBPort_GSPInvoice"
+										   placeholder="Enter FOB..." />
+								</div>
+							</div>
+
+							<div class="col-md-1">
+								<div class="field">
+									<label>FREIGHT</label>
+									<select id="ddlFreight">
+										<option>Select</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-2">
+								<div class="field">
+									<label>Address Consignee</label>
+									<textarea id="txtConsigneeAddress_GSPInvoice"
+											  rows="2"
+											  placeholder="Enter Consignee Address ..."></textarea>
+								</div>
+							</div>
+
+							<!-- Notify Address 1 -->
+							<div class="col-2">
+								<div class="field">
+									<label>Address Notify</label>
+									<textarea id="txtNotifyAddress_GSPInvoice"
+											  rows="2"
+											  placeholder="Enter Notify Address ..."></textarea>
+								</div>
+							</div>
+
+							<!-- Buyer Address 1 -->
+							<div class="col-2">
+								<div class="field">
+									<label>Buyer Address </label>
+									<textarea id="txtBuyerOtherAddress_GSPInvoice"
+											  rows="2"
+											  placeholder="Enter Buyer Address ..."></textarea>
+								</div>
+							</div>
+
+
+
+							<div class=" col-md-1">
+								<div class="field">
+									<label>Place of Receipt</label>
+									<input type="text"
+										   id="txtPlaceReceipt_GSPInvoice"
+										   placeholder="Enter Place..." />
+								</div>
+							</div>
+							<div class=" col-md-1">
+								<div class="field">
+									<label>Final Destination</label>
+									<input type="text"
+										   id="txtFinalDestination_GSPInvoice"
+										   placeholder="Enter Destination..." />
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+				<!--  FULL 12 COLUMN GRID -->
+
+				<div class="row mt-0 g-2">
+					<!-- ROW 3 -->
+					<div class=" col-md-1">
+						<div class="field">
+							<label>Other Reference(s)</label>
+							<input type="text"
+								   id="txtOtherReference_GSPInvoice"
+								   placeholder="Enter Other Reference..." />
+						</div>
+					</div>
+
+
+					<div class=" col-md-1">
+						<div class="field">
+							<label>Country of Origin</label>
+							<input type="text"
+								   id="txtCountryOrigin_GSPInvoice"
+								   placeholder="Enter Country..." />
+						</div>
+					</div>
+
+					<div class=" col-md-1">
+						<div class="field">
+							<label>Ctry. Dest. Code</label>
+							<input type="text"
+								   id="txtCountryDestCode_GSPInvoice"
+								   placeholder="Enter Code..." />
+						</div>
+					</div>
+
+					<div class="col-md-1">
+						<div class="field">
+							<label>Country Destination</label>
+							<input type="text"
+								   id="txtCountryDestination_GSPInvoice"
+								   placeholder="Enter Destination..." />
+						</div>
+					</div>
+
+					<div class="col-md-1">
+						<div class="field">
+							<label>Terms Conv.</label>
+							<input type="text"
+								   id="txtTermsConv_GSPInvoice"
+								   placeholder="Enter Terms..." />
+						</div>
+					</div>
+
+
+					<!-- ROW 4 -->
+
+
+
+
+					<div class="col-md-1">
+						<div class="field">
+							<label>MAWB No</label>
+							<input type="text"
+								   id="txtMAWBNo_GSPInvoice"
+								   placeholder="Enter MAWB No..." />
+						</div>
+					</div>
+
+					<div class="col-md-1">
+						<div class="field">
+							<label>MAWB Date</label>
+							<input type="text"
+								   class="form-Flatdate"
+								   id="txtMAWBDt_GSPInvoice"
+								   placeholder="Select Date..." />
+						</div>
+					</div>
+
+					<div class="col-md-1">
+						<div class="field">
+							<label>L/C No.</label>
+							<input type="text"
+								   id="txtLCNo_GSPInvoice"
+								   placeholder="Enter L/C No..." />
+						</div>
+					</div>
+
+					<div class="col-md-1">
+						<div class="field">
+							<label>L/C Date</label>
+							<input type="text"
+								   class="form-Flatdate"
+								   id="txtLCDt_GSPInvoice"
+								   placeholder="Select Date..." />
+						</div>
+					</div>
+
+					<div class="col-md-1">
+						<div class="field">
+							<label>RITC No.</label>
+							<input type="text"
+								   id="txtRITCNo_GSPInvoice"
+								   placeholder="Enter RITC No..." />
+						</div>
+					</div>
+				</div>
+
+				<!--ITEM ENTRY -->
+				<hr />
+				<div class="grid cols-8">
+
+					<!-- Marks & Nos. / Container No. -->
+					<div class="field">
+						<label>Marks & Nos. / Container No.</label>
+
+						<input type="text"
+							   id="txtMarksNos_GSPInvoice"
+							   placeholder="Marks / Container No..." />
+					</div>
+
+
+					<!-- No. & Kind of Pkgs. -->
+					<div class="field">
+						<label>No. & Kind of Pkgs.</label>
+
+						<input type="text"
+							   id="txtNoKindPkgs_GSPInvoice"
+							   placeholder="Packages..." />
+					</div>
+
+
+					<!-- Description of Goods -->
+					<div class="field span-2">
+						<label>Description of Goods</label>
+
+						<textarea type="text"
+								  id="txtDescriptionGoods_GSPInvoice"
+								  placeholder="Description..."></textarea>
+					</div>
+
+
+					<!-- Quantity -->
+					<div class="field">
+						<label>Quantity</label>
+
+						<input type="text"
+							   id="txtItemQuantity_GSPInvoice"
+							   placeholder="Qty..." />
+					</div>
+
+
+					<!-- Decimal -->
+					<div class="field">
+						<label>Decimal (Y/N)</label>
+
+						<select id="ddlDecimal_GSPInvoice"
+								class="select2-field">
+
+							<option value="">Select</option>
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+
+						</select>
+					</div>
+
+
+					<!-- For Qty -->
+					<div class="field">
+						<label>For Qty</label>
+
+						<input type="text"
+							   id="txtForQty_GSPInvoice"
+							   placeholder="Qty..." />
+					</div>
+
+
+					<!-- Rate -->
+					<div class="field">
+						<label>Rate</label>
+
+						<input type="text"
+							   id="txtItemRate_GSPInvoice"
+							   placeholder="Rate..." />
+					</div>
+
+
+
+					<!-- Address -->
+					<div class="field">
+						<label>Address</label>
+
+						<input type="text"
+							   id="txtAddress_GSPInvoice"
+							   placeholder="Enter Address..." />
+					</div>
+
+
+					<!-- PO Number -->
+					<div class="field">
+						<label>PO Number</label>
+
+						<input type="text"
+							   id="txtPoNumber_GSPInvoice"
+							   placeholder="Enter PO Number..." />
+					</div>
+
+
+					<!-- Style -->
+					<div class="field">
+						<label>Style</label>
+
+						<input type="text"
+							   id="txtStyle_GSPInvoice"
+							   placeholder="Enter Style..." />
+					</div>
+
+
+					<!-- Category -->
+					<div class="field">
+						<label>Category</label>
+
+						<input type="text"
+							   id="txtCategory_GSPInvoice"
+							   placeholder="Enter Category..." />
+					</div>
+
+
+					<!-- Description -->
+					<div class="field">
+						<label>Description</label>
+
+						<input type="text"
+							   id="txtDescription_GSPInvoice"
+							   placeholder="Enter Description..." />
+					</div>
+
+
+					<!-- Units -->
+					<div class="field">
+						<label>Units</label>
+
+						<input type="text"
+							   id="txtUnits_GSPInvoice"
+							   placeholder="Enter Units..." />
+					</div>
+
+
+					<!-- US$ FOB 1 -->
+					<div class="field">
+						<label>US$ FOB</label>
+
+						<input type="text"
+							   id="txtUSDFob1_GSPInvoice"
+							   placeholder="Enter US$ FOB..." />
+					</div>
+
+
+					<!-- US$ FOB 2 -->
+					<div class="field">
+						<label>US$ FOB</label>
+
+						<input type="text"
+							   id="txtUSDFob2_GSPInvoice"
+							   placeholder="Enter US$ FOB..." />
+					</div>
+
+
+					<!-- GR No -->
+					<div class="field">
+						<label>GR No.</label>
+
+						<input type="text"
+							   id="txtGRNo_GSPInvoice"
+							   placeholder="GR No..." />
+					</div>
+
+
+					<!-- GR Date -->
+					<div class="field">
+						<label>GR Date</label>
+
+						<input type="text"
+							   class="form-Flatdate"
+							   id="txtGRDate_GSPInvoice"
+							   placeholder="Select GR Date..." />
+					</div>
+
+
+					<!-- SB No -->
+					<div class="field">
+						<label>SB No.</label>
+
+						<input type="text"
+							   id="txtSBNo_GSPInvoice"
+							   placeholder="SB No..." />
+					</div>
+
+
+					<!-- SB Date -->
+					<div class="field">
+						<label>SB Date</label>
+
+						<input type="text"
+							   class="form-Flatdate"
+							   id="txtSBDate_GSPInvoice"
+							   placeholder="Select SB Date..." />
+					</div>
+
+
+					<!-- GR Weight -->
+					<div class="field">
+						<label>GR WT.</label>
+
+						<input type="text"
+							   id="txtGRWeight_GSPInvoice"
+							   placeholder="17.480 KGS" />
+					</div>
+
+
+					<!-- Net Weight 2 -->
+					<div class="field">
+						<label>NT. WT.</label>
+
+						<input type="text"
+							   id="txtNetWt2_GSPInvoice"
+							   placeholder="15.180 KGS" />
+					</div>
+
+
+					<!-- Dimension -->
+					<div class="field">
+						<label>DIMENSI</label>
+
+						<input type="text"
+							   id="txtDimension_GSPInvoice"
+							   placeholder="Dimension..." />
+					</div>
+
+
+				</div>
+				<hr />
+
+				<!--  ITEM TABLE-->
+
+				<div class=" d-flex justify-content-between">
+					<div class="d-flex align-items-center gap-2">
+						<span class="tick"></span>
+						<h4 class="">
+							Invoice Items
+						</h4>
+					</div>
+					<div class="d-flex justify-content-end align-items-end">
+
+						@* <button type="button"
+								class="btn btn-primary btn-sm"
+								id="btnAddItem_GSPInvoice">
+
+							<i class="fa-solid fa-plus me-1"></i>
+							Add Item
+
+						</button> *@
+
+
+						<button type="button"
+								class="btn btn-primary btn-sm"
+								id="btnAddGSPInvoice">
+
+							<i class="fa-solid fa-plus"></i>
+							Add Item
+
+						</button>
+
+					</div>
+
+				</div>
+
+				<div class="table table-responsive">
+
+
+					<div class="gsp-table-scroll table-scroll" style="max-height: 210px;">
+						<table id="tblGSPInvoice"
+							   class="display"
+							   style="width:100%">
+
+							<thead>
+								<tr>
+									<th style="width:50px;" >Action</th>
+									<th style="width:2px;">SrNo</th>
+									<th>Style</th>
+									<th>Po.No</th>
+									<th>Catgry</th>
+									<th class="r num">Qty</th>
+									<th>Unit</th>
+									<th>Op</th>
+									<th class="r num">Rate</th>
+									<th class="r num">Amount</th>
+									<th class="r num">Fob Rt</th>
+									<th class="r num">Fob Val</th>
+									<th class="r num">Dbk Pc</th>
+									<th class="r num">Dbk Amt</th>
+									<th class="r num">Wt.</th>
+									<th>Wt Prn</th>
+									<th>Ttl</th>
+								</tr>
+							</thead>
+
+							<tbody id="tblbodyGSPInvoice">
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+				<hr />
+				<!--  CALCULATION / FOOTER -->
+
+				<div class="charges">
+					<div class="panel">
+						<h4>Deductions</h4>
+						<div class="rows">
+							<div class="charge-row">
+								<span class="lbl">Commission %</span>
+								<div class="d-flex align-items-center gap-2">
+
+									<select id="ddl_Style_poNo_commission" class="form-select form-select-sm" style="width:70px;" tabindex="0" aria-hidden="false">
+										<option selected="">Yes</option>
+										<option>No</option>
+									</select>
+
+									<select id="ddl_Style_poNo_commission2" class="form-select form-select-sm" style="width:70px;" tabindex="0" aria-hidden="false">
+										<option selected="">+</option>
+										<option>-</option>
+									</select>
+
+									<input type="text" id="txt_Style_poNo_commission" value="0.00" class="form-control form-control-sm" style="width:200px;">
+
+								</div>
+							</div>
+							<div class="charge-row">
+								<span class="lbl">Discount %</span>
+								<div class="d-flex align-items-center gap-2">
+
+
+									<select id="ddl_Style_poNo_commission" class="form-select form-select-sm" style="width:70px;" tabindex="0" aria-hidden="false">
+										<option selected="">Yes</option>
+										<option>No</option>
+									</select>
+
+									<select id="ddl_Style_poNo_commission2" class="form-select form-select-sm" style="width:70px;" tabindex="0" aria-hidden="false">
+										<option selected="">+</option>
+										<option>-</option>
+									</select>
+
+									<input type="text" id="txt_Style_poNo_commission" value="0.00" class="form-control form-control-sm" style="width:200px;">
+
+
+
+								</div>
+							</div>
+							<div class="charge-row">
+								<span class="lbl">Discount</span>
+								<div class="d-flex align-items-center gap-2">
+
+									<select id="ddl_Style_poNo_discount" class="form-select form-select-sm" style="width:70px;" tabindex="0" aria-hidden="false">
+										<option selected="">Yes</option>
+										<option>No</option>
+									</select>
+
+									<select id="ddl_Style_poNo_discountt2" class="form-select form-select-sm select2-hidden-accessible" style="width:70px;" data-select2-id="select2-data-ddl_Style_poNo_discountt2" tabindex="-1" aria-hidden="true">
+										<option selected="" data-select2-id="select2-data-14-79rf">+</option>
+										<option>-</option>
+									</select><span class="select2 select2-container select2-container--default" dir="undefined" data-select2-id="select2-data-13-6q2j" style="width: 70px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-ddl_Style_poNo_discountt2-container" aria-controls="select2-ddl_Style_poNo_discountt2-container"><span class="select2-selection__rendered" id="select2-ddl_Style_poNo_discountt2-container" role="textbox" aria-readonly="true" title="+">+</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+
+									<input type="text" id="txt_Style_poNo_discount" value="0.00" class="form-control form-control-sm" style="width:200px;">
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel">
+						<h4>Additions</h4>
+						<div class="rows">
+							<div class="charge-row">
+								<span class="lbl">Freight</span>
+								<div class="d-flex align-items-center gap-2">
+
+									<select id="ddl_Style_poNo_freight" class="form-select form-select-sm" style="width:70px;" tabindex="0" aria-hidden="false">
+										<option selected="">Yes</option>
+										<option>No</option>
+									</select>
+
+									<select id="ddl_Style_poNo_freight2" class="form-select form-select-sm" style="width:70px;" tabindex="0" aria-hidden="false">
+										<option selected="">+</option>
+										<option>-</option>
+									</select>
+
+									<input type="text" id="txt_Style_poNo_freight" value="0.00" class="form-control" style="width:200px;">
+
+								</div>
+
+							</div>
+							<div class="charge-row">
+								<span class="lbl">Other</span>
+								<div class="d-flex align-items-center gap-2">
+
+									<select id="ddl_Style_poNo_freight" class="form-select form-select-sm" style="width:70px;" tabindex="0" aria-hidden="false">
+										<option selected="">Yes</option>
+										<option>No</option>
+									</select>
+
+									<select id="ddl_Style_poNo_freight2" class="form-select form-select-sm" style="width:70px;" tabindex="0" aria-hidden="false">
+										<option selected="">+</option>
+										<option>-</option>
+									</select>
+
+									<input type="text" id="txt_Style_poNo_freight" value="0.00" class="form-control" style="width:200px;">
+
+								</div>
+							</div>
+							<div class="charge-row">
+								<span class="lbl">Insurance</span>
+								<div class="d-flex align-items-center gap-2">
+
+									<select id="ddl_Style_poNo_freight" class="form-select form-select-sm select2-hidden-accessible" style="width:70px;" data-select2-id="select2-data-ddl_Style_poNo_freight" tabindex="-1" aria-hidden="true">
+										<option selected="" data-select2-id="select2-data-27-3a38">Yes</option>
+										<option>No</option>
+									</select><span class="select2 select2-container select2-container--default" dir="undefined" data-select2-id="select2-data-26-cia5" style="width: 70px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-ddl_Style_poNo_freight-container" aria-controls="select2-ddl_Style_poNo_freight-container"><span class="select2-selection__rendered" id="select2-ddl_Style_poNo_freight-container" role="textbox" aria-readonly="true" title="Yes">Yes</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+
+									<select id="ddl_Style_poNo_freight2" class="form-select form-select-sm select2-hidden-accessible" style="width:70px;" data-select2-id="select2-data-ddl_Style_poNo_freight2" tabindex="-1" aria-hidden="true">
+										<option selected="" data-select2-id="select2-data-30-nhy0">+</option>
+										<option>-</option>
+									</select><span class="select2 select2-container select2-container--default" dir="undefined" data-select2-id="select2-data-29-6wm7" style="width: 70px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-ddl_Style_poNo_freight2-container" aria-controls="select2-ddl_Style_poNo_freight2-container"><span class="select2-selection__rendered" id="select2-ddl_Style_poNo_freight2-container" role="textbox" aria-readonly="true" title="+">+</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+
+									<input type="text" id="txt_Style_poNo_freight" value="0.00" class="form-control" style="width:200px;">
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="totals">
+						<div class="t-row"><span>Total Quantity</span><b id="lbl_Style_poNo_Quantity">3,612</b></div>
+						<div class="t-row"><span>Total Amount</span><b id="lbl_Style_poNo_Amount">38,106.60</b></div>
+						<div class="t-row mr-5"><span> Amount In Words :</span> <b class="text-danger ms-5" id="lbl_Style_poNo_Word"> Thrity Eight Thousand One hunderd Six and Sixty Paise Only </b> </div>
+						<div class="t-row net"><span>Net Amount</span><b id="lbl_Style_poNo_NetAmu">0.00</b></div>
+					</div>
+
+
+				</div>
+
+@* 
+				<div class="grid cols-10">
+
+					<!-- Commission -->
+					<div class="field">
+						<label>Commission</label>
+
+						<select id="ddlCommission_GSPInvoice"
+								class="select2-field">
+
+							<option value="N">N</option>
+							<option value="Y">Y</option>
+
+						</select>
+					</div>
+
+
+					<div class="field">
+						<label>Commission Value</label>
+
+						<input type="text"
+							   id="txtCommissionValue_GSPInvoice"
+							   placeholder="Commission..." />
+					</div>
+
+
+					<!-- Discount -->
+					<div class="field">
+						<label>Discount</label>
+
+						<select id="ddlDiscount_GSPInvoice"
+								class="select2-field">
+
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+
+						</select>
+					</div>
+
+
+					<div class="field">
+						<label>Discount Description</label>
+
+						<input type="text"
+							   id="txtDiscountDescription_GSPInvoice"
+							   placeholder="DISCOUNT" />
+					</div>
+
+
+					<!-- Discount % -->
+					<div class="field">
+						<label>Discount %</label>
+
+						<input type="text"
+							   id="txtDiscountPercent_GSPInvoice"
+							   placeholder="0.660%" />
+					</div>
+
+
+					<!-- Discount Amount -->
+					<div class="field">
+						<label>Discount Amount</label>
+
+						<input type="text"
+							   id="txtDiscountAmount_GSPInvoice"
+							   placeholder="6.34" />
+					</div>
+
+
+					<!-- Freight -->
+					<div class="field">
+						<label>Freight</label>
+
+						<select id="ddlFreight_GSPInvoice"
+								class="select2-field">
+
+							<option value="N">N</option>
+							<option value="Y">Y</option>
+
+						</select>
+					</div>
+
+
+					<div class="field">
+						<label>Freight Value</label>
+
+						<input type="text"
+							   id="txtFreightValue_GSPInvoice"
+							   placeholder="Freight..." />
+					</div>
+
+
+					<!-- Insurance -->
+					<div class="field">
+						<label>Insurance</label>
+
+						<select id="ddlInsurance_GSPInvoice"
+								class="select2-field">
+
+							<option value="N">N</option>
+							<option value="Y">Y</option>
+
+						</select>
+					</div>
+
+
+					<div class="field">
+						<label>Insurance Value</label>
+
+						<input type="text"
+							   id="txtInsuranceValue_GSPInvoice"
+							   placeholder="Insurance..." />
+					</div>
+
+
+					<!-- Other -->
+					<div class="field">
+						<label>Other</label>
+
+						<select id="ddlOther_GSPInvoice"
+								class="select2-field">
+
+							<option value="N">N</option>
+							<option value="Y">Y</option>
+
+						</select>
+					</div>
+
+
+					<div class="field">
+						<label>Other Value</label>
+
+						<input type="text"
+							   id="txtOtherValue_GSPInvoice"
+							   placeholder="Other..." />
+					</div>
+
+
+					<!-- Total -->
+					<div class="field">
+						<label>Total</label>
+
+						<input type="text"
+							   id="txtTotal_GSPInvoice"
+							   placeholder="Total..." />
+					</div>
+
+
+					<!-- Net Weight -->
+					<div class="field">
+						<label>Net Wt</label>
+
+						<input type="text"
+							   id="txtNetWeight_GSPInvoice"
+							   placeholder="0.000" />
+					</div>
+
+
+					<!-- Amount In Words -->
+					<div class="field span-2">
+						<label>Amount (In Words)</label>
+
+						<input type="text"
+							   id="txtAmountWords_GSPInvoice"
+							   placeholder="Amount in Words..." />
+					</div>
+
+
+					<!-- FOB Name -->
+					<div class="field">
+						<label>FOB Name</label>
+
+						<input type="text"
+							   id="txtFOBName_GSPInvoice"
+							   placeholder="FOB Name..." />
+					</div>
+
+
+					<!-- Total FOB -->
+					<div class="field">
+						<label>Total FOB</label>
+
+						<input type="text"
+							   id="txtTotalFOB_GSPInvoice"
+							   placeholder="Total FOB..." />
+					</div>
+
+
+
+
+					<!-- Initial ADI -->
+					<div class="field">
+						<label>Initial ADI</label>
+
+						<input type="text"
+							   id="txtInitialADI_GSPInvoice"
+							   placeholder="ADI..." />
+					</div>
+
+
+				</div> *@
+
+			</div>
+		</section>
+
+
+
+
+
+
+	</div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="modalGSPInvoice" tabindex="-1" aria-labelledby="modalGSPInvoiceLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content modal-box">
+			<div class="modal-header">
+				<div class="modal-header-text">
+					<div class="modal-title" id="addMenuModalLabel">
+						Invoice Item
+					</div>
+				</div>
+				<div class="d-flex gap-2">
+
+
+
+					<button type="button"
+							style=" "
+							class="modal-close"
+							data-bs-dismiss="modal"
+							aria-label="Close">
+						<svg viewBox="0 0 24 24">
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+					</button>
+				</div>
+				<div class="app-modal-header-actions">
+				</div>
+			</div>
+
+			<div class="modal-body p-2">
+
+				<div class="row g-3">
+
+					<!-- Style -->
+					<div class="col-md-3">
+						<label class="form-label">Style</label>
+						<input type="text"
+							   id="gspStyle"
+							   class="form-control">
+					</div>
+
+					<!-- PO -->
+					<div class="col-md-3">
+						<label class="form-label">PO No.</label>
+						<input type="text"
+							   id="gspPoNo"
+							   class="form-control">
+					</div>
+
+					<!-- Category -->
+					<div class="col-md-3">
+						<label class="form-label">Category</label>
+						<input type="text"
+							   id="gspCatgry"
+							   class="form-control">
+					</div>
+
+					<!-- Qty -->
+					<div class="col-md-3">
+						<label class="form-label">Qty</label>
+						<input type="number"
+							   id="gspQty"
+							   class="form-control">
+					</div>
+
+					<!-- Unit -->
+					<div class="col-md-3">
+						<label class="form-label">Unit</label>
+						<input type="text"
+							   id="gspUnit"
+							   class="form-control">
+					</div>
+
+					<!-- OP -->
+					<div class="col-md-3">
+						<label class="form-label">OP</label>
+						<select id="gspOp"
+								class="form-select">
+							<option value="">Select</option>
+							<option value="-">-</option>
+							<option value="+">+</option>
+						</select>
+					</div>
+
+					<!-- Rate -->
+					<div class="col-md-3">
+						<label class="form-label">Rate</label>
+						<input type="number"
+							   step="any"
+							   id="gspRate"
+							   class="form-control">
+					</div>
+
+					<!-- Amount -->
+					<div class="col-md-3">
+						<label class="form-label">Amount</label>
+						<input type="number"
+							   step="any"
+							   id="gspAmount"
+							   class="form-control">
+					</div>
+
+					<!-- FOB Rate -->
+					<div class="col-md-3">
+						<label class="form-label">FOB Rate</label>
+						<input type="number"
+							   step="any"
+							   id="gspFobRt"
+							   class="form-control">
+					</div>
+
+					<!-- FOB Value -->
+					<div class="col-md-3">
+						<label class="form-label">FOB Value</label>
+						<input type="number"
+							   step="any"
+							   id="gspFobVal"
+							   class="form-control">
+					</div>
+
+					<!-- DBK PC -->
+					<div class="col-md-3">
+						<label class="form-label">DBK PC</label>
+						<input type="number"
+							   step="any"
+							   id="gspDbkPc"
+							   class="form-control">
+					</div>
+
+					<!-- DBK Amount -->
+					<div class="col-md-3">
+						<label class="form-label">DBK Amount</label>
+						<input type="number"
+							   step="any"
+							   id="gspDbkAmt"
+							   class="form-control">
+					</div>
+
+					<!-- Weight -->
+					<div class="col-md-3">
+						<label class="form-label">Weight</label>
+						<input type="number"
+							   step="any"
+							   id="gspWt"
+							   class="form-control">
+					</div>
+
+					<!-- Weight Print -->
+					<div class="col-md-3">
+						<label class="form-label">Wt Prn</label>
+						<select id="gspWtPrn"
+								class="form-select">
+
+							<option value="">Select</option>
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+
+						</select>
+					</div>
+
+					<!-- TTL -->
+					<div class="col-md-3">
+						<label class="form-label">TTL</label>
+						<select id="gspTtl"
+								class="form-select">
+
+							<option value="">Select</option>
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+
+						</select>
+					</div>
+
+				</div>
+
+
+			</div>
+
+			<div class="modal-footer">
+
+				<button type="button"
+						class="btn btn-primary btn-sm"
+						id="btnOkGSPInvoice">
+					<svg width="14"
+						 height="14"
+						 viewBox="0 0 24 24"
+						 fill="none"
+						 stroke="currentColor"
+						 stroke-width="2"
+						 stroke-linecap="round"
+						 stroke-linejoin="round">
+
+						<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+						<polyline points="17 21 17 13 7 13 7 21"></polyline>
+						<polyline points="7 3 7 8 15 8"></polyline>
+
+					</svg>
+
+					Save
+				</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<script src="~/js/pages/shipping/gsp_invoice_generation.js" asp-append-version="true"></script>

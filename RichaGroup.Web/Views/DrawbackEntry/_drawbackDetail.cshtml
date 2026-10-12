@@ -1,0 +1,383 @@
+﻿<!-- ================= INVOICE HEADER ================= -->
+<div class="grid cols-6">
+
+    <!-- 1 -->
+    <div class="field">
+        <label>Invoice No</label>
+        <select id="ddlInvoiceNo">
+            <option selected value="">-- Search & Select AEPC Invoice --</option>
+        </select>
+    </div>
+
+    <!-- 2 -->
+    <div class="field">
+        <label>Invoice Date</label>
+        <input id="txtInvoiceDate" type="text" class="form-Flatdate" placeholder="DD/MM/YYYY" disabled>
+    </div>
+
+    <!-- 3 -->
+    <div class="field">
+        <label>Consignee Name</label>
+        <input id="txtConsigneeName" disabled>
+    </div>
+
+</div>
+
+<hr />
+
+<!-- ================= INVOICE DETAILS (Auto from Invoice) ================= -->
+<div class="grid cols-6">
+
+    <div class="field">
+        <label>Exchange</label>
+        <input id="txtExchange" class="num" disabled placeholder="0.00">
+    </div>
+
+    <div class="field">
+        <label>Invoice Value (INR)</label>
+        <input id="txtInvoiceValueINR" class="num" placeholder="0.00">
+    </div>
+
+    <div class="field">
+        <label>Total Qty</label>
+        <input id="txtTotalQty" class="num" placeholder="0.00">
+    </div>
+
+    <div class="field">
+        <label>Shipment Mode</label>
+        <input id="txtShipmentMode">
+    </div>
+
+    <div class="field">
+        <label>HS Code</label>
+        <input id="txtHSCode" disabled placeholder="&mdash;">
+    </div>
+
+</div>
+
+<hr />
+
+<!-- ================= MAIN FIELDS (Field Seq order) ================= -->
+<div class="grid cols-6">
+
+    <!-- 4 -->
+    <div class="field">
+        <label>Garments Type (RM)</label>
+        <select id="ddlGarmentsTypeRM">
+            <option selected value="">-- Select --</option>
+            <option value="RMG">RMG</option>
+            <option value="MUP">MUP</option>
+            <option value="FBR">FBR</option>
+            <option value="R/M">R/M</option>
+        </select>
+    </div>
+
+    <!-- 5 -->
+    <div class="field">
+        <label>License Type</label>
+        <input id="txtLicenseType" placeholder="&mdash;">
+    </div>
+
+    <!-- 5 (License Type 1) -->
+    <div class="field">
+        <label>License Type 1</label>
+        <input id="txtLicenseType1" placeholder="&mdash;">
+    </div>
+
+    <!-- 6 -->
+    <div class="field">
+        <label>Shipping Bill Number</label>
+        <input id="txtShippingBill">
+    </div>
+
+    <!-- 7 -->
+    <div class="field">
+        <label>Shipping Bill Date</label>
+        <input id="txtShippingDate" type="text" class="form-Flatdate" placeholder="DD/MM/YYYY">
+    </div>
+
+    <!-- 8 -->
+    <div class="field">
+        <label>Status</label>
+        <input id="txtSubmissionStatus" disabled placeholder="&mdash;">
+    </div>
+
+    <!-- 9 -->
+    <div class="field">
+        <label>Submission</label>
+        <select id="ddlSubmission">
+            <option selected value="">-- Select --</option>
+        </select>
+    </div>
+
+    <!-- 10 -->
+    <div class="field">
+        <label>Drawback Basis</label>
+        <select id="ddlDrawbackBasis">
+            <option selected value="">-- Select --</option>
+            <option value="%">%</option>
+            <option value="PC">PC (Per Piece)</option>
+            <option value="WT">WT</option>
+        </select>
+    </div>
+
+    <!-- 11 -->
+    <div class="field">
+        <label>Dbk Pc Rt</label>
+        <input id="txtDbkPcRt" class="num" placeholder="0.00">
+    </div>
+
+    <!-- 12 -->
+    <div class="field">
+        <label>Total FOB</label>
+        <input id="txtTotalFOB" class="num" placeholder="0.00">
+    </div>
+
+    <!-- 13 -->
+    <div class="field">
+        <label>Less Amount (INR)</label>
+        <input id="txtLessAmountINR" class="num" placeholder="0.00">
+    </div>
+
+    <!-- 14 -->
+    <div class="field">
+        <label>FOB For Drawback (INR)</label>
+        <input id="txtFOBForDrawbackINR" class="num" disabled placeholder="0.00">
+    </div>
+
+    <!-- 15 -->
+    <div class="field">
+        <label>Drawback Applied</label>
+        <input id="txtDrawbackApplied" class="num" disabled placeholder="0.00">
+    </div>
+
+    <!-- 16 -->
+    <div class="field">
+        <label>DBK Received Amount</label>
+        <input id="txtDBKReceivedAmount" class="num" placeholder="0.00">
+    </div>
+
+    <!-- 17 -->
+    <div class="field">
+        <label>Flag</label>
+        <input id="txtFlag" placeholder="&mdash;">
+    </div>
+
+    <!-- 18 -->
+    <div class="field">
+        <label>Statement Date</label>
+        <input id="txtStatementDate" type="text" class="form-Flatdate" placeholder="DD/MM/YYYY">
+    </div>
+
+    <!-- 19 -->
+    <div class="field">
+        <label>Realization Date</label>
+        <input id="txtRealizationDate" type="text" class="form-Flatdate" placeholder="DD/MM/YYYY">
+    </div>
+
+    <!-- 20 -->
+    <div class="field">
+        <label>DBK Received Date</label>
+        <input id="txtDBKReceivedDate" type="text" class="form-Flatdate" placeholder="DD/MM/YYYY">
+    </div>
+
+    <!-- 21 -->
+    <div class="field">
+        <label>Less Value Remarks</label>
+        <input id="txtLessValueRemarks" placeholder="Reason for deduction">
+    </div>
+
+    <!-- 22 -->
+    <div class="field">
+        <label>EP Copy Rate</label>
+        <input id="txtEPCopyRate" class="num" placeholder="0.00">
+    </div>
+
+    <!-- 23 -->
+    <div class="field">
+        <label>EP Copy Date</label>
+        <input id="txtEPCopyDate" type="text" class="form-Flatdate" placeholder="DD/MM/YYYY">
+    </div>
+
+    <!-- 24 -->
+    <div class="field">
+        <label>Leo Date</label>
+        <input id="txtLeoDate" type="text" class="form-Flatdate" placeholder="DD/MM/YYYY">
+    </div>
+
+    <!-- 25 -->
+    <div class="field">
+        <label>Country in EP Copy</label>
+        <select id="ddlCountryInEPCopy">
+            <option selected value="">-- Select --</option>
+        </select>
+    </div>
+
+    <!-- 26 -->
+    <div class="field">
+        <label>FCR No</label>
+        <input id="txtFCRNo" placeholder="&mdash;">
+    </div>
+
+    <!-- 27 -->
+    <div class="field">
+        <label>FCR Date</label>
+        <input id="txtFCRDate" type="text" class="form-Flatdate" placeholder="DD/MM/YYYY">
+    </div>
+
+    <!-- 28 -->
+    <div class="field">
+        <label>MAWB No.</label>
+        <input id="txtMAWBNo">
+    </div>
+
+    <!-- 29 -->
+    <div class="field">
+        <label>MAWB Date</label>
+        <input id="txtMAWBDate" type="text" class="form-Flatdate" placeholder="DD/MM/YYYY">
+    </div>
+
+    <!-- 30 -->
+    <div class="field">
+        <label>HAWB No.</label>
+        <input id="txtHAWBNo">
+    </div>
+
+     <!-- 49 -->
+    <div class="field">
+        <label>Vessel / Airline Name</label>
+        <input id="txtVesselAirline" placeholder="&mdash;">
+    </div>
+
+    <!-- 50 -->
+    <div class="field">
+        <label>Sailing/Flight Date</label>
+        <input id="txtSailingDate" type="text" class="form-Flatdate" placeholder="DD/MM/YYYY">
+    </div>
+
+    <!-- 31 -->
+    <div class="field">
+        <label>Port Code</label>
+        <select id="ddlPortCode">
+            <option selected value="">-- Select --</option>
+        </select>
+    </div>
+
+    <!-- 32 -->
+    <div class="field">
+        <label>Port</label>
+        <input id="txtPort" disabled placeholder="&mdash;">
+    </div>
+
+    <!-- 33 -->
+    <div class="field">
+        <label>Agent Code</label>
+        <select id="ddlAgentCode">
+            <option selected value="">-- Select --</option>
+        </select>
+    </div>
+
+    <!-- 34 -->
+    <div class="field">
+        <label>Agent Name</label>
+        <input id="txtAgentName" disabled placeholder="&mdash;">
+    </div>
+
+    <!-- 35 -->
+    <div class="field">
+        <label>Account Number</label>
+        <input id="txtAccountNumber" placeholder="&mdash;">
+    </div>
+
+    <!-- 36 -->
+    <div class="field">
+        <label>Bank</label>
+        <select id="ddlBank">
+            <option selected value="">-- Select --</option>
+        </select>
+    </div>
+
+    <!-- 37 -->
+    <div class="field">
+        <label>City</label>
+        <input id="txtCity" placeholder="&mdash;">
+    </div>
+
+    <!-- 38 -->
+    <div class="field">
+        <label>Entered on</label>
+        <input id="txtEnteredOn" type="text" class="form-Flatdate" placeholder="DD/MM/YYYY" disabled>
+    </div>
+
+    <!-- 39 -->
+    <div class="field">
+        <label>Update on</label>
+        <input id="txtUpdatedOn" type="text" class="form-Flatdate" placeholder="DD/MM/YYYY" disabled>
+    </div>
+
+    <!-- 40 -->
+    <div class="field">
+        <label>DBK Writeoff Date</label>
+        <input id="txtDBKWriteoffDate" type="text" class="form-Flatdate" placeholder="DD/MM/YYYY">
+    </div>
+
+    <!-- 41 -->
+    <div class="field">
+        <label>Shipment Basis</label>
+        <select id="ddlShipmentBasis">
+            <option selected value="">-- Select --</option>
+            <option value="FOB">FOB</option>
+            <option value="CIF">CIF</option>
+            <option value="C&F">C&amp;F</option>
+        </select>
+    </div>
+
+    <!-- 42 -->
+    <div class="field">
+        <label>Freight Type</label>
+        <select id="ddlFreightType">
+            <option selected value="">-- Select --</option>
+        </select>
+    </div>
+
+    <!-- 43 -->
+    <div class="field">
+        <label>Freight %</label>
+        <input id="txtFreightPercent" class="num" placeholder="0.00">
+    </div>
+
+    <!-- 44 -->
+    <div class="field">
+        <label>Freight Amount</label>
+        <input id="txtFreightAmount" class="num" placeholder="0.00">
+    </div>
+
+    <!-- 45 -->
+    <div class="field">
+        <label>Paper Filed on</label>
+        <input id="txtPaperFiledOn" type="text" class="form-Flatdate" placeholder="DD/MM/YYYY">
+    </div>
+
+    <!-- 46 -->
+    <div class="field">
+        <label>Remarks</label>
+        <input id="txtRemarks" placeholder="&mdash;">
+    </div>
+
+    <!-- 47 -->
+    <div class="field">
+        <label>Cargo Code</label>
+        <select id="ddlCargoCode">
+            <option selected value="">-- Select --</option>
+        </select>
+    </div>
+
+    <!-- 48 -->
+    <div class="field">
+        <label>Cargo Agent Name</label>
+        <input id="txtCargoAgentName" disabled placeholder="&mdash;">
+    </div>
+
+   
+
+</div>

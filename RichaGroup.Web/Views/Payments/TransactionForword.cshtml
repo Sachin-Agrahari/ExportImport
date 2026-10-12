@@ -1,0 +1,151 @@
+﻿@{
+    ViewData["Title"] = "Receive / Forward Request";
+    var isFabric = ViewBag.IsFabric;
+    var Type = ViewBag.Type;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} 
+
+<div class="bd_mainContainer" id="@Type">
+
+    <div class="page">
+
+        
+        <section class="card">
+            <div class="card-head">
+
+                <div class="d-flex flex-row ">
+
+                    <h2 class="mt-2"><span id="txtHeaderMain">Transaction Forward</span> (@Type)</h2>
+                </div>
+                <div class="d-flex gap-2">
+                    <div class="d-flex gap-2">
+                        @await Html.PartialAsync("Components/_CheckBoxComponent")
+                        @await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+                    </div>
+
+
+                    <button class="btn btn-primary btn-sm"
+                            id="rfrBtnAdd">
+                        ＋ Add
+                    </button>
+
+
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Save" id="rfrBtnSave">
+
+                        <img src="~/assets/icon/save.svg" alt="save-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Save</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm text-white d-flex flex-row align-center justify-content-center" title="Return" id="rfrBtnReturn">
+
+                        <span>Return</span>
+                    </button>
+
+                    <button class="btn-outline-danger d-flex flex-row align-center justify-content-center px-2" title="Delete" id="rfrBtnDelete">
+                        <img src="~/assets/icon/delete.svg" class="w-50 h-50 me-1 white-icon" />
+                      
+                        <span>Delete</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm  d-flex flex-row align-center justify-content-center" title="Print" id="rfrBtnPrint">
+
+                        <img src="~/assets/icon/print.svg" alt="print-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Print</span>
+                    </button>
+
+
+                </div>
+             </div>
+
+            <div class="card-body">
+
+                <div class="grid cols-5">
+
+                    <div class="field">
+                        <label class="form-label">Company</label>
+                        <input type="text" id="txtCompany" class="from-control" placeholder="Company..." />
+
+                    </div>
+                    <div class="field">
+                        <label class="form-label">User Name</label>
+                        <input type="text" id="txtUserName" class="from-control" value="RISHABHSHARMA" readonly />
+
+                    </div>
+                    <div class="field">
+                        <label class="form-label"> Department <span class="text-danger">*</span></label>
+                        <select id="ddlDepartment" class="form-select">
+                            <option value="">— Select —</option>
+                            <option value="DEPT (I)_USER">DEPT (I)_USER</option>
+                            <option value="DEPT (II)_REGISTER ENTRY">DEPT (II)_REGISTER ENTRY</option>
+                            <option value="DEPT (III)_EDP">DEPT (III)_EDP</option>
+                            <option value="DEPT (IV)_FILING">DEPT (IV)_FILING</option>
+                            <option value="COMPLETE">COMPLETE</option>
+                        </select>
+
+                    </div>
+                  </div>
+               </div>
+
+         </section>
+
+        <section class="card">
+            <div class="card-head">
+
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2">Transcation Details</h2>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="table-wrap">
+                    <table id="tblTrxForword" class="table-component">
+                        <thead>
+                            <tr>
+                                <th class="td-check"></th>
+                                <th>CHANAME</th>
+                                <th>CHADATE</th>
+                                <th>FORWARDER</th>
+                                <th>VENDOR</th>
+                                <th>CI NO</th>
+                                <th>CI DT.#</th>
+                                <th class="td-number">CIAMOUT$</th>
+                                <th>CURRENCY</th>
+                                <th>IMPORT DUTY</th>
+                                <th>CTRN$</th>
+                                <th>CTRNWEIGHT</th>
+                                <th>SHIPMODE</th>
+                                <th>FOB</th>
+                                <th>AWB</th>
+                                <th>AWBDATE#</th>
+                                <th>HAWB</th>
+                                <th>HAWBDT</th>
+                                <th>DEPT STATUS</th>
+                                <th>DEPTDATE</th>
+                                <th>SNO</th>
+                                <th>USERNAME</th>
+                                <th>COMPANY</th>
+                                <th>UNIT</th>
+                                @{
+                                    if (!isFabric)
+                                    {
+                                        <th>DB</th>
+                                    }
+                                }
+                            </tr>
+                        </thead>
+                        <tbody id="tblBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    </div> 
+
+</div>
+
+<script type="module" src="~/js/pages/import/transactionforword.js" asp-append-version="true"></script>
+ 
+@* <script type="module" src="~/js/pages/Payments/TransactionForword.js" asp-append-version="true"></script> *@
+

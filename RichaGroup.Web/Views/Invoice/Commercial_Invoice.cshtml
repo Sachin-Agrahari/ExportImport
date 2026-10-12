@@ -1,0 +1,889 @@
+﻿@{
+    ViewData["Title"] = "Commercial Invoice";
+    var isFabric = ViewBag.IsFabric;
+    var Type = ViewBag.Type;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .cols-6 {
+        grid-template-columns: repeat(6,minmax(0,1fr));
+    }
+
+    .d-none {
+        display: none !important;
+    }
+</style>
+
+<div class="bd_mainContainer" id="@Type">
+
+    <div class="page">
+
+        <section class="card">
+
+            <!-- HEADER -->
+            <div class="card-head">
+                <div class="d-flex flex-row " style="width: 163px;">
+
+                    <h2 class="mt-2" id="txtHeaderMain">Commercial Invoice</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+
+                    <span id="ciStatusBadge" class="badge rounded-pill text-bg-success p-auto m-auto fs-6">
+                        Fresh
+                    </span>
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="New" id="btnOpenUploadDoc">
+
+                        <span>Upload Document</span>
+                    </button>
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="New" id="btnPerferomaNew">
+
+                        <img src="~/assets/icon/plus.svg" alt="save-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Add</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Edit" id="btnPerferomaEdit">
+
+                        <img src="~/assets/icon/edit.svg" alt="edit-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Edit</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Save" id="performanceBtnSave">
+
+                        <img src="~/assets/icon/save.svg" alt="save-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Save</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Update" id="performanceBtnConfirm">
+                        <span>Delete</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm  d-flex flex-row align-center justify-content-center" title="Print" id="performanceBtnPrint">
+
+                        <img src="~/assets/icon/print.svg" alt="print-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Print</span>
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="grid cols-8">
+                    <div class="field">
+                        <div class="col-2">
+                            <div class="d-flex align-items-center justify-content-center gap-1 mb-1">
+                                <label class="form-label mb-0 pe-2">
+                                    CI# <span class="text-danger" style="color:red !important;">*</span>
+                                </label>
+
+                                <input type="checkbox" id="ciCheckboxCiNo" class="" />
+                            </div>
+                        </div>
+                         <input type="text"
+                                id="txtCiNumber"
+                                class="form-control"
+                                value="YWI-25B026RCH"
+                                readonly />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Supplier<span class="text-danger" style="color:red !important;">*</span></label>
+                       
+                        <select id="ddlSupplier" class="form-select">
+                            <option value="1" selected>YOON WORLD</option>
+                            <option value="2">PROLOGIC (HK) LIMITED</option>
+                            <option value="3">ORIENT ACCESSORIES LTD</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <div class="col-4">
+                            <div class="d-flex align-items-center justify-content-center gap-1 mb-1 ms-2">
+                               
+                                <label class="form-label mb-0 pe-5">
+                                    Pr.Inv. 
+                                </label>
+                                <input type="checkbox" id="chkPrInv" class="" />
+
+                            </div>
+                        </div>
+                        <input type="text"
+                               id="txtPrInvNo"
+                               class="form-control"
+                               value=""
+                                />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Dt <span class="text-danger" style="color:red !important;">*</span></label>
+                        <input type="text" id="txtDated" class="form-control" value="01-Jul-2025" />
+                    </div>
+                   @*  <div class="field">
+                        <div class="col-2">
+                            <div class="d-flex align-items-center justify-content-center gap-1 mb-1">
+
+                                <label class="form-label mb-0 pe-2">
+                                   Po <span class="text-danger" style="color:red !important;">*</span>
+                                </label>
+                                <input type="checkbox" id="chkPo" class="" />
+
+                            </div>
+                        </div>
+                        <input type="text"
+                               id="txtPoNo"
+                               class="form-control"
+                               value="" />
+                    </div>
+                    
+                    <div class="field">
+                        <div class="d-flex align-items-center justify-content-start gap-0 mb-1 me-3">
+                            <label class="form-label mb-0 pe-5">
+                                Accessory <span class="text-danger">*</span>
+                            </label>
+
+                            <input type="checkbox"
+                                   id="chkAccessory"
+                                   class="me-5">
+                        </div>
+
+                        <select id="ddlAccessory" class="form-select">
+                            <option value="EX WORKS" selected>EX WORKS</option>
+                            <option value="FOB">FOB</option>
+                            <option value="CIF">CIF</option>
+                        </select>
+
+                    </div>
+                    <div class="field">
+                        <div class="col-4">
+                            <div class="d-flex align-items-center justify-content-center gap-1 mb-1 ms-1">
+
+                                <label class="form-label mb-0 pe-3">
+                                   Type <span class="text-danger" style="color:red !important;">*</span>
+                                </label>
+                                <input type="checkbox" id="chkType" class="" />
+
+                            </div>
+                        </div>
+                        <select id="ddlType" class="form-select">
+                            <option value="EX WORKS" selected>EX WOI</option>
+                            <option value="FOB">FOB</option>
+                            <option value="CIF">CIF</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <div class="col-2">
+                            <div class="d-flex align-items-center justify-content-center gap-1 mb-1 ms-3">
+
+                                <label class="form-label mb-0 pe-4">
+                                   Size <span class="text-danger" style="color:red !important;">*</span>
+                                </label>
+                                <input type="checkbox" id="chkSize" class="" />
+
+                            </div>
+                        </div>
+                        <select id="ddlSize" class="form-select">
+                            <option value="EX WORKS" selected>EX WOI</option>
+                            <option value="FOB">FOB</option>
+                            <option value="CIF">CIF</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <div class="col-2">
+                            <div class="d-flex align-items-center justify-content-center gap-1 mb-1 ms-3">
+
+                                <label class="form-label mb-0 pe-4">
+                                   Col <span class="text-danger" style="color:red !important;">*</span>
+                                </label>
+                                <input type="checkbox" id="chkCol" class="" />
+
+                            </div>
+                        </div>
+                        <input type="text" id="txtCol" class="form-control po-number-field" value="" />
+                    </div>
+ *@
+                    <div class="field">
+                        <label class="form-label">Ship-Via</label>
+                        <select id="ddlShipVia" class="form-select">
+                            <option value="AIR" selected>AIR</option>
+                            <option value="SEA">SEA</option>
+                            <option value="COURIER">COURIER</option>
+                            <option value="BYROAD">BY ROAD</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Shipment-Term</label>
+                        <select id="ddlShipmentTerm" class="form-select">
+                            <option value="EX WORKS" selected>EX WOI</option>
+                            <option value="FOB">FOB</option>
+                            <option value="CIF">CIF</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">PayTerms</label>
+                        <select id="ddlPayTerms" class="form-select">
+                            <option value="TT" selected>TT</option>
+                            <option value="LC">LC</option>
+                            <option value="DA">DA</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Carton#</label>
+                        <input type="text" id="txtCartonNo" class="form-control" value="23" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Carton Wt.</label>
+                        <input type="text" id="txtCartonWt" class="form-control" value="580" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Cha Name</label>
+                        <select id="ddlChaName" class="form-select">
+                            <option value="COMMITTED" selected>COMMITTED</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Fwdr</label>
+                        <select id="ddlFwdr" class="form-select">
+                            <option value="RISING SON LOGISTIC" selected>RISING SON LOGISTIC</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Transporter</label>
+                        <input type="text" id="txtTransporter" class="form-control" value="" />
+                    </div>
+
+                    <!-- NEW: sirf SEA aur BYROAD pe dikhenge -->
+                    <div class="field lrField d-none">
+                        <label class="form-label">LR No</label>
+                        <input type="text" id="txtLRNo" class="form-control" value="" />
+                    </div>
+                    <div class="field lrField d-none">
+                        <label class="form-label">LR Date</label>
+                        <input type="text" id="txtLRDate" class="form-input form-Flatdate" placeholder="07-Jul-2025" />
+                    </div>
+
+                  </div>
+            </div>
+
+        </section>
+        <div class="d-flex gap-2 w-100">
+            <section class="card w-50" id="shipRefLeftCard">
+                <div class="card-head">
+                    <div>
+                        <span class="tick"></span>
+                        <h2 class="mt-2">Shipment Reference</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="grid cols-4">
+
+                        @for (int i = 1; i <= 4; i++)
+                        {
+                            @* HOUSE: HAWB / HBL / AWB *@
+                            <div class="field">
+                                <label class="form-label lblHouse" data-index="@i">HAWB-@i</label>
+                                <input type="text" id="txtHouse@(i)" class="form-control" value="" />
+                            </div>
+                            <div class="field">
+                                <div class="d-flex align-items-center justify-content-center gap-1 mb-1 ms-1">
+                                    <label class="form-label mb-0 pe-3 ms-2">Dt</label>
+                                    <input type="checkbox" id="chkHouse@(i)Dt" />
+                                </div>
+                                <input type="text" id="txtHouse@(i)Dt" class="form-input form-Flatdate" placeholder="07-Jul-2025" />
+                            </div>
+
+                            @* MASTER: MAWB / MBL *@
+                            <div class="field">
+                                <label class="form-label lblMaster" data-index="@i">MAWB-@i</label>
+                                <input type="text" id="txtMaster@(i)" class="form-control" value="" />
+                            </div>
+                            <div class="field">
+                                <div class="d-flex align-items-center justify-content-center gap-1 mb-1 ms-1">
+                                    <label class="form-label mb-0 pe-3 ms-2">Dt</label>
+                                    <input type="checkbox" id="chkMaster@(i)Dt" />
+                                </div>
+                                <input type="text" id="txtMaster@(i)Dt" class="form-input form-Flatdate" placeholder="07-Jul-2025" />
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="card w-100">
+                <div class="card-head">
+
+                    <div>
+                        <span class="tick"></span>
+                        <h2 class="mt-2">Shipment Reference</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="grid cols-5">
+                        <div class="field">
+                            <label class="form-label">Bond / Duty</label>
+                            <select onchange="ManageShipmentReference()" id="ddlBond_Duty" class="form-select">
+                                <option value="BOND">BOND</option>
+                                <option value="DUTY">DUTY</option>
+                            </select>
+                        </div>
+
+
+                        <div class="field">
+                            <label class="form-label">Certificate#</label>
+                            <input type="text" id="ciCertificateNo" class="form-control manageShipment" value="06AALCR4331D1ZM2526004" />
+                        </div>
+                        <div class="field">
+                            <label class="form-label">BOE #</label>
+                            <input type="text" id="ciBoeNo" class="form-control manageShipment" value="3135664" />
+                        </div>
+                        <div class="field">
+                            <div class="col-2">
+                                <div class="d-flex align-items-center justify-content-center gap-1 mb-1 ms-1">
+
+                                    <label class="form-label mb-0 pe-3 ms-2">
+                                        Dt
+                                    </label>
+                                    <input type="checkbox" id="ciCheckboxBoeDt" class="manageShipment" />
+
+                                </div>
+                            </div>
+                            <input type="text" id="ciBoeDt" class="form-input form-Flatdate manageShipment" placeholder="07-Jul-2025" />
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Bond Value in (INR)</label>
+                            <input type="text" id="ciBondValue" class="form-control manageShipment" value="147546" />
+                        </div>
+                        <div class="field">
+                            <label class="form-label">Port of Loading</label>
+                            <select id="ciPortOfLoading" class="form-select manageShipment">
+                                <option value="HONG KONG" selected>HONG KONG</option>
+                            </select>
+                        </div>
+                       
+                        <div class="field">
+                            <label class="form-label">Bond #</label>
+                            <input type="text" id="ciBondNo" class="form-control manageShipment" value="2002444129" />
+                        </div>
+                        <div class="field">
+                            <div class="col-2">
+                                <div class="d-flex align-items-center justify-content-center gap-1 mb-1 ms-1">
+
+                                    <label class="form-label mb-0 pe-3 ms-2">
+                                        Dt
+                                    </label>
+                                    <input type="checkbox" id="ciCheckboxBondDt" class="manageShipment" />
+
+                                </div>
+                            </div>
+                            <input type="text" id="ciBondDt" class="form-input form-Flatdate manageShipment" placeholder="07-Jul-2025" />
+                        </div>
+                        <div class="field">
+                            <label class="form-label">Assessable Value</label>
+                            <input type="text" id="ciAssessableValue" class="form-control manageShipment" value="638726" />
+                        </div>
+                        <div class="field">
+                            <label class="form-label">Port of Destination</label>
+                            <select id="ciPortOfDestination" class="form-select manageShipment">
+                                <option value="NEW DELHI" selected>NEW DELHI</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label class="form-label">Custom STN : Port</label>
+                            <select id="ciCustomStnPort" class="form-select manageShipment">
+                                <option value="INDEL4" selected>INDEL4</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label class="form-label">Ad Code</label>
+                            <input type="text" id="ciAdCode" class="form-control manageShipment" value="0510005" />
+                        </div>
+                       
+
+                    </div>
+                </div>
+
+            </section>
+        </div>
+
+        <section class="card">
+            <div class="card-head">
+
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2">Commerical Invoice Details</h2>
+                </div>
+                 <div class="d-flex gap-2">
+                    <span class="form-label mx-2" style="color: var(--clr-danger)">
+                        Total Qty : <b id="ciTotalQtyDisplay">4025</b>&nbsp;&nbsp;
+                        Total Amount : <b id="ciTotalAmtDisplay">6295.0000</b>
+                    </span>
+
+                    <button class="btn btn-primary btn-sm" id="btnExecute">
+                        Execute
+                    </button>
+
+                    @{
+                        if (isFabric)
+                        {
+                            <button class="btn btn-outline btn-sm" id="btnQtyAllocate">
+                                Qty Allocate
+                            </button>
+                        }
+                    }
+
+                    <button class="btn btn-outline-danger btn-sm px-3" id="btnRefresh">
+                        Refresh
+                    </button>
+
+                    </div>
+
+
+            </div>
+            <div class="card-body">
+                <div class="table-wrap">
+                    <table id="tblCommericalInv" class="table-component">
+                        <thead>
+                            <tr>
+                                <th class="td-check">
+                                    <input type="checkbox" id="selectAll">
+                                </th>
+
+                                <th>PI No</th>
+                                <th>PO No</th>
+                                <th>Item</th>
+                                <th>ItemDesc</th>
+                                @{
+                                    if (isFabric)
+                                    {
+                                        <th>Quality</th>
+                                    }
+                                    else
+                                    {
+                                        <th>Size</th>
+                                    }
+                                }
+                                <th>Colour</th>
+                                <th class="td-number">Qty</th>
+                                <th class="td-number">Rate</th>
+                                <th>PI/UOM</th>
+                                <th>CI/UOM</th>
+                                <th>Amount</th>
+                                <th>Curr</th> 
+                                <th class="td-number">RtType</th>
+                                <th>Req No</th>
+                                <th>Buyer</th>
+                                <th>Style</th> 
+                                <th>ItSuplr</th> 
+                                <th>Curr</th>
+                                <th class="td-number">Amount</th>
+                                <th class="td-number">Others</th> 
+                                <th>CIUOM</th>
+                                <th>CONV</th>
+                                <th>ACQTY</th> 
+                                <th>S_ITEMCODE</th>
+                                <th>Process</th>
+                                <th>Width</th>
+                                <th>Fin Width</th>
+                                <th>GSM From</th>
+                                <th>GSM To</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-head">
+                <div class="d-flex flex-row " style="width: 163px;">
+
+                    <h2 class="mt-2" id="txtHeaderMain">Total And Changes</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+
+                    <button class="btn btn-secondary btn-sm" id="bthOtherCharges">Other Charges</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="grid cols-10">
+                    <div class="field">
+                        <label class="form-label">Total Amount</label>
+                        <input type="text" id="ciTotalAmount" class="form-control" value="5796.0000" readonly />
+
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Net Amount</label>
+                        <input type="text" id="ciNetAmount" class="form-input" value="5796.00" readonly />
+
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Currency</label>
+                            <select id="ciCurrency" class="form-select">
+                                <option value="US$" selected>US$</option>
+                                <option value="INR">INR</option>
+                                <option value="EUR">EUR</option>
+                            </select>
+                    </div>
+                    <div class="field">
+                            <label class="form-label">Calculation(+/-)</label>
+                            <select id="ciPlusMinus" class="form-select">
+                                <option value="+" selected>+</option>
+                                <option value="-">-</option>
+                            </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Amount (+/-)</label>
+                        <input type="text" id="ciPlusMinusAmt" class="form-control" value="0.0000" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Oth. Charges</label>
+                        <input type="text" id="ciOthCharges" class="form-input" value="6.8000" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Ded.</label>
+                        <input type="text" id="ciDeduction" class="form-control" value="0.0000" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Disc. (if any)</label>
+                        <input type="text" id="ciDiscount" class="form-control" value="0.0000" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Amt to be Paid</label>
+                        <input type="text" id="ciAmountToBePaid" class="form-control" value="5802.80" readonly />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Currency</label>
+                        <select id="ciCurrency2" class="form-select">
+                            <option value="US$" selected>US$</option>
+                            <option value="INR">INR</option>
+                            <option value="EUR">EUR</option>
+                        </select>
+                    </div>
+                 </div>
+             </div>
+        </section>
+    
+
+    </div>
+</div>
+
+<div class="modal fade" id="otherChargesModal" tabindex="-1" aria-labelledby="otherChargesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" style="max-width:460px; width:460px">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="otherChargesModalLabel">
+                        Other Charges
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                <div class="table-responsive">
+                    <div class="table-scroll table-scroll--fixed" style="height:23vh !important;">
+                        <table id="tblOtherCharges" class="table-component">
+                            <thead>
+                                <tr>
+                                    <th>SR NO</th>
+                                    <th>Charges Type</th>
+                                    <th>Charges</th>
+                                    <th>Currency</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>
+                                        <select id="ddlCharges" class="table-input performance-currency-select">
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtCharges" />
+                                    </td>
+                                    <td>
+                                        <select id="ddlChargesCurrency" class="table-input performance-currency-select">
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>
+                                        <select id="ddlCharges" class="table-input performance-currency-select">
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtCharges" />
+                                    </td>
+                                    <td>
+                                        <select id="ddlChargesCurrency" class="table-input performance-currency-select">
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="QtyAllocationModal" tabindex="-1" aria-labelledby="QtyAllocationModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header custom-modal-header">
+                <div class="modal-header-text">
+                    <span class="modal-title" id="QtyAllocationModal">
+                        Allocate Quantity
+                    </span>
+                </div>
+
+                <button type="button" class="btn btn-outline">
+                    Save
+                </button>
+                <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="table-scroll table-scroll--fixed" style="height:23vh !important;">
+                    <table id="tblOtherCharges" class="table-component">
+                        <thead>
+                            <tr>
+                                <th>Item Desc</th>
+                                <th>Process</th>
+                                <th class="td-number">Rate</th>
+                                <th class="td-number">PI Qty</th>
+                                <th>UOM</th>
+                                <th class="td-number">Allocate Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tBodyAllocation"> </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="UploadModal" tabindex="-1" aria-labelledby="UploadModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="fileUploadModalLabel">
+                        Upload Files <span id="mainTitle"></span>
+                    </div>
+
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2" style="overflow-x:hidden">
+                <div class="row">
+
+                  
+                    <div class="col-2">
+                        <label for="ddlUploadDocType" class="form-label">
+                            Document Type
+                        </label>
+
+                        <select class="form-input w-100" id="ddlDocType">
+                            <option value="Boe">Boe</option>
+                            <option value="Invoice">Invoice</option>
+                        </select>
+                    </div>
+                    <div class="col-8"></div>
+                    <div class="col-2 d-flex gap-2">
+                        <button type="button"
+                                class="btn btn-primary btn-sm mt-4"
+                                id="btnView">
+                            View
+                        </button>
+                    </div>
+
+                </div>
+
+                <div id="dropZone"
+                     class="fu-dropzone mt-2"
+                     tabindex="0">
+
+                    <input type="file" id="fileUploadInput" multiple hidden />
+
+                    <!-- Dropzone Content -->
+
+                    <div id="UploadZoneContent">
+
+                        <p class="fu-dropzone-text">
+                            Drag &amp; drop files here, paste (Ctrl+V), or
+
+                            <button type="button"
+                                    id="btnUploadBrowse"
+                                    class="btn btn-sm btn-outline-primary fu-browse">
+                                Browse
+                            </button>
+                        </p>
+
+                        <p class="fu-dropzone-subtext">
+                            You can select multiple files at once
+                        </p>
+
+                    </div>
+
+                    <!-- File Preview -->
+
+                    <div id="UploadfilePreviewContainer"
+                         class="file-preview-container d-none">
+
+                        <div id="UploadfilePreviewList"
+                             class="file-preview-list">
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="fu-table-wrapper mt-4">
+
+                    <table class="table table-hover align-middle table-bordered" id="tblFileUpload">
+
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    <input class="chkAll" type="checkbox" />
+                                </th>
+                                <th>Menu Name</th>
+                                <th>Doc Name</th>
+                                <th>Doc Title</th>
+                                <th>Doc Type</th>
+                                <th>Doc Count</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="uploadedFileTableBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="module" src="~/js/pages/import/commercial_invoice.js" asp-append-version="true"></script>

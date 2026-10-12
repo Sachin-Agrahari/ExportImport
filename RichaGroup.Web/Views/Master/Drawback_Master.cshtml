@@ -1,0 +1,223 @@
+﻿@{
+	ViewData["Title"] = "Drawback Master";
+	ViewData["Heading"] = "Drawback Details Master";
+}
+
+
+
+
+<div class="bd_mainContainer">
+	<div class="page">
+		<!-- Bond entries -->
+		<section class="card">
+
+			<!-- HEADER -->
+			<div class="card-head">
+
+				<div>
+					<span class="tick"></span>
+					<h2 class="mt-2" id="txtHeaderMain">Drawback Master</h2>
+				</div>
+
+				<div class="d-flex gap-2">
+					<div class="d-flex gap-2">
+						@await Html.PartialAsync("Components/_CheckBoxComponent")
+						@await Html.PartialAsync("Components/_UploadAndViewButtons")
+						<button class="btn btn-primary btn-sm"
+								id="btnAdd">
+							＋ Add
+						</button>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="card-body">
+
+				<div class="table-wrap table-responsive" style="max-height:790px; overflow-y:auto !important;">
+					<table id="tblDrawbackMaster" class="display" style="width:100%; height:100%">
+						<thead>
+							<tr>
+								<th style="width:50px !important; text-align:right !important;">Action</th>
+								<th class="c">DBK_FROM_DATE</th>
+								<th class="c">DBK_To_DATE</th>
+								<th class="c">DBK_Code</th>
+								<th>DBK_Serial No</th>
+								<th>DBK_Item_Desc</th>
+								<th>DBK_Unit_Measurment</th>
+								<th  style="text-align:right !important;">DBK_Percantage</th>
+								<th  style="text-align:right !important;">DBK_Per_Piece_Capping</th>
+								<th  style="text-align:right !important;">DBK_Perct_SPL_ADV_LIC</th>
+								<th  style="text-align:right !important;">DBK_PER_PIECE_CAP_SPL_ADV_LIC</th>
+								<th >REMARKS</th>
+							</tr>
+						</thead>
+						<tbody id="tblbody_DrawbackMaster"></tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+
+
+<div class="modal fade" id="addDrawbackMasterModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-xl">
+		<div class="modal-content modal-box">
+			<div class="modal-header">
+				<div class="modal-header-text">
+					<div class="modal-title" id="addMenuModalLabel">
+						Drawback Master
+					</div>
+				</div>
+				<div class="d-flex gap-2">
+
+					<button type="button"
+							style=" "
+							class="modal-close"
+							data-bs-dismiss="modal"
+							aria-label="Close">
+						<svg viewBox="0 0 24 24">
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+					</button>
+				</div>
+				<div class="app-modal-header-actions">
+				</div>
+			</div>
+
+			<div class="modal-body p-2">
+
+<div class="grid cols-4">
+
+    <div class="field">
+        <label for="txtDBK_From_Date_DrawbackMaster">DBK From Date</label>
+        <input type="date"
+               id="txtDBK_From_Date_DrawbackMaster"
+               class="form-control" />
+    </div>
+
+    <div class="field">
+        <label for="txtDBK_To_Date_DrawbackMaster">DBK To Date</label>
+        <input type="date"
+               id="txtDBK_To_Date_DrawbackMaster"
+               class="form-control" />
+    </div>
+
+    <div class="field">
+        <label for="txtCode_DrawbackMaster">DBK Code</label>
+        <input type="text"
+               id="txtCode_DrawbackMaster"
+               class="form-control"
+               placeholder="Enter DBK Code" />
+    </div>
+
+    <div class="field">
+        <label for="txtSINo_DrawbackMaster">DBK Serial No</label>
+        <input type="text"
+               id="txtSINo_DrawbackMaster"
+               class="form-control"
+               placeholder="Enter Serial No" />
+    </div>
+
+    <div class="field">
+        <label for="txtDBK_Item_Desc_DrawbackMaster">DBK Item Description</label>
+        <input type="text"
+               id="txtDBK_Item_Desc_DrawbackMaster"
+               class="form-control"
+               placeholder="Enter Item Description" />
+    </div>
+
+    <div class="field">
+        <label for="txtDBKUnit_DrawbackMaster">DBK Unit Measurement</label>
+        <input type="text"
+               id="txtDBKUnit_DrawbackMaster"
+               class="form-control"
+               placeholder="Enter Unit Measurement" />
+    </div>
+
+    <div class="field">
+        <label for="txtDBK_Pc_DrawbackMaster">DBK Percentage</label>
+        <input type="number"
+               id="txtDBK_Pc_DrawbackMaster"
+               class="form-control"
+               placeholder="Enter Percentage"
+               step="0.01" />
+    </div>
+
+    <div class="field">
+        <label for="txtDBK_Cap_DrawbackMaster">DBK Per Piece Capping</label>
+        <input type="number"
+               id="txtDBK_Cap_DrawbackMaster"
+               class="form-control"
+               placeholder="Enter Per Piece Capping"
+               step="0.01" />
+    </div>
+
+    <div class="field">
+        <label for="txtDBK_pc_a_DrawbackMaster">DBK Percentage SPL ADV LIC</label>
+        <input type="number"
+               id="txtDBK_pc_a_DrawbackMaster"
+               class="form-control"
+               placeholder="Enter SPL ADV LIC Percentage"
+               step="0.01" />
+    </div>
+
+    <div class="field">
+        <label for="txtDBK_cap_a_DrawbackMaster">DBK Per Piece Cap SPL ADV LIC</label>
+        <input type="number"
+               id="txtDBK_cap_a_DrawbackMaster"
+               class="form-control"
+               placeholder="Enter SPL ADV LIC Capping"
+               step="0.01" />
+    </div>
+
+    <div class="field">
+        <label for="txtRemarks_DrawbackMaster">Remarks</label>
+        <input type="text"
+               id="txtRemarks_DrawbackMaster"
+               class="form-control"
+               placeholder="Enter Remarks" />
+    </div>
+
+</div>
+
+				
+			</div>
+
+
+			<div class="modal-footer">
+
+				<button type="button"
+						class="btn btn-primary btn-sm"
+						id="btnSave">
+
+					<svg width="14"
+						 height="14"
+						 viewBox="0 0 24 24"
+						 fill="none"
+						 stroke="currentColor"
+						 stroke-width="2"
+						 stroke-linecap="round"
+						 stroke-linejoin="round">
+
+						<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+						<polyline points="17 21 17 13 7 13 7 21"></polyline>
+						<polyline points="7 3 7 8 15 8"></polyline>
+
+					</svg>
+
+					Save
+				</button>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+<script src="~/js/pages/mastersjs/drawback_master.js" asp-append-version="true"></script>

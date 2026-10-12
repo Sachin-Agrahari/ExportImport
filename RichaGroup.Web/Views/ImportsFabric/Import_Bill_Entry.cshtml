@@ -1,0 +1,820 @@
+﻿@{
+	ViewData["Title"] = "Import Fabric Machinery Courier Bill Entry";
+	ViewData["Heading"] = "Import Fabric Machinery Courier Bill Entry";
+}
+
+
+<div class="bd_mainContainer">
+
+    <div class="page">
+
+        <section class="card">
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Import Bill Entry</h2>
+                </div>
+                 
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave_BOEAgainstFabric"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+                    <button type="button"
+                            class="btn btn-outline-danger btn-sm"
+                            id="btnRefresh_BOEAgainstFabric">
+                        ↻ Refresh
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="grid cols-6">
+
+                    <div class="field">
+                        <label id="lb_Parties_location">
+                            Entry No
+                            <button id="btnEntryHelp" class="help-link">Help</button>
+                        </label>
+                        <input type="text" id="txtEntry" placeholder="Enter Entry Number.." />
+                    </div>
+                    <div class="field">
+                        <label> Date</label>
+
+                        <input type="text"
+                               id="txtDt_DutyBillEntry"
+                               placeholder="Select date.." />
+                    </div>
+                    <div class="field">
+                        <label>Inv Date</label>
+
+                        <input type="text"
+                                class="form-Flatdate"
+                               id="txtInvDt_DutyBillEntry"
+                               placeholder="Select date.." />
+                    </div>
+                    <div class="field">
+                        <label>Bill Type</label>
+
+                      <select class="" >
+                            <option value="Fabric">Fabric</option>
+                            <option value="Machinery">Machinery</option>
+                            <option value="Courier">Courier</option>
+                      </select>
+                    </div>
+                
+                    </div>
+                   </div>
+                </section>
+
+        <section class="card gsp-table-card">
+
+            <div class="d-flex justify-content-end m-1 align-items-end">
+                <button type="button"
+                        class="btn btn-primary btn-sm fs-6 me-3"
+                        id="btnBOEDetails_EntyImportPaymt">
+                   BOE Details
+                </button>
+                <button type="button"
+                        class="btn btn-primary btn-sm fs-6 me-3"
+                        id="btnServiceBill_EntyImportPaymt">
+                  Service Bill Tagging
+                </button>
+                <button type="button"
+                        class="btn btn-primary btn-sm fs-6"
+                        id="btnAdd_EntyImportPaymt">
+                    Add Row
+                </button>
+                
+            </div>
+
+            <div class="card-body px-2">
+
+                <div class="gsp-table-scroll">
+
+                    <table id="tblDutyBillEntry"
+                           class="display"
+                           style="width:100%">
+
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Sr No</th>
+                                <th>Supplier</th>
+                                <th>Invoice No</th>
+                                <th>Invoice Date</th>
+                                <th>Buyer Name</th>
+                                <th>Style</th>
+                                <th>Desc</th>
+                                <th>Qty</th>
+                                <th>UOM</th>
+                                <th>Currency</th>
+                                <th>Price</th>
+                                <th>Surcharge</th>
+                                <th>FOB Value</th>
+                                <th>Awb No</th>
+                                <th>Awb Dt</th>
+                                <th>KG</th>
+                                <th>Roll</th>
+                                <th>CBM</th>
+                             
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyDutyBillEntry">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        @* footer of import bill  *@
+<section class="card border-0 shadow-sm mt-3" id="importFabricFooterSection">
+
+    <!-- HEADER -->
+    <div class="card-header py-2 px-3">
+        <div class="d-flex align-items-center gap-2">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+            <span class="fw-semibold">Import Bill Footer</span>
+        </div>
+    </div>
+
+    <div class="card-body bg-light p-1">
+
+        <div class="row g-3">
+
+            <!-- LEFT : TAX DETAILS -->
+            <div class="col-lg-6">
+
+                <div class="card border shadow-sm h-100">
+
+                    <div class="card-header bg-white py-2">
+                        <span class="fw-semibold text-primary">
+                            Tax Details
+                        </span>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- SAC CODE -->
+                        <div class="row align-items-center mb-1 field">
+                            <label class="col-sm-5 fs-6 col-form-label fw-semibold">
+                                SAC Code
+                            </label>
+
+                            <div class="col-sm-7">
+                                <input type="text"
+                                       id="txtSacCode_EntyImportPaymt"
+                                       class="form-control form-control-sm"
+                                       placeholder="Enter SAC Code">
+                            </div>
+                        </div>
+
+                        <!-- IGST -->
+                        <div class="row align-items-center mb-1 field">
+                            <label class="col-sm-5 fs-6 col-form-label fw-semibold">
+                                IGST %
+                            </label>
+
+                            <div class="col-sm-7">
+                                <div class="input-group input-group-sm">
+                                    <input type="text"
+                                           id="txtIgstPer_EntyImportPaymt"
+                                           class="form-control text-end"
+                                           value="0.00">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CGST -->
+                        <div class="row align-items-center mb-1 field">
+                            <label class="col-sm-5 fs-6 col-form-label fw-semibold">
+                                CGST %
+                            </label>
+
+                            <div class="col-sm-7">
+                                <div class="input-group input-group-sm">
+                                    <input type="text"
+                                           id="txtCgstPer_EntyImportPaymt"
+                                           class="form-control text-end"
+                                           value="0.00">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SGST -->
+                        <div class="row align-items-center field">
+                            <label class="col-sm-5 fs-6 col-form-label fw-semibold">
+                                SGST %
+                            </label>
+
+                            <div class="col-sm-7">
+                                <div class="input-group input-group-sm">
+                                    <input type="text"
+                                           id="txtSgstPer_EntyImportPaymt"
+                                           class="form-control text-end"
+                                           value="0.00">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT : AMOUNT DETAILS -->
+            <div class="col-lg-6">
+
+                <div class="card border shadow-sm h-100">
+
+                    <div class="card-header bg-white py-2">
+                        <span class="fw-semibold text-success">
+                            Amount Details
+                        </span>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- BASIC -->
+                        <div class="row align-items-center mb-1">
+                            <label class="col-sm-5 col-form-label fw-semibold">
+                                Basic Amount
+                            </label>
+
+                            <div class="col-sm-7 field">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">
+                                        ₹
+                                    </span> 
+
+                                    <input type="text"
+                                           id="txtBasicAmt_EntyImportPaymt"
+                                           class="form-control text-end"
+                                           value="0.00"
+                                           readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- IGST -->
+                        <div class="row align-items-center mb-1 field">
+                            <label class="col-sm-5 fs-6 col-form-label fw-semibold">
+                                IGST Amount
+                            </label>
+
+                            <div class="col-sm-7">
+                                <input type="text"
+                                       id="txtIgstAmt_EntyImportPaymt"
+                                       class="form-control form-control-sm text-end bg-light"
+                                       value="0.00"
+                                       readonly>
+                            </div>
+                        </div>
+
+                        <!-- CGST -->
+                        <div class="row align-items-center mb-1 field">
+                            <label class="col-sm-5 fs-6 col-form-label fw-semibold">
+                                CGST Amount
+                            </label>
+
+                            <div class="col-sm-7">
+                                <input type="text"
+                                       id="txtCgstAmt_EntyImportPaymt"
+                                       class="form-control form-control-sm text-end bg-light"
+                                       value="0.00"
+                                       readonly>
+                            </div>
+                        </div>
+
+                        <!-- SGST -->
+                        <div class="row align-items-center mb-1 field">
+                            <label class="col-sm-5 fs-6 col-form-label fw-semibold">
+                                SGST Amount
+                            </label>
+
+                            <div class="col-sm-7">
+                                <input type="text"
+                                       id="txtSgstAmt_EntyImportPaymt"
+                                       class="form-control form-control-sm text-end bg-light"
+                                       value="0.00"
+                                       readonly>
+                            </div>
+                        </div>
+
+                        <!-- OTHER -->
+                        <div class="row align-items-center field">
+                            <label class="col-sm-5 fs-6 col-form-label fw-semibold">
+                                Other Amount
+                            </label>
+
+                            <div class="col-sm-7">
+                                <input type="text"
+                                       id="txtOtherAmt_EntyImportPaymt"
+                                       class="form-control "
+                                       value="0.00">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FINAL TOTALS -->
+        <div class="card border-0 shadow-sm mt-1">
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <!-- DEBIT -->
+                    <div class="col-md-6">
+
+                        <div class="border rounded bg-warning-subtle p-1">
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-semibold text-dark">
+                                    Debit Amount
+                                </span>
+
+                                <span class="badge bg-warning text-dark fs-6 px-3 py-2">
+                                    ₹
+                                    <span id="txtDebitAmount_EntyImportPaymt">
+                                        0.00
+                                    </span>
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NET BILL -->
+                    <div class="col-md-6">
+
+                        <div class="border border-success rounded bg-success-subtle p-1">
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-semibold text-success">
+                                    Net Bill Amount
+                                </span>
+
+                                <span class="badge bg-success fs-6 px-3 py-2">
+                                    ₹
+                                    <span id="txtNetBillAmount_EntyImportPaymt">
+                                        0.00
+                                    </span>
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+    </div>
+ </div>
+ @* for modal open for the table edit button  *@
+ 
+<div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                       Import edit modal 
+                    </div>
+                </div>  
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+          <div class="modal-body px-2">
+                 @await Html.PartialAsync("_ImportBillEntry")
+        </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* Help modal open in style *@
+<div class="modal fade"
+     id="styleHelpModal_DutyBillEntry"
+     tabindex="-1"
+     aria-labelledby="styleHelpModalLabel_DutyBillEntry"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+
+                <div class="modal-title"
+                     id="styleHelpModalLabel_DutyBillEntry">
+                    Style Help
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body px-2">
+
+                <div class="table-wrap">
+
+                    <table class="w-100">
+
+                        <thead>
+                            <tr>
+                                <th class="text-center">Select</th>
+                                <th>Style No</th>
+                                <th>Order No</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyStyleHelp_DutyBillEntry">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+@* BOEDetails open modal  *@
+
+<div class="modal fade"
+     id="addMenuModalBOEModal"
+     tabindex="-1"
+     aria-labelledby="addMenuModalBOEModal"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+
+                <div class="modal-title"
+                     id="addMenuModalBOEModallabel">
+                 BOE Details Modal
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body px-2">
+
+                 @await Html.PartialAsync("_BOEAgainstFabric")
+
+            </div>
+             <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@* Service Bill Tagging open modal  *@
+
+<div class="modal fade"
+     id="addMenuModalServiceBill"
+     tabindex="-1"
+     aria-labelledby="addMenuModalServiceBill"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+
+                <div class="modal-title"
+                     id="addMenuModalServiceBilllabel">
+                   Service Bill Tagging
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body px-2">
+
+                 @await Html.PartialAsync("_ServiceBillTag")
+
+            </div>
+             <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnServiceBillTag">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@* Service Bill Tagging Add and edit  open modal  *@
+
+<div class="modal fade"
+     id="addMenuModalServiceAddBill"
+     tabindex="-1"
+     aria-labelledby="addMenuModalServiceAddBill"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+
+                <div class="modal-title"
+                     id="addMenuModalServiceBillAddlabel">
+                   Service Bill Tagging Add/Edit
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body px-2">
+
+                 @await Html.PartialAsync("_ServiceChargesBillTagAddRow")
+
+            </div>
+             <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnServiceBillTagAdd">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="EntryNoModal" tabindex="-1" aria-labelledby="addEntryNoModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addEntryNoModal">
+                        Entry No Help
+                    </div>
+                </div>
+
+                <div class="app-modal-header-actions">
+
+                    <button type="button"
+                            style="    margin-top: 12px;"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                <table id="tblEntryHelp" class="display" style="width:100%">
+
+                    <thead>
+                        <tr>
+                            <th>Entry No</th>
+                            <th>Entry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblEntryHelp">
+                        <tr>
+                            <td>EN_123</td>
+                            <td>18-Oct-2026</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                @* 
+				<button type="button"
+						class="btn btn-primary btn-sm"
+						id="btnSave">
+
+					<svg width="14"
+						 height="14"
+						 viewBox="0 0 24 24"
+						 fill="none"
+						 stroke="currentColor"
+						 stroke-width="2"
+						 stroke-linecap="round"
+						 stroke-linejoin="round">
+
+						<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+						<polyline points="17 21 17 13 7 13 7 21"></polyline>
+						<polyline points="7 3 7 8 15 8"></polyline>
+
+					</svg>
+
+					Save
+				</button>
+ *@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+ 
+<script src="~/js/pages/importsfabric/import_bill_entry.js" asp-append-version="true"></script>

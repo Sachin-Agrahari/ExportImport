@@ -1,0 +1,83 @@
+<div class="top-right">
+    <button type="button" class="btn btn-cancel-custom btn-sm" id="btnExport">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="16"
+             height="16"
+             fill="currentColor"
+             class="me-1"
+             viewBox="0 0 16 16">
+            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.6a.5.5 0 0 1 1 0V13a2 2 0 0 1-2 2H2.5a2 2 0 0 1-2-2v-2.6a.5.5 0 0 1 .5-.5z" />
+            <path d="M7.646 10.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 9.293V1.5a.5.5 0 0 0-1 0v7.793L5.354 7.146a.5.5 0 1 0-.708.708l3 3z" />
+        </svg>
+        Export
+    </button>
+  <button class="icon-btn" aria-label="Messages">&#9993;<span class="dot"></span></button>
+  <button class="icon-btn" aria-label="Notifications">&#128276;<span class="dot"></span></button>
+  <div class="avatar">AK</div>
+    <button type="button" class="btn btn-cancel-custom btn-sm" id="btnLogout">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="20"
+             height="20"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+
+        Logout
+    </button>
+
+</div>
+
+<script>
+
+    $(document).ready(function(){
+        const empCode = sessionStorage.getItem("empCode");
+        if(!empCode)
+        {
+            $('#btnLogout').html('<i class="fas fa-sign-in-alt me-2"></i> Login')
+        } 
+    })
+
+    $('#btnLogout').on('click', () => {
+        let btnText = $(this).text()
+        if(btnText == 'Login')
+        {
+           window.location.href = '/auth/login';
+        }
+        else{
+            sessionStorage.removeItem("empCode")
+            window.location.href = '/auth/login';
+        }
+        
+    });
+    $('#btnExport').on('click', () => {
+        $('#btnExport').prop('disabled', true);
+        $.ajax({
+            url: '/FileHandler/DowenlodExcel',
+            type: 'POST',
+            contentType: 'application/json',
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function (blob) {
+                let link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = `UploadedDocs.xlsx`;
+                link.click();
+            },
+            error: function (xhr, status, error) {
+                console.error("Download failed", error);
+            },
+            complete: function () {
+                $('#btnExport').prop('disabled', false);
+            }
+        });
+    })
+
+</script>

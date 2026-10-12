@@ -1,0 +1,191 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="~/assets/images/rc.png">
+        <title>Shipping Banking Accessory Import And Fabric Import</title>
+         @await Html.PartialAsync("Components/_CommonResources") 
+        <link href="~/css/pages/login/login.css" rel="stylesheet" asp-append-version="true"/>
+         
+    </head>
+    <body>
+    
+        <div class="container-fluid login-container">
+            <div class="row h-100">
+    
+                <!-- Left Side -->
+                <div class="col-lg-7 left-panel">
+                    <h1 class="headerMaster">Richa Group</h1>
+                    <p class="mt-3">
+                        Shipping &amp; Banking &mdash; Accessory Import And Fabric Import
+                    </p>
+    
+                    <div class="mt-4">
+                        <h5>Features</h5>
+                        <ul>
+                            <li>Manage Accessory &amp; Fabric Import Shipments</li>
+                            <li>Track Buyer, Supplier &amp; Consignee Masters</li>
+                            <li>Generate &amp; Track Shipping Documents</li>
+                            <li>Monitor Banking &amp; Payment Terms</li>
+                        </ul>
+                    </div>
+                </div> 
+    
+                <div class="col-lg-5 d-flex justify-content-center align-items-center">
+    
+                    <div class="card login-card">
+                        <div class="card-body p-5">
+    
+                            <div class="text-center mb-4">
+                                <div class="logo-box">
+                                    RC
+                                </div>
+    
+                                <h3 class="login-title mt-3">
+                                    Welcome Back
+                                </h3>
+    
+                                <p class="text-muted">
+                                    Sign in to continue
+                                </p>
+                            </div>
+    
+                            <div>
+    
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Employee Code
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-id-badge"></i>
+                                        </span>
+                                        <input type="text"
+                                               name="EmployeeCode"
+                                               id="txtEmployeeCode"
+                                               class="form-control"
+                                               placeholder="Enter Employee Code"
+                                               required />
+                                    </div>
+                                </div>
+    
+                                <div class="mb-4">
+                                    <label class="form-label">
+                                        Password
+                                    </label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-lock"></i>
+                                        </span>
+                                        <input type="password"
+                                               id="txtPassword"
+                                               name="Password"
+                                               class="form-control"
+                                               placeholder="Enter Password"
+                                               onkeydown="loginOnEnter(event)"
+                                               required />
+                                    </div>
+                                </div>
+    
+                                <button type="button" id="btnLogin"
+                                        class="btn btn-primary btn-login w-100">
+                                    <i class="fas fa-sign-in-alt me-2"></i>
+                                    Login
+                                </button>
+    
+                            </div>
+    
+                            <div class="text-center mt-4 footer-text">
+                                Richa Group <br />
+                                Shipping Banking Accessory Import And Fabric Import
+                            </div>
+    
+                        </div>
+                    </div>
+    
+                </div>
+    
+            </div>
+        </div>
+    
+        <script>
+    
+            $('#btnLogin').on('click', function () {
+    
+                $(this).prop("disabled", true);
+    
+                let EmployeeCode = $("#txtEmployeeCode").val().trim();
+                let Password = $("#txtPassword").val().trim();
+    
+                if (!EmployeeCode || !Password) {
+                    ShowAlert('OOPS!', "Employee Code and Password are required.", "warning");
+                    $(this).prop("disabled", false);
+                    return;
+                }
+                 
+                $.ajax({
+                    url: '/Auth/GetLogin',
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        EmployeeCode: EmployeeCode,
+                        Password: Password
+                    }),
+                
+                    success: function (res) {
+                
+
+                        if (res.success) { 
+						    sessionStorage.setItem('empCode',res.empCode);
+
+                            window.location.href = '/Dashboard/Index';
+                            return;
+                        }
+                 
+                        ShowAlert('OOPS!', res.message || 'Invalid login details.', 'error');
+                    },
+                
+                    error: function (xhr) {
+                 
+                        let message = "Login failed.";
+                
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            message = xhr.responseJSON.message;
+                        }
+                        else if (xhr.responseText) {
+                            try {
+                                let response = JSON.parse(xhr.responseText);
+                
+                                if (response.message) {
+                                    message = response.message;
+                                }
+                            }
+                            catch (e) {
+                            }
+                        }
+                
+                        showWarning('OOPS!', message, 'error');
+                    },
+                
+                    complete: function () {
+                        $('#btnLogin').prop("disabled", false);
+                    }
+                });
+    
+            });
+    
+            function loginOnEnter(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    $('#btnLogin').click();
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,112 @@
+﻿
+.cols-6 {
+    grid-template-columns: repeat(6,minmax(0,1fr));
+}
+
+
+.form-grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 12px 16px;
+    width: 100%;
+    align-items: start;
+}
+ 
+.form-main {
+    grid-column: 1 / 5;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px 16px;
+}
+ 
+.checkbox-list-container {
+    grid-column: 6 / 7;
+    grid-row: 1;
+    border: 1px solid #ddd;
+    padding: 9px 15px;
+    background: #fff;
+    box-sizing: border-box;
+    height:100%;
+}
+
+.checkbox-list-title {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.checkbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    min-height: 18px;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+}
+
+
+/* Individual field */
+.form-field {
+    min-width: 0;
+}
+ 
+.form-field input:focus,
+.form-field select:focus {
+    outline: none;
+    border-color: aliceblue;
+}
+
+.field input, input, textarea {
+    /*width: 100%;*/
+    font: inherit;
+    font-size: .88rem;
+    color: var(--text);
+    padding: 6px 9px;
+    border: 1px solid var(--line-strong);
+    border-radius: 0px;
+    background: #fff;
+    transition: border-color .15s,box-shadow .15s;
+    resize: vertical;
+}
+
+
+.modal-body .form-input, .modal-body .select2-container .select2-selection--single {
+    height: 36px !important;
+}
+
+.yn-checkbox {
+    height: 36px !important;
+}
+
+.form-control {
+    border-radius: 0px !important;
+}
+
+.btn-PartyMasterUse {
+    background: #257DEF;
+    color:#fff;
+    height: 35px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 0px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all .15s;
+    padding: 4px 6px;
+    border: none;
+    border-radius: 2px;
+}

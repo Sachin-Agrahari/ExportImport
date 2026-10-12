@@ -1,0 +1,64 @@
+# Build results
+**/[Bb]in/
+**/[Oo]bj/
+**/[Oo]ut/
+**/[Ll]og/
+**/[Ll]ogs/
+
+# Visual Studio cache/options
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+
+# Rider / ReSharper
+.idea/
+*.DotSettings.user
+_ReSharper*/
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET / publish output
+publish/
+PublishProfiles/*.user
+*.publishsettings
+*.azurePubxml
+
+# Test results
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+*.coveragexml
+TestResults/
+
+# Node (if front-end tooling is added later)
+node_modules/
+
+# OS files
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Backup / temp files
+*.bak
+*.tmp
+*.cache
+*~
+/RichaGroup.Web/obj/Debug/net8.0/apphost.exe
+/RichaGroup.Web/obj/Debug/net8.0/rjsmcshtml.dswa.cache.json
+/RichaGroup.Web/obj/Debug/net8.0/rjsmrazor.dswa.cache.json
+/RichaGroup.Web/obj/Debug/net8.0/ShippingDocuments.Web.AssemblyInfo.cs
+/RichaGroup.Web/obj/Debug/net8.0/ShippingDocuments.Web.AssemblyInfoInputs.cache
+/RichaGroup.Web/LogManager

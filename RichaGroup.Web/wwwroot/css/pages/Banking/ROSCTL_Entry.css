@@ -1,0 +1,98 @@
+﻿
+
+.rosctl-summary-card {
+    margin-top: 10px;
+    border: 1px solid var(--teal);
+    box-shadow: none;
+    overflow: hidden;
+}
+
+.rosctl-summary {
+    background: var(--teal-tint-light);
+    padding: 10px 16px 12px;
+}
+
+.rosctl-summary-port {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+    .rosctl-summary-port .summary-label {
+        min-width: 45px;
+    }
+
+    .rosctl-summary-port input {
+        width: 260px;
+        height: 28px;
+        border: 1px solid var(--teal);
+        border-radius: 3px;
+        background: var(--bg-white);
+        color: var(--teal-dark);
+        padding: 3px 8px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+.rosctl-summary-header {
+    display: grid;
+    grid-template-columns: 210px 250px 250px;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+    .rosctl-summary-header span {
+        color: var(--teal-dark);
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+.summary-row {
+    display: grid;
+    grid-template-columns: 210px 250px 250px;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.summary-label {
+    color: var(--teal-dark);
+    font-size: 15px;
+    font-weight: 500;
+}
+
+    .summary-label b {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 42px;
+        height: 25px;
+        margin-left: 8px;
+        background: var(--bg-white);
+        border: 1px solid var(--teal);
+        border-radius: 3px;
+        color: var(--teal-dark);
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+.summary-value {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 25px;
+    padding: 3px 8px;
+    background: var(--bg-white);
+    border: 1px solid var(--teal);
+    border-radius: 3px;
+    color: var(--teal-dark);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.summary-row:last-child .summary-label,
+.summary-row:last-child .summary-value {
+    font-weight: 700;
+}

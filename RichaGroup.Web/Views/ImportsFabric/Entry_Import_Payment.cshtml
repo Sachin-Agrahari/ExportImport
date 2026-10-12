@@ -1,0 +1,454 @@
+﻿@{
+	ViewData["Title"] = "Entry Import Payment";
+	ViewData["Heading"] = "Entry Import Payment";
+}
+
+<div class="bd_mainContainer">
+    <div class="page">
+   
+        <section class="card">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Import Payment</h2>
+                </div>
+
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-outline-danger btn-sm px-2"
+                            id="btnRefresh_EntyImportPaymt">
+                        ↻ Refresh
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="grid cols-6">
+
+                    <div class="field">
+                        <label>Bank Refrence Number <button id="btnBnkRefNo" class="help-link">Help</button></label>
+                        <input type="text" id="txtBknRefNo" placeholder="Enter Draft Number..." />
+                    </div>
+                  
+
+                    <div class="field">
+                        <label>Bank Refrence Date</label>
+                        <input type="text" class="form-Flatdate" id="txtBnkRefDate" placeholder="DD/MMM/YYYY" />
+                    </div>
+
+                    <div class="field">
+                        <label>Supplier Name </label>
+                        <input type="text"
+                               id="txtSupplierName_EntyImportPaymt"
+                               placeholder="Enter Supplier Name..." />
+                    </div>
+                    <div class="field">
+                        <label>Country</label>
+                        <input type="text"
+                               id="txtCountry_EntyImportPaymt"
+                               placeholder="Enter Country..." />
+                    </div>
+                    <div class="field">
+                        <label>Company</label>
+                        <input type="text"
+                               id="txtCompyName_EntyImportPaymt"
+                               placeholder="Enter Company Name..." />
+                    </div>
+
+                    <div class="field">
+                        <label>Approved By</label>
+                        <select id="ddlApprovBy_EntyImportPaymt" class="form-select w-100">
+                            <option value="Akash" selected>Akash</option>
+                            <option value="Sachine">Sachine</option>
+                            <option value="Alok">Alok</option>
+                            <option value="Amit">Amit</option>
+                        </select>
+                    </div>
+                   
+
+                    
+
+                    <div class="field">
+                        <label>Payment of</label>
+                        <input type="text"
+                               id="txtPaymentof_EntyImportPaymt"
+                               placeholder="Enter Payment Of .." />
+                    </div>
+                    <div class="field">
+                        <label>Other Rem</label>
+                        <input type="text"
+                               id="txtOtherRem_EntyImportPaymt"
+                               placeholder="Enter Payment Of .." />
+                    </div>
+                    <div class="field">
+                        <label>Payment Type</label>
+                        <select id="ddlPaymentType" class="form-select w-100">
+                            <option value=" ">Select Payment Type</option> 
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Currency </label>
+                        <select id="ddlCurr_EntyImportPaymt" class="form-select w-100">
+                            
+                            <option value="US$" selected>US$</option>
+                            <option value="Euro">Euro</option>
+                            <option value="INR">INR</option>
+                            
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Amount</label>
+                        <input type="text"
+                               id="txtAmut_EntyImportPaymt"
+                               placeholder="Enter Amount .." />
+                    </div>
+                    <div class="field">
+                        <label>Invoice Number</label>
+                        <input type="text"
+                               id="txtInvNo_EntyImportPaymt"
+                               placeholder="Enter Invoice Number .." />
+                    </div>
+                    <div class="field">
+                        <label>POI</label>
+                        <select id="ddlPOI_EntyImportPaymt" class="form-select">
+                            <option value="">Select Value</option>
+                            <option value="Submitted">Submitted</option>
+                            <option value="Non-Submitted">Non-Submitted</option>
+                        </select>
+                        @* <input type="text"
+                               id="txtPOI_EntyImportPaymt"
+                               placeholder="Enter POI Type .." /> *@
+                    </div>
+                    <div class="field">
+                        <label>POI Date</label>
+                        <input type="text"
+                               id="txtPOIDt_EntyImportPaymt"
+                               placeholder="Select POI Date" />
+                    </div>
+                    <div class="field">
+                        <label>Bank Code</label>
+                        <input type="text"
+                               id="txtBankCode_EntyImportPaymt"
+                               placeholder="Enter Bank Code..." />
+                    </div>
+                    <div class="field">
+                        <label>Account Number</label>
+                        <input type="text"
+                               id="txtAccNo_EntyImportPaymt"
+                               placeholder="Enter Account Number..." />
+                    </div>
+                    <div class="field">
+
+                        <label>Bank Name</label>
+                        <select id="ddlBank" class="form-select w-100">
+
+                            <option value="SBI" selected>SBI</option>
+                            <option value="HDFC">HDFC</option>
+                            <option value="RBL">RBL</option>
+                            <option value="BOB">BOB</option>
+
+                        </select>
+                         
+                    </div>
+
+                    <div class="field">
+                        <label>Purpose Code</label>
+                        <input type="text"
+                               id="txtPurposeCode_EntyImportPaymt"
+                               placeholder="Enter Purpose Code..." />
+                    </div>
+                     
+                    <div class="field">
+
+                        <div class="yn-field">
+
+                            <label class="yn-field-label" style="font-size:0.74rem;">
+                                Mislinous Document<span class="text-danger">*</span>
+                            </label>
+
+                            <div class="yn-checkbox" style="height:33px">
+                                <label>
+                                    <input type="radio" name="MislinousDoc" class="rdoMislinousDoc" value="Y">
+                                    <span>YES</span>
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="MislinousDoc" class="rdoMislinousDoc" value="N">
+                                    <span>NO</span>
+                                </label>
+                            </div>
+
+                        </div>
+
+                    </div>
+                     
+                    <div class="field span-2">
+                        <label>Remarks</label>
+                        <input type="text"
+                               id="txtRemarks_EntyImportPaymt"
+                               placeholder="Enter Remarks..." />
+                    </div>
+ 
+                </div>
+            </div>
+
+        </section>
+
+        <section class="card">
+            <div class="card-head d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
+                    BOE Details
+                </h5>
+
+                <div class="d-flex align-items-center gap-2">
+
+                    <div class="d-flex align-items-center gap-2 d-none"
+                         id="paymentRequestField_EntyImportPaymt">
+
+                        <label class="form-label mb-0 text-nowrap">
+                            Payment Request No
+                        </label>
+
+                        <input type="text"
+                               id="txtPaymentRequestNo_EntyImportPaymt"
+                               class="form-control"
+                               placeholder="Payment Request No"
+                               style="width:140px;">
+
+                    </div>
+
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnAddBOEDetails">
+                        Add
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-outline-danger btn-sm px-2"
+                            id="btnDeleteBOEDetails">
+                        Delete
+                    </button>
+
+                </div>
+
+            </div>
+            <div class="card-body"> 
+                <div class="table-wrap">
+
+                    <table class="table table-sm table-bordered align-middle mb-0"
+                           id="tblBOEDteials_ImportPyament">
+
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Sr No</th>
+                                <th>BOE #</th>
+                                <th>BOE DT.</th>
+                                <th>BOE Amount.</th>
+                                <th>Terms</th>
+                                <th>Invoice No</th>
+                                <th>Invoice Date</th>
+                                <th>Payment Ref No</th>
+                            </tr>
+                        </thead> 
+                        <tbody id="tblbodyBOEDteials_ImportPyament" ></tbody>       
+                        </table>
+                        </div>
+            </div>
+        </section>
+
+
+    </div>
+</div>
+
+@* modal open in help click to open  *@
+<div class="modal fade" id="addMenuModalBnkRefNoHelp" tabindex="-1" aria-labelledby="addMenuModalBnkRefNoHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalBnkRefNoHelpLabel">
+                       Bank Ref No help
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2">
+                <div class="table-responsive">
+
+                    <table id="tblLCHelpDutyPayment" class="table table-sm table-bordered align-middle mb-0">
+
+                        <thead class="table-primary">
+                            <tr>
+                                <th class="text-center">
+                                    Select
+                                </th>
+
+                                <th>
+                                    Bank Ref No
+                                </th>
+
+                                <th>
+                                    Bank Ref Date
+                                </th>
+
+                                <th>
+                                    Favouring
+                                </th>
+                                <th>
+                                   Currency
+                                </th>
+                                <th>
+                                   Amount
+                                </th>
+                                <th>
+                                   Payment Type
+                                </th>
+                                <th>
+                                   Payment Of
+                                </th>
+                                <th>
+                                   Invoice No
+                                </th>
+                                <th>
+                                   Invoice Date
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyLCHelpDutyPayment">
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveBnkRefNoHelp">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* modal open for the Add and Edit foor the table *@
+<div class="modal fade" id="addMenuModalAddEdit" tabindex="-1" aria-labelledby="addMenuModalAddEdit" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalAddEditLabel">
+                        BOE Details Add/Edit
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2">
+                @await Html.PartialAsync("_Entry_Import_PaymentAddEdit")
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveAddEdit">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/js/pages/importsfabric/entry_import_payment.js" asp-append-version="true"></script>

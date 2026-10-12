@@ -1,0 +1,253 @@
+﻿@{
+    
+    bool isFabric = ViewBag.isFabric;
+    bool formType = ViewBag.IsModal;
+    string Type = ViewBag. Type;
+    ViewData["Title"] = $"TT Payment Request ({Type})";
+    if (ViewBag.IsModal == true)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml"; 
+    }
+   
+}
+ 
+<style>
+    
+    .tt-radio-slider {
+        position: absolute;
+        top: 3px;
+        bottom: 3px;
+        left: 3px;
+        width: calc(50% - 3px);
+        background: var(--teal);
+        border-radius: 999px;
+        transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 6px rgba(113, 137, 255, 0.3);
+    }
+
+    #ttRefCiNo:checked ~ .tt-radio-slider {
+        transform: translateX(100%);
+    }
+ 
+    .tt-pi-item.selected {
+        background: var(--clr-primary);
+        color: #fff;
+    }
+
+    .tt-pi-item input[type="checkbox"] {
+        accent-color: var(--clr-primary);
+        width: 14px;
+        height: 14px;
+        cursor: pointer;
+    }
+
+    .tt-pi-item.selected input[type="checkbox"] {
+        accent-color: #fff;
+    }
+
+    .tt-radio-toggle {
+        position: relative;
+        display: inline-flex;
+        background: var(--clr-surface);
+        border: 1.5px solid var( --teal-tint-light);
+        border-radius: 999px;
+        padding: 3px;
+        gap: 2px;
+    }
+
+        .tt-radio-toggle input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .tt-radio-toggle label {
+            position: relative;
+            z-index: 1;
+            padding: 5px 16px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            font-family: var(--font-body);
+            color: var(--clr-neutral-soft);
+            border-radius: 999px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            user-select: none;
+        }
+
+        .tt-radio-toggle input[type="radio"]:checked + label {
+            color: #fff;
+        }
+</style>
+
+
+<div class="bd_mainContainer" id="@Type">
+    <div class="page">
+        
+
+        <section class="card">
+            <div class="card-head">
+
+                <div class="d-flex flex-row ">
+
+                    <h2 class="mt-2"><span id="txtHeaderMain">TT Payment Request</span> (@Type)</h2>
+                </div>
+              
+                 <div class="d-flex gap-2">
+
+                      <div class="d-flex gap-2">
+                        @if (formType == false)
+                        {
+                           @await Html.PartialAsync("Components/_CheckBoxComponent")
+                           @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                        }
+                      </div>
+                      
+                      <div class="tt-radio-toggle" id="ttRefTypeToggle">
+                          <input type="radio" name="ttRefType" id="ttRefPiNo" value="PiNo" >
+                          <label for="ttRefPiNo">PiNo</label>
+                        <input type="radio" name="ttRefType" id="ttRefCiNo" value="CiNo" checked>
+                          <label for="ttRefCiNo">CiNo</label>
+                          <span class="tt-radio-slider"></span>
+                      </div>
+
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="New" id="btnPerferomaNew">
+
+                        <img src="~/assets/icon/plus.svg" alt="save-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Add</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Edit" id="btnPerferomaEdit">
+
+                        <img src="~/assets/icon/edit.svg" alt="edit-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Edit</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Save" id="performanceBtnSave">
+
+                        <img src="~/assets/icon/save.svg" alt="save-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Save</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Update" id="performanceBtnConfirm">
+                        <span>Delete</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm  d-flex flex-row align-center justify-content-center" title="Print" id="performanceBtnPrint">
+
+                        <img src="~/assets/icon/print.svg" alt="print-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Print</span>
+                    </button>
+                 </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="grid cols-5">
+
+                    
+                    <div class="field">
+                        <label class="form-label">Vendor <span class="text-danger">*</span></label>
+                        <select id="ddlVendor" class="form-select">
+                            <option value="">— Select Vendor —</option>
+                            <option value="1" selected>SML VIETNAM BRANDING COMPANY LIMITED</option>
+                            <option value="2">ORIENT ACCESSORIES LTD</option>
+                            <option value="3">METRO GARMENT SUPPLIERS</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Entry No.</label>
+                        <select id="ddlEntryNo" class="form-select">
+                            <option value="7461" selected>7461</option>
+                            <option value="7460">7460</option>
+                            <option value="7459">7459</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Entry Date</label>
+                        <input type="text" id="txtEntryDate" class="form-Flatdate" placeholder="DD/MMM/YYYY" />
+                    </div>
+
+                    <div class="field" id="dvCIno">
+                        <label class="form-label">CI No.</label>
+                        <select id="ddlCiNo" class="form-select">
+                            <option value="CI-2026-0001">CI-2026-0001</option>
+                            <option value="CI-2026-0002">CI-2026-0002</option>
+                            <option value="CI-2026-0003">CI-2026-0003</option>
+                        </select>
+                    </div>
+
+                    <div class="field d-none" id="dvPINo">
+                        <label class="form-label">PI No.</label>
+                        <select id="ddlPiNo" class="form-select">
+                            <option value="PI-2026-0001">PI-2026-0001</option>
+                            <option value="PI-2026-0002">PI-2026-0002</option>
+                            <option value="PI-2026-0003">PI-2026-0003</option>
+                        </select>
+                    </div>
+
+                    <div class="col-4 d-flex justify-content-end mt-3" >    
+                        <button class="btn btn-primary btn-sm pt-1" id="btnExecute" disabled>Execute</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </section>
+
+        <section class="card">
+            <div class="card-head">
+
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2">Payment Line Item</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+
+                    <div class="d-flex gap-2"> 
+                        <button class="btn btn-info text-white pt-2" id="ttBtnCopy">Copy</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+                <div class="table-wrap">
+                    <table id="tblPayments" class="table-component"> </table>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="card">
+            <div class="card-body">
+
+                <div class="grid cols-5">
+                    <div class="field">
+                        <label class="form-label">Total Amt.</label>
+                        <input type="text" id="txtTotalAmt" class="form-control" value="0.00" readonly />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Bank Charges</label>
+                        <input type="number" id="txtBankCharges" class="form-control" placeholder="0" />
+                   
+                    </div>
+                    <div class="field">
+                        <label class="form-label">G. Total Amt.</label>
+                        <input type="text" id="txtGTotalAmt" class="form-control" value="0.00" readonly />
+                    </div>
+
+                 </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script type="module" src="~/js/pages/import/tt_payments.js" asp-append-version="true"></script>

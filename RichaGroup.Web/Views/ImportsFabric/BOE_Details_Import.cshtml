@@ -1,0 +1,147 @@
+﻿@{
+	ViewData["Title"] = "BOE Details Import";
+	ViewData["Heading"] = "BOE Details Import";
+}
+
+<link href="~/css/pages/importsfabric/boe_details_import.css" rel="stylesheet" asp-append-version="true"/>
+
+<div class="bd_mainContainer">
+    <div class="page">
+        
+        <section class="card">
+             <div class="card-head">
+                  <div>
+                      <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">BOE Details Import</h2>
+                  </div>
+
+
+                  <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                      <button type="button"
+                              class="btn btn-outline-danger btn-sm"
+                            id="btnRefresh_BOEImport">
+                          ↻ Refresh
+                      </button>
+                    <button class="btn btn-primary btn-sm" id="btnSave_BOEImport">Save</button>
+                  </div>
+             </div>
+            
+            <div class="card-head d-flex justify-content-between">
+
+                <div class="d-flex justify-content-end align-items-end">
+
+                    <div class="field draft-inline">
+                        <label for="txtDraft_BOEImport">Draft#</label>
+
+                        <input type="text"
+                            class="text-primary"
+                               id="txtDraft_BOEImport"
+                               value="S72BC012406000001/24"
+                               placeholder="Enter Draft Number..."
+                               disabled />
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="grid cols-6">
+
+                    <div class="field">
+                        <label>Payment Request No</label>
+
+                        <div class="payment-request-no">
+                            <input type="text"
+                                   id="txtPaymentReqNo1_BOEImport"
+                                   maxlength="2"
+                                   value="0" />
+
+                            <input type="text"
+                                   id="txtPaymentReqNo2_BOEImport"
+                                   maxlength="2"
+                                   value="0" />
+
+                            <input type="text"
+                                   id="txtPaymentReqNo3_EntyImportPaymt"
+                                   maxlength="2"
+                                   value="0" />
+
+                            <input type="text"
+                                   id="txtPaymentReqNo4_BOEImport"
+                                   maxlength="2"
+                                   value="0" />
+
+                            <input type="text"
+                                   id="txtPaymentReqNo5_BOEImport"
+                                   maxlength="2"
+                                   value="0" />
+                        </div>
+                    </div>
+               </div>
+               </div>
+            </section>
+
+        <section class="card gsp-table-card">
+
+            <div class="card-head d-flex justify-content-end">
+                    <div class="d-flex justify-content-end align-items-end">
+
+                        <button type="button"
+                                class="btn btn-primary btn-sm"
+                                id="btnAddItem_BOEImport">
+
+                            <i class="fa-solid fa-plus me-1"></i>
+                            Add Item
+
+                        </button>
+
+                    </div>
+
+
+
+            </div>
+
+            <div class="card-body p-0">
+
+                <div class="gsp-table-scroll">
+
+                    <table id="tblBOEImport"
+                           class="display"
+                           style="width:100%">
+
+                        <thead>
+                            <tr>
+                                <th>SrNo</th>
+                                <th>BOE</th>
+                                <th>BOE Date</th>
+                                <th>BOE Amount</th>
+                                <th>Terms</th>
+                                <th>Invoice Number</th>
+                                <th>Invoice Date</th>
+                                <th>Pay Ref No</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyBOEImport">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    
+    </div>
+</div>
+
+
+<script src="~/js/pages/importsfabric/boe_details_import.js" asp-append-version="true"></script>

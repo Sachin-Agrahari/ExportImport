@@ -1,0 +1,32 @@
+﻿
+.lc-balance-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 300px;
+    padding: 10px 14px;
+    background: var(--bg-white);
+    border: 1px solid var(--teal);
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.lc-balance-label {
+    color: var(--teal-dark);
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.lc-balance-value {
+    min-width: 160px;
+    padding: 7px 12px;
+    background: var(--teal-tint-light);
+    border: 1px solid var(--teal);
+    border-radius: 5px;
+    color: var(--teal-dark);
+    font-size: 14px;
+    font-weight: 700;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}

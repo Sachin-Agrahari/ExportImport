@@ -1,0 +1,123 @@
+﻿@{
+    ViewData["Title"] = "Invoice Number Master";
+    ViewData["Heading"] = "Invoice Number Master";
+}
+<div class="bd_mainContainer">
+    <div class="page">
+        <section class="card">
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Invoice Number Master</h2>
+                </div>
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button class="btn btn-primary btn-sm" id="btnAdd">＋ Add</button>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="table-wrap">
+                    <table id="tblInvoiceMaster" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th width="80px">Action</th>
+                                <th>Code</th>
+                                <th>Unit</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Last No</th>
+                                <th>Financial Year</th>
+                                <th>Last GST Inv No</th>
+                                <th>Credit Note No</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblbodyInvoiceMaster"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">Invoice Number Master</div>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2">
+                <div class="grid cols-3">
+                     
+                    <div class="field">
+                        <label for="txtCode" class="form-label">Code</label>
+                        <input type="text" id="txtCode" placeholder="Enter Code" />
+                    </div>
+
+                    <div class="field">
+                        <label for="txtUnit" class="form-label">Unit</label>
+                        <input type="text" id="txtUnit" placeholder="Enter Unit" />
+                    </div>
+
+                    <div class="field">
+                        <label for="txtFrom" class="form-label">From</label>
+                        <input type="number" id="txtFrom" placeholder="Enter From" />
+                    </div>
+
+                    <div class="field">
+                        <label for="txtTo" class="form-label">To</label>
+                        <input type="number" id="txtTo" placeholder="Enter To" />
+                    </div>
+
+                    <div class="field">
+                        <label for="txtLastNo" class="form-label">Last No</label>
+                        <input type="number" id="txtLastNo" placeholder="Enter Last No" />
+                    </div>
+
+                    <div class="field">
+                        <label for="txtFinYear" class="form-label">Financial Year</label>
+                        <input type="text" id="txtFinYear" placeholder="e.g. 2025-2026" />
+                    </div>
+
+                    <div class="field">
+                        <label for="txtLastGstInvNo" class="form-label">Last GST Inv No</label>
+                        <input type="number" id="txtLastGstInvNo" placeholder="Enter Last GST Inv No" />
+                    </div>
+
+                    <div class="field">
+                        <label for="txtCreditNoteNo" class="form-label">Credit Note No</label>
+                        <input type="number" id="txtCreditNoteNo" placeholder="Enter Credit Note No" />
+                    </div>
+ 
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/pages/mastersjs/InvoiceNo.js" asp-append-version="true"></script>

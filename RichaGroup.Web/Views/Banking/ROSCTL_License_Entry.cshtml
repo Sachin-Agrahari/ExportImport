@@ -1,0 +1,438 @@
+﻿@{
+	ViewData["Title"] = "ROSCTL License Entry";
+	ViewData["Heading"] = "ROSCTL License Entry";
+}
+
+
+<div class="bd_mainContainer">
+    <div class="page">   
+       <section class="card">
+
+    <!-- Header -->
+    <div class="card-head">
+
+        <div>
+            <span class="tick"></span>
+            <h2 class="mt-2" id="txtHeaderMain">
+                ROSCTL License Entry
+            </h2>
+        </div>
+
+        <div class="d-flex gap-2">
+            @await Html.PartialAsync("Components/_CheckBoxComponent")
+            @await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+            <button type="button"
+                    class="btn btn-primary btn-sm"
+                    id="btnSave"
+                    title="Save">
+
+                <svg width="14"
+                     height="14"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+
+                </svg>
+
+                Save
+            </button>
+                 <button type="button"
+                    class="btn btn-primary btn-sm"
+                    id="btnAdd">
+                ＋ Add
+              </button>
+
+            <button type="button"
+                    class="btn btn-cancel-custom"
+                    id="btnCancel">
+                ✕ Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Body -->
+    <div class="card-body">
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs"
+            id="advROSCTLTabs"
+            role="tablist">
+
+            <li class="nav-item" role="presentation">
+
+                <button class="nav-link active"
+                        id="tabSingleEntry-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#tabSingleEntry"
+                        type="button"
+                        role="tab"
+                        aria-controls="tabSingleEntry"
+                        aria-selected="true">
+
+                    Single Entry
+
+                </button>
+
+            </li>
+
+            <li class="nav-item" role="presentation">
+
+                <button class="nav-link"
+                        id="tabBulkEntry-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#tabBulkEntry"
+                        type="button"
+                        role="tab"
+                        aria-controls="tabBulkEntry"
+                        aria-selected="false">
+
+                    Bulk Entry
+
+                </button>
+
+            </li>
+
+        </ul>
+
+
+        <!-- Tab Content -->
+        <div class="tab-content pt-3"
+             id="advROSCTLTabContent">
+
+
+            <!-- ========================= -->
+            <!-- SINGLE ENTRY -->
+            <!-- ========================= -->
+
+            <div class="tab-pane fade show active"
+                 id="tabSingleEntry"
+                 role="tabpanel"
+                 aria-labelledby="tabSingleEntry-tab">
+
+                <div class="grid cols-6">
+
+                    <div class="field">
+                        <label>Entry # <button id="btn-entryHelp" class="help-link">Help</button></label>
+
+                        <input type="text"
+                               id="txtEntryNo_ROSCTLLicenseEntry"
+                               placeholder="Enter Entry Number..." />
+                    </div>
+
+
+                    <div class="field">
+                        <label>Date</label>
+
+                        <input type="text"
+                               id="txtDate_ROSCTLLicenseEntry"
+                               placeholder="Select Date..." />
+                    </div>
+
+
+                    <div class="field span-2">
+                        <label>File #</label>
+
+                        <input type="text"
+                               id="txtFileNo_ROSCTLLicenseEntry"
+                               placeholder="Enter File Number..." />
+                    </div>
+
+
+                    <div class="field">
+                        <label># of SB</label>
+
+                        <input type="text"
+                               id="txtNoOfSB_ROSCTLLicenseEntry"
+                               placeholder="Enter Number of SB..." />
+                    </div>
+
+
+                    <div class="field">
+                        <label>Pending Advance Cases</label>
+
+                        <input type="text"
+                               id="txtPendingAdvanceCases_ROSCTLLicenseEntry"
+                               placeholder="Enter Pending Advance Cases..." />
+                    </div>
+
+
+                    <div class="field">
+                        <label>Total Cases</label>
+
+                        <input type="text"
+                               id="txtTotalCases_ROSCTLLicenseEntry"
+                               placeholder="Enter Total Cases..." />
+                    </div>
+
+                </div>
+
+
+                <div class="d-flex justify-content-end mt-3">
+
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnAdd_ROSCTLLicenceEntry">
+                        Filter
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- BULK ENTRY -->
+            <!-- ========================= -->
+
+            <div class="tab-pane fade"
+                 id="tabBulkEntry"
+                 role="tabpanel"
+                 aria-labelledby="tabBulkEntry-tab">
+
+                <div class="grid cols-4">
+
+                    <!-- Excel File -->
+                    <div class="field">
+
+                        <label class="form-label">
+                            Excel File
+                        </label>
+
+                        <input type="text"
+                               id="txtSelectedXls_ROSCTLLicenseEntry"
+                               class="form-input"
+                               placeholder="Select XLS file..."
+                               readonly />
+
+                        <input type="file"
+                               id="fileXls_ROSCTLLicenseEntry"
+                               class="d-none"
+                               accept=".xls,.xlsx" />
+
+                        <button type="button"
+                                class="btn btn-primary btn-sm mt-2"
+                                id="btnBrowseXls_ROSCTLLicenseEntry">
+
+                            Browse XLS File
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- Search On -->
+                    <div class="field">
+
+                        <label class="form-label">
+                            Search On
+                        </label>
+
+                        <select id="ddlSearchOn_ROSCTLLicenseEntry"
+                                class="form-select">
+
+                            <option value="">
+                                Select Search On
+                            </option>
+
+                            <option value="S/No">
+                                S/No
+                            </option>
+
+                            <option value="Scroll Number">
+                                Scroll Number
+                            </option>
+
+                            <option value="SB Date">
+                                SB Date
+                            </option>
+
+                            <option value="Santioned">
+                                Santioned
+                            </option>
+
+                            <option value="Amount">
+                                Amount
+                            </option>
+
+                            <option value="Lic No">
+                                Lic No
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+        
+        <section class="card">
+            <div class="card-body">
+
+                <div class="table-wrap">
+                    <table id="tblROSCTLicenseLEntry" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Lic#</th>
+                                <th>Lic. Amt</th>
+                                <th>L. Date</th>
+                                <th>Validity</th>
+                                <th>Port Code</th>
+                                <th>Port Name</th>
+                                <th>Vry Dt</th>
+                                <th>Vry Lic Amt</th>
+                                <th>Sold On</th>
+                                <th>Rate</th>
+                                <th>Sold to</th>
+                                 <th>Check Amt</th>
+                                 <th>Bank</th>
+                                @* <th>Validity</th> *@
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="tblbodyROSCTLLicenseEntry"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    
+    </div>
+</div>
+
+
+<!-- ROSCTL License Update Modal -->
+
+<div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                        ROSCTL License Entry
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+          <div class="modal-body px-2">
+                 @await Html.PartialAsync("_ROSCTL_Licensce_Entry")
+        </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* open help in entry no  *@
+
+<div class="modal fade" id="addMenuModalEntryHelp" tabindex="-1" aria-labelledby="addMenuModalEntryHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalEntryHelpLabel">
+                      Entry help
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2">
+                @await Html.PartialAsync("_EntryHelpROSCTL")
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveEntryHelp">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/pages/banking/rosctl_license_entry.js" asp-append-version="true"></script>

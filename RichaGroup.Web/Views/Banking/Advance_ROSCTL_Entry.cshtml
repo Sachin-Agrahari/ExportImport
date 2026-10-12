@@ -1,0 +1,324 @@
+﻿@{
+    ViewData["Title"] = "Advance ROSCTL Entry";
+    ViewData["Heading"] = "Advance ROSCTL Entry";
+}
+
+<link href="~/css/pages/banking/xls_uploader.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="bd_mainContainer">
+    <div class="page">
+        <section class="card">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Advance ROSCTL Entry</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-cancel-custom"
+                            id="btnCancel">
+                        ✕ Cancel
+                    </button>
+                     
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <!-- Tabs -->
+                <ul class="nav nav-tabs" id="advROSCTLTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active"
+                                id="tabSingleEntry-tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#tabSingleEntry"
+                                type="button"
+                                role="tab"
+                                aria-controls="tabSingleEntry"
+                                aria-selected="true">
+                            Single Entry
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link"
+                                id="tabBulkEntry-tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#tabBulkEntry"
+                                type="button"
+                                role="tab"
+                                aria-controls="tabBulkEntry"
+                                aria-selected="false">
+                            Bulk Entry
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content pt-3" id="advROSCTLTabsContent">
+
+                    <!-- ============ SINGLE ENTRY ============ -->
+                    <div class="tab-pane fade show active" id="tabSingleEntry" role="tabpanel" aria-labelledby="tabSingleEntry-tab">
+
+                        <div class="grid cols-6">
+
+                            <div class="field">
+                                <label>Entry No <button id="btnHelpEntryNo" class="help-link">Help</button></label>
+                                <input type="text" id="txtEntryNo_Single" placeholder="Enter Entry No..." />
+                            </div>
+
+                            <div class="field">
+                                <label>SB No</label>
+                                <input type="text" id="txtSBNo_Single" placeholder="Enter SB No..." />
+                            </div>
+
+                            <div class="field">
+                                <label>SB Date</label>
+                                <input type="text" id="txtSBDate_Single" placeholder="Select SB Date..." />
+                            </div>
+
+                            <div class="field">
+                                <label>Invoice No</label>
+                                <input type="text" id="txtInvNo_Single" placeholder="Enter Inv No..." />
+                            </div>
+
+                            <div class="field">
+                                <label>Received Amount</label>
+                                <input type="text" id="txtReceivedAmt_Single" placeholder="Enter Received Amount..." />
+                            </div>
+
+                            <div class="field span-2">
+                                <label>Licence Number</label>
+                                <input type="text" id="txtLicenceNo_Single" placeholder="Enter Licence Number..." />
+                            </div>
+
+                            <div class="field">
+                                <label>Licence Date</label>
+                                <input type="text" id="txtLicenceDate_Single" placeholder="Select Licence Date..." />
+                            </div>
+
+                            <div class="field span-2">
+                                <label>Port Name</label>
+                                <input type="text" id="txtPort_Single" placeholder="Enter Port Name..." />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- ============ BULK ENTRY ============ -->
+                    <div class="tab-pane fade" id="tabBulkEntry" role="tabpanel" aria-labelledby="tabBulkEntry-tab">
+                        <div class="grid cols-6">
+                            <div class="field">
+                                <label>Entry Number</label>
+                                <input type="text" id="txtEntryNo_Bulk" placeholder="Enter Entry Number..." />
+                            </div>
+                            <div class="field">
+                                <label>SB Number</label>
+                                <input type="text" id="txtSBNo_Bulk" placeholder="Enter SB Number..." />
+                            </div>
+                            <div class="field">
+                                <label>SB Date</label>
+                                <input type="text" id="txtSBDate_Bulk" placeholder="Select SB Date..." />
+                            </div>
+                            <div class="field">
+                                <label>Rcvd Amount</label>
+                                <input type="text" id="txtRcvdAmount_Bulk" class="num" placeholder="Enter Received Amount..." />
+                            </div>
+                            <div class="field span-2">
+                                <label>Licence No.</label>
+                                <input type="text" id="txtLicenceNo_Bulk" placeholder="Enter Licence Number..." />
+                            </div>
+                            <div class="field">
+                                <label>Licence Date</label>
+                                <input type="text" id="txtLicenceDate_Bulk" placeholder="Select Licence Date..." />
+                            </div>
+                            <div class="field span-2">
+                                <label>Port</label>
+                                <input type="text" id="txtPort_Bulk" placeholder="Enter Port..." />
+                            </div>
+                        </div>
+                         
+                        <div class="xls-bulk-upload-box mt-3" id="xlsDropZone">
+
+                            <div class="xls-upload-icon">
+                                <svg width="30" height="30"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="1.8"
+                                     stroke-linecap="round"
+                                     stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                    <polyline points="14 2 14 8 20 8" />
+                                    <path d="M12 18V11" />
+                                    <path d="M9 14l3-3 3 3" />
+                                </svg>
+                            </div>
+
+                            <div class="xls-upload-content">
+
+                                <h4>Upload Excel Files</h4>
+
+                                <p>
+                                    Drag & drop your ROSCTL Excel files here,
+                                    or select files from your computer.
+                                </p>
+
+                                <label for="fileXLS_Bulk" class="xls-select-btn">
+                                    <svg width="15" height="15"
+                                         viewBox="0 0 24 24"
+                                         fill="none"
+                                         stroke="currentColor"
+                                         stroke-width="2"
+                                         stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="17 8 12 3 7 8" />
+                                        <line x1="12" y1="3" x2="12" y2="15" />
+                                    </svg>
+                                    Select Excel Files
+                                </label>
+
+                                <input type="file"
+                                       id="fileXLS_Bulk"
+                                       accept=".xls,.xlsx"
+                                       multiple />
+
+                                <small>
+                                    Supported formats: .xls, .xlsx
+                                    &nbsp; | &nbsp; Multiple files allowed
+                                </small>
+
+                            </div>
+                        </div>
+
+                        <div class="xls-bulk-files mt-3">
+
+                            <div class="xls-bulk-header">
+                                <span> Selected Files </span>
+                                <span id="lblFileCount_Bulk"> 0 Files </span>
+                            </div>
+
+                            <div class="table-wrap">
+                                <table id="tblXLSFiles" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>File Name</th>
+                                            <th>Size</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblXLSFilesBody">
+
+                                        <tr>
+                                            <td colspan="5" class="text-center text-muted">
+                                                No files selected
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                         
+                        <div class="d-flex justify-content-end mt-3">
+
+                            <button type="button" class="btn btn-primary btn-sm" id="btnUpload_Bulk">
+                                Import All Files
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+@* help open in modal  *@
+
+
+<div class="modal fade" id="addMenuModalEntryHelp" tabindex="-1" aria-labelledby="addMenuModalEntryHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalEntryHelpLabel">
+                        Entry help
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2">
+                @await Html.PartialAsync("_HelpEntryAdvROSCTL")
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveEntryHelp">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/pages/banking/advance_rosctl_entry.js" asp-append-version="true"></script>

@@ -1,0 +1,269 @@
+﻿@{
+	ViewData["Title"] = "Entry Import Payment";
+	ViewData["Heading"] = "Entry Import Payment";
+}
+
+<style>
+    .field input, .field select, .field textarea {
+        padding: 9px 9px;
+    }
+</style>
+
+<div class="bd_mainContainer">
+    <div class="page">
+   
+        <section class="card">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Debit Note Entry</h2>
+                </div>
+
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-outline-danger btn-sm px-2"
+                            id="btnRefresh_EntyImportPaymt">
+                        ↻ Refresh
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="grid cols-4">
+
+                    <div class="field">
+                        <label>DBN Note Number <button id="btnhelpDBN" class="help-link">Help</button></label>
+                        <input type="text" id="txtDbnNo" placeholder="Enter DBN Number..." />
+                    </div>
+                  
+
+                    @* <div class="field">
+                        <label>DBN Date</label>
+                        <input type="text" class="form-Flatdate" id="txtDBNDate" placeholder="DD/MMM/YYYY" />
+                    </div> *@
+                     
+                    <div class="field">
+                        <label>Party</label>
+                        <select id="ddlParty" class="select2-field w-100">
+                            <option value="RC236">RC236</option>
+                            <option value="RC239">RC239</option>
+                            <option value="RC192">RC192</option>
+                            <option value="RC193">RC193</option>
+                            <option value="RC479">RC479</option>
+                        </select>
+                    </div>
+
+
+                    <div class="field">
+
+                        <div class="yn-field">
+
+                            <label class="yn-field-label" style="font-size:0.74rem;">
+                                Option<span class="text-danger">*</span>
+                            </label>
+
+                            <div class="yn-checkbox">
+                                <label>
+                                    <input type="radio" name="Options" class="rdoOption" value="PI">
+                                    <span>PI</span>
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="Options" class="rdoOption" value="CI">
+                                    <span>CI</span>
+                                </label>
+                            </div>
+
+                        </div>
+
+                    </div>
+                     
+                    <div class="field">
+                        <label>Invoice No
+                            <button id="btInvnHelp" class="help-link">Help</button>
+                        </label>
+                        <input type="text" id="txtInvNo" placeholder="Enter Payment Of .." />
+                    </div>
+                     
+
+                    <div class="field">
+                        <label>Currency Type</label>
+                        <select id="ddlCurrType_EntyImportPaymt" class="select2-field w-100">
+                            
+                            <option value="US$" selected>US$</option>
+                            <option value="Euro">Euro</option>
+                            <option value="INR">INR</option>
+                            
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Amount</label>
+                        <input type="text"
+                               id="txtAmut_EntyImportPaymt"
+                               placeholder="Enter Amount .." />
+                    </div>
+                     
+                    <div class="field">
+                        <label>Reason</label>
+                        <textarea type="text" id="textResion" rows="2" placeholder="Enter Resions..">
+                        </textarea> 
+                    </div>
+ 
+                </div>
+            </div>
+
+        </section>
+
+
+    </div>
+</div>
+
+
+<div class="modal fade" id="invoiceHelpModal" tabindex="-1" aria-labelledby="invoiceHelpModalLabel" aria-hidden="true"> 
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="invoiceHelpModalLabel">
+                        Invoice Help
+                    </div>
+                </div>
+
+                <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+            </div>
+
+            <div class="modal-body p-3">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover"
+                           style="width:100%;">
+
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width:60px;">#</th>
+                                <th>Invoice No</th>
+                                <th class="text-end">Quantity</th>
+                                <th class="text-end">Invoice Amount</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="invoiceBody">
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+@* 
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-secondary btn-sm"
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
+
+            </div> *@
+
+        </div>
+    </div>
+</div>
+
+@* debit note number help modal open here  *@
+
+
+<div class="modal fade" id="addMenuModalDBNHelp" tabindex="-1" aria-labelledby="addMenuModalDBNHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalDBNHelpLabel">
+                        Entry help
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2">
+                @await Html.PartialAsync("_HelpDebitNoteDBN")
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveDBNHelp">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/pages/importsfabric/DebitNoteEntry.js" asp-append-version="true"></script>

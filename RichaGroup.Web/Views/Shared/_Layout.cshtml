@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/png" href="~/favicon.jpg" />
+		<title>@ViewData["Title"] &mdash; Richa Group</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		@await Html.PartialAsync("Components/_CommonResources")
+		@await RenderSectionAsync("Styles", required: false)
+	</head>
+	<body class="sidebar-collapsed">
+
+		<header class="topbar">
+			<button type="button" class="sidebar-toggle" aria-label="Toggle sidebar">
+				<span class="icon-open">&#9776;</span>  
+				<span class="icon-close">&times;</span> 
+			</button>
+			
+			<div class="brand">
+				<div class="brand-mark">RC</div>
+				<div class="brand-name">Richa Group</div> 
+					<div class="sub-brand-name">Shipping / Banking</div>
+			</div>
+			 
+			@await RenderSectionAsync("TopbarLeft", required: false)
+			<partial name="_TopbarActions" />
+		</header>
+	
+		<partial name="_Sidebar" />
+
+		<div class="sidebar-backdrop"></div>
+	
+		<main>
+			<div class="page">
+				@RenderBody()
+			</div>
+		
+	@* 		@await RenderSectionAsync("SaveBar", required: false) *@
+		</main>
+	
+		@await RenderSectionAsync("Modals", required: false)
+	
+		 
+		<div id="globalLoader" class="gl-overlay">
+	
+			<div class="gl-box">
+	
+				<div id="globalLottieLoader" class="gl-lottie-loader"></div>
+	
+				<div class="gl-text" id="globalLoaderText">
+					Loading, please wait...
+				</div>
+	
+			</div>
+	
+		</div>
+		 
+		<div id="globalLoader" class="gl-overlay">
+	
+			<div class="gl-box">
+	
+				<div id="globalLottieLoader" class="gl-lottie-loader"></div>
+	
+				<div class="gl-text" id="globalLoaderText">
+					Loading, please wait...
+				</div>
+	
+			</div>
+	
+		</div>
+
+		@await RenderSectionAsync("Scripts", required: false)
+	</body>
+</html>

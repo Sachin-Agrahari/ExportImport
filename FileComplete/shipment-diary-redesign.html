@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipment Diary — Richa Group (Redesign)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16233a;
+    --ink-soft:#22334f;
+    --paper:#f3f5f8;
+    --card:#ffffff;
+    --line:#dde3ec;
+    --line-strong:#c6cfdc;
+    --text:#243044;
+    --muted:#6b7a90;
+    --teal:#0e7c72;
+    --teal-dark:#0b6159;
+    --teal-tint:#e6f2f0;
+    --amber:#b45309;
+    --amber-tint:#fdf3e3;
+    --red:#b3363d;
+    --red-tint:#fbebec;
+    --disabled:#eef1f5;
+    --radius:10px;
+    --shadow:0 1px 2px rgba(22,35,58,.06), 0 4px 14px rgba(22,35,58,.05);
+    --shadow-lg:0 8px 20px rgba(22,35,58,.14), 0 20px 60px rgba(22,35,58,.18);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    background:var(--paper);color:var(--text);
+    display:grid;grid-template-columns:248px 1fr;min-height:100vh;
+  }
+
+  /* ── Sidebar ── */
+  aside{background:var(--ink);color:#c9d4e5;padding:20px 0 28px;position:sticky;top:0;height:100vh;overflow-y:auto}
+  .brand{display:flex;align-items:center;gap:10px;padding:4px 22px 20px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:14px}
+  .brand-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#0e7c72,#28a598);display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;color:#fff;font-size:15px}
+  .brand-name{font-family:'Space Grotesk';font-weight:600;color:#fff;font-size:1.02rem}
+  nav a{display:flex;align-items:center;gap:10px;padding:9px 22px;color:#aebad0;text-decoration:none;font-size:.88rem;border-left:3px solid transparent;transition:background .15s,color .15s}
+  nav a:hover{background:rgba(255,255,255,.05);color:#fff}
+  nav a:focus-visible{outline:2px solid #28a598;outline-offset:-2px}
+  nav .group{padding:16px 22px 6px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#5d6d88;font-weight:600}
+  nav a.sub{padding-left:38px;font-size:.84rem}
+  nav a.active{background:rgba(14,124,114,.18);border-left-color:#28a598;color:#fff;font-weight:500}
+  .caret{margin-left:auto;font-size:.7rem;opacity:.6}
+
+  /* ── Main / topbar ── */
+  main{display:flex;flex-direction:column;min-width:0}
+  header.topbar{background:var(--card);border-bottom:1px solid var(--line);padding:12px 32px;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:20}
+  .screen-switch{display:flex;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:4px}
+  .screen-switch button{font:inherit;font-size:.78rem;font-weight:600;color:var(--muted);background:none;border:none;border-radius:99px;padding:7px 16px;cursor:pointer}
+  .screen-switch button.on{background:var(--ink);color:#fff}
+  .top-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+  .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;cursor:pointer;position:relative;color:var(--muted)}
+  .icon-btn:hover{border-color:var(--line-strong);color:var(--ink)}
+  .dot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--amber);border:1.5px solid #fff}
+  .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#22334f,#0e7c72);color:#fff;display:grid;place-items:center;font-weight:600;font-size:.8rem}
+
+  .page{padding:26px 32px 110px;max-width:1460px;width:100%}
+  .screen{display:none}
+  .screen.on{display:block}
+
+  .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+  .crumbs{font-size:.76rem;color:var(--muted);margin-bottom:6px}
+  .crumbs b{color:var(--teal);font-weight:500}
+  h1{font-family:'Space Grotesk';font-weight:700;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em}
+  .chip{display:inline-block;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--amber-tint);color:var(--amber);border-radius:99px;padding:3px 10px;margin-left:8px;vertical-align:middle}
+  .chip-teal{background:var(--teal-tint);color:var(--teal)}
+
+  /* ── Buttons ── */
+  .btn{font-family:'IBM Plex Sans';font-size:.86rem;font-weight:600;border-radius:8px;padding:10px 20px;cursor:pointer;border:1px solid transparent;transition:all .15s}
+  .btn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+  .btn-primary{background:var(--teal);color:#fff}
+  .btn-primary:hover{background:var(--teal-dark)}
+  .btn-outline{background:#fff;color:var(--teal);border-color:var(--teal)}
+  .btn-outline:hover{background:var(--teal-tint)}
+  .btn-ghost{background:var(--ink);color:#fff}
+  .btn-ghost:hover{background:var(--ink-soft)}
+  .btn-danger{background:#fff;color:var(--red);border-color:var(--red)}
+  .btn-danger:hover{background:var(--red-tint)}
+  .btn-sm{padding:7px 14px;font-size:.8rem}
+
+  /* ── Cards ── */
+  section.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:10px;padding:14px 22px;border-bottom:1px solid var(--line);background:linear-gradient(to bottom,#fbfcfe,#f7f9fc)}
+  .card-head .tick{width:4px;height:18px;border-radius:2px;background:var(--teal)}
+  .card-head h2{font-family:'Space Grotesk';font-size:.95rem;font-weight:600;color:var(--ink)}
+  .card-head .hint{margin-left:auto;font-size:.74rem;color:var(--muted)}
+  .card-body{padding:20px 22px 24px}
+
+  /* ── Fields ── */
+  .grid{display:grid;gap:16px 20px}
+  .cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .field label{display:block;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .field input,.field select,.field textarea{width:100%;font:inherit;font-size:.88rem;color:var(--text);padding:9px 12px;border:1px solid var(--line-strong);border-radius:8px;background:#fff;transition:border-color .15s,box-shadow .15s}
+  .field input:hover:not(:disabled),.field select:hover:not(:disabled){border-color:#a7b4c6}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,124,114,.15)}
+  .field input:disabled,.field select:disabled,.field textarea:disabled{background:var(--disabled);color:#94a1b3;border-color:var(--line);cursor:not-allowed}
+  .field .num{font-variant-numeric:tabular-nums;text-align:right}
+  .checkbox{display:flex;align-items:center;gap:8px;font-size:.88rem}
+  .checkbox input{width:17px;height:17px;accent-color:var(--teal);cursor:pointer}
+  .search{position:relative;max-width:280px}
+  .search input{width:100%;font:inherit;font-size:.86rem;padding:9px 12px 9px 34px;border:1px solid var(--line-strong);border-radius:8px}
+  .search input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,124,114,.15)}
+  .search::before{content:"⌕";position:absolute;left:11px;top:50%;transform:translateY(-54%);font-size:1.05rem;color:var(--muted)}
+
+  /* ── Tables ── */
+  .table-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:720px}
+  thead th{font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:11px 14px;background:#f7f9fc;border-bottom:1px solid var(--line);white-space:nowrap}
+  thead th.r, td.r{text-align:right}
+  thead th.c, td.c{text-align:center}
+  tbody td{padding:11px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+  tbody td.num{font-variant-numeric:tabular-nums}
+  tbody tr:hover{background:#f6faf9}
+  tbody tr:last-child td{border-bottom:none}
+  .mono{font-variant-numeric:tabular-nums;letter-spacing:.01em}
+  .status-pill{display:inline-block;min-width:26px;text-align:center;font-size:.72rem;font-weight:600;background:var(--teal-tint);color:var(--teal);border-radius:6px;padding:3px 8px}
+  .row-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--muted);font-size:.9rem;transition:all .12s}
+  .row-btn:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-tint)}
+  .row-btn.danger:hover{border-color:var(--red);color:var(--red);background:var(--red-tint)}
+
+  /* ── Tabs (screen 2) ── */
+  .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);padding:0 22px;background:linear-gradient(to bottom,#fbfcfe,#f7f9fc)}
+  .tabs button{font:inherit;font-size:.86rem;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;padding:13px 18px;cursor:pointer}
+  .tabs button:hover{color:var(--ink)}
+  .tabs button.on{color:var(--teal);border-bottom-color:var(--teal)}
+  .tabpane{display:none;padding:20px 22px 24px}
+  .tabpane.on{display:block}
+  .tab-footer{display:flex;justify-content:space-between;gap:10px;padding:14px 22px;border-top:1px solid var(--line);background:#fbfcfe}
+  .tab-footer .right{display:flex;gap:10px}
+
+  /* ── Modals ── */
+  .overlay{position:fixed;inset:0;background:rgba(22,35,58,.5);backdrop-filter:blur(2px);display:none;place-items:center;z-index:100;padding:24px}
+  .overlay.on{display:grid}
+  .modal{background:#fff;border-radius:14px;box-shadow:var(--shadow-lg);width:min(1080px,100%);max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
+  .modal.sm{width:min(680px,100%)}
+  .modal-head{display:flex;align-items:center;gap:10px;padding:16px 24px;border-bottom:1px solid var(--line)}
+  .modal-head .tick{width:4px;height:18px;border-radius:2px;background:var(--teal)}
+  .modal-head h3{font-family:'Space Grotesk';font-size:1.02rem;font-weight:600;color:var(--ink)}
+  .modal-close{margin-left:auto;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--muted);font-size:1rem}
+  .modal-close:hover{border-color:var(--red);color:var(--red)}
+  .modal-body{padding:20px 24px;overflow:auto}
+  .modal-foot{padding:14px 24px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px;background:#fbfcfe}
+  .modal-side{display:grid;grid-template-columns:1fr 168px;gap:18px;align-items:start}
+  .side-actions{display:flex;flex-direction:column;gap:9px;position:sticky;top:0}
+  .side-actions .label{font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+
+  .divider{border:none;border-top:1px dashed var(--line);margin:18px 0}
+
+  /* ── Save bar ── */
+  .savebar{position:fixed;bottom:0;left:248px;right:0;z-index:30;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:14px 32px;display:flex;align-items:center;gap:12px}
+  .savebar .status{margin-right:auto;font-size:.8rem;color:var(--muted)}
+  .savebar .status b{color:var(--teal);font-weight:600}
+
+  @media (max-width:1100px){.cols-4{grid-template-columns:repeat(2,minmax(0,1fr))}.cols-3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:900px){
+    body{grid-template-columns:1fr}aside{display:none}.savebar{left:0}
+    .cols-2,.cols-3,.cols-4{grid-template-columns:1fr}
+    .modal-side{grid-template-columns:1fr}
+    .side-actions{flex-direction:row;flex-wrap:wrap}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ══════════ Sidebar ══════════ -->
+<aside>
+  <div class="brand"><div class="brand-mark">RG</div><div class="brand-name">Richa Group</div></div>
+  <nav>
+    <a href="#">Dashboard</a>
+    <a href="#">Master <span class="caret">▾</span></a>
+    <div class="group">Transactions</div>
+    <a href="#" class="sub">Invoice <span class="caret">▾</span></a>
+    <a href="#" class="sub">Carton Details <span class="caret">▾</span></a>
+    <a href="#" class="sub">Shipment Planning</a>
+    <a href="#" class="sub">Sales Register <span class="caret">▾</span></a>
+    <a href="#" class="sub">Doc Sent</a>
+    <a href="#" class="sub">Custom Paper</a>
+    <a href="#" class="sub">CHA Bill Entry</a>
+    <a href="#" class="sub active">Buyer Order Maintenance</a>
+    <a href="#" class="sub" style="padding-left:52px">Buyer Order Details</a>
+    <a href="#" class="sub" style="padding-left:52px">Gims Order Details</a>
+    <a href="#" class="sub">Import Accessory Style Detail</a>
+    <a href="#" class="sub">GSP <span class="caret">▾</span></a>
+    <div class="group">General</div>
+    <a href="#">Reports <span class="caret">▾</span></a>
+    <a href="#">Edit</a>
+    <a href="#">Logout</a>
+  </nav>
+</aside>
+
+<!-- ══════════ Main ══════════ -->
+<main>
+  <header class="topbar">
+    <div class="screen-switch" role="tablist" aria-label="Demo screens">
+      <button class="on" data-screen="list">1 · Invoice List</button>
+      <button data-screen="diary">2 · Shipment Diary</button>
+      <button data-screen="boe">3 · Bill of Exchange</button>
+    </div>
+    <div class="top-right">
+      <button class="icon-btn" aria-label="Messages">✉<span class="dot"></span></button>
+      <button class="icon-btn" aria-label="Notifications">🔔<span class="dot"></span></button>
+      <div class="avatar">AK</div>
+    </div>
+  </header>
+
+  <div class="page">
+
+    <!-- ════════ SCREEN 1 · Invoice list ════════ -->
+    <div class="screen on" id="screen-list">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / Buyer Order Maintenance / <b>Bill of Exchange</b></div>
+          <h1>Bill of Exchange</h1>
+        </div>
+        <button class="btn btn-primary">+ Add New</button>
+      </div>
+
+      <section class="card">
+        <div class="card-head">
+          <span class="tick"></span><h2>Invoices</h2>
+          <span class="hint">6 records</span>
+        </div>
+        <div class="card-body" style="padding-bottom:14px">
+          <div class="search"><input type="search" placeholder="Search invoice no…" value="RE/2135/23-24" aria-label="Search invoice number"></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="c">#</th><th>Invoice No.</th><th class="r">Lot No.</th><th>Lot Date</th>
+                <th>CHA Agent</th><th class="r">Buyer Code</th><th class="c">Status</th>
+                <th class="r">Forwarder</th><th class="c">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="c">1</td><td class="mono">RE/2135/23-24</td><td class="r num">1034</td><td>25-10-2023</td><td>Star Shipping</td><td class="r num">2237</td><td class="c"><span class="status-pill">T</span></td><td class="r num">5578</td>
+                <td class="c"><button class="row-btn" title="Edit" onclick="show('diary')">✎</button> <button class="row-btn" title="Merge lot" onclick="openModal('m-merge')">⇄</button> <button class="row-btn danger" title="Delete">🗑</button></td></tr>
+              <tr><td class="c">2</td><td class="mono">RE/2136/23-24</td><td class="r num">1055</td><td>01-11-2023</td><td>Star Shipping</td><td class="r num">2237</td><td class="c"><span class="status-pill">T</span></td><td class="r num">5578</td>
+                <td class="c"><button class="row-btn" title="Edit" onclick="show('diary')">✎</button> <button class="row-btn" title="Merge lot" onclick="openModal('m-merge')">⇄</button> <button class="row-btn danger" title="Delete">🗑</button></td></tr>
+              <tr><td class="c">3</td><td class="mono">RE/2137/23-24</td><td class="r num">1033</td><td>25-10-2023</td><td>Star Shipping</td><td class="r num">2237</td><td class="c"><span class="status-pill">T</span></td><td class="r num">5578</td>
+                <td class="c"><button class="row-btn" title="Edit" onclick="show('diary')">✎</button> <button class="row-btn" title="Merge lot" onclick="openModal('m-merge')">⇄</button> <button class="row-btn danger" title="Delete">🗑</button></td></tr>
+              <tr><td class="c">4</td><td class="mono">RE/2138/23-24</td><td class="r num">1055</td><td>01-11-2023</td><td>Star Shipping</td><td class="r num">2237</td><td class="c"><span class="status-pill">T</span></td><td class="r num">5578</td>
+                <td class="c"><button class="row-btn" title="Edit" onclick="show('diary')">✎</button> <button class="row-btn" title="Merge lot" onclick="openModal('m-merge')">⇄</button> <button class="row-btn danger" title="Delete">🗑</button></td></tr>
+              <tr><td class="c">5</td><td class="mono">RE/2139/23-24</td><td class="r num">1025</td><td>21-10-2023</td><td>Star Shipping</td><td class="r num">2237</td><td class="c"><span class="status-pill">T</span></td><td class="r num">5578</td>
+                <td class="c"><button class="row-btn" title="Edit" onclick="show('diary')">✎</button> <button class="row-btn" title="Merge lot" onclick="openModal('m-merge')">⇄</button> <button class="row-btn danger" title="Delete">🗑</button></td></tr>
+              <tr><td class="c">6</td><td class="mono">RE/2140/23-24</td><td class="r num">1025</td><td>21-10-2023</td><td>Star Shipping</td><td class="r num">2237</td><td class="c"><span class="status-pill">T</span></td><td class="r num">5578</td>
+                <td class="c"><button class="row-btn" title="Edit" onclick="show('diary')">✎</button> <button class="row-btn" title="Merge lot" onclick="openModal('m-merge')">⇄</button> <button class="row-btn danger" title="Delete">🗑</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ════════ SCREEN 2 · Shipment diary (tabbed) ════════ -->
+    <div class="screen" id="screen-diary">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / Buyer Order Maintenance / <b>Shipment Diary</b></div>
+          <h1>Shipment Diary <span class="chip">Lot 910</span></h1>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-danger">Abort</button>
+          <button class="btn btn-outline" onclick="openModal('m-planning')">Shipment Planning ↗</button>
+        </div>
+      </div>
+
+      <!-- Consignment header -->
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Consignment</h2></div>
+        <div class="card-body">
+          <div class="grid cols-4">
+            <div class="field"><label>Lot No</label><input value="910"></div>
+            <div class="field"><label>Date</label><input type="date" value="2023-09-23"></div>
+            <div class="field"><label>Buyer Code</label><input value="2021"></div>
+            <div class="field"><label>Buyer Name</label><input value="Abercrombie & Fitch Trading"></div>
+            <div class="field"><label>CHA Code</label><input value="5437"></div>
+            <div class="field"><label>CHA Name</label><input value="ClearFastair Cargo Agencies Pvt"></div>
+            <div class="field"><label>Forwarder Code</label><input value="ULAS"></div>
+            <div class="field"><label>Forwarder Name</label><input value="United Liner Shipping"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabbed detail -->
+      <section class="card">
+        <div class="tabs" role="tablist">
+          <button class="on" data-tab="t-plan">Shipment Planning</button>
+          <button data-tab="t-cha">CHA Bill Details</button>
+          <button data-tab="t-fwd">Forwarder Bill Details</button>
+        </div>
+
+        <!-- Tab 1 -->
+        <div class="tabpane on" id="t-plan">
+          <div class="grid cols-3">
+            <div class="field"><label>Mode</label><select><option selected>By Sea</option><option>By Air</option></select></div>
+            <div class="field"><label>Cartage</label><select><option selected>By</option></select></div>
+            <div class="field"><label>Freight Instruction</label><select><option selected>Topay</option><option>Prepaid</option></select></div>
+            <div class="field"><label>Type</label><select><option selected>FOB</option><option>CIF</option></select></div>
+            <div class="checkbox" style="padding-top:26px"><input type="checkbox" id="e1"><label for="e1" style="all:unset;cursor:pointer">Entry</label></div>
+            <div class="field"></div>
+            <div class="field"><label>BL / FCR</label><select><option selected>FCR No</option><option>BL No</option></select></div>
+            <div class="field"><label>Date</label><input type="date" value="2025-09-25"></div>
+            <div class="field"><label>BL #</label><input value="NA"></div>
+            <div class="field"><label>Air / Shipping Line</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Local EGM No</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Local EGM Date</label><input type="date" disabled></div>
+          </div>
+          <hr class="divider">
+          <div class="field"><label>Remarks</label><textarea rows="3" disabled placeholder="—"></textarea></div>
+        </div>
+
+        <!-- Tab 2 -->
+        <div class="tabpane" id="t-cha">
+          <div class="grid cols-3">
+            <div class="field"><label>Mate</label><input placeholder="—"></div>
+            <div class="field"><label>ETD</label><select><option selected>By</option></select></div>
+            <div class="field"><label>ETA</label><select><option selected>Topay</option></select></div>
+            <div class="checkbox" style="padding-top:26px"><input type="checkbox" id="e2"><label for="e2" style="all:unset;cursor:pointer">Generate GM</label></div>
+            <div class="field"><label>FCR</label><input value="AFCN05429BB023"></div>
+            <div class="field"><label>HAWB Number</label><input disabled placeholder="—"></div>
+            <div class="field"><label>GTW. Port</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Line Seal</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Error Code</label><input disabled placeholder="—"></div>
+          </div>
+        </div>
+
+        <!-- Tab 3 -->
+        <div class="tabpane" id="t-fwd">
+          <div class="grid cols-3">
+            <div class="field"><label>Destination</label><input value="USA"></div>
+            <div class="field"><label>Port of Loading</label><input value="Nhava Sheva"></div>
+            <div class="field"><label>Port of Discharge</label><input value="New York"></div>
+            <div class="field"><label>Vessel Number</label><input value="CMA CGM IVANHOE/313B"></div>
+            <div class="field"><label>Voyage</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Description</label><input value="Ready-made Garments"></div>
+            <div class="field"><label>Brand / Bond / Depart</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Reference</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Our Reference</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Your Reference</label><input disabled placeholder="—"></div>
+          </div>
+        </div>
+
+        <div class="tab-footer">
+          <button class="btn btn-sm btn-outline" onclick="stepTab(-1)">← Previous tab</button>
+          <div class="right">
+            <button class="btn btn-sm btn-outline" onclick="stepTab(1)">Next tab →</button>
+            <button class="btn btn-sm btn-primary">Save</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ════════ SCREEN 3 · Bill of Exchange form ════════ -->
+    <div class="screen" id="screen-boe">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / Buyer Order Maintenance / <b>Bill of Exchange</b></div>
+          <h1>Bill of Exchange <span class="chip">Lot 910</span></h1>
+        </div>
+        <button class="btn btn-primary">+ Add New</button>
+      </div>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Forwarder Bill Details</h2></div>
+        <div class="card-body">
+          <div class="grid cols-4">
+            <div class="field"><label>Shipping Bill Rcvd</label><select><option selected>Yes</option><option>No</option></select></div>
+            <div class="field"><label>Received On</label><input type="date" value="2023-09-28"></div>
+            <div class="field"><label>Cargo Mode</label><input value="Road"></div>
+            <div class="checkbox" style="padding-top:26px"><input type="checkbox" id="e3"><label for="e3" style="all:unset;cursor:pointer">Entry</label></div>
+            <div class="field"><label>Documents Rcvd</label><select><option selected>Yes</option><option>No</option></select></div>
+            <div class="field"><label>Received On</label><input type="date" value="2023-10-17"></div>
+            <div class="field"><label>G.R. Number</label><input value="011267"></div>
+            <div class="field"><label>G.R. Date</label><input type="date" value="2023-09-15"></div>
+            <div class="field"><label>Documents Type</label><select><option selected>Exporter Copy</option></select></div>
+            <div class="field"><label>Dated</label><input type="date" value="2023-09-28"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Forwarder Bill Number</h2>
+          <button class="btn btn-sm btn-outline" style="margin-left:auto" onclick="openModal('m-tag')">Tag Invoice</button>
+        </div>
+        <div class="card-body">
+          <div class="grid cols-4">
+            <div class="field"><label>Entry Date</label><input type="date" value="2023-10-03"></div>
+            <div class="field"><label>Bill No</label><input value="DNCDSMUM234"></div>
+            <div class="field"><label>Date</label><input type="date" value="2023-09-29"></div>
+            <div class="field"><label>Amount</label><input class="num" value="68,288.37"></div>
+            <div class="field"><label>Late Delivery</label><input class="num" value="0.00"></div>
+            <div class="field"><label>Bill For</label><select><option selected>CHA</option><option>Forwarder</option></select></div>
+            <div class="field"><label>Invoice</label><input class="num" value="0.00"></div>
+            <div class="field"><label>Container No.</label><input value="BMOU5558450/40, FANU3094"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>International Bill Details</h2>
+          <button class="btn btn-sm btn-outline" style="margin-left:auto" onclick="openModal('m-tag')">Tag Invoice</button>
+        </div>
+        <div class="card-body">
+          <div class="grid cols-4">
+            <div class="field"><label>Bill For</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Weight</label><input class="num" value="0.000"></div>
+            <div class="field"><label>Rate</label><input class="num" value="0.00"></div>
+            <div class="field"><label>Amount</label><input class="num" value="0.00"></div>
+            <div class="field"><label>Currency</label><select><option selected>INR</option><option>USD</option></select></div>
+            <div class="field"><label>Conv Rate</label><input class="num" value="1.00000"></div>
+            <div class="field"><label>Freight (INR)</label><input class="num" value="0.00"></div>
+            <div class="field"><label>Min. Freight (INR)</label><input class="num" value="0.00"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Save bar -->
+  <div class="savebar">
+    <span class="status">Editing lot <b>910</b> · unsaved changes</span>
+    <button class="btn btn-ghost">Cancel</button>
+    <button class="btn btn-primary">Save Changes</button>
+  </div>
+</main>
+
+<!-- ══════════ MODAL · Merge Lot / Lot Number Help ══════════ -->
+<div class="overlay" id="m-merge" role="dialog" aria-modal="true" aria-label="Merge lot">
+  <div class="modal">
+    <div class="modal-head"><span class="tick"></span><h3>Merge Lot — Lot Number Help</h3>
+      <button class="modal-close" onclick="closeModal('m-merge')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="grid cols-4" style="margin-bottom:4px">
+        <div class="field"><label>Lot No</label><input value="910"></div>
+        <div class="field"><label>Buyer Code</label><input value="5437"></div>
+        <div class="field"><label>Buyer Name</label><input value="ClearFastair Cargo Agencies Pvt"></div>
+        <div class="field"><label>Mode</label><input value="By Sea"></div>
+        <div class="field"><label>CHA</label><input value="5437"></div>
+        <div class="field"><label>Forwarder</label><input value="ULAS"></div>
+        <div class="field"><label>Terms</label><input value="FOB"></div>
+        <div class="field"><label>Port of Loading</label><input value="Nhava Sheva"></div>
+        <div class="field"><label>Port of Discharge</label><input value="New York"></div>
+        <div class="field"><label>Invoice No</label>
+          <div class="search" style="max-width:none"><input type="search" value="RE/2135/23-24"></div>
+        </div>
+      </div>
+      <hr class="divider">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="c">#</th><th class="r">Lot No</th><th class="r">CHA</th><th class="r">Buyer Code</th><th>Forwarder</th><th>Mode</th><th>Terms</th><th>Port of Discharge</th><th>Port of Loading</th></tr></thead>
+          <tbody>
+            <tr><td class="c">1</td><td class="r num">16</td><td class="r num">5437</td><td class="r num">2021</td><td>Ulas</td><td>By Sea</td><td>By Sea</td><td>New York</td><td>Nhava Sheva</td></tr>
+            <tr><td class="c">2</td><td class="r num">21</td><td class="r num">5437</td><td class="r num">2021</td><td>Ulas</td><td>By Sea</td><td>By Sea</td><td>New York</td><td>Nhava Sheva</td></tr>
+            <tr><td class="c">3</td><td class="r num">38</td><td class="r num">5437</td><td class="r num">2021</td><td>Ulas</td><td>By Sea</td><td>By Sea</td><td>New York</td><td>Nhava Sheva</td></tr>
+            <tr><td class="c">4</td><td class="r num">91</td><td class="r num">5437</td><td class="r num">2021</td><td>Ulas</td><td>By Sea</td><td>By Sea</td><td>New York</td><td>Nhava Sheva</td></tr>
+            <tr><td class="c">5</td><td class="r num">181</td><td class="r num">5437</td><td class="r num">2021</td><td>Ulas</td><td>By Sea</td><td>By Sea</td><td>New York</td><td>Nhava Sheva</td></tr>
+            <tr><td class="c">6</td><td class="r num">186</td><td class="r num">5437</td><td class="r num">2021</td><td>Ulas</td><td>By Sea</td><td>By Sea</td><td>New York</td><td>Nhava Sheva</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('m-merge')">Cancel</button>
+      <button class="btn btn-primary">Merge Lot</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL · Shipment Planning ══════════ -->
+<div class="overlay" id="m-planning" role="dialog" aria-modal="true" aria-label="Shipment planning">
+  <div class="modal" style="width:min(1240px,100%)">
+    <div class="modal-head"><span class="tick"></span><h3>Shipment Planning</h3>
+      <span class="chip chip-teal" style="margin-left:12px">RE/2135/23-24</span>
+      <button class="modal-close" onclick="closeModal('m-planning')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="modal-side">
+        <div>
+          <div class="search" style="margin-bottom:14px"><input type="search" placeholder="Search invoice no…" value="RE/2135/23-24"></div>
+          <div class="table-wrap">
+            <table style="min-width:1180px">
+              <thead><tr>
+                <th class="c">#</th><th>Invoice No.</th><th>GST Invoice No.</th><th class="r">GST on Value</th><th class="r">IGST</th>
+                <th>Cur.</th><th class="r">Amount</th><th class="r">Bank Qty</th><th class="r">AEPC Qty</th><th class="r">CTN#</th>
+                <th class="r">Vol Wt</th><th class="r">Gross Wt</th><th class="r">Net Wt</th><th class="r">CBM</th>
+              </tr></thead>
+              <tbody>
+                <tr><td class="c">1</td><td class="mono">RE/2069/23-24</td><td class="mono">RE/ES/2257/23-24</td><td class="r num">20,73,289.50</td><td class="r num">1,03,664.48</td><td>US$</td><td class="r num">25,222.50</td><td class="r num">2,242.000</td><td class="r num">2,242.000</td><td class="r num">76</td><td class="r num">675.290</td><td class="r num">772.160</td><td class="r num">650.560</td><td class="r num">4.052</td></tr>
+                <tr><td class="c">2</td><td class="mono">RE/2183/23-24</td><td class="mono">RE/ES/2295/23-24</td><td class="r num">27,65,372.40</td><td class="r num">3,31,844.69</td><td>US$</td><td class="r num">33,642.00</td><td class="r num">1,869.000</td><td class="r num">1,869.000</td><td class="r num">93</td><td class="r num">799.490</td><td class="r num">1,111.350</td><td class="r num">934.650</td><td class="r num">4.797</td></tr>
+                <tr><td class="c">3</td><td class="mono">RE/2103/23-24</td><td class="mono">RE/ES/2296/23-24</td><td class="r num">30,39,427.20</td><td class="r num">3,64,731.26</td><td>US$</td><td class="r num">36,976.00</td><td class="r num">2,311.000</td><td class="r num">2,311.000</td><td class="r num">73</td><td class="r num">1,113.840</td><td class="r num">1,103.700</td><td class="r num">924.300</td><td class="r num">6.683</td></tr>
+                <tr><td class="c">4</td><td class="mono">—</td><td class="mono">RE/ES/2294/23-24</td><td class="r num">31,32,362.52</td><td class="r num">1,56,618.13</td><td>US$</td><td class="r num">38,106.60</td><td class="r num">3,612.000</td><td class="r num">3,612.000</td><td class="r num">173</td><td class="r num">924.700</td><td class="r num">1,091.630</td><td class="r num">866.730</td><td class="r num">5.548</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="side-actions">
+          <button class="btn btn-sm btn-primary">+ Add</button>
+          <button class="btn btn-sm btn-danger">Delete</button>
+          <span class="label">Details</span>
+          <button class="btn btn-sm btn-outline" onclick="openModal('m-airsea')">Air / Sea Diff</button>
+          <button class="btn btn-sm btn-outline">LC Details</button>
+          <button class="btn btn-sm btn-outline">Other Details</button>
+          <span class="label">Invoice help</span>
+          <button class="btn btn-sm btn-outline" onclick="openModal('m-invhelp')">Invoice Details</button>
+          <button class="btn btn-sm btn-outline" onclick="openModal('m-aepc')">AEPC / Bank</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL · Shipment Register Invoice Help ══════════ -->
+<div class="overlay" id="m-invhelp" role="dialog" aria-modal="true" aria-label="Shipment register invoice help">
+  <div class="modal sm">
+    <div class="modal-head"><span class="tick"></span><h3>Shipment Register — Invoice Help</h3>
+      <button class="modal-close" onclick="closeModal('m-invhelp')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="search" style="margin-bottom:14px"><input type="search" value="RE/2135/23-24"></div>
+      <div class="table-wrap">
+        <table style="min-width:620px">
+          <thead><tr><th class="c">#</th><th>Invoice No.</th><th>Invoice Date</th><th>Type</th><th>Cur.</th><th class="r">Amount</th><th>LC No</th><th class="r">Ctns</th></tr></thead>
+          <tbody>
+            <tr><td class="c">1</td><td class="mono">RE/2069/23-24</td><td>18-09-2023</td><td>FOB</td><td>US$</td><td class="r num">21,800.00</td><td>NA</td><td class="r num">117</td></tr>
+            <tr><td class="c">2</td><td class="mono">RE/2183/23-24</td><td>19-09-2023</td><td>FOB</td><td>US$</td><td class="r num">30,890.80</td><td>NA</td><td class="r num">229</td></tr>
+            <tr><td class="c">3</td><td class="mono">RE/2103/23-24</td><td>13-10-2023</td><td>FOB</td><td>US$</td><td class="r num">80,936.60</td><td>NA</td><td class="r num">201</td></tr>
+            <tr><td class="c">4</td><td class="mono">—</td><td>23-10-2023</td><td>FOB</td><td>US$</td><td class="r num">66,900.00</td><td>NA</td><td class="r num">0</td></tr>
+            <tr><td class="c">5</td><td class="mono">—</td><td>24-10-2023</td><td>FOB</td><td>US$</td><td class="r num">24,600.00</td><td>NA</td><td class="r num">0</td></tr>
+            <tr><td class="c">6</td><td class="mono">—</td><td>24-10-2023</td><td>FOB</td><td>US$</td><td class="r num">8,825.00</td><td>NA</td><td class="r num">0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-primary" onclick="closeModal('m-invhelp')">Done</button></div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL · Air/Sea Entry Details ══════════ -->
+<div class="overlay" id="m-airsea" role="dialog" aria-modal="true" aria-label="Air/sea entry details">
+  <div class="modal sm">
+    <div class="modal-head"><span class="tick"></span><h3>Air / Sea Entry Details</h3>
+      <button class="modal-close" onclick="closeModal('m-airsea')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="table-wrap">
+        <table style="min-width:560px">
+          <thead><tr><th class="c">#</th><th>Invoice No</th><th class="r">Quantity</th><th class="r">Actual Rate</th><th class="r">New Rate</th><th class="r">Diff Rate</th></tr></thead>
+          <tbody>
+            <tr><td class="c">1</td><td class="mono">RE/2145/23-25</td><td class="r num">3,612.000</td><td class="r num">10.5500</td><td class="r num">10.5500</td><td class="r num">0.00000</td></tr>
+            <tr><td class="c">2</td><td>—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td></tr>
+            <tr><td class="c">3</td><td>—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-primary" onclick="closeModal('m-airsea')">Done</button></div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL · AEPC Bank Invoice Details ══════════ -->
+<div class="overlay" id="m-aepc" role="dialog" aria-modal="true" aria-label="AEPC bank invoice details">
+  <div class="modal">
+    <div class="modal-head"><span class="tick"></span><h3>AEPC / Bank Invoice Details</h3>
+      <label class="checkbox" style="margin-left:16px"><input type="checkbox"> AEPC</label>
+      <label class="checkbox"><input type="checkbox" checked> Bank</label>
+      <button class="modal-close" onclick="closeModal('m-aepc')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="table-wrap">
+        <table style="min-width:980px">
+          <thead><tr><th class="c">#</th><th>Style No</th><th>PO No.</th><th>Goods Description</th><th>Shipment From</th><th>Shipment To</th><th>Category</th><th class="r">Quantity</th><th>Qty Type</th><th class="r">Rate</th><th class="r">Amount</th></tr></thead>
+          <tbody>
+            <tr><td class="c">1</td><td class="mono">103664.48</td><td class="mono">2557669-US1BU</td><td>Ladies Skirt White</td><td>11-09-2023</td><td>18-09-2023</td><td>USA/NA</td><td class="r num">3,612.000</td><td>PCS</td><td class="r num">10.5500</td><td class="r num">38,106.50</td></tr>
+            <tr><td class="c">2</td><td class="mono">331844.69</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="r">—</td><td>—</td><td class="r">—</td><td class="r">—</td></tr>
+            <tr><td class="c">3</td><td class="mono">364731.26</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="r">—</td><td>—</td><td class="r">—</td><td class="r">—</td></tr>
+            <tr><td class="c">4</td><td class="mono">156618.13</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="r">—</td><td>—</td><td class="r">—</td><td class="r">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-primary" onclick="closeModal('m-aepc')">Done</button></div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL · Tag Invoice ══════════ -->
+<div class="overlay" id="m-tag" role="dialog" aria-modal="true" aria-label="Tag invoice">
+  <div class="modal sm">
+    <div class="modal-head"><span class="tick"></span><h3>Tag Invoice</h3>
+      <button class="modal-close" onclick="closeModal('m-tag')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="table-wrap">
+        <table style="min-width:560px">
+          <thead><tr><th>Invoice Number</th><th class="r">Quantity</th><th class="r">Carton</th><th class="r">Amount</th><th class="r">SB No.</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">RE/2143/25-26</td><td class="r num">2,404.000</td><td class="r num">22</td><td class="r num">6,738.44</td><td class="r num">8966357</td></tr>
+            <tr><td class="mono">RE/2144/21-22</td><td class="r num">5,923.000</td><td class="r num">214</td><td class="r num">17,585.69</td><td class="r num">5634099</td></tr>
+            <tr><td class="mono">RE/2143/22-23</td><td class="r num">3,235.000</td><td class="r num">115</td><td class="r num">9,450.26</td><td class="r num">5056193</td></tr>
+            <tr><td class="mono">RE/2143/23-24</td><td class="r num">2,242.000</td><td class="r num">76</td><td class="r num">6,245.39</td><td class="r num">3105188</td></tr>
+            <tr><td class="mono">RE/2143/24-25</td><td class="r num">1,869.000</td><td class="r num">93</td><td class="r num">7,642.38</td><td class="r num">0</td></tr>
+            <tr><td class="mono">RE/2144/25-26</td><td class="r num">2,311.000</td><td class="r num">78</td><td class="r num">6,409.74</td><td class="r num">8762047</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <hr class="divider">
+      <div class="table-wrap">
+        <table style="min-width:520px">
+          <thead><tr><th class="c">#</th><th>Invoice Number</th><th>Cur.</th><th class="r">Amount</th><th class="r">CTNS</th><th class="r">Lot</th></tr></thead>
+          <tbody>
+            <tr><td class="c">1</td><td class="mono">RE/0001/23-24</td><td>US$</td><td class="r num">18,297.98</td><td class="r num">48</td><td class="r num">49</td></tr>
+            <tr><td class="c">2</td><td class="mono">RE/0002/23-24</td><td>US$</td><td class="r num">668.14</td><td class="r num">7</td><td class="r num">164</td></tr>
+            <tr><td class="c">3</td><td class="mono">RE/0003/23-24</td><td>US$</td><td class="r num">4,283.68</td><td class="r num">15</td><td class="r num">49</td></tr>
+            <tr><td class="c">4</td><td class="mono">RE/0004/23-24</td><td>US$</td><td class="r num">10,490.84</td><td class="r num">17</td><td class="r num">48</td></tr>
+            <tr><td class="c">5</td><td class="mono">RE/0005/23-24</td><td>US$</td><td class="r num">6,693.35</td><td class="r num">16</td><td class="r num">49</td></tr>
+            <tr><td class="c">6</td><td class="mono">RE/0006/23-24</td><td>US$</td><td class="r num">742.53</td><td class="r num">7</td><td class="r num">164</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('m-tag')">Cancel</button>
+      <button class="btn btn-primary">Tag Selected</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Screen switcher
+  const switchBtns = document.querySelectorAll('.screen-switch button');
+  function show(name){
+    document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === 'screen-' + name));
+    switchBtns.forEach(b => b.classList.toggle('on', b.dataset.screen === name));
+    window.scrollTo({top:0});
+  }
+  switchBtns.forEach(b => b.addEventListener('click', () => show(b.dataset.screen)));
+
+  // Tabs
+  const tabBtns = [...document.querySelectorAll('.tabs button')];
+  function showTab(id){
+    document.querySelectorAll('.tabpane').forEach(p => p.classList.toggle('on', p.id === id));
+    tabBtns.forEach(b => b.classList.toggle('on', b.dataset.tab === id));
+  }
+  tabBtns.forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
+  function stepTab(dir){
+    const i = tabBtns.findIndex(b => b.classList.contains('on'));
+    const next = Math.min(Math.max(i + dir, 0), tabBtns.length - 1);
+    showTab(tabBtns[next].dataset.tab);
+  }
+
+  // Modals
+  function openModal(id){ document.getElementById(id).classList.add('on'); }
+  function closeModal(id){ document.getElementById(id).classList.remove('on'); }
+  document.querySelectorAll('.overlay').forEach(o => {
+    o.addEventListener('click', e => { if(e.target === o) o.classList.remove('on'); });
+  });
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape') document.querySelectorAll('.overlay.on').forEach(o => o.classList.remove('on'));
+  });
+</script>
+</body>
+</html>

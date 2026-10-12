@@ -1,0 +1,61 @@
+﻿
+        <!-- Search -->
+        <div class="row g-2 mb-3 mt-1 align-items-end justify-content-end">
+
+            <div class="col-md-2">
+                <label class="form-label">Search By</label>
+                <select id="ddlMergeLotSearchBy"
+                        class="form-select">
+                    <option value="lotNo" selected>Lot No</option>
+                    <option value="invoiceNo">Invoice No</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Search</label>
+
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+
+                    <input type="text"
+                           id="txtMergeLotSearch"
+                           class="form-input w-75"
+                           placeholder="Enter Lot No">
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <!-- Table -->
+        <div class="table-wrap">
+
+            <table id="tblMergeLot"
+                   class="display"
+                   style="width:100%">
+
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Select</th>
+                        <th class="invoice-column d-none">Invoice No</th>
+                        <th>Lot No</th>
+                        <th>CHA</th>
+                        <th>Buyer</th>
+                        <th>Forwarder</th>
+                        <th>Mode</th>
+                        <th>Terms</th>
+                        <th>Port Of Discharge</th>
+                        <th>Port Of Loading</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tblbodymergeLotLotNo"></tbody>
+
+            </table>
+
+        </div>
+

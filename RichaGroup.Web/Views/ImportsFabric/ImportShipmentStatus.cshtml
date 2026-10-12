@@ -1,0 +1,785 @@
+﻿<div class="bd_mainContainer">
+
+	<div class="page">
+
+		<section class="card">
+			<div class="card-head">
+				<div>
+					<span class="tick"></span>
+					<h2 class="mt-2" id="txtHeaderMain">Import Shipment Status</h2>
+				</div>
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave_BOEAgainstFabric"
+                            title="Save">
+
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+							 stroke="currentColor" stroke-width="2"
+							 stroke-linecap="round" stroke-linejoin="round">
+							<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+							<polyline points="17 21 17 13 7 13 7 21"></polyline>
+							<polyline points="7 3 7 8 15 8"></polyline>
+						</svg>
+						Save
+					</button>
+					<button type="button"
+							class="btn btn-outline-danger btn-sm"
+							id="btnRefresh_BOEAgainstFabric">
+						↻ Refresh
+					</button>
+				</div>
+			</div>
+
+			<div class="card-body">
+
+				<div class="grid cols-6">
+					<div class="field">
+						<label id="lb_Parties_location">
+							Entry No
+							<button id="btnEntryHelp" class="help-link">Help</button>
+						</label>
+						<input type="text" id="txtEntry" placeholder="Enter Entry Number.." />
+					</div>
+					
+					<div class="field">
+						<label>Entry Date</label>
+						<input type="text" id="txtentryDt" class="form-Flatdate" placeholder="Select date.." />
+					</div>
+					<div class="field">
+						<label>PI No</label>
+						<input type="text" id="txtPiNo" placeholder="PI No" disabled />
+					</div>
+					<div class="field">
+						<label>Style No</label>
+						<input type="text" id="txtStyleNo" placeholder="Style No" disabled />
+					</div>
+					<div class="field">
+						<label>PI Qty</label>
+						<input type="text" id="txtPiQty" placeholder="PI Qty" class="r num" disabled />
+					</div>
+					<div class="field">
+						<label>Unit</label>
+						<input type="text" id="txtUnit" placeholder="Unit" disabled />
+					</div>
+					<div class="field">
+						<label>Company</label>
+						<input type="text" id="txtCompany" placeholder="Company" disabled />
+					</div>
+					<div class="field">
+						<label>Merchant</label>
+						<input type="text" id="txtMerchant" placeholder="Merchant" disabled />
+					</div>
+					<div class="field">
+						<label>Buyer</label>
+						<input type="text" id="txtBuyer" placeholder="Buyer" disabled />
+					</div>
+					<div class="field">
+						<label>Supplier</label>
+						<input type="text" id="txtSupplier" placeholder="Supplier" disabled />
+					</div>
+					<div class="field">
+						<label>Garment Description</label>
+						<input type="text" id="txtGarmentDesc" placeholder="Garment Description" disabled />
+					</div>
+					<div class="field" style="margin-top: 19px;">
+						<button class="btn btn-primary d-flex align-items-center justify-content-start p-2" id="btnDispatch">
+							<img src="~/assets/icon/import.svg" class="white-icon" />
+							<span class="mt-0">Dispatch</span>
+						</button>
+					</div>
+				</div>
+				<hr />
+
+				<div class="d-flex justify-content-end m-1 align-items-end">
+					@*  <button type="button"
+                             class="btn btn-primary btn-sm fs-6"
+                             id="btnAdd_EntyImportPaymt">
+                         Add Row
+                     </button> *@
+				</div>
+				<div class="table-responsive table" style="max-height:400px;">
+					<div class="gsp-table-scroll">
+						<div class="card-head">
+
+							<div>
+								<span class="tick"></span>
+								@*  <h2 class="mt-2">Fabric PO Details</h2> *@
+							</div>
+
+							<div class="d-flex gap-2">
+
+								<div class="d-flex gap-2">
+
+
+									<button id="btnAddrow" type="button" class="btn btn-primary btn-sm" title="Add">
+										<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+											<path d="M12 5v14"></path>
+											<path d="M5 12h14"></path>
+										</svg>
+										<span>Add</span>
+									</button>
+
+									<button type="button" class="btn btn-primary btn-sm" title="Copy Row">
+										<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+											<path d="M12 5v14"></path>
+											<path d="M5 12h14"></path>
+										</svg>
+										<span>Copy</span>
+									</button>
+
+									<button type="button" class="btn btn-primary  btn-sm" title="Delete Row">
+										<span>Delete</span>
+									</button>
+
+								</div>
+
+							</div>
+
+						</div>
+						<table id="tblDutyBillEntry" class="display" style="width:100%">
+
+							<thead>
+								<tr>
+									<th>Action</th>
+									<th>Sr No</th>
+									<th>Pino</th>
+									<th>PO No</th>
+									<th>Supplier</th>
+									<th>Invoice No</th>
+									<th>Buyer Name</th>
+									<th>Style</th>
+									<th>Desc</th>
+									<th>Gsm</th>
+									<th>Gsm To</th>
+									<th>WID</th>
+									<th>FW</th>
+									<th>Process</th>
+									<th>Segment</th>
+									<th>Apld Qty</th>
+									<th>Shpd Qty</th>
+									<th>Pi Fm</th>
+									<th>Mode</th>
+									<th>Ex-Mill</th>
+									<th>ETD Remarks</th>
+									<th>Etd</th>
+									<th>Terms</th>
+									<th>PMT</th>
+									<th>Lic. Status</th>
+									<th>Lic. No</th>
+									<th>CHA</th>
+									<th>FWD</th>
+									<th>Docs Status</th>
+									<th>Final Status</th>
+									<th>Final Date</th>
+									<th>Goods In House</th>
+									<th>Remarks</th>
+								</tr>
+							</thead>
+							<tbody id="tblbodyDutyBillEntry">
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+
+<div class="modal fade" id="modalBoeEdit" tabindex="-1" aria-labelledby="modalBoeEditLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-xl">
+		<div class="modal-content modal-box">
+			<div class="modal-header">
+				<div class="modal-header-text">
+					<div class="modal-title" id="modalBoeEditLabel">
+						Edit Import Bill Entry
+					</div>
+				</div>
+				<div class="d-flex gap-2">
+					<button type="button"
+							class="modal-close"
+							data-bs-dismiss="modal"
+							aria-label="Close">
+						<svg viewBox="0 0 24 24">
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+					</button>
+				</div>
+				<div class="app-modal-header-actions">
+				</div>
+			</div>
+
+			<div class="modal-body p-2">
+
+				<div class="grid cols-5">
+
+					<div class="field">
+						<label class="form-label">Pino</label>
+						<input type="text" id="txtpino" class="form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">PO No</label>
+						<input type="text" id="txtpo" class="form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Supplier</label>
+						<input type="text" id="txtsupplier" class="form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Invoice No</label>
+						<input type="text" id="txtinvoice" class="form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Buyer Name</label>
+						<input type="text" id="txtbuyer" class="form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Style</label>
+						<input type="text" id="txtstyle" class="form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Desc</label>
+						<input type="text" id="txtdesc" class="form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Gsm</label>
+						<input type="text" step="any" id="txtgsm" class="r num form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Gsm To</label>
+						<input type="text" step="any" id="txtgsmTo" class="r num form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">WID</label>
+						<input type="text" step="any" id="txtwid" class="r num form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">FW</label>
+						<input type="text" step="any" id="txtfw" class="r num form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Process</label>
+						<input type="text" id="txtprocess" class="form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Segment</label>
+						<input type="text" id="txtsegment" class="form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Apld Qty</label>
+						<input type="text" step="any" id="txtapldQty" class="r num form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Shpd Qty</label>
+						<input type="text" step="any" id="txtshpdQty" class="r num form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Pi Fm</label>
+						<input type="text" id="txtpiFm" class="form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Mode</label>
+						<input type="text" id="txtmode" class="form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Ex-Mill</label>
+						<input type="text" id="txtexMill" class="form-Flatdate form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">ETD Remarks</label>
+						<input type="text" id="txtetdRemarks" class="form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Etd</label>
+						<input type="text" id="txtetd" class="form-control">
+					</div>
+
+					<div class="field">
+						<label class="form-label">Terms</label>
+						<input type="text" id="txtterms" class="form-control">
+					</div>
+
+
+					<div class="field">
+						<label class="form-label">PMT</label>
+						<input type="text" id="txtpmt" class="form-control">
+					</div>
+					<div class="field">
+						<label class="form-label">Lic. Status</label>
+						<input type="text" id="txtlicStatus" class="form-control">
+					</div>
+					<div class="field">
+						<label class="form-label">Lic. No</label>
+						<input type="text" id="txtlicNo" class="form-control">
+					</div>
+					<div class="field">
+						<label class="form-label">CHA</label>
+						<input type="text" id="txtcha" class="form-control">
+					</div>
+					<div class="field">
+						<label class="form-label">FWD</label>
+						<input type="text" id="txtfwd" class="form-control">
+					</div>
+					<div class="field">
+						<label class="form-label">Docs Status</label>
+						<input type="text" id="txtdocsStatus" class="form-control">
+					</div>
+					<div class="field">
+						<label class="form-label">Final Status</label>
+						<input type="text" id="txtfinalStatus" class="form-control">
+					</div>
+					<div class="field">
+						<label class="form-label">Final Date</label>
+						<input type="text" id="txtfinalDt" class="form-Flatdate form-control">
+					</div>
+					<div class="field">
+						<label class="form-label">Goods In House</label>
+						<input type="text" id="txtgoodsInHouse" class="form-control">
+					</div>
+					<div class="field">
+						<label class="form-label">Remarks</label>
+						<input type="text" id="txtremarks" class="form-control">
+					</div>
+				</div>
+
+			</div>
+
+			<div class="modal-footer">
+				<button type="button"
+						class="btn btn-primary btn-sm"
+						id="btnOkBoeEdit">
+					<svg width="14"
+						 height="14"
+						 viewBox="0 0 24 24"
+						 fill="none"
+						 stroke="currentColor"
+						 stroke-width="2"
+						 stroke-linecap="round"
+						 stroke-linejoin="round">
+						<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+						<polyline points="17 21 17 13 7 13 7 21"></polyline>
+						<polyline points="7 3 7 8 15 8"></polyline>
+					</svg>
+					Save
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade" id="DispatchModal" tabindex="-1" aria-labelledby="addDispatchModal" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-xl">
+		<div class="modal-content modal-box">
+			<div class="modal-header">
+				<div class="modal-header-text">
+					<div class="modal-title" id="addDispatchModal">
+						Dispatch
+					</div>
+				</div>
+
+				<div class="app-modal-header-actions">
+
+					<button type="button"
+							style="    margin-top: 12px;"
+							class="modal-close"
+							data-bs-dismiss="modal"
+							aria-label="Close">
+						<svg viewBox="0 0 24 24">
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+					</button>
+				</div>
+			</div>
+
+			<div class="modal-body p-2">
+
+				<table id="tblDispatch" class="display" style="width:100%">
+
+					<thead>
+						<tr>
+							<th>Pi No</th>
+							<th class="r num">Pi Qty</th>
+							<th>Shipdate From</th>
+							<th>Shipped Qty</th>
+							<th>Awb Number</th>
+							<th>EWAY Status</th>
+							<th>GST Status</th>
+							<th>Payment Status</th>
+							<th>Rolls</th>
+							<th>Brown File Number</th>
+						</tr>
+					</thead>
+					<tbody id="tblbodyDispatch">
+						<tr>
+							<td>PI_123</td>
+							<td class="r num">230</td>
+							<td>Ship</td>
+							<td class="r num">230</td>
+							<td class="r num"></td>
+							<td>Done</td>
+							<td>Pending</td>
+							<td>Done</td>
+							<td>A</td>
+							<td>Sach_123</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="modal-footer">
+				@* 
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button> *@
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="EntryNoModal" tabindex="-1" aria-labelledby="addEntryNoModal" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-md">
+		<div class="modal-content modal-box">
+			<div class="modal-header">
+				<div class="modal-header-text">
+					<div class="modal-title" id="addEntryNoModal">
+						Entry No Help
+					</div>
+				</div>
+
+				<div class="app-modal-header-actions">
+
+					<button type="button"
+							style="    margin-top: 12px;"
+							class="modal-close"
+							data-bs-dismiss="modal"
+							aria-label="Close">
+						<svg viewBox="0 0 24 24">
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+					</button>
+				</div>
+			</div>
+
+			<div class="modal-body p-2">
+				<table id="tblEntryHelp" class="display" style="width:100%">
+
+					<thead>
+						<tr>
+							<th>Entry No</th>
+							<th>Style No</th>
+							<th>PI No</th>
+							<th>PO No</th>
+							<th>License Number</th>
+							
+						</tr>
+					</thead>
+					<tbody id="tblEntryHelp">
+						<tr>
+							<td>EN_123</td>
+							<td>STY230</td>
+							<td>PI_123</td>
+							<td>PO_123</td>
+							<td>LIC_123</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="modal-footer">
+@* 
+				<button type="button"
+						class="btn btn-primary btn-sm"
+						id="btnSave">
+
+					<svg width="14"
+						 height="14"
+						 viewBox="0 0 24 24"
+						 fill="none"
+						 stroke="currentColor"
+						 stroke-width="2"
+						 stroke-linecap="round"
+						 stroke-linejoin="round">
+
+						<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+						<polyline points="17 21 17 13 7 13 7 21"></polyline>
+						<polyline points="7 3 7 8 15 8"></polyline>
+
+					</svg>
+
+					Save
+				</button>
+ *@
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+@section Scripts {
+	<script>
+		$(function () {
+
+			// ---------- DUMMY DATA ----------
+			const dummyHeader = {
+				entryNo: "225",
+				entryDate: "15-05-2025",
+				piNo: "JD25040701",
+				styleNo: "WJT331651,WJT331651W,WJT331652,WJT331653",
+				piQty: "3150",
+				unit: "RC225",
+				company: "RICHACO EXPORTS PRIVATE LIMITED",
+				merchant: "MANJU/AJEET KUMAR SINGH",
+				buyer: "J-JILL INC., LTD.",
+				supplier: "SHAOXING KEQIAO JIEDA IMPORT AND EXPORT CO.",
+				garmentDesc: "JACKET"
+			};
+
+			const base = {
+				pino: "JD2504070", po: "PI25-4", supplier: "SHAOXING KEQIAO JIEDA",
+				buyer: "JACKET", desc: "100% BCI COTTON", gsm: 220, gsmTo: 0, wid: 54, fw: 56,
+				process: "DYED", segment: "Woven", shpdQty: 0, piFm: "", mode: "SEA",
+				exMill: "15-05-2025", etdRemarks: "", etd: "", terms: "FOB",
+				pmt: "90 DAYS FROM BOE", licStatus: "HOLD", licNo: "",
+				docsStatus: "", finalStatus: "SAMPLE RCVD", finalDt: "", goodsInHouse: "", remarks: ""
+			};
+
+			const dummyRows = [
+				{ ...base, invoice: "INV-1001", style: "WJT331651",  apldQty: 3150, cha: "LINKERS", fwd: "NA" },
+				{ ...base, invoice: "INV-1002", style: "WJT331651",  apldQty: 1432, cha: "L", fwd: "CONTINENTAL" },
+				{ ...base, invoice: "INV-1003", style: "WJT331651W", apldQty: 674,  cha: "LINKERS", fwd: "NA" },
+				{ ...base, invoice: "INV-1004", style: "WJT331652",  apldQty: 710,  cha: "L", fwd: "CONTINENTAL" },
+				{ ...base, invoice: "INV-1005", style: "WJT331653",  apldQty: 334,  cha: "L", fwd: "CONTINENTAL" }
+			];
+
+			// ---------- COLUMNS ----------
+			const cols = [
+				{ key: "pino" }, { key: "po" }, { key: "supplier" }, { key: "invoice" },
+				{ key: "buyer" }, { key: "style" }, { key: "desc" },
+				{ key: "gsm", num: true }, { key: "gsmTo", num: true },
+				{ key: "wid", num: true }, { key: "fw", num: true },
+				{ key: "process" }, { key: "segment" },
+				{ key: "apldQty", num: true }, { key: "shpdQty", num: true },
+				{ key: "piFm" }, { key: "mode" }, { key: "exMill" },
+				{ key: "etdRemarks" }, { key: "etd" }, { key: "terms" },
+				{ key: "pmt" }, { key: "licStatus" }, { key: "licNo" },
+				{ key: "cha" }, { key: "fwd" }, { key: "docsStatus" },
+				{ key: "finalStatus" }, { key: "finalDt" },
+				{ key: "goodsInHouse" }, { key: "remarks" }
+			];
+
+			const FIRST_DATA_COL = 2; // 0 = Action, 1 = Sr No
+			const EditBtn = `<button type="button" class="row-btn edit-btn btnEditRow" title="Edit">✎</button>`;
+
+			// modal input id: "#txt" + key.toLowerCase()  (txtgsmTo -> txtgsmto bhi chalega kyunki id exact match chahiye, isliye map banaya)
+			const modalIds = {
+				pino: "txtpino", po: "txtpo", supplier: "txtsupplier", invoice: "txtinvoice",
+				buyer: "txtbuyer", style: "txtstyle", desc: "txtdesc", gsm: "txtgsm",
+				gsmTo: "txtgsmTo", wid: "txtwid", fw: "txtfw", process: "txtprocess",
+				segment: "txtsegment", apldQty: "txtapldQty", shpdQty: "txtshpdQty",
+				piFm: "txtpiFm", mode: "txtmode", exMill: "txtexMill",
+				etdRemarks: "txtetdRemarks", etd: "txtetd", terms: "txtterms",
+				pmt: "txtpmt", licStatus: "txtlicStatus", licNo: "txtlicNo",
+				cha: "txtcha", fwd: "txtfwd", docsStatus: "txtdocsStatus",
+				finalStatus: "txtfinalStatus", finalDt: "txtfinalDt",
+				goodsInHouse: "txtgoodsInHouse", remarks: "txtremarks"
+			};
+
+			let editTr = null; // null => Add mode, otherwise Edit mode
+
+			// ---------- HELPERS ----------
+			function cell(c, r) {
+				const v = r[c.key] ?? "";
+				const cls = `c-${c.key}` + (c.num ? " r num" : "");
+				return `<span class="${cls}">${v}</span>`;
+			}
+
+			function rowToCells(r) {
+				return [EditBtn, ""].concat(cols.map(c => cell(c, r)));
+			}
+
+			function readModal() {
+				const row = {};
+				cols.forEach(c => row[c.key] = $("#" + modalIds[c.key]).val());
+				return row;
+			}
+
+			function fillModal(row) {
+				cols.forEach(c => $("#" + modalIds[c.key]).val(row[c.key] ?? ""));
+			}
+
+			function readRow($tr) {
+				const row = {};
+				cols.forEach(c => row[c.key] = $tr.find(".c-" + c.key).text());
+				return row;
+			}
+
+			// ---------- HEADER ----------
+			function bindHeader(h) {
+				$("#txtEntry").val(h.entryNo);
+				$("#txtentryDt").val(h.entryDate);
+				$("#txtPiNo").val(h.piNo);
+				$("#txtStyleNo").val(h.styleNo);
+				$("#txtPiQty").val(h.piQty);
+				$("#txtUnit").val(h.unit);
+				$("#txtCompany").val(h.company);
+				$("#txtMerchant").val(h.merchant);
+				$("#txtBuyer").val(h.buyer);
+				$("#txtSupplier").val(h.supplier);
+				$("#txtGarmentDesc").val(h.garmentDesc);
+			}
+
+			// ---------- DATATABLE ----------
+			const numTargets = cols
+				.map((c, i) => c.num ? i + FIRST_DATA_COL : -1)
+				.filter(i => i >= 0);
+
+			const dt = $("#tblDutyBillEntry").DataTable({
+				paging: false,
+				searching: false,
+				info: false,
+				ordering: false,
+				scrollX: true,
+				autoWidth: false,
+				columnDefs: [{ targets: numTargets, className: "r num" }]
+			});
+
+			function renumber() {
+				dt.rows().every(function (i) {
+					$(this.node()).find("td:nth-child(2)").text(i + 1);
+				});
+			}
+
+			function bindRows(rows) {
+				dt.clear();
+				rows.forEach(r => dt.row.add(rowToCells(r)));
+				dt.draw();
+				renumber();
+			}
+
+			// ---------- MODAL ----------
+			const editModalEl = document.getElementById("modalBoeEdit");
+			const editModal = bootstrap.Modal.getOrCreateInstance(editModalEl);
+
+			// ---------- FUNCTIONS (button handlers) ----------
+			function openAddRow() {
+				editTr = null;
+				fillModal({});
+				$("#modalBoeEditLabel").text("Add Import Bill Entry");
+				editModal.show();
+			}
+
+			function openEditRow($btn) {
+				editTr = $btn.closest("tr");
+				fillModal(readRow(editTr));
+				$("#modalBoeEditLabel").text("Edit Import Bill Entry");
+				editModal.show();
+			}
+
+			function saveModalRow() {
+				const row = readModal();
+
+				if (editTr) {
+					// EDIT
+					cols.forEach(c => editTr.find(".c-" + c.key).text(row[c.key]));
+				} else {
+					// ADD
+					dt.row.add(rowToCells(row)).draw(false);
+					renumber();
+				}
+
+				editModal.hide();
+				editTr = null;
+			}
+
+			function saveAll() {
+				const data = [];
+				dt.rows().every(function () {
+					data.push(readRow($(this.node())));
+				});
+				console.log("Save payload:", data);
+			}
+
+			function refreshAll() {
+				bindHeader(dummyHeader);
+				bindRows(dummyRows);
+			}
+
+			function openDispatch() {
+				$("#DispatchModal").modal("show");
+			}
+
+			function openEntryHelp() {
+				$("#EntryNoModal").modal("show");
+			}
+
+			// ---------- EVENTS ----------
+			$("#btnAddrow").on("click", openAddRow);
+
+			$("#tblDutyBillEntry tbody").on("click", ".btnEditRow", function () {
+				openEditRow($(this));
+			});
+
+			$("#btnOkBoeEdit").on("click", saveModalRow);
+			$("#btnSave_BOEAgainstFabric").on("click", saveAll);
+			$("#btnRefresh_BOEAgainstFabric").on("click", refreshAll);
+			$("#btnDispatch").on("click", openDispatch);
+			$("#btnEntryHelp").on("click", openEntryHelp);
+
+			editModalEl.addEventListener("hidden.bs.modal", function () {
+				editTr = null;
+			});
+
+			// ---------- INITIAL LOAD ----------
+			refreshAll();
+		});
+	</script>
+}

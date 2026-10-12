@@ -1,0 +1,21 @@
+/* Bill Receiving — page-specific styles (tax detail two-column layout) */
+.overlay {
+    display: none;
+}
+
+    .overlay.on {
+        display: grid;
+    }
+
+.tax-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
+.tax-row{display:grid;grid-template-columns:1fr 150px;align-items:center;gap:14px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.tax-row:last-child{border-bottom:none}
+.tax-row .lbl{font-size:.84rem;color:var(--text)}
+.tax-row input,.tax-row select{font:inherit;font-size:.84rem;padding:7px 10px;border:1px solid var(--line-strong);border-radius:7px;width:100%;font-variant-numeric:tabular-nums;text-align:right}
+.tax-row select{text-align:left}
+.tax-row input:disabled{background:var(--disabled);color:#94a1b3;border-color:var(--line)}
+.tax-row input:focus,.tax-row select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 2px rgba(14,124,114,.15)}
+.tax-row.total .lbl{font-weight:600;color:var(--ink)}
+.tax-row.total input{font-weight:600;border-color:var(--teal);background:var(--teal-tint);color:var(--teal-dark)}
+
+@media (max-width:1150px){.tax-grid{grid-template-columns:1fr}}

@@ -1,0 +1,867 @@
+@{
+    ViewData["Title"] = "Buyer Order";
+    ViewData["Heading"] = "Buyer Order";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/buyer-order.css" asp-append-version="true">
+}
+
+@*
+    @section TopbarLeft {
+
+    }
+*@
+
+<div class="card boe-tabbar">
+    <div class="card-head">
+        <div class="screen-switch" role="tablist" aria-label="Views">
+            <button type="button" class="on" data-view="new">
+                👥 New Buyer Orders
+            </button>
+            <button type="button" data-view="status">
+                📋 Order Status
+            </button>
+            <button type="button" data-view="booking">
+                📑 Booking Reference
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ════════ VIEW 1 · New buyer orders ════════ -->
+<div class="view on" id="view-new">
+
+    <section class="card">
+        <div class="card-head">
+            <div>
+                <span class="tick"></span>
+                <h2 class="mt-2" id="txtHeaderMain">Buyer Orders</h2>
+            </div>
+
+
+            <div class="d-flex gap-2">
+                @await Html.PartialAsync("Components/_CheckBoxComponent")
+                @await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave" title="Save">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    Save
+                </button>
+
+                <button type="button" class="btn btn-cancel-custom" id="btnCancel">
+                    ✕ Cancel
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="grid cols-6">
+                <div class="field">
+                    <label>Mail Date</label>
+                    <input type="text" id="txtMaildate" class="form-Flatdate" value="2025-07-27">
+                </div>
+                <div class="field">
+                    <label>Mode</label>
+                    <div class="segment">
+                        <button class="on" onclick="orderMode(this,'add')">Add  Orders</button>
+                        <button onclick="orderMode(this,'upd')">Update Orders</button>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Key Number</label>
+                    <input placeholder="—">
+                </div>
+            </div>
+
+            <!-- Add mode -->
+            <section class="mt-2" id="mode-add">
+                @* <div class="card-head">
+                    <span class="tick"></span>
+                    <h2>Orders to Add</h2>
+                    <span class="hint">Gims details on the left · assign shipping buyer on the right</span>
+                </div> *@
+
+                <div class="table-wrap" style="border:none;border-radius:0">
+                    <table id="tblOrdersAdd" class="" style="min-width:1500px">
+                        <colgroup>
+                            <col style="width:40px">   <!-- # -->
+                            <col style="width:90px">   <!-- Key No. -->
+                            <col style="width:130px">  <!-- Buyer Name -->
+                            <col style="width:150px">  <!-- Style No. -->
+                            <col style="width:80px">   <!-- PO No. -->
+                            <col style="width:100px">   <!-- Country -->
+                            <col style="width:100px">  <!-- Quantity -->
+                            <col style="width:70px">   <!-- Rate -->
+                            <col style="width:100px">  <!-- Ex-Factory -->
+                            <col style="width:100px">  <!-- Ex-Country -->
+                            <col style="width:90px">  <!-- Premises-->
+                            <col style="width:90px">  <!--  Mode --> 
+                            <col style="width:90px">   <!-- Byr Code -->
+                            <col style="width:190px">  <!-- Byr Name -->
+                            <col style="width:90px">   <!-- B.H. Code -->
+                            <col style="width:180px">  <!-- B.H. Name -->
+                        </colgroup>
+
+                        <thead>
+                            <tr>
+                                <th colspan="10" class="gline" style="background: white !important; color: black !important;">
+                                    Gims Details
+                                </th>
+                                <th colspan="9" class="gline" style="background: white !important; color: black !important;">
+                                    Shipping Details
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="c">#</th>
+                                <th>Update</th>
+                                <th>Key No.</th>
+                                <th>Buyer Name</th>
+                                <th>Style No.</th>
+                                <th>PO No.</th>
+                                <th>Country</th>
+                                <th class="r">Quantity</th>
+                                <th class="r">Rate</th>
+                                <th>Ex-Factory</th>
+                                <th>Ex-Country</th>
+                                <th>Premises</th>
+                                <th>Mode</th>
+                                <th>Fabric</th>
+                                <th>Acc</th>
+                                <th class="r">Byr Code</th>
+                                <th>Byr Name</th>
+                                <th class="r">B.H. Code</th>
+                                <th>B.H. Name</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblOrdersAddBody">
+                            <!-- populated by JS from JSON (see renderOrdersAddGrid in buyer-order.js) -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+
+        </div>
+    </section>
+
+   
+    <!-- Update mode -->
+    <section class="card" id="mode-upd" style="display:none">
+        <div class="card-head">
+            <span class="tick"></span>
+            <h2>Orders to Update</h2>
+            <span class="hint">Gims values vs current shipping values, side by side</span>
+        </div>
+
+        <div class="table-wrap" style="border:none;border-radius:0">
+            <table style="min-width:1600px">
+                <thead>
+                    <tr class="groups">
+                        <th colspan="10" class="gline">Gims Details</th>
+                        <th colspan="12" class="gline">Shipping Details</th>
+                    </tr>
+                    <tr>
+                        <th class="c">#</th>
+                        <th class="c">Update</th>
+                        @* <th>Key No.</th> *@
+                        <th>Style No</th>
+                        <th>PO No.</th>
+                           <th class="r">Quantity</th>
+                            <th class="r">Rate</th>
+                             <th>Ex-Factory</th>
+                        <th>Ex-Country</th>
+                         <th>Premises</th>
+                          <th>Mode</th>
+                        <th>Country</th>
+                      <th>Key No.</th> 
+                       
+                       
+                        <th class="r">Byr Code</th>
+                        <th>Style</th>
+                        <th>PO No.</th>
+                        <th class="r">Quantity</th>
+                        <th class="r">Rate</th>
+                        <th>Ex-Factory</th>
+                       <th>Ex-Country</th>
+                         <th>Premises</th>
+                          <th>Mode</th>
+                       
+                        <th>Country Grp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="">
+                        <td class="c">1</td>
+                        <td class="c"><input type="checkbox" checked style="width:16px;min-width:16px"></td>
+                       
+                        <td class="mono">100215519MS</td>
+                        <td class="mono">8514781</td>
+                         <td class="r num">3,248.000</td>
+                         <td class="r num">19.56</td>
+                            <td>22-03-2025</td>
+                        <td>28-03-2025</td>
+                            <td>Unit-92</td>
+                                 <td>By Air</td>
+                        <td>USA</td>
+                       
+                        <td class="mono">25-0159</td> 
+                     
+                        <td class="r num">757</td>
+                        <td class="mono">100215519MS</td>
+                        <td class="mono">8514781</td>
+                        <td class="r num">3,248.000</td>
+                        <td class="r num">19.56</td>
+                        <td>07-11-2025</td>
+                      <td>28-03-2025</td>
+                            <td>Unit-92</td>
+                                 <td>By Air</td>
+                   
+                        <td>USA</td>
+                    </tr>
+                    <tr>
+                        <td class="c">2</td>
+                        <td class="c"><input type="checkbox" style="width:16px;min-width:16px"></td>
+                        @* <td class="mono">25-0159</td> *@
+                        <td class="mono">100215519MS</td>
+                        <td class="mono">8514782</td>
+                         <td class="r num">1,560.000</td>
+                          <td class="r num">19.56</td>
+                        <td>22-03-2025</td>
+                        <td>28-03-2025</td>
+                          <td>Unit-92</td>
+                           <td>By Air</td>
+                        <td>USA</td>
+                       <td class="mono">25-0159</td> 
+                     
+                        <td class="r num">757</td>
+                        <td class="mono">100215519MS</td>
+                        <td class="mono">8514782</td>
+                        <td class="r num">1,560.000</td>
+                        <td class="r num">19.56</td>
+                        <td>07-11-2025</td>
+                       <td>28-03-2025</td>
+                          <td>Unit-92</td>
+                           <td>By Air</td>
+                       
+                        <td>USA</td>
+                    </tr>
+                    <tr>
+                        <td class="c">3</td>
+                        <td class="c"><input type="checkbox" style="width:16px;min-width:16px"></td>
+                        @* <td class="mono">25-01568</td> *@
+                        <td class="mono">100215519MS</td>
+                        <td class="mono">8514651</td>
+                          <td class="r num">2,050.000</td>
+                        <td class="r num">18.76</td>
+                         <td>22-03-2025</td>
+                        <td>28-03-2025</td>
+                           <td>RC239</td>
+                            <td>By Air</td>
+                        <td>USA</td> 
+                      <td class="mono">25-01568</td>
+                       
+                        <td class="r num">757</td>
+                        <td class="mono">100215519MS</td>
+                        <td class="mono">8514651</td>
+                        <td class="r num">2,050.000</td>
+                        <td class="r num">18.76</td>
+                        <td>04-11-2025</td>
+                      <td>22-03-2025</td>
+                        <td>28-03-2025</td>
+                           <td>RC239</td>
+                       
+                        <td>USA</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-body">
+            <div class="grid cols-6">
+                <div class="field">
+                    <label>GIMS Buyer</label>
+                    <input value="Macy's Merchandising Group">
+                </div>
+                <div class="field">
+                    <label>Fabric</label>
+                    <input value="Local">
+                </div>
+                <div class="field">
+                    <label>Accessory</label>
+                    <input disabled placeholder="—">
+                </div>
+                <div class="field">
+                    <label>Shipping Buyer ID</label>
+                    <div class="pair">
+                        <input class="num" value="757">
+                        <input value="Macy's Merchandising Group">
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Country Code / Name</label>
+                    <div class="pair">
+                        <input value="USA">
+                        <input value="USA">
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Shipping Buying House ID</label>
+                    <div class="pair">
+                        <input class="num" value="757">
+                        <input value="Macy's Merchandising Group">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ════════ VIEW 2 · Order status ════════ -->
+<div class="view" id="view-status">
+
+    <!-- Filters -->
+    <section class="card">
+        <div class="card-head">
+            <div>
+                <span class="tick"></span>
+                <h2 class="mt-2" id="txtHeaderMain">Order Status</h2>
+            </div>
+
+            <div class="d-flex gap-2">
+                @* @await Html.PartialAsync("Components/_UploadAndViewButtons") *@
+
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave" title="Save">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    Save
+                </button>
+
+                <button type="button" class="btn btn-cancel-custom" id="btnCancel">
+                    ✕ Cancel
+                </button>
+            </div>
+        </div>
+ 
+        <div class="card-body">
+            <div class="grid cols-6">
+
+                <div class="field">
+                    <label>Buyer Order No</label> 
+                    <input id="txtBuyerOderNo" type="text" placeholder="Enter Buyer Order No"> 
+                </div>
+
+                <div class="field">
+                    <label>Buyer Order Date</label> 
+                    <input id="txtBuyerOderDate" type="text" class="form-Flatdate" placeholder="DD/MMM/YYYY">
+                </div>
+
+                <div class="field">
+                    <label>Style No.</label>
+                    <select><option selected>—</option></select>
+                </div>
+
+                <div class="field">
+                    <label>PO No.</label>
+                    <select><option selected>—</option></select>
+                </div>  
+
+                <div class="field">
+                    <label>Key No.</label>
+                    <select><option selected>—</option></select>
+                </div>
+                
+                <div class="field">
+                    <label>Status</label>
+                    <select>
+                        <option selected>Complete</option>
+                        <option>Pending</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Orders table -->
+    <section class="card">
+        <div class="card-head">
+            <span class="tick"></span>
+            <h2>Orders</h2>
+            <div style="margin-left:auto;display:flex;gap:8px">
+                <button class="btn btn-sm btn-outline" id="btnPoNoUpdation">Po No Updation</button>
+                <button class="btn btn-sm btn-outline">Copy</button>
+                <button class="btn btn-sm btn-outline" onclick="openModal('m-edit')">Edit</button>
+                <button class="btn btn-sm btn-outline">+ Add</button>
+                <button class="btn btn-sm btn-outline-danger btn-sm p-2">Delete</button>
+            </div>
+        </div>
+
+        <div class="table-wrap" style="border:none;border-radius:0">
+            <table style="min-width:1600px">
+                <thead>
+                    <tr>
+                        <th class="c">#</th>
+                        <th class="c">Sel</th>
+                        <th class="r">BO #</th>
+                        <th class="r">Buyer</th>
+                        <th class="r">Style</th>
+                        <th class="r">PO No.</th>
+                        <th>Terms</th>
+                        <th>Cur.</th>
+                        <th class="r">Rate</th>
+                        <th class="r">Ord. Qty</th>
+                        <th class="r">Shipped</th>
+                        <th class="r">Adjust</th>
+                        <th class="r">Balance</th>
+                        <th>Mode</th>
+                        <th>Country</th>
+                        <th>Ship From</th>
+                        <th>Ship To</th>
+                        <th>Unit</th>
+                        <th class="c">Imp</th>
+                        <th class="c">Prj</th>
+                        <th>Description</th>
+                        <th>LC No.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="c">1</td>
+                        <td class="c"><input type="checkbox" style="width:16px;min-width:16px"></td>
+                        <td class="r num">9780</td>
+                        <td class="r num">2368</td>
+                        <td class="r num">8879</td>
+                        <td class="r num">1251169</td>
+                        <td>FOB</td>
+                        <td>US$</td>
+                        <td class="r num">8.5000</td>
+                        <td class="r num">910.000</td>
+                        <td class="r num">0.000</td>
+                        <td class="r num">0.000</td>
+                        <td class="r num">910.000</td>
+                        <td>By Sea</td>
+                        <td>USA</td>
+                        <td>07-08-2025</td>
+                        <td>12-08-2025</td>
+                        <td>1722k</td>
+                        <td class="c">—</td>
+                        <td class="c">—</td>
+                        <td>95% Recycled Polyester 5%</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td class="c">2</td>
+                        <td class="c"><input type="checkbox" checked style="width:16px;min-width:16px"></td>
+                        <td class="r num">9780</td>
+                        <td class="r num">780</td>
+                        <td class="r num">8879</td>
+                        <td class="r num">1251168</td>
+                        <td>FOB</td>
+                        <td>US$</td>
+                        <td class="r num">8.9500</td>
+                        <td class="r num">90.000</td>
+                        <td class="r num">0.000</td>
+                        <td class="r num">0.000</td>
+                        <td class="r num">90.000</td>
+                        <td>By Sea</td>
+                        <td>Canada</td>
+                        <td>08-08-2025</td>
+                        <td>13-08-2025</td>
+                        <td>1722k</td>
+                        <td class="c"><span class="pill pill-y">✓</span></td>
+                        <td class="c"><span class="pill pill-y">✓</span></td>
+                        <td>95% Recycled Polyester 5%</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td class="c">3</td>
+                        <td class="c"><input type="checkbox" style="width:16px;min-width:16px"></td>
+                        <td class="r num">9780</td>
+                        <td class="r num">2053</td>
+                        <td class="r num">8879</td>
+                        <td class="r num">1251157</td>
+                        <td>FOB</td>
+                        <td>US$</td>
+                        <td class="r num">8.9500</td>
+                        <td class="r num">94.000</td>
+                        <td class="r num">0.000</td>
+                        <td class="r num">0.000</td>
+                        <td class="r num">94.000</td>
+                        <td>By Sea</td>
+                        <td>U.A.E</td>
+                        <td>08-08-2025</td>
+                        <td>13-08-2025</td>
+                        <td>1722k</td>
+                        <td class="c">—</td>
+                        <td class="c">—</td>
+                        <td>95% Recycled Polyester 5%</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td class="c">4</td>
+                        <td class="c"><input type="checkbox" style="width:16px;min-width:16px"></td>
+                        <td class="r num">9780</td>
+                        <td class="r num">2388</td>
+                        <td class="r num">8879</td>
+                        <td class="r num">1251745</td>
+                        <td>FOB</td>
+                        <td>US$</td>
+                        <td class="r num">8.4600</td>
+                        <td class="r num">59.000</td>
+                        <td class="r num">0.000</td>
+                        <td class="r num">0.000</td>
+                        <td class="r num">59.000</td>
+                        <td>By Sea</td>
+                        <td>USA</td>
+                        <td>08-08-2025</td>
+                        <td>13-08-2025</td>
+                        <td>1722k</td>
+                        <td class="c">—</td>
+                        <td class="c">—</td>
+                        <td>95% Recycled Polyester 5%</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td class="c">5</td>
+                        <td class="c"><input type="checkbox" style="width:16px;min-width:16px"></td>
+                        <td class="r num">9780</td>
+                        <td class="r num">5072</td>
+                        <td class="r num">8879</td>
+                        <td class="r num">1251158</td>
+                        <td>FOB</td>
+                        <td>US$</td>
+                        <td class="r num">89.000</td>
+                        <td class="r num">89.000</td>
+                        <td class="r num">0.000</td>
+                        <td class="r num">0.000</td>
+                        <td class="r num">89.000</td>
+                        <td>By Sea</td>
+                        <td>Venezuela</td>
+                        <td>08-08-2025</td>
+                        <td>13-08-2025</td>
+                        <td>1722k</td>
+                        <td class="c">—</td>
+                        <td class="c">—</td>
+                        <td>95% Recycled Polyester 5%</td>
+                        <td>NA</td>
+                    </tr>
+                    <tr>
+                        <td class="c">6</td>
+                        <td class="c"><input type="checkbox" style="width:16px;min-width:16px"></td>
+                        <td class="r num">9780</td>
+                        <td class="r num">5795</td>
+                        <td class="r num">8879</td>
+                        <td class="r num">1251161</td>
+                        <td>FOB</td>
+                        <td>US$</td>
+                        <td class="r num">89.000</td>
+                        <td class="r num">1,013.000</td>
+                        <td class="r num">0.000</td>
+                        <td class="r num">0.000</td>
+                        <td class="r num">1,013.000</td>
+                        <td>By Sea</td>
+                        <td>Mexico</td>
+                        <td>08-08-2025</td>
+                        <td>13-08-2025</td>
+                        <td>1722k</td>
+                        <td class="c">—</td>
+                        <td class="c">—</td>
+                        <td>95% Recycled Polyester 5%</td>
+                        <td>NA</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="totals-strip">
+            <span class="t-item">Ordered<b>2,962</b></span>
+            <span class="t-item">Shipped<b>0</b></span>
+            <span class="t-item">Adjust<b>0</b></span>
+            <span class="t-item">Net Order Quantity<b>2,962</b></span>
+            <span class="t-item accent">Order Amount<b>25,981</b></span>
+        </div>
+    </section>
+
+    <!-- Sub-tabs -->
+    <section class="card">
+        <div class="tabs" role="tablist">
+            <button class="on" data-tab="t-fabric">Import Fabric</button>
+            <button data-tab="t-acc">Import Accessory</button>
+            <button data-tab="t-inv">Invoice</button>
+            <button data-tab="t-pay">Payment Days Updation</button>
+        </div>
+
+        <!-- Import fabric -->
+        <div class="tabpane on" id="t-fabric">
+            @await Html.PartialAsync("_ImportFabric")
+        </div>
+
+        <!-- Import accessory -->
+        <div class="tabpane" id="t-acc">
+            @await Html.PartialAsync("_ImportAccessory")
+        </div>
+
+        <!-- Invoice -->
+        <div class="tabpane" id="t-inv">
+            @await Html.PartialAsync("_t-Inv")
+        </div>
+
+        <!-- Payment days -->
+        <div class="tabpane" id="t-pay">
+            @await Html.PartialAsync("_t-Pay")
+        </div>
+    </section>
+</div>
+
+<!-- ════════ VIEW 3 · Booking reference ════════ -->
+<div class="view" id="view-booking">
+
+    <section class="card">
+        <div class="card-head">
+            <div>
+                <span class="tick"></span>
+                <h2 class="mt-2" id="txtHeaderMain">Booking Reference</h2>
+            </div>
+
+            <div class="d-flex gap-2">
+             @*    @await Html.PartialAsync("Components/_UploadAndViewButtons") *@
+
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave" title="Save">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    Save
+                </button>
+
+                <button type="button" class="btn btn-cancel-custom" id="btnCancel">
+                    ✕ Cancel
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="grid cols-6">
+                <div class="field">
+                    <label>Buyer Name</label>
+                    <select><option selected>Choose one…</option></select>
+                </div>
+                <div class="field">
+                    <label>Style No.</label>
+                    <select><option selected>Choose one…</option></select>
+                </div>
+                <div class="field">
+                    <label>PO No.</label>
+                    <select><option selected>Choose one…</option></select>
+                </div>
+                <div class="field">
+                    <label>Div Date</label>
+                    <input id="txtDivDate" class="form-Flatdate" type="text">
+                </div>
+                <div class="field">
+                    <label>Booking Reference No</label>
+                    <input placeholder="—">
+                </div>
+                <div class="field">
+                    <label>Booking Reference Date</label>
+                    <input id="txtBookingRefDate" class="form-Flatdate" type="text">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="card-head">
+            <span class="tick"></span>
+            <h2>Orders Awaiting Booking</h2>
+            <span class="hint">Enter ref no &amp; date per row, then Update</span>
+        </div>
+
+        <div class="table-wrap" style="border:none;border-radius:0">
+            <table style="min-width:1150px">
+                <thead>
+                    <tr>
+                        <th class="c">#</th>
+                        <th class="c">Pick</th>
+                        <th>Buyer Name</th>
+                        <th class="r">Style No.</th>
+                        <th class="r">PO #</th>
+                        <th class="r">Ord. Qty</th>
+                        <th class="r">Rate</th>
+                        <th>Terms</th>
+                        <th>Cur.</th>
+                        <th>Mode</th>
+                        <th>Div Date</th>
+                        <th>Booking Ref No.</th>
+                        <th>Booking Ref Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="c">1</td>
+                        <td class="c"><input type="checkbox" style="width:16px;min-width:16px"></td>
+                        <td>Blue Star Import</td>
+                        <td class="r num">8879</td>
+                        <td class="r num">1251169</td>
+                        <td class="r num">910.000</td>
+                        <td class="r num">8.5000</td>
+                        <td>FOB</td>
+                        <td>US$</td>
+                        <td>By Sea</td>
+                        <td>12-08-2025</td>
+                        <td><input placeholder="—"></td>
+                        <td><input type="text" class="form-Flatdate"></td>
+                    </tr>
+                    <tr>
+                        <td class="c">2</td>
+                        <td class="c"><input type="checkbox" style="width:16px;min-width:16px"></td>
+                        <td>John Uribe</td>
+                        <td class="r num">5287</td>
+                        <td class="r num">1251181</td>
+                        <td class="r num">78</td>
+                        <td class="r num">9.5500</td>
+                        <td>FOB</td>
+                        <td>US$</td>
+                        <td>By Sea</td>
+                        <td>13-08-2025</td>
+                        <td><input placeholder="—"></td>
+                        <td><input type="text" class="form-Flatdate"></td>
+                    </tr>
+                    <tr>
+                        <td class="c">3</td>
+                        <td class="c"><input type="checkbox" style="width:16px;min-width:16px"></td>
+                        <td>American Eagle</td>
+                        <td class="r num">5287</td>
+                        <td class="r num">1251182</td>
+                        <td class="r num">940</td>
+                        <td class="r num">9.5500</td>
+                        <td>FOB</td>
+                        <td>US$</td>
+                        <td>By Sea</td>
+                        <td>13-08-2025</td>
+                        <td><input placeholder="—"></td>
+                        <td><input type="text" class="form-Flatdate"></td>
+                    </tr>
+                    <tr>
+                        <td class="c">4</td>
+                        <td class="c"><input type="checkbox" style="width:16px;min-width:16px"></td>
+                        <td>American Eagle</td>
+                        <td class="r num">5287</td>
+                        <td class="r num">1251183</td>
+                        <td class="r num">246</td>
+                        <td class="r num">9.6000</td>
+                        <td>FOB</td>
+                        <td>US$</td>
+                        <td>By Sea</td>
+                        <td>13-08-2025</td>
+                        <td><input placeholder="—"></td>
+                        <td><input type="text" class="form-Flatdate"></td>
+                    </tr>
+                    <tr>
+                        <td class="c">5</td>
+                        <td class="c"><input type="checkbox" style="width:16px;min-width:16px"></td>
+                        <td>Blue Star Import</td>
+                        <td class="r num">8879</td>
+                        <td class="r num">1251797</td>
+                        <td class="r num">20</td>
+                        <td class="r num">8.2200</td>
+                        <td>FOB</td>
+                        <td>US$</td>
+                        <td>By Sea</td>
+                        <td>13-08-2025</td>
+                        <td><input placeholder="—"></td>
+                        <td><input type="text" class="form-Flatdate"></td>
+                    </tr>
+                    <tr>
+                        <td class="c">6</td>
+                        <td class="c"><input type="checkbox" style="width:16px;min-width:16px"></td>
+                        <td>American Eagle</td>
+                        <td class="r num">2044</td>
+                        <td class="r num">1251798</td>
+                        <td class="r num">5,000</td>
+                        <td class="r num">8.2200</td>
+                        <td>FOB</td>
+                        <td>US$</td>
+                        <td>By Sea</td>
+                        <td>13-08-2025</td>
+                        <td><input placeholder="—"></td>
+                        <td><input type="text" class="form-Flatdate"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+@section Modals {
+
+    <div class="modal fade" id="OrderUodationModal" tabindex="-1" aria-labelledby="OrderUodationModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xxl">
+            <div class="modal-content modal-box">
+                <div class="modal-header">
+                    <div class="modal-header-text">
+                        <div class="modal-title" id="OrderUodationModalLabel">
+                            Order Uodation
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2">
+
+                        <button type="button"
+                                class="modal-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="modal-body p-2">
+                    @await Html.PartialAsync("_OrderUodationModal")
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/pages/buyer-order.js" asp-append-version="true"></script>
+}

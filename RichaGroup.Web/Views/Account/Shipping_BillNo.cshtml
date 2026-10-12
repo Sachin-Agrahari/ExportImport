@@ -1,0 +1,198 @@
+﻿@{
+    ViewData["Title"] = "Shipping Bill No";
+    ViewData["Heading"] = "Shipping Bill No";
+}
+<style>   
+    .shipping-edit-highlight {
+        border-color: #4891f1 !important;
+        box-shadow: 0 0 0 3px rgba(72, 145, 241, 0.18) !important;
+        background-color: #f5f9ff !important;
+        transition: all 0.2s ease;
+    }
+
+        .shipping-edit-highlight:focus {
+            border-color: #2563eb !important;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18) !important;
+            background-color: #ffffff !important;
+        }
+</style>
+
+
+<div class="bd_mainContainer">
+    <div class="page">
+
+        <section class="card">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Shipping Bill No</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-primary btn-sm fs-6"
+                            id="btnGSTDetailEdit_ShippingBill">
+                        GST Detail-Edit
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-cancel-custom"
+                            id="btnCancel">
+                        ✕ Cancel
+                    </button>
+                     
+                </div>
+            </div>
+
+          
+            <div class="card-body">
+
+                <div class="grid cols-6">
+
+                    <div class="field span-2">
+                        <label for="txtInvoiceNo_ShippingBill">
+                            Invoice Number
+                        </label>
+
+                        <div class="d-flex gap-2">
+                            <input type="text"
+                                   id="txtInvoiceNo_ShippingBill"
+                                   value="RE/0001/25-26"
+                                   class="form-control" />
+
+                            <button type="button"
+                                    class="btn btn-outline btn-sm"
+                                    id="btnInvoiceSearch_ShippingBill"
+                                    title="Search Invoice">
+                                ...
+                            </button>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="txtShippingBillNo_ShippingBill">
+                            Shipping Bill Number
+                        </label>
+
+                        <input type="text"
+                               id="txtShippingBillNo_ShippingBill"
+                               value="9696468"
+                               class="form-control" />
+                    </div>
+
+                    <div class="field">
+                        <label for="txtShippingBillDate_ShippingBill">
+                            Shipping Bill Date
+                        </label>
+
+                        <input type="text"
+                               id="txtShippingBillDate_ShippingBill"
+                               value="05-04-2025"
+                               class="form-control"
+                               placeholder="Select Date" />
+                    </div>
+                    <div class="field">
+                        <label for="txtEPRate_ShippingBill">
+                            EP Rate
+                        </label>
+
+                        <input type="text"
+                               id="txtEPRate_ShippingBill"
+                               value="84.90000"
+                               class="form-control num" />
+                    </div>
+                    <div class="field">
+                        <label for="txtAdjExchRate_ShippingBill">
+                            Adj. Exch. Rate
+                        </label>
+
+                        <input type="text"
+                               id="txtAdjExchRate_ShippingBill"
+                               value="0"
+                               class="form-control num" />
+                    </div>
+                    <div class="field">
+                        <label for="txtLEODate_ShippingBill">
+                            LEO Date
+                        </label>
+
+                        <input type="text"
+                               id="txtLEODate_ShippingBill"
+                               value="05-04-2025"
+                               class="form-control"
+                               placeholder="Select Date" />
+                    </div>
+                    <div class="field">
+                        <label for="txtShippingBillFreight_ShippingBill">
+                            Shipping Bill Freight
+                        </label>
+
+                        <input type="text"
+                               id="txtShippingBillFreight_ShippingBill"
+                               value="0.00"
+                               class="form-control num" />
+                    </div>
+                    <div class="field">
+                        <label for="txtIGST_ShippingBill">
+                            IGST
+                        </label>
+
+                        <input type="text"
+                               id="txtIGST_ShippingBill"
+                               value="0.00"
+                               class="form-control num" />
+                    </div>
+                    <div class="field">
+                        <label for="txtDBKApplied_ShippingBill">
+                            DBK Applied
+                        </label>
+
+                        <input type="text"
+                               id="txtDBKApplied_ShippingBill"
+                               value="151609.00"
+                               class="form-control num" />
+                    </div>
+                    <div class="field">
+                        <label for="txtDBKReceived_ShippingBill">
+                            DBK Received
+                        </label>
+
+                        <input type="text"
+                               id="txtDBKReceived_ShippingBill"
+                               value="151609.00"
+                               class="form-control num" />
+                    </div>
+
+                </div>
+                
+            </div>
+        </section>
+
+    </div>
+</div>
+<script src="~/js/pages/accounts/shipping_billno.js" asp-append-version="true"></script>

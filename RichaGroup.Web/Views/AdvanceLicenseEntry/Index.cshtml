@@ -1,0 +1,214 @@
+@{
+    ViewData["Title"] = "Advance License Entry";
+    ViewData["Heading"] = "Advance License Entry";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/advance-license-entry.css" asp-append-version="true">
+}
+
+<div class="page-head">
+  <div>
+    <div class="crumbs">TRX / <b>Advance License Entry</b></div>
+    <span class="chip">Entry 1597</span> <span class="chip chip-teal">Adv. Lic</span>
+  </div>
+  <button class="btn btn-outline" onclick="openModal('m-lic')">Find License &#8981;</button>
+</div>
+
+<!-- ════════ License identity ════════ -->
+<section class="card">
+  <div class="card-head"><span class="tick"></span><h2>License Identity</h2></div>
+  <div class="card-body">
+    <div class="grid cols-4">
+      <div class="field"><label>Entry Number</label><input class="num" value="1597"></div>
+      <div class="field"><label>Company Code</label><input class="num" value="01"></div>
+      <div class="field"><label>Diary Serial No.</label><input class="num" value="2389"></div>
+      <div class="field"><label>IGST</label>
+        <div class="yn" data-flag><button class="on-y">Y</button><button>N</button></div></div>
+      <div class="field"><label>License Number <button class="help-link" onclick="openModal('m-lic')">Help</button></label><input class="num" value="0511029698"></div>
+      <div class="field"><label>License Date</label><input type="date" value="2024-12-26"></div>
+      <div class="field"><label>CLA File Number</label><input value="05/AX/040/03265/AM25"></div>
+      <div class="field"><label>CLA File Date</label><input type="date" value="2024-12-21"></div>
+      <div class="field"><label>Port of Regn.</label><input value="Cochin"></div>
+      <div class="field"><label>CHA Name</label><input value="WFB"></div>
+      <div class="field"><label>SION / Norms</label><input value="SION"></div>
+      <div class="field"><label>Ch 19</label>
+        <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ Fixation & norms ════════ -->
+<section class="card">
+  <div class="card-head"><span class="tick"></span><h2>Fixation &amp; Norms</h2></div>
+  <div class="card-body">
+    <div class="grid cols-4">
+      <div class="field"><label>Adv Fixation Applied</label>
+        <div class="flag-row">
+          <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+          <input type="date" disabled title="Date applied">
+        </div></div>
+      <div class="field"><label>Norms Fixed</label>
+        <div class="flag-row">
+          <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+          <input type="date" disabled title="Date fixed">
+        </div></div>
+      <div class="field"><label>Fixed</label>
+        <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div></div>
+      <div class="field"><label>Meeting No</label><input disabled placeholder="&mdash;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ Status & completion ════════ -->
+<section class="card">
+  <div class="card-head"><span class="tick"></span><h2>Status &amp; Completion</h2></div>
+  <div class="card-body">
+    <div class="grid cols-4">
+      <div class="field"><label>H.O. File Number</label><input disabled placeholder="&mdash;"></div>
+      <div class="field"><label>License Status</label><input disabled placeholder="&mdash;"></div>
+      <div class="field"><label>Order Status</label><input value="To be Shipped"></div>
+      <div class="field"><label>Merchant</label><input disabled placeholder="&mdash;"></div>
+      <div class="field"><label>Imports Complete</label>
+        <div class="flag-row">
+          <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+          <input type="date" title="Completion date">
+        </div></div>
+      <div class="field"><label>Balance to be Shipped</label>
+        <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div></div>
+      <div class="field"><label>Duty Ready Payment</label>
+        <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div></div>
+      <div class="field"><label>Duty Paid</label>
+        <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div></div>
+      <div class="field"><label>Excess</label><input class="num" placeholder="0.00"></div>
+      <div class="field"><label>License Rcvd Back On</label><input type="text" class="form-Flatdate"></div>
+      <div class="field"><label>Surrender Rcvd Date</label><input type="text" class="form-Flatdate"></div>
+      <div class="field"><label>Confirmed by Merchant</label><input disabled placeholder="&mdash;"></div>
+      <div class="field"><label>Mail Sent Date &amp; Time</label>
+        <div class="flag-row" style="grid-template-columns:1fr 1fr">
+          <input type="date" disabled><input type="time" disabled>
+        </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ Redemption & bond ════════ -->
+<section class="card">
+  <div class="card-head"><span class="tick"></span><h2>Redemption &amp; Bond</h2>
+    <span class="hint">Bond No. tracked after registration</span></div>
+  <div class="card-body">
+    <div class="grid cols-4">
+      <div class="field"><label>Redemption Filed</label>
+        <div class="flag-row">
+          <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+          <input type="date" disabled title="Date filed">
+        </div></div>
+      <div class="field"><label>Redemption Rcvd</label>
+        <div class="flag-row">
+          <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+          <input type="date" value="2014-09-05" title="Date received">
+        </div></div>
+      <div class="field"><label>Deficiency Reason <button class="help-link" onclick="openModal('m-dreason')">Help</button></label>
+        <select><option selected>Choose one&hellip;</option><option>Mismatch of Fab/GSM</option><option>Norms Issue</option><option>TR6 Attested</option></select></div>
+      <div class="field"></div>
+      <div class="field"><label>Bond Registered</label>
+        <div class="flag-row">
+          <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+          <input type="date" disabled title="Registration date">
+        </div></div>
+      <div class="field"><label>Bond Number</label><input disabled placeholder="&mdash;"></div>
+      <div class="field"><label>Bond Cancel Filed</label>
+        <div class="flag-row">
+          <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+          <input type="date" disabled title="Filing date">
+        </div></div>
+      <div class="field"><label>Bond Cancelled</label>
+        <div class="flag-row">
+          <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+          <input type="date" disabled title="Cancellation date">
+        </div></div>
+      <div class="field span-2"><label>Bond Status</label>
+        <div class="flag-row" style="grid-template-columns:1fr 1fr">
+          <input disabled placeholder="&mdash;"><input disabled placeholder="&mdash;">
+        </div></div>
+    </div>
+  </div>
+</section>
+
+@section SaveBar {
+    <div class="savebar">
+      <span class="status">Editing entry <b>1597</b> &middot; license <b>0511029698</b></span>
+      <button class="btn btn-outline">+ Add</button>
+      <button class="btn btn-outline">Edit</button>
+      <button class="btn btn-outline">View</button>
+      <button class="btn btn-danger">Delete</button>
+      <button class="btn btn-primary">Save</button>
+    </div>
+}
+
+@section Modals {
+    <!-- ══════════ MODAL &middot; License lookup ══════════ -->
+    <div class="overlay" id="m-lic" role="dialog" aria-modal="true" aria-label="License lookup">
+      <div class="modal">
+        <div class="modal-head"><span class="tick"></span><h3>License Lookup</h3>
+          <button class="modal-close" onclick="closeModal('m-lic')" aria-label="Close">&#10005;</button></div>
+        <div class="modal-body">
+          <div class="search"><input type="search" placeholder="Search license number&hellip;"></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th class="c">#</th><th class="r">CM</th><th>LIC No</th><th>LIC Date</th></tr></thead>
+              <tbody>
+                <tr><td class="c">1</td><td class="r num">01</td><td class="mono">0511034767</td><td>29-08-2025</td></tr>
+                <tr><td class="c">2</td><td class="r num">01</td><td class="mono">0511034809</td><td>01-09-2025</td></tr>
+                <tr><td class="c">3</td><td class="r num">01</td><td class="mono">0511034810</td><td>01-09-2025</td></tr>
+                <tr><td class="c">4</td><td class="r num">01</td><td class="mono">0511034811</td><td>01-09-2025</td></tr>
+                <tr><td class="c">5</td><td class="r num">01</td><td class="mono">0511034860</td><td>03-09-2025</td></tr>
+                <tr><td class="c">6</td><td class="r num">01</td><td class="mono">0511034861</td><td>03-09-2025</td></tr>
+                <tr><td class="c">7</td><td class="r num">01</td><td class="mono">0511034862</td><td>03-09-2025</td></tr>
+                <tr><td class="c">8</td><td class="r num">01</td><td class="mono">0511034863</td><td>03-09-2025</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost" onclick="closeModal('m-lic')">Cancel</button>
+          <button class="btn btn-primary" onclick="closeModal('m-lic')">Select License</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ MODAL &middot; Deficiency reasons ══════════ -->
+    <div class="overlay" id="m-dreason" role="dialog" aria-modal="true" aria-label="Deficiency reasons">
+      <div class="modal">
+        <div class="modal-head"><span class="tick"></span><h3>Deficiency Reasons</h3>
+          <button class="modal-close" onclick="closeModal('m-dreason')" aria-label="Close">&#10005;</button></div>
+        <div class="modal-body">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th class="c">#</th><th>Reason</th></tr></thead>
+              <tbody>
+                <tr><td class="c">1</td><td>Mismatch of Fab/GSM</td></tr>
+                <tr><td class="c">2</td><td>Norms Issue</td></tr>
+                <tr><td class="c">3</td><td>TR6 Attested</td></tr>
+                <tr><td class="c">4</td><td>EBRC Bank Certificate</td></tr>
+                <tr><td class="c">5</td><td>NA</td></tr>
+                <tr><td class="c">6</td><td>DL Clubbing</td></tr>
+                <tr><td class="c">7</td><td>GN19 Third Party</td></tr>
+                <tr><td class="c">8</td><td>G-19</td></tr>
+                <tr><td class="c">9</td><td>DL G-19</td></tr>
+                <tr><td class="c">10</td><td>TR-6 Attested</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost" onclick="closeModal('m-dreason')">Cancel</button>
+          <button class="btn btn-primary" onclick="closeModal('m-dreason')">Select Reason</button>
+        </div>
+      </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/pages/advance-license-entry.js" asp-append-version="true"></script>
+}

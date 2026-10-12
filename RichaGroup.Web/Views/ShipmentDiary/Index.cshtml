@@ -1,0 +1,1393 @@
+@{
+	ViewData["Title"] = "Shipment Diary";
+}
+<style>
+
+	.screen {
+		display: none
+	}
+
+		.screen.on {
+			display: block
+		}
+</style>
+
+<div class="card">
+	<div class="card-head">
+		<div class="screen-switch" role="tablist" aria-label="Demo screens">
+			<button type="button" class="on" data-screen="list">1 &middot; Invoice List</button>
+			<button type="button" data-screen="diary">2 &middot; Shipment Diary</button>
+		</div>
+	</div>
+</div>
+
+<!-- ════════ SCREEN 1 &middot; Invoice list ════════ -->
+<div class="screen on" id="screen-list">
+
+	<section class="card">
+
+		<div class="card-head">
+			<div>
+				<span class="tick"></span>
+				<h2 class="mt-2" id="txtHeaderMain">Shipment Diary</h2>
+			</div>
+
+			<div class="d-flex gap-2">
+				@await Html.PartialAsync("Components/_CheckBoxComponent")
+				@await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnSave_InvoiceList" title="Save">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+						<polyline points="17 21 17 13 7 13 7 21"></polyline>
+						<polyline points="7 3 7 8 15 8"></polyline>
+					</svg>
+					Save
+				</button>
+
+				@* <button id="btnAdd_InvoiceList" class="btn btn-primary btn-sm">+ Add New</button> *@
+
+				<button type="button" class="btn btn-cancel-custom" id="btnCancel_InvoiceList">✕ Cancel</button>
+			</div>
+		</div>
+
+		<div class="card-body" style="padding-bottom:14px">
+			<div class="search" style="margin-bottom: 5px;">
+				<input type="search" id="txtInvoiceListSearch" placeholder="Search invoice no&hellip;"
+					   value="RE/2135/23-24" aria-label="Search invoice number">
+			</div>
+		
+
+			<div class="table-wrap">
+			<table id="tbl_InvoiceList">
+				<thead>
+					<tr>
+						<th class="c" style="width:50px;">Actions</th>
+						<th class="c">#</th>
+						<th>Invoice No.</th>
+						<th class="r">Lot No.</th>
+						<th>Lot Date</th>
+						<th>CHA Agent</th>
+						<th class="r">Buyer Code</th>
+						<th class="c">Status</th>
+						<th class="r">Forwarder</th>
+					</tr>
+				</thead>
+				<tbody id="tblbody_InvoiceList">
+					@* <tr>
+						<td class="c">
+							<button type="button" class="row-btn" title="Edit" onclick="show('diary')">&#9998;</button>
+							<button class="row-btn" title="Merge lot" onclick="openModal('m-merge')">&#8644;</button>
+
+						</td>
+						<td class="c">1</td>
+						<td class="mono">RE/2135/23-24</td>
+						<td class="r num">1034</td>
+						<td>25-10-2023</td>
+						<td>Star Shipping</td>
+						<td class="r num">2237</td>
+						<td class="c"><span class="status-pill">T</span></td>
+						<td class="r num">5578</td>
+
+					</tr>
+					<tr>
+						<td class="c">
+							<button class="row-btn" title="Edit" onclick="show('diary')">&#9998;</button>
+							<button class="row-btn" title="Merge lot" onclick="openModal('m-merge')">&#8644;</button>
+
+						</td>
+						<td class="c">2</td>
+						<td class="mono">RE/2136/23-24</td>
+						<td class="r num">1055</td>
+						<td>01-11-2023</td>
+						<td>Star Shipping</td>
+						<td class="r num">2237</td>
+						<td class="c"><span class="status-pill">T</span></td>
+						<td class="r num">5578</td>
+
+					</tr>
+					<tr>
+						<td class="c">
+							<button class="row-btn" title="Edit" onclick="show('diary')">&#9998;</button>
+							<button class="row-btn" title="Merge lot" onclick="openModal('m-merge')">&#8644;</button>
+
+						</td>
+						<td class="c">3</td>
+						<td class="mono">RE/2137/23-24</td>
+						<td class="r num">1033</td>
+						<td>25-10-2023</td>
+						<td>Star Shipping</td>
+						<td class="r num">2237</td>
+						<td class="c"><span class="status-pill">T</span></td>
+						<td class="r num">5578</td>
+
+					</tr>
+					<tr>
+						<td class="c">
+							<button class="row-btn" title="Edit" onclick="show('diary')">&#9998;</button>
+							<button class="row-btn" title="Merge lot" onclick="openModal('m-merge')">&#8644;</button>
+
+						</td>
+						<td class="c">4</td>
+						<td class="mono">RE/2138/23-24</td>
+						<td class="r num">1055</td>
+						<td>01-11-2023</td>
+						<td>Star Shipping</td>
+						<td class="r num">2237</td>
+						<td class="c"><span class="status-pill">T</span></td>
+						<td class="r num">5578</td>
+
+					</tr>
+					<tr>
+						<td class="c">
+							<button class="row-btn" title="Edit" onclick="show('diary')">&#9998;</button>
+							<button class="row-btn" title="Merge lot" onclick="openModal('m-merge')">&#8644;</button>
+
+						</td>
+						<td class="c">5</td>
+						<td class="mono">RE/2139/23-24</td>
+						<td class="r num">1025</td>
+						<td>21-10-2023</td>
+						<td>Star Shipping</td>
+						<td class="r num">2237</td>
+						<td class="c"><span class="status-pill">T</span></td>
+						<td class="r num">5578</td>
+
+					</tr>
+					<tr>
+						<td class="c">
+							<button class="row-btn" title="Edit" onclick="show('diary')">&#9998;</button>
+							<button class="row-btn" title="Merge lot" onclick="openModal('m-merge')">&#8644;</button>
+
+						</td>
+						<td class="c">6</td>
+						<td class="mono">RE/2140/23-24</td>
+						<td class="r num">1025</td>
+						<td>21-10-2023</td>
+						<td>Star Shipping</td>
+						<td class="r num">2237</td>
+						<td class="c"><span class="status-pill">T</span></td>
+						<td class="r num">5578</td>
+
+					</tr> *@
+				</tbody>
+			</table>
+		</div>
+		</div>
+	</section>
+</div>
+
+<!-- ════════ SCREEN 2 &middot; Shipment diary (tabbed) ════════ -->
+<div class="screen" id="screen-diary">
+
+	<!-- Consignment header -->
+	<section class="card">
+
+		<div class="card-head">
+			<div>
+				<span class="tick"></span>
+				<h2 class="mt-2">Shipment Diary <span class="chip">Lot 910</span></h2>
+			</div>
+
+			<div class="d-flex gap-2">
+				<button type="button" class="btn btn-primary btn-sm" id="btnSave_ShipmentDiary" title="Save">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+						<polyline points="17 21 17 13 7 13 7 21"></polyline>
+						<polyline points="7 3 7 8 15 8"></polyline>
+					</svg>
+					Save
+				</button>
+
+				<button id="btnPlanning_ShipmentDiary" class="btn btn-outline btn-sm" onclick="openModal('m-planning')">Shipment Planning &#8599;</button>
+
+				<button type="button" class="btn btn-cancel-custom" id="btnAbort_ShipmentDiary">✕ Abort</button>
+			</div>
+		</div>
+
+		<div class="card-body">
+			<div class="grid cols-8">
+				<div class="field">
+					<label id="lbl_Consignment_LotNo">Lot No</label>
+					<input id="txt_Consignment_LotNo" value="910">
+				</div>
+				<div class="field">
+					<label id="lbl_Consignment_Date">Date</label>
+					<input id="txt_Consignment_Date" type="text" class="form-Flatdate" value="2023-09-23">
+				</div>
+				<div class="field">
+					<label id="lbl_Consignment_BuyerCode">Buyer Code</label>
+					<input id="txt_Consignment_BuyerCode" value="2021">
+				</div>
+				<div class="field">
+					<label id="lbl_Consignment_BuyerName">Buyer Name</label>
+					<input id="txt_Consignment_BuyerName" value="Abercrombie &amp; Fitch Trading">
+				</div>
+				<div class="field">
+					<label id="lbl_Consignment_CHACode">CHA Code</label>
+					<input id="txt_Consignment_CHACode" value="5437">
+				</div>
+				<div class="field">
+					<label id="lbl_Consignment_CHAName">CHA Name</label>
+					<input id="txt_Consignment_CHAName" value="ClearFastair Cargo Agencies Pvt">
+				</div>
+				<div class="field">
+					<label id="lbl_Consignment_ForwarderCode">Forwarder Code</label>
+					<input id="txt_Consignment_ForwarderCode" value="ULAS">
+				</div>
+				<div class="field">
+					<label id="lbl_Consignment_ForwarderName">Forwarder Name</label>
+					<input id="txt_Consignment_ForwarderName" value="United Liner Shipping">
+				</div>
+
+				@*  <div class="field">
+                                <label id="lbl_Licences_GRNO_No">GRN No</label>
+                               
+                                    <input id="txt_Licences_GRNO" disabled placeholder="&mdash;">
+                                
+                            </div>
+                            <div class="field">
+                                <label id="lbl_Licences_GRNO_Date">GRN Date</label>
+                               
+                                      <input id="txt_Licences_GRN_Date" type="text" class="form-Flatdate" value="2025-02-10">
+                                  
+                            </div> *@
+
+				<div class="field">
+					<label id="lbl_Licences_BillNo_No">Shipping Bill No</label>
+
+					<input id="txt_Licences_BillNo" disabled placeholder="&mdash;">
+
+				</div>
+				<div class="field">
+					<label id="lbl_Licences_BillNo_Date">Shipping Bill Date</label>
+
+					<input id="txt_Licences_Bill_Date" type="text" class="form-Flatdate" disabled>
+
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+	<!-- Tabbed detail -->
+	<section class="card">
+		<div class="tabs" role="tablist">
+			<button id="btn_ShipmentDiary_DispatchDetails" class="on" data-tab="t-ID">Dispatch Details</button>
+			<button id="btn_ShipmentDiary_Planning" data-tab="t-plan">Shipment Planning</button>
+			<button id="btn_ShipmentDiary_CHA" data-tab="t-cha">CHA Bill Details</button>
+			<button id="btn_ShipmentDiary_Forwarder" data-tab="t-fwd">Forwarder Bill Details</button>
+		</div>
+
+
+		<!-- Tab 1 &middot; Dispatch Details -->
+
+		<div class="tabpane on" id="t-ID">
+			<div class="grid cols-6">
+
+				<div class="field">
+					<label id="lbl_InvoiceDetails_CHA_Conslidator">CHA / Consolidator</label>
+					<div class="pair">
+						<select id="ddl_InvoiceDetails_CHA">
+							<option selected>5437</option>
+						</select>
+						<input id="txt_InvoiceDetails_CHA_Conslidator" value="ClearFastair Cargo Agencies">
+					</div>
+				</div>
+
+				<div class="field">
+					<label id="lbl_InvoiceDetails_Mode">Mode</label>
+					<select id="ddl_InvoiceDetails_Mode">
+						<option selected>Transporter</option>
+					</select>
+				</div>
+
+
+				<div class="field">
+					<label id="lbl_InvoiceDetails_Cargo1">Cargo By 1</label>
+					<select id="ddl_InvoiceDetails_Cargo1">
+						<option selected>Road</option>
+						<option>Rail</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label id="lbl_InvoiceDetails_Cargo2">Cargo By 2</label>
+					<select id="ddl_InvoiceDetails_Cargo2" disabled>
+						<option>&mdash;</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label id="lbl_InvoiceDetails_Received">Received On</label>
+					<input id="txt_InvoiceDetails_Received" value="17-10-2023">
+				</div>
+
+				<div class="field">
+					<label id="lbl_InvoiceDetails_Delivery1">Delivery Type 1</label>
+					<select id="ddl_InvoiceDetails_Delivery1">
+						<option selected>5437</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label id="lbl_InvoiceDetails_Delivery2">Delivery Type 2</label>
+					<select id="ddl_InvoiceDetails_Delivery2" disabled>
+						<option>&mdash;</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label id="lbl_InvoiceDetails_AWB_SB_Status">AWB / SB Status</label>
+					<select id="ddl_InvoiceDetails_AWB_SB_Status">
+						<option selected>Both</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label id="lbl_InvoiceDetails_Transporter1">Transporter Name 1</label>
+					<select id="ddl_InvoiceDetails_Transporter1">
+						<option selected>Transporter</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label id="lbl_InvoiceDetails_Transporter2">Transporter Name 2</label>
+					<select id="ddl_InvoiceDetails_Transporter2" disabled>
+						<option>&mdash;</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label id="lbl_InvoiceDetails_Transporter2">Carting Date</label>
+					<input type="text" class="form-Flatdate" id="txtCartingDate" />
+				</div>
+				<div class="field">
+					<label id="lbl_InvoiceDetails_LR_AWB_1">LR/AWB Number 1</label>
+
+					<input id="txt_InvoiceDetails_LR_AWB_1" class="num" value="146367">
+
+				</div>
+
+				<div class="field">
+					<label id="lbl_InvoiceDetails_LR_AWB_1">Number 1  Date</label>
+
+					<input id="txt_InvoiceDetails_LR_AWB_1_date" type="text" class="form-Flatdate" value="2023-09-18">
+
+				</div>
+
+				<div class="field">
+					<label id="lbl_InvoiceDetails_LR_AWB_2">LR/AWB Number 2</label>
+
+					<input id="txt_InvoiceDetails_LR_AWB_2" disabled placeholder="&mdash;">
+
+				</div>
+
+				<div class="field">
+					<label id="lbl_InvoiceDetails_LR_AWB_2">Number 2  Date</label>
+
+					<input id="txt_InvoiceDetails_LR_AWB_2" type="text" class="form-Flatdate" disabled>
+
+				</div>
+
+				<div class="field">
+					<label id="lblPackage_1">Package 1</label>
+					<input type="text" id="txtPackage_1" placeholder="&mdash;">
+
+				</div>
+				<div class="field">
+					<label id="lblPackage_2">Package 2</label>
+					<input type="text" id="txtPackage_2" placeholder="&mdash;">
+
+				</div>
+				<div class="field">
+					<label id="lbl_InvoiceDetails_invoiceDetails">Invoice Details</label>
+					<textarea id="txt_InvoiceDetails_invoiceDetails" rows="2" placeholder="&mdash;"></textarea>
+				</div>
+				<div class="field">
+					<label id="lblPort">Port</label>
+					<input id="txtPort" type="text" value="Bombay">
+				</div>
+				<div class="field">
+					<label id="lblShipmentweidrawn">Shipment Weidrawn</label>
+					<select id="ddlShipmentweidrawn">
+						<option value="Y">Y</option>
+						<option value="N">N</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="subhead"> Pick Invoices </div>
+			<div class="table-wrap">
+				<table id="tbl_InvoiceDetails_Pick_Invoice" style="width:100%">
+					<thead>
+						<tr>
+							<th class="c">#</th>
+							<th>Invoice No.</th>
+							<th>Invoice Date</th>
+							<th>GST Invoice</th>
+							<th class="r">Packages</th>
+							<th>Buyer Name</th>
+							<th class="r">Invoice Amount</th>
+							<th>Cur.</th>
+							<th>Initial</th>
+						</tr>
+					</thead>
+					<tbody id="tblbody_InvoiceDetails_Pick_Invoice">
+					</tbody>
+				</table>
+			</div>
+
+
+
+		</div>
+
+		<!-- Tab 2 &middot; Shipment Planning -->
+		<div class="tabpane " id="t-plan">
+			<div class="grid cols-6">
+				<div class="field">
+					<label id="lbl_Plan_Mode">Mode</label>
+					<select id="ddl_Plan_Mode">
+						<option selected>By Sea</option>
+						<option>By Air</option>
+					</select>
+				</div>
+				@* <div class="field">
+								<label id="lbl_Plan_Cartage">Cartage</label>
+								<select id="ddl_Plan_Cartage">
+									<option selected>By</option>
+								</select>
+							</div> *@
+				<div class="field">
+					<label id="lbl_Plan_FreightInstruction">Freight Instruction</label>
+					<select id="ddl_Plan_FreightInstruction">
+						<option selected>Topay</option>
+						<option>Prepaid</option>
+					</select>
+				</div>
+				<div class="field">
+					<label id="lbl_Plan_Type">Type</label>
+					<select id="ddl_Plan_Type">
+						<option selected>FOB</option>
+						<option>CIF</option>
+					</select>
+				</div>
+				<div class="checkbox" style="padding-top:26px">
+					<input type="checkbox" id="chk_Plan_Entry">
+					<label for="chk_Plan_Entry" style="all:unset;cursor:pointer">Entry</label>
+				</div>
+
+				<div class="field">
+					<label id="lbl_Plan_BLType">BL / FCR</label>
+					<select id="ddl_Plan_BLType">
+						<option selected>FCR No</option>
+						<option>BL No</option>
+					</select>
+				</div>
+				<div class="field">
+					<label id="lbl_Plan_BLType">FCR No</label>
+					<input type="text" value="NSH705165" id="txtFcrNo">
+				</div>
+				<div class="field">
+					<label id="lbl_Plan_Date">Mawb</label>
+					<input id="txt_Plan_Date" type="text" class="form-Flatdate" value="2025-09-25">
+				</div>
+				<div class="field">
+					<label id="lblHAWBNumber">HAWB Number</label>
+					<input id="txtHAWBNumber" type="text" class="" value="">
+				</div>
+				<div class="field">
+					<label id="lbl_Plan_BLNo">BL #</label>
+					<input id="txt_Plan_BLNo" value="NA">
+				</div>
+				<div class="field">
+					<label id="lbl_Plan_ShippingLine">Air / Shipping Line</label>
+					<input id="txt_Plan_ShippingLine" disabled placeholder="&mdash;">
+				</div>
+				<div class="field">
+					<label id="lbl_Plan_LocalEGMNo">Local EGM No</label>
+					<input id="txt_Plan_LocalEGMNo" disabled placeholder="&mdash;">
+				</div>
+				<div class="field">
+					<label id="lbl_Plan_LocalEGMDate">Local EGM Date</label>
+					<input id="txt_Plan_LocalEGMDate" type="text" class="form-Flatdate" disabled>
+				</div>
+				<div class="field">
+					<label id="lbl_Fwd_Destination">Destination</label>
+					<input id="txt_Fwd_Destination" value="USA">
+				</div>
+				<div class="field">
+					<label id="lbl_Fwd_PortLoading">Port of Loading</label>
+					<input id="txt_Fwd_PortLoading" value="Nhava Sheva">
+				</div>
+				<div class="field">
+					<label id="lbl_Fwd_PortDischarge">Port of Discharge</label>
+					<input id="txt_Fwd_PortDischarge" value="New York">
+				</div>
+				<div class="field">
+					<label id="lbl_Fwd_VesselNumber">Vessel Number</label>
+					<input id="txt_Fwd_VesselNumber" value="CMA CGM IVANHOE/313B">
+				</div>
+				@*  <div class="field">
+                                <label id="lbl_Fwd_Voyage">Voyage</label>
+                                <input id="txt_Fwd_Voyage" disabled placeholder="&mdash;">
+                            </div> *@
+				<div class="field">
+					<label id="lbl_Fwd_Description">Description</label>
+					<input id="txt_Fwd_Description" value="Ready-made Garments">
+				</div>
+				<div class="field">
+					<label id="lbl_Fwd_BrandBondDepart">Brand / Bond / Depart</label>
+					<input id="txt_Fwd_BrandBondDepart" disabled placeholder="&mdash;">
+				</div>
+				<div class="field">
+					<label id="lbl_Fwd_Reference">Reference</label>
+					<input id="txt_Fwd_Reference" disabled placeholder="&mdash;">
+				</div>
+
+			</div>
+			<hr class="divider">
+			<div class="field">
+				<label id="lbl_Plan_Remarks">Remarks</label>
+				<textarea id="txt_Plan_Remarks" rows="3" disabled placeholder="&mdash;"></textarea>
+			</div>
+
+		</div>
+
+
+		<!-- Tab 3 &middot; CHA Bill Details -->
+		<div class="tabpane " id="t-cha">
+			<div class="card-body d-flex justify-content-end align-items-center"
+				 style="padding-bottom:14px;">
+
+				@* Old search - commented *@
+				@*
+				<div class="search">
+					<input type="search" id="txtInvoiceNumber"
+						   placeholder="Search invoice no…"
+						   value="RE/2135/23-24"
+						   aria-label="Search invoice number">
+				</div>
+				*@
+
+				<button type="button"
+						class="btn btn-primary"
+						id="btnOpenInvoiceModal"
+						data-bs-toggle="modal"
+						data-bs-target="#invoiceModal">
+					<i class="fa-solid fa-file-invoice"></i>
+					Invoice
+					
+				</button>
+
+			</div>
+
+			<div class="table-wrap">
+				<table id="tblCHABillDetails">
+					<thead>
+						<tr>
+							<th class="c">#</th>
+							<th>Invoice No.</th>
+							<th>Gst Inv_No</th>
+							<th class="r num">Gst On VLU</th>
+							<th class="r num">IGST</th>
+							<th class="r num">Amount</th>
+							<th class="r num">Bank Qty.</th>
+							<th class="r num">AFPC. Qty.</th>
+							<th class="r num">CTN #</th>
+							<th class="r num">Vol. WT</th>
+							<th class="r num">Grwt</th>
+							<th class="r num">NTA</th>
+						</tr>
+					</thead>
+					<tbody id="tblbodytblCHABillDetails">
+					</tbody>
+				</table>
+			</div>
+			<hr />
+			<div class="row col-md-12">
+				<div class="col-md-6">
+					<div class="grid cols-3">
+
+						<div class="field">
+							<label id="lblAepcQty">AEPC Qty</label>
+							<input id="txtAepcQty" type="text" class="r num" placeholder="0.00" />
+						</div>
+						<div class="field">
+							<label id="lblPackages">Packages</label>
+							<input id="txtPackages" type="text" class="r num" placeholder="0.00" />
+						</div>
+						<div class="field">
+							<label id="lblGrosswt">Gross Wt.</label>
+							<input id="txtGrosswt" type="text" class="r num" placeholder="0.00" />
+						</div>
+						<div class="field">
+							<label id="lblNetwt">Net Wt.</label>
+							<input id="txtNetwt" type="text" class="r num" placeholder="0.00" />
+						</div>
+
+						<div class="field">
+							<label id="lblVolumewt">Volume  Wt.</label>
+							<input id="txtVolumewt" type="text" class="r num" placeholder="0.00" />
+						</div>
+						<div class="field">
+							<label id="lblCBM">CBM</label>
+							<input id="txtCBM" type="text" class="r num" placeholder="0.00" />
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="table-wrap">
+						<table id="tblChaInvDetails">
+							<thead>
+								<tr>
+									<th>Invoice No.</th>
+									<th class="r num">Qty.</th>
+									<th class="r num">Acti. Rate</th>
+									<th class="r num">New Rate</th>
+									<th class="r num">Diff Rate</th>
+								</tr>
+							</thead>
+							<tbody id="tblbodytblChaInvDetails">
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+
+		<!-- Tab 4 &middot; Forwarder Details -->
+		<div class="tabpane " id="t-fwd">
+			<!-- ================= SHIPMENT / BILL DETAILS ================= -->
+			<div class="grid cols-8">
+
+				<!-- Shipping Bill Received + Date -->
+
+				<div class="field">
+					<label id="lbl_Shipping_Bill_Received">
+						Shipping Bill Rcvd
+					</label>
+					<select id="ddlShippingBillRcvd">
+						<option value="Yes">Yes</option>
+						<option value="No">No</option>
+					</select>
+
+				</div>
+
+
+				<div class="field">
+					<label id="lbl_Shipping_Bill_Received_Date">
+						Shipping Bill Date
+					</label>
+
+					<input type="text"
+						   id="txtShippingBillReceived_Date"
+						   class="form-Flatdate">
+				</div>
+
+				<div class="field">
+					<label id="lbl_Shipping_Bill_No">
+						Shipping Bill No.
+					</label>
+
+					<input type="text"
+						   id="txt_Shipping_Bill_No"
+						   class="form-control">
+				</div>
+
+
+				<div class="field">
+					<label id="lbl_Shipping_Bill_Date">
+						Shipping Bill No. Date
+					</label>
+
+					<input type="text"
+						   id="txtShippingBillDate"
+						   class="form-Flatdate">
+				</div>
+
+				<div class="field">
+					<label id="lbl_Documents_Received">
+						Document Rcvd
+					</label>
+
+					<select id="ddl_Documents_Received"
+							class="form-control">
+
+						<option value="Yes">Yes</option>
+						<option value="No">No</option>
+					</select>
+				</div>
+
+
+				<div class="field">
+					<label id="lbl_Document_Received_Date">
+						Document Date
+					</label>
+
+					<input type="text"
+						   id="txtDocumentReceivedDate"
+						   class="form-Flatdate">
+				</div>
+				<div class="field">
+					<label id="lblDocumentType">
+						Document Type
+					</label>
+
+					<select id="ddlDocumentType"
+							class="form-control">
+						<option value="Exporter Copy">Exporter Copy</option>
+					</select>
+				</div>
+
+
+				<div class="field">
+					<label id="lbl_Cargo">
+						Cargo
+					</label>
+
+					<input type="text"
+						   id="txt_Cargo"
+						   class="form-control">
+				</div>
+
+
+				<div class="field">
+					<label id="lbl_LR_Number">
+						LR Number
+					</label>
+
+					<input type="text"
+						   id="txt_LR_Number"
+						   class="form-control">
+				</div>
+
+				<div class="field">
+					<label id="lbl_LR_Date">
+						LR Date
+					</label>
+
+					<input type="text"
+						   id="txt_LR_Date"
+						   class="form-Flatdate">
+				</div>
+
+			</div>
+			<hr />
+
+			<div class="row col-md-12">
+				<div class="col-md-5">
+					<div class="card-head">
+						<div>
+							<span class="tick"></span>
+							<h2 class="mt-2">Forwarder Bill Details</h2>
+						</div>
+
+						<div class="d-flex gap-2">
+							<a href="#" id="btnForwarderAdd" onclick="AddForwarderDetails()" class="btn btn-sm btn-primary">Add</a>
+						</div>
+					</div>
+					<div class="table-responsive" style="max-height:230px;">
+						<table class="table table-bordered table-sm" id="tblForwarderBillDetails">
+
+							<thead>
+								<tr>
+									<th style="width:50px;">Action</th>
+									<th>Entry Date</th>
+									<th>Bill No.</th>
+									<th style="width:100px;">Date</th>
+									<th class="r num">Amount</th>
+									<th class="r num">Late Delivery</th>
+									<th class="r num">Bill For</th>
+									@* <th>Remarks</th> *@
+								</tr>
+							</thead>
+
+							<tbody id="tblbodyForwarderBillDetails">
+
+								<tr>
+									<td>
+										<button type="button"
+												id="btnForwaderDetails"
+												style="width:60px; margin-top:3px"
+												class="row-btn btnOpenmodal edit-btn"
+												title="Tag Invoice">
+											Tag Inv
+										</button>
+									</td>
+
+									<td>
+										<input type="text"
+											   id="txtEntryDate"
+											   class="w-100 form-Flatdate">
+									</td>
+
+									<td>
+										<input type="text"
+											   id="txtBillNo"
+											   placeholder="Enter Bill.."
+											   class="w-100 ">
+									</td>
+									<td>
+										<input type="text"
+											   id="txtDate"
+											   class="w-100  form-Flatdate">
+									</td>
+
+									<td class="r num">
+										<input type="text"
+											   id="txtAmount"
+											   class="w-100  r num"
+											   placeholder="0.00">
+									</td>
+									<td class="r num">
+										<input type="text"
+											   id="txtAmount"
+											   class="w-100  r num"
+											   placeholder="0.00">
+									</td>
+									<td class="r num">
+										<select id="ddlBillFor">
+											<option value="CHA">CHA</option>
+										</select>
+									</td>
+								</tr>
+
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+				<div class="col-md-7">
+
+					<div class="">
+						<div class="col-md-12">
+
+							<div class="card-head">
+								<div>
+									<span class="tick"></span>
+									<h2 class="mt-2">International Bill Details</h2>
+								</div>
+
+								@* <div class="d-flex gap-2">
+												<a href="#" class="btn btn-sm btn-primary">Tag Inv</a>
+											</div> *@
+							</div>
+							<div class="table-responsive">
+
+								<table class="table table-bordered table-sm"
+									   id="tblInternationalBillDetails">
+
+									<thead>
+										<tr>
+											<th>Bill No.</th>
+											<th>Weight</th>
+											<th>Rate</th>
+											<th>Amount</th>
+											<th>Currency</th>
+											<th>Conv. Rate</th>
+											<th>Freight (INR)</th>
+											<th>Min. Freight (INR)</th>
+										</tr>
+									</thead>
+
+									<tbody id="tblbodyInternationalBillDetails">
+
+										<tr>
+
+											<td>
+												<input type="text"
+													   id="txtInterBillNo"
+													   placeholder="Enter Bill.."
+													   class="w-100 ">
+											</td>
+
+											<td>
+												<input type="text"
+													   id="txtInterWeight"
+													   class="w-100  r num"
+													   placeholder="0.00">
+											</td>
+
+											<td>
+												<input type="text"
+													   id="txtInterRate"
+													   class="w-100  r num"
+													   placeholder="0.00">
+											</td>
+
+
+											<td class="r num">
+												<input type="text"
+													   id="txtInterAmount"
+													   class="w-100  r num"
+													   placeholder="0.00">
+											</td>
+
+											<td>
+												<select id="ddlInterCurrency" class="w-100 ">
+													<option value=""> Currency </option>
+													<option value="USD">USD</option>
+													<option value="UK">UK</option>
+													<option value="EURO">EURO</option>
+													<option value="DM">DM</option>
+													<option value="NA">N.A.</option>
+												</select>
+											</td>
+
+											<td>
+												<input type="text"
+													   id="txtInterConvRate"
+													   class="w-100 r num"
+													   placeholder="0.00">
+											</td>
+
+											<td>
+												<input type="text"
+													   id="txtInterFreightINR"
+													   class="w-100  r num"
+													   placeholder="0.00">
+											</td>
+
+											<td>
+												<input type="text"
+													   id="txtInterMinFreightINR"
+													   class="w-100  r num"
+													   placeholder="0.00">
+											</td>
+
+										</tr>
+
+									</tbody>
+
+								</table>
+
+							</div>
+						</div>
+					</div>
+					<div class="row col-md-12">
+						<div class="col-md-3">
+							<div class="grid cols-2">
+								<div class="field">
+									<label id="lbl_LR_Date">
+										Container No:-
+									</label>
+									<input type="text" class="r num form-control" id="txtContainerNo" />
+								</div>
+								<div class="field mt-4">
+									<button type="button"
+											id="btnContOpenmodal"
+											style="width:60px"
+											class="row-btn btnOpenmodal edit-btn"
+											title="Tag Invoice">
+										Tag Inv
+									</button>
+								</div>
+							</div>
+
+						</div>
+						<div class="col-md-9">
+
+							<div class="card-head">
+								<h2 class="mt-2">Order Details</h2>
+							</div>
+
+							<div class="row">
+
+								<!-- Empty space for label column -->
+								<div class="col-md-3"></div>
+
+								<!-- Header -->
+								<div class="col-md-3">
+									<label class="form-label fw-semibold mb-1">
+										Curr
+									</label>
+								</div>
+
+								<div class="col-md-3">
+									<label class="form-label fw-semibold mb-1">
+										Amount
+									</label>
+								</div>
+
+								<div class="col-md-3"></div>
+
+
+								<!-- Reim. Sea Row -->
+								<div class="col-md-3">
+									<label class="form-label mb-0">
+										Reim. Sea
+									</label>
+								</div>
+
+								<div class="col-md-3 field">
+									<input type="text"
+										   class=""
+										   id="txtReimSeaCurr">
+								</div>
+
+								<div class="col-md-3 field">
+									<input type="text"
+										   class="r num"
+										   id="txtReimSeaAmount">
+								</div>
+
+								<div class="col-md-3"></div>
+
+
+								<!-- Discount Row -->
+								<div class="col-md-3 mt-2">
+									<label class="form-label mb-0">
+										Discount
+									</label>
+								</div>
+
+								<div class="col-md-3 mt-2 field">
+									<input type="text"
+										   class=""
+										   id="txtDiscountCurr">
+								</div>
+
+								<div class="col-md-3 mt-2 field">
+									<div class="d-flex gap-1">
+										<input type="text"
+											   class="r num"
+											   id="txtDiscountAmount">
+
+									</div>
+								</div>
+
+								<div class="col-md-3 mt-2">
+									<div class="d-flex gap-1 field">
+										<select class=""
+												title="Dest Trucking Chrg."
+												id="ddlDiscountType"
+												style="width: 130px;">
+											<option value="Dest Trucking Chrg">Dest Trucking Chrg.</option>
+										</select>
+										<input type="text"
+											   class="r num"
+											   style="width: 60px;"
+											   id="txtDAmount">
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="tab-footer">
+			<button id="btn_ShipmentDiary_PrevTab" class="btn btn-sm btn-outline" onclick="stepTab(-1)">&larr; Previous tab</button>
+			<div class="right">
+				<button id="btn_ShipmentDiary_NextTab" class="btn btn-sm btn-outline" onclick="stepTab(1)">Next tab &rarr;</button>
+				<button id="btn_ShipmentDiary_TabSave" class="btn btn-sm btn-primary">Save</button>
+			</div>
+		</div>
+	</section>
+</div>
+
+
+
+<div class="modal fade" id="addForwarderModal" tabindex="-1" aria-labelledby="addMenuModal" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-xl">
+		<div class="modal-content modal-box">
+			<div class="modal-header">
+				<div class="modal-header-text">
+					<div class="modal-title" id="addMenuModalLabel">
+						Tag Invoice
+					</div>
+				</div>
+				<div class="d-flex gap-2">
+
+					<button type="button"
+							class="modal-close"
+							data-bs-dismiss="modal"
+							aria-label="Close">
+						<svg viewBox="0 0 24 24">
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+					</button>
+				</div>
+			</div>
+
+			<div class="modal-body p-2">
+				<div class="table-wrap"
+					 style="overflow-x:auto">
+
+					<table id="tbl_Tag_Available"
+						   style="min-width:560px">
+
+						<thead>
+							<tr>
+								<th>Invoice Number</th>
+								<th class="r">Quantity</th>
+								<th class="r">Carton</th>
+								<th class="r">Bill Amount4Inv</th>
+								<th class="r">Lot No.</th>
+							</tr>
+						</thead>
+
+						<tbody id="tblbody_Tag_Available">
+							<tr>
+								<td class="mono">RE/2143/25-26</td>
+								<td class="r num">2,404.000</td>
+								<td class="r num">22</td>
+								<td class="r num">6,738.44</td>
+								<td class="r num">8966357</td>
+							</tr>
+
+							<tr>
+								<td class="mono">RE/2144/21-22</td>
+								<td class="r num">5,923.000</td>
+								<td class="r num">214</td>
+								<td class="r num">17,585.69</td>
+								<td class="r num">5634099</td>
+							</tr>
+
+							<tr>
+								<td class="mono">RE/2143/22-23</td>
+								<td class="r num">3,235.000</td>
+								<td class="r num">115</td>
+								<td class="r num">9,450.26</td>
+								<td class="r num">5056193</td>
+							</tr>
+
+							<tr>
+								<td class="mono">RE/2143/23-24</td>
+								<td class="r num">2,242.000</td>
+								<td class="r num">76</td>
+								<td class="r num">6,245.39</td>
+								<td class="r num">3105188</td>
+							</tr>
+
+							<tr>
+								<td class="mono">RE/2143/24-25</td>
+								<td class="r num">1,869.000</td>
+								<td class="r num">93</td>
+								<td class="r num">7,642.38</td>
+								<td class="r num">0</td>
+							</tr>
+
+							<tr>
+								<td class="mono">RE/2144/25-26</td>
+								<td class="r num">2,311.000</td>
+								<td class="r num">78</td>
+								<td class="r num">6,409.74</td>
+								<td class="r num">8762047</td>
+							</tr>
+						</tbody>
+
+					</table>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="invoiceModal" tabindex="-1"
+	 aria-labelledby="invoiceModalLabel" aria-hidden="true">
+
+	<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="invoiceModalLabel">
+					<i class="fa-solid fa-file-invoice me-2"></i>
+					Select Invoice
+				</h5>
+
+				<button type="button" class="btn-close"
+						data-bs-dismiss="modal"
+						aria-label="Close"></button>
+			</div>
+
+			<div class="modal-body">
+
+				<div class="row align-items-center mb-3">
+					<div class="col-md-6">
+						<input type="search"
+							   id="txtModalInvoiceSearch"
+							   class="form-control"
+							   placeholder="Search invoice number...">
+					</div>
+
+					@* <div class="col-md-6 text-md-end mt-2 mt-md-0">
+						<span class="badge bg-primary p-2">
+							Selected:
+							<span id="modalSelectedCount">0</span>
+						</span>
+					</div> *@
+				</div>
+
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover table-sm"
+						   id="tblInvoiceSelection">
+
+						<thead class="table-light">
+							<tr>
+								<th class="text-center" style="width:50px;">
+									<input type="checkbox" id="chkSelectAll">
+								</th>
+
+								<th>Invoice No.</th>
+								<th>GST Inv No.</th>
+								<th class="text-end">GST On VLU</th>
+								<th class="text-end">IGST</th>
+								<th class="text-end">Amount</th>
+								<th class="text-end">Bank Qty.</th>
+								<th class="text-end">AFPC Qty.</th>
+								<th class="text-end">CTN #</th>
+								<th class="text-end">Vol. WT</th>
+								<th class="text-end">Grwt</th>
+								<th class="text-end">NTA</th>
+							</tr>
+						</thead>
+
+						<tbody id="tblInvoiceSelectionBody">
+						</tbody>
+					</table>
+				</div>
+
+				<div id="invoiceNoRecord"
+					 class="text-center text-muted py-3"
+					 style="display:none;">
+					No invoice found.
+				</div>
+
+			</div>
+
+			<div class="modal-footer">
+				<button type="button"
+						class="btn btn-secondary"
+						data-bs-dismiss="modal">
+					Cancel
+				</button>
+
+				<button type="button"
+						class="btn btn-primary"
+						id="btnAddSelectedInvoices">
+					<i class="fa-solid fa-plus me-1"></i>
+					Add Selected
+				</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+@* modal open for merage lot open *@
+
+
+<div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                        Merage Lot 
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+					<button id="btnAdd_MeargeLot" class="btn btn-primary btn-sm">+ Add New</button>
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+          <div class="modal-body px-1 pt-0">
+                 @await Html.PartialAsync("_MergeLot")
+        </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnMeargeLot">
+
+                     <i class="fa-solid fa-code-merge"></i>
+
+                    Merge Lot
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* add and edit merge lot open a modal *@
+
+<div class="modal fade" id="addMenuModalEditAdd" tabindex="-1" aria-labelledby="addMenuModalEditAdd" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                        Merage Lot 
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+				
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+          <div class="modal-body px-2">
+                 @await Html.PartialAsync("_MerageLotEditAdd")
+        </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                     <i class="fa-solid fa-code-merge"></i>
+						Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+	<script src="~/js/pages/shipment-diary.js" asp-append-version="true"></script>
+}

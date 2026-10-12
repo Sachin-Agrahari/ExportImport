@@ -1,0 +1,56 @@
+﻿/* =========================
+   COMMON SEARCH BOX
+   ========================= */
+
+.common-search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 340px;
+    padding: 8px 14px;
+    background: #fff;
+    border: 1px solid #e3e7eb;
+    border-radius: 999px;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+    .common-search-box:focus-within {
+        border-color: #2fb6a3;
+        box-shadow: 0 0 0 3px rgba(47, 182, 163, 0.12);
+    }
+
+    .common-search-box .common-search-icon {
+        font-size: 0.95rem;
+        color: #9aa4ad;
+        flex-shrink: 0;
+    }
+
+    .common-search-box input {
+        flex: 1;
+        width: 100%;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 0.9rem;
+        color: #33404a;
+    }
+
+        .common-search-box input::placeholder {
+            color: #aab2ba;
+        }
+
+
+    /* Optional sizes */
+
+    .common-search-box.sm {
+        max-width: 250px;
+    }
+
+    .common-search-box.md {
+        max-width: 340px;
+    }
+
+    .common-search-box.lg {
+        max-width: 450px;
+    }

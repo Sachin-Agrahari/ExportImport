@@ -1,0 +1,235 @@
+@{
+    ViewData["Title"] = "Advance Payment Receipt";
+    ViewData["Heading"] = "Advance Payment Receipt"; 
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pages/advance-payment-receipt.css" asp-append-version="true">
+}
+
+
+<!-- ════════ Receipt details / filters ════════ -->
+<section class="card">
+    <div class="card-head">
+        <div>
+            <span class="tick"></span>
+            <h2 class="mt-2" id="txtHeaderMain">Advance Payment</h2>
+        </div>
+
+
+        <div class="d-flex gap-2">
+            <div class="d-flex gap-2">
+                @await Html.PartialAsync("Components/_CheckBoxComponent")
+                @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave"
+                        title="Save">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+                <button type="button"
+                        class="btn btn-cancel-custom"
+                        id="btnCancel">
+                    ✕ Cancel
+                </button>
+ 
+            </div>
+        </div>
+    </div>
+  <div class="card-body">
+    <div class="grid cols-6">
+      <div class="field"><label>Advance <button class="help-link" onclick="openModal('m-adv')">Help</button></label><input placeholder="&mdash;"></div>
+      <div class="field"><label>Date</label><input type="text" class="form-Flatdate"></div>
+      <div class="field"><label>Buyer</label><input placeholder="&mdash;"></div>
+      <div class="field"><label>Amount</label><input class="num" placeholder="0.00"></div>
+      <div class="field"><label>IRM Number</label><input placeholder="&mdash;"></div>
+      <div class="field"><label>IRM Date</label><input type="text" class="form-Flatdate"></div>
+
+      <div class="field"><label>Currency <button class="help-link" onclick="openModal('m-pending')">Bookings</button></label><input placeholder="&mdash;"></div>
+      <div class="field"><label>Credit Advice No</label><input placeholder="&mdash;"></div>
+      <div class="field"><label>Advice Date</label><input type="text" class="form-Flatdate"></div>
+      <div class="field"><label>Avg. Rate</label><input class="num" placeholder="0.00000"></div>
+      <div class="field"><label>Payment Against Export</label><select><option selected>Complete</option><option>Partial</option></select></div>
+      <div class="field"><label>Option</label><select><option selected>Choose&hellip;</option></select></div>
+
+      <div class="field"><label>Amount INR</label><input class="num" placeholder="0.00"></div>
+      <div class="field"><label>Invoice Dtl <button class="help-link" onclick="openModal('m-tagged')">Help</button></label><input placeholder="&mdash;"></div>
+      <div class="field"><label>BOE Adjust</label><input class="num" placeholder="0.00"></div>
+      <div class="field"><label>Balance Amount</label><input class="num" placeholder="0.00"></div>
+      <div class="field"><label>Bank</label><select><option selected>Complete</option></select></div>
+			<div class="field" style="align-self:end"><button class="btn btn-primary btn-sm">Filter</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ Receipt lines ════════ -->
+<section class="card">
+  <div class="card-head"><span class="tick"></span><h2>Receipt Lines</h2><span class="hint">TT-wise conversion &amp; adjustments</span></div>
+  <div class="card-body">
+    <div class="table-wrap">
+      <table style="min-width:1250px">
+        <thead>
+          <tr class="groups">
+            <th colspan="8"></th>
+            <th colspan="2" class="gline">Received</th>
+            <th colspan="2" class="gline">Manual Adjustment</th>
+            <th colspan="2" class="gline">Extra Adjustment</th>
+          </tr>
+          <tr>
+            <th class="c">#</th><th class="r">Cnv. Rate</th><th class="r">Amount</th><th>TT Number</th>
+            <th class="c">Y</th><th class="c">FW</th><th class="r">TRW</th><th></th>
+            <th class="r">Amount</th><th>Date</th>
+            <th>Date</th><th class="r">Amount</th>
+            <th>Date</th><th class="r">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="c">1</td><td><input class="num" value="0.00000"></td><td><input class="num" value="0.00"></td><td><input placeholder="&mdash;"></td>
+            <td class="c"><div class="yn" data-flag><button class="on-y">Y</button><button>N</button></div></td>
+            <td class="c"><div class="yn" data-flag><button class="on-y">Y</button><button>N</button></div></td>
+            <td><input class="num" value="0"></td><td></td>
+            <td><input class="num" value="0.00"></td><td><input type="text" class="form-Flatdate"></td>
+            <td><input type="text" class="form-Flatdate"></td><td><input class="num" value="0.00"></td>
+            <td><input type="text" class="form-Flatdate"></td><td><input class="num" value="0.00"></td>
+          </tr>
+          <tr>
+            <td class="c">2</td><td><input class="num" value="0.00000"></td><td><input class="num" value="0.00"></td><td><input placeholder="&mdash;"></td>
+            <td class="c"><div class="yn" data-flag><button class="on-y">Y</button><button>N</button></div></td>
+            <td class="c"><div class="yn" data-flag><button class="on-y">Y</button><button>N</button></div></td>
+            <td><input class="num" value="0"></td><td></td>
+            <td><input class="num" value="0.00"></td><td><input type="text" class="form-Flatdate"></td>
+            <td><input type="text" class="form-Flatdate"></td><td><input class="num" value="0.00"></td>
+            <td><input type="text" class="form-Flatdate"></td><td><input class="num" value="0.00"></td>
+          </tr>
+          <tr>
+            <td class="c">3</td><td><input class="num" value="0.00000"></td><td><input class="num" value="0.00"></td><td><input placeholder="&mdash;"></td>
+            <td class="c"><div class="yn" data-flag><button class="on-y">Y</button><button>N</button></div></td>
+            <td class="c"><div class="yn" data-flag><button class="on-y">Y</button><button>N</button></div></td>
+            <td><input class="num" value="0"></td><td></td>
+            <td><input class="num" value="0.00"></td><td><input type="text" class="form-Flatdate"></td>
+            <td><input type="text" class="form-Flatdate"></td><td><input class="num" value="0.00"></td>
+            <td><input type="text" class="form-Flatdate"></td><td><input class="num" value="0.00"></td>
+          </tr>
+          <tr>
+            <td class="c">4</td><td><input class="num" value="0.00000"></td><td><input class="num" value="0.00"></td><td><input placeholder="&mdash;"></td>
+            <td class="c"><div class="yn" data-flag><button class="on-y">Y</button><button>N</button></div></td>
+            <td class="c"><div class="yn" data-flag><button class="on-y">Y</button><button>N</button></div></td>
+            <td><input class="num" value="0"></td><td></td>
+            <td><input class="num" value="0.00"></td><td><input type="text" class="form-Flatdate"></td>
+            <td><input type="text" class="form-Flatdate"></td><td><input class="num" value="0.00"></td>
+            <td><input type="text" class="form-Flatdate"></td><td><input class="num" value="0.00"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>  
+
+    <div class="summary">
+      <div class="sum-tile"><div class="lbl">Advance Received</div><b>0.00</b></div>
+      <div class="sum-tile"><div class="lbl">Tagged Invoice</div><b>0.00</b></div>
+      <div class="sum-tile accent"><div class="lbl">Extra Amount</div><b>0.00</b></div>
+    </div>
+  </div>
+</section>
+ 
+@section Modals {
+    <!-- ══════════ MODAL &middot; Advance Received Help ══════════ -->
+    <div class="overlay" id="m-adv" role="dialog" aria-modal="true" aria-label="Advance received help">
+      <div class="modal">
+        <div class="modal-head"><span class="tick"></span><h3>Advance Received &mdash; Lookup</h3>
+          <button class="modal-close" onclick="closeModal('m-adv')" aria-label="Close">&#10005;</button></div>
+        <div class="modal-body">
+          <div class="table-wrap">
+            <table style="min-width:780px">
+              <thead><tr><th class="r">Adv</th><th>Date</th><th>Buyer Code</th><th>Buyer Name</th><th>Cur.</th><th class="r">Cnv. Rate</th><th class="r">Amount</th></tr></thead>
+              <tbody>
+                <tr><td class="r num">6733</td><td>09-09-2025</td><td class="mono">2058</td><td>J.Crew Group, LLC</td><td>US$</td><td class="r num">88.04000</td><td class="r num">7,606.68</td></tr>
+                <tr><td class="r num">6734</td><td>09-09-2025</td><td class="mono">ANN</td><td>Abfico Netherlands Distribution B.V.</td><td>US$</td><td class="r num">88.04000</td><td class="r num">4,88,763.05</td></tr>
+                <tr><td class="r num">6735</td><td>10-09-2025</td><td class="mono">MACY</td><td>Abercrombie &amp; Fitch Trading</td><td>US$</td><td class="r num">88.04000</td><td class="r num">5,60,646.88</td></tr>
+                <tr><td class="r num">6736</td><td>10-09-2025</td><td class="mono">ANF</td><td>Abercrombie &amp; Fitch Trading</td><td>US$</td><td class="r num">88.04000</td><td class="r num">26,986.88</td></tr>
+                <tr><td class="r num">6737</td><td>10-09-2025</td><td class="mono">ANF</td><td>Abercrombie &amp; Fitch Trading</td><td>US$</td><td class="r num">88.04000</td><td class="r num">3,17,957.78</td></tr>
+                <tr><td class="r num">6738</td><td>15-09-2025</td><td class="mono">6048</td><td>Abercrombie &amp; Fitch Trading</td><td>US$</td><td class="r num">88.04000</td><td class="r num">267.62</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost" onclick="closeModal('m-adv')">Cancel</button>
+          <button class="btn btn-primary" onclick="closeModal('m-adv')">Select Advance</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ MODAL &middot; Pending Currency Booked ══════════ -->
+    <div class="overlay" id="m-pending" role="dialog" aria-modal="true" aria-label="Pending currency booked help">
+      <div class="modal" style="width:min(1100px,100%)">
+        <div class="modal-head"><span class="tick"></span><h3>Pending Currency Booked &mdash; Lookup</h3>
+          <button class="modal-close" onclick="closeModal('m-pending')" aria-label="Close">&#10005;</button></div>
+        <div class="modal-body">
+          <div class="table-wrap">
+            <table style="min-width:1040px">
+              <thead><tr>
+                <th class="c">#</th><th class="r">Texmo</th><th>Date</th><th class="r">Amount</th><th class="r">Rate</th>
+                <th>Due Date</th><th>Due Date (Ext.)</th><th class="r">Amount</th><th class="r">Balance</th><th class="r">INR</th><th class="r">Contract</th>
+              </tr></thead>
+              <tbody>
+                <tr><td class="c">1</td><td class="r num">4804</td><td>16-10-2024</td><td class="r num">2,50,000</td><td class="r num">65.6975</td><td>16-09-2025</td><td>15-10-2025</td><td class="r num">7,606.68</td><td class="r num">2,50,000.00</td><td class="r num">2,14,21,375.00</td><td class="r num">55236142</td></tr>
+                <tr><td class="c">2</td><td class="r num">4880</td><td>16-09-2025</td><td class="r num">50,000</td><td class="r num">114.9450</td><td>01-09-2025</td><td>15-10-2025</td><td class="r num">4,88,763.05</td><td class="r num">50,000.00</td><td class="r num">37,47,250.00</td><td class="r num">62507045</td></tr>
+                <tr><td class="c">3</td><td class="r num">4872</td><td>30-09-2024</td><td class="r num">5,00,000</td><td class="r num">85.7650</td><td>01-10-2025</td><td>30-10-2025</td><td class="r num">5,60,646.88</td><td class="r num">5,00,000.00</td><td class="r num">4,28,82,500.00</td><td class="r num">61309620</td></tr>
+                <tr><td class="c">4</td><td class="r num">4803</td><td>15-04-2025</td><td class="r num">50,000</td><td class="r num">85.8575</td><td>16-10-2025</td><td>14-11-2025</td><td class="r num">26,986.88</td><td class="r num">2,50,000.00</td><td class="r num">57,27,000.00</td><td class="r num">55156019</td></tr>
+                <tr><td class="c">5</td><td class="r num">4805</td><td>15-04-2025</td><td class="r num">2,50,000</td><td class="r num">85.8800</td><td>16-11-2025</td><td>14-11-2025</td><td class="r num">3,17,957.78</td><td class="r num">2,50,000.00</td><td class="r num">2,14,70,000.00</td><td class="r num">55256019</td></tr>
+                <tr><td class="c">6</td><td class="r num">4824</td><td>18-10-2025</td><td class="r num">2,50,000</td><td class="r num">85.9950</td><td>03-11-2025</td><td>28-11-2025</td><td class="r num">267.62</td><td class="r num">2,50,000.00</td><td class="r num">2,14,64,375.00</td><td class="r num">61026049</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost" onclick="closeModal('m-pending')">Cancel</button>
+          <button class="btn btn-primary" onclick="closeModal('m-pending')">Select Booking</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ MODAL &middot; Tagged Invoices ══════════ -->
+    <div class="overlay" id="m-tagged" role="dialog" aria-modal="true" aria-label="Tagged invoices">
+      <div class="modal sm">
+        <div class="modal-head"><span class="tick"></span><h3>Tagged Invoices</h3>
+          <button class="modal-close" onclick="closeModal('m-tagged')" aria-label="Close">&#10005;</button></div>
+        <div class="modal-body">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th class="c">#</th><th>Invoice Number</th><th class="r">Invoice Amount</th></tr></thead>
+              <tbody>
+                <tr><td class="c">1</td><td class="mono">RE/2635/25-26</td><td class="r num">0.00</td></tr>
+                <tr><td class="c">2</td><td>&mdash;</td><td class="r num">0.00</td></tr>
+                <tr><td class="c">3</td><td>&mdash;</td><td class="r num">0.00</td></tr>
+                <tr><td class="c">4</td><td>&mdash;</td><td class="r num">0.00</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-foot"><button class="btn btn-primary" onclick="closeModal('m-tagged')">Done</button></div>
+      </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/pages/advance-payment-receipt.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,383 @@
+﻿ 
+<link href="~/css/pages/filehandler/fileuploader.css" rel="stylesheet" asp-append-version="true" />
+
+<style>
+    .btnCustom {
+        border: 1px solid red;
+        color: red;
+    }
+
+    .btnCustom:hover {
+        border: 1px solid red;
+        color: red;
+    }
+
+    .add-menu-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 20px;
+        height: 20px;
+
+        border-radius: 50%;
+
+        background-color: #0d6efd;
+        color: #fff;
+
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1;
+
+        cursor: pointer;
+
+        transition: all 0.2s ease;
+    }
+
+    .add-menu-badge:hover {
+        background-color: #0b5ed7;
+        transform: scale(1.08);
+    }
+
+    .add-menu-badge:active {
+        transform: scale(0.95);
+    }
+ 
+</style>
+
+<div class="d-flex gap-2"> 
+    <div class="master-action-buttons"> 
+        <button type="button" class="master-btn master-btn-upload" id="btnUpload" title="Upload File"> 
+            <span class="master-btn-icon">
+                <svg width="16"
+                     height="16"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
+
+                </svg>
+            </span> 
+            <span>Ref Doc</span> 
+        </button> 
+    </div> 
+</div>
+  
+<div class="modal fade" id="fileUploadModal" tabindex="-1" aria-labelledby="fileUploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="fileUploadModalLabel">
+                        Upload Files <span id="mainTitle"></span>
+                    </div>
+
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2" style="overflow-x:hidden"> 
+                <div class="row"> 
+                     
+                    <div class="col-2">
+
+                        <label for="ddlMenuName" class="form-label d-flex align-items-center gap-2">
+                            Menu Name
+
+                            <span type="button"
+                                  id="btnAddMenu"
+                                  class="add-menu-badge"
+                                  title="Add Menu">
+                                +
+                            </span>
+                        </label>
+
+                        <select class="form-input w-100" id="ddlMenuName"> </select>
+
+                    </div>
+
+                    <div class="col-2">
+                        <label for="txtReportTitle" class="form-label">
+                            Report Title
+                        </label>
+
+                        <input type="text" class="form-input w-100" id="txtReportTitle" />
+                    </div>
+
+                    <div class="col-2">
+                        <label for="ddlDocType" class="form-label">
+                            Document Type
+                        </label>
+
+                        <select class="form-input w-100" id="ddlDocType">
+                        </select>
+                    </div>
+
+                    <div class="col-2">
+                        <label for="txtDocCount" class="form-label">
+                            Document Count
+                        </label> 
+                        <input type="number" class="form-input w-100" id="txtDocCount" value="1" />
+                    </div>
+
+                    <div class="col-1">
+                        <label for="chkAll" class="form-label">
+                            All
+                        </label>
+
+                        <input type="checkbox" class="form-input form-check" id="chkAll" />
+                    </div>
+
+                    <div class="col-3 d-flex gap-2">
+                        <button type="button"
+                                class="btn btn-primary btn-sm mt-4"
+                                id="btnView">
+                            View
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-primary btn-sm mt-4"
+                                id="btnExport">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 class="me-1"
+                                 viewBox="0 0 16 16">
+                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.6a.5.5 0 0 1 1 0V13a2 2 0 0 1-2 2H2.5a2 2 0 0 1-2-2v-2.6a.5.5 0 0 1 .5-.5z" />
+                                <path d="M7.646 10.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 9.293V1.5a.5.5 0 0 0-1 0v7.793L5.354 7.146a.5.5 0 1 0-.708.708l3 3z" />
+                            </svg>
+                            Export
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div id="dropZone"
+                     class="fu-dropzone mt-2"
+                     tabindex="0">
+
+                    <input type="file" id="fileInput" multiple hidden />
+
+                    <!-- Dropzone Content -->
+
+                    <div id="dropZoneContent">
+
+                        <p class="fu-dropzone-text">
+                            Drag &amp; drop files here, paste (Ctrl+V), or
+
+                            <button type="button"
+                                    id="btnBrowse"
+                                    class="btn btn-sm btn-outline-primary fu-browse">
+                                Browse
+                            </button>
+                        </p>
+
+                        <p class="fu-dropzone-subtext">
+                            You can select multiple files at once
+                        </p>
+
+                    </div>
+
+                    <!-- File Preview -->
+
+                    <div id="filePreviewContainer"
+                         class="file-preview-container d-none">
+
+                        <div id="filePreviewList"
+                             class="file-preview-list">
+                        </div>
+
+                    </div>
+
+                </div>
+                 
+                <div class="fu-table-wrapper mt-4">
+
+                    <table class="table table-hover align-middle table-bordered" id="tblFileUpload">
+
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    <input class="chkAll" type="checkbox" />
+                                </th>
+                                <th>Menu Name</th>
+                                <th>Doc Name</th>
+                                <th>Doc Title</th>
+                                <th>Doc Type</th>
+                                <th>Doc Count</th> 
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="uploadedFileTableBody"></tbody>
+
+                    </table>
+
+                </div>
+                 
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+ 
+<div class="modal fade" id="menuNameModal" tabindex="-1" aria-labelledby="menuNameModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="menuNameModalLabel">
+                        Add Menu
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2"> 
+                <div class="grid"> 
+                    <div class="field"> 
+                        <label for="txtNewMenuName" class="form-label">
+                            Menu Name
+                        </label>
+
+                        <input type="text" class="form-input w-100" id="txtNewMenuName" placeholder="Enter Menu Name" autocomplete="off" />
+                    </div> 
+                </div> 
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="btnSaveMenu"> 
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg> 
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+  
+<div class="modal fade" id="universalFileModal" tabindex="-1" aria-labelledby="universalFileModalLaven" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="fileUpluniversalFileModal">
+                        File Viewer
+                    </div>
+
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                <div id="fileViewerContainer">
+
+                    <div class="text-center p-5">
+                        Select files to view
+                    </div>
+
+                </div>
+            </div>
+             
+        </div>
+    </div>
+</div>
+ 
+<script src="~/js/pages/FileHandler/FileUploader.js" asp-append-version="true"></script>
+
+<script>
+
+    $('#btnUpload').on('click', function () {
+
+        var modal = new bootstrap.Modal(
+            document.getElementById('fileUploadModal')
+        );
+
+        modal.show();
+
+     });
+
+</script>
+
+
+

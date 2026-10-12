@@ -1,0 +1,183 @@
+﻿@{
+	ViewData["Title"] = "Generate Carton";
+	ViewData["Heading"] = "Generate Carton";
+}
+
+
+<div class="bd_mainContainer">
+    <div class="page">
+
+
+        <section class="card">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Generate Carton</h2>
+                </div>
+
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-cancel-custom"
+                            id="btnCancel">
+                        ✕ Cancel
+                    </button>
+ 
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div class="grid cols-6">
+
+                    <!-- Invoice # -->
+                    <div class="field">
+                        <label>Invoice #</label>
+
+                        <input type="text"
+                               id="txtInvoiceNo_GenerateCarton"
+                               placeholder="Enter Invoice No..." />
+                    </div>
+
+
+                    <!-- Buyer Name -->
+                    <div class="field span-2">
+                        <label>Buyer Name</label>
+
+                        <input type="text"
+                               id="txtBuyerName_GenerateCarton"
+                               placeholder="Enter Buyer Name..." />
+                    </div>
+
+
+                 @*    <!-- ADI -->
+                    <div class="field">
+                        <label>ADI</label>
+
+                        <input type="text"
+                               id="txtAdi_GenerateCarton"
+                               placeholder="Enter ADI..." />
+                    </div>
+
+ *@
+                    <!-- Quantity -->
+                    <div class="field">
+                        <label>Quantity</label>
+
+                        <input type="text"
+                               id="txtQuantity_GenerateCarton"
+                               placeholder="Enter Quantity..." />
+                    </div>
+
+
+                    <!-- Invoice Value -->
+                    <div class="field">
+                        <label>Inv. Value</label>
+
+                        <input type="text"
+                               id="txtInvoiceValue_GenerateCarton"
+                               placeholder="Enter Invoice Value..." />
+                    </div>
+
+
+                    <!-- Currency -->
+                    <div class="field">
+                        <label>Currency</label>
+
+                        <select id="ddlCurrency_GenerateCarton"
+                                class="select2-field">
+
+                            <option value="">Select Currency</option>
+                            <option value="US$">US$</option>
+                            <option value="UK£">UK£</option>
+                            <option value="EURO">EURO</option>
+                            <option value="DM">DM</option>
+                            <option value="N.A.">N.A.</option>
+
+                        </select>
+                    </div>
+
+
+                    <!-- FOB -->
+                  @*   <div class="field">
+                        <label>FOB</label>
+
+                        <input type="text"
+                               id="txtFOB_GenerateCarton"
+                               placeholder="Enter FOB..." />
+                    </div> *@
+
+                    <!-- Total Ctn -->
+                    <div class="field">
+                        <label>Total Ctn</label>
+
+                        <input type="text"
+                               id="txtTotalCtn_GenerateCarton"
+                               placeholder="Enter Total Ctn..." />
+                    </div>
+
+
+                    <!-- Lot -->
+                    <div class="field">
+                        <label>Lot</label>
+
+                        <input type="text"
+                               id="txtLot_GenerateCarton"
+                               placeholder="Enter Lot..." />
+                    </div>
+
+
+                    <!-- From -->
+                    <div class="field">
+                        <label>From</label>
+
+                        <input type="text"
+                               id="txtFrom_GenerateCarton"
+                               placeholder="Enter From..." />
+                    </div>
+
+
+                    <!-- To -->
+                    <div class="field">
+                        <label>To</label>
+
+                        <input type="text"
+                               id="txtTo_GenerateCarton"
+                               placeholder="Enter To..." />
+                    </div>
+
+                    
+
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="~/js/pages/shipping/generate_carton.js" asp-append-version="true"></script>

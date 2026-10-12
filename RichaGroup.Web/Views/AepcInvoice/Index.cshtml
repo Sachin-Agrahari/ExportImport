@@ -1,0 +1,2635 @@
+@{
+    ViewData["Title"] = "AEPC Invoice";
+    ViewData["Heading"] = "AEPC Invoice";
+}
+
+<link href="~/css/pages/aepc-invoice.css" rel="stylesheet" asp-append-version="true"/>
+
+<!-- ════════ Invoice header (grouped, collapsible) ════════ -->
+<section class="card">
+
+    <div class="card-head">
+        <div>
+            <span class="tick"></span>
+            <h2 class="mt-2" id="txtHeaderMain">AEPC Invoice</h2>
+        </div>
+
+        <div class="d-flex gap-2">
+            @await Html.PartialAsync("Components/_CheckBoxComponent")
+            @await Html.PartialAsync("Components/_UploadAndViewButtons")
+            <button type="button"
+                    class="btn btn-primary btn-sm"
+                    id="btnSave"
+                    title="Save">
+
+                <svg width="14"
+                     height="14"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+
+                </svg>
+
+                Save
+            </button>
+
+            <button id="btnAdd" class="btn btn-primary btn-sm">+ Add New</button>
+
+            <button type="button"
+                    class="btn btn-cancel-custom btn-sm"
+                    id="btnCancel">
+                ✕ Cancel
+            </button>
+             <button type="button"
+                        class="action-btn action-back"
+                        id="btnBack">
+                    ← Back
+                </button>
+
+        </div>
+    </div>
+
+    <details class="hgroup" open>
+        <summary>
+            Parties &amp; Addresses
+            <span class="count">consignee &middot; buyer &middot; notify</span>
+        </summary>
+        <div class="hgroup-body">
+            <div class="grid cols-6">
+
+                <div class="field">
+                    <label id="lb_Parties_location">
+                        Invoice Location
+                        <button id="btn_Parties_location" class="help-link">Help</button>
+                    </label>
+                    <select id="ddl_Parties_location">
+                        <option selected>RC 236</option>
+                    </select>
+                </div>
+                 <div class="field d-flex justify-content-center gap-3">
+
+                    <div>
+                           <label id="lb_Parties_commericalinvoice">Commercial Inv No</label>
+                <input title="RE/2145/23-24" value="RE/2145/23-24" id="txt_Parties_commerical_fromDate">
+                    </div>
+                
+                    <div>
+                         <label id="lb_Parties_commericalinvoicedt">Commercial Inv Date</label>
+                  
+                        <input type="date" value="2023-09-14" id="txt_Parties_commerical_toDate">
+                        
+                    </div>
+                
+                </div>
+
+                <div class="field">
+                    <label id="lb_Parties_commerical_LUT">LUT / IGST</label>
+                    <select id="ddl_Parties_commerical_LUT">
+                        <option selected>IGST</option>
+                        <option>LUT</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label class="pe-5" id="lbl_Parties_buyer">
+                        <span title="Buyer (if other than consignee)" class="text-truncate ">Buyer (if other than consignee)</span>
+                        <button id="btn_Parties_buyer" class="help-link">+ Add</button>
+                    </label>
+                    <select id="ddl_Parties_buyer">
+                        <option selected>&mdash;</option>   
+                    </select>
+                </div>
+
+            
+
+                <div class="field">
+                    <label id="lbl_Parties_consigneeCode">
+                        Consignee Code
+                        <button id="btn_Parties_consigneeCode" class="help-link">+ Add</button>
+                    </label>
+                    <select id="ddl_Parties_consigneeCode">
+                        <option selected>2021</option>
+                    </select>
+                </div>
+
+               
+                <div class="field">
+                    <label id="lbl_Parties_notifyCode">
+                        Notify Code
+                        <button id="btn_Parties_notifyCode" class="help-link">+ Add</button>
+                    </label>
+                    <select id="ddl_Parties_notifyCode">
+                        <option selected>Choose one&hellip;</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label id="lbl_Parties_taxinvoice">Tax Invoice No &amp; Date</label>
+                    <div class="pair">
+                    <select id="ddl_Parties_taxinvoice">
+                        <option selected>Choose one&hellip;</option>
+                    </select>
+                     <input id="txt_Parties_BuyerOrder_Date" type="date" disabled>
+                     </div>
+                </div>
+                
+                 <div class="field d-flex justify-content-center gap-3">
+
+                    <div>
+                           <label id="lbl_Parties_BuyerOrder">Buyer Order No</label>
+                         <input disabled placeholder="&mdash;" id="txt_Parties_BuyerOrder_No">
+                    </div>
+
+                    <div>
+                         <label id="lbl_Parties_BuyerOrder_dt">Buyer Order Date</label>
+                  
+                        <input id="txt_Parties_BuyerOrder_Date" type="date" disabled> 
+                        
+                    </div>
+
+                </div>
+             
+
+                <div class="field d-flex justify-content-center gap-3">
+
+                    <div>
+                        <label id="lbl_Parties_agreementCode">Agreement Code</label>
+                        <select id="ddl_Parties_agreementCode" disabled>
+                            <option>&mdash;</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label id="lbl_Parties_exporterRef">Exporter Ref</label>
+                        <input id="txt_Parties_exporterRef" disabled placeholder="&mdash;">
+                        
+                    </div>
+
+                </div>
+
+                <div class="field">
+                    <label id="lbl_Parties_buyerAddress">Buyer Address</label>
+                    <textarea id="txt_Parties_buyerAddress" rows="2" disabled placeholder="&mdash;"></textarea>
+                </div>
+
+                <div class="field">
+                    <label id="lbl_Parties_consigneeAddress">Consignee Address</label>
+                    <textarea id="txt_Parties_consigneeAddress" rows="2">Abercrombie &amp; Fitch Trading
+                        c/o A&amp;F Distribution Center, DC 1
+                        8100 Smiths Mall Road
+                        New Albany, Ohio 43054 (USA)</textarea>
+                </div>
+
+                  <div class="field">
+                    <label id="lbl_Parties_notifyAddress">Notify Address</label>
+                    <textarea id="txt_Parties_notifyAddress" rows="2" disabled placeholder="&mdash;"></textarea>
+                </div>
+                  <div class="field">
+                    <label id="lbl_Parties_OtherRefer">Other Reference</label>
+                    <textarea id="txt_Parties_OtherReference" rows="2" disabled placeholder="&mdash;"></textarea>
+                </div>
+
+                  <div class="field">
+                        <label id="lbl_GWM_No_Pkgs">No &amp; Kind of Pkgs</label>
+                        <textarea id="txt_GWM_No_Pkgs" rows="2" disabled placeholder="&mdash;"></textarea>
+                    </div>
+                     <div class="field">
+                        <label id="lbl_GWM_Quantity_Rate">Quantity / Rate Decimal</label>
+                        <div class="pair">
+                            <input id="txt_GWM_Quantity" class="num" disabled placeholder="&mdash;">
+                            <input id="txt_GWM_Quantity_Rate" class="num" disabled placeholder="&mdash;">
+                        </div>
+                    </div>
+
+            @*                     <div class="field">
+                <label id="lbl_Licences_Currency_Date">Currency &amp; Date</label>
+                <div class="pair">
+                    <select id="ddl_Licences_Currency">
+                        <option selected>Choose one&hellip;</option>
+                    </select>
+                    <input id="lbl_Licences_Currency_Date" type="date" disabled>
+                </div>
+            </div> *@
+
+             <div class="field d-flex justify-content-center gap-3">
+
+                      <div>
+                         <label id="lbl_Licences_Currency">Currency</label>
+                    <select id="ddl_Licences_Currency">
+                        <option selected>Choose one&hellip;</option>
+                    </select>
+                </div>
+            
+                <div>
+                      <label id="lbl_Licences_Date"> Date</label>
+              
+                      <input id="lbl_Licences_Date" type="date" disabled>
+                    
+                </div>
+            
+            </div>
+
+            <div class="field">
+                <label id="lbl_Licences_Terms">Terms Conversion</label>
+                <input id="txt_Licences_Terms" disabled placeholder="&mdash;">
+            </div>
+             <div class="field">
+                <label id="lbl_Licences_FOB">FOB Place</label>
+                <select id="ddl_Licences_FOB">
+                    <option selected>Choose one&hellip;</option>
+                </select>
+            </div>
+             <div class="field">
+                <label id="lbl_Licences_Drawback">Drawback Type</label>
+                <select id="ddl_Licences_Drawback">
+                    <option value="Adv Licencese" selected>Adv Licencese</option>
+                    <option value="Duty Free">Duty Free</option>
+                    <option value="Drawback">Drawback</option>
+                </select>
+            </div>
+
+
+                
+
+            </div>
+        </div>
+    </details>
+     <details class="hgroup" open>
+        <summary>
+            Route &amp; Transport
+            <span class="count">consignee &middot; buyer &middot; notify</span>
+        </summary>
+        <div class="hgroup-body">
+     <div class="grid cols-6">
+
+    <div class="field">
+        <label id="lbl_Route_country">Country of Origin</label>
+        <input id="txt_Route_country" value="India">
+    </div>
+
+    @* <div class="field">
+        <label id="lbl_Route_countryDestinantion">
+            <span title= "Country of Destination (Code &amp; Name)" class="text-truncate ">Country of Destination (Code &amp; Name)</span>
+        </label>
+        <div class="pair">
+            <select id="ddl_Route_countryDestinantion">
+                <option selected>USA</option>
+            </select>
+            <input id="txt_Route_countryDestinantion" value="USA">
+        </div>
+    </div> *@
+
+    <div class="field d-flex justify-content-center gap-3">
+
+        <div>
+        <label id="lbl_Route_countryDestinantionCode">
+            <span title= "Country of Destination (Code )" class="text-truncate ">Country of Destination (Code)</span>
+        </label>
+         <select id="ddl_Route_countryDestinantionCode">
+                <option selected>USA</option>
+            </select>
+        </div>
+    
+       <div>
+    <label id="lbl_Route_countryDestinantionName"
+           class="d-block"
+           style="max-width: 150px;">
+        <span title="Country of Destination (Name)"
+              class="text-truncate d-block">
+            Country (Name)
+        </span>
+
+    </label>
+
+    <input id="txt_Route_countryDestinantionName"
+           value="USA">
+</div>
+    
+    </div>
+
+    <div class="field">
+        <label id="lbl_Route_finalDestination">Final Destination</label>
+        <div class="pair">
+            <select id="ddl_Route_finalDestination" disabled>
+                <option>&mdash;</option>
+            </select>
+            <input id="txt_Route_finalDestination" disabled placeholder="&mdash;">
+        </div>
+    </div>
+
+    <div class="field">
+        <label id="lbl_Route_preCarriage">Pre-Carriage By</label>
+        <select id="ddl_Route_preCarriage">
+            <option selected>China</option>
+        </select>
+    </div>
+
+    @* <div class="field">
+        <label id="lbl_Route_Port">Port of Loading / Code</label>
+        <div class="pair">
+            <select id="ddl_Route_Port">
+                <option selected>Nhava Sheva</option>
+            </select>
+            <input disabled placeholder="&mdash;">
+        </div>
+    </div> *@
+
+         <div class="field d-flex justify-content-center gap-3">
+
+            <div>
+             <label id="lbl_Route_Port">Port of Loading</label>
+             <select title="Nhava Sheva" id="ddl_Route_Port">
+                <option selected>Nhava Sheva</option>
+            </select>
+            </div>
+        
+            <div>
+                <label id="lbl_Route_Code"> Code</label>
+          
+                 <input disabled placeholder="&mdash;">
+                
+            </div>
+        
+        </div>
+
+    @* <div class="field">
+        <label id="lbl_Route_PortDischarge">Port of Discharge / Code</label>
+        <div class="pair">
+            <select id="ddl_Route_PortDischarge">
+                <option selected>Nhava Sheva</option>
+            </select>
+            <input id="txt_Route_PortDischarge" disabled placeholder="&mdash;">
+        </div>
+    </div> *@
+
+    <div class="field d-flex justify-content-center gap-3">
+
+            <div>
+             <label id="lbl_Route_PortDischarge">Port of Discharge </label>
+            <select id="ddl_Route_PortDischarge">
+                <option selected>Nhava Sheva</option>
+            </select>
+            </div>
+        
+            <div>
+               <label id="lbl_Route_Code"> Code</label>
+          
+                <input id="txt_Route_PortDischarge" disabled placeholder="&mdash;">
+                
+            </div>
+        
+        </div>
+
+    <div class="field">
+        <label id="lbl_Route_Vessel_FlightNo">Vessel / Flight No.</label>
+        <input id="txt_Route_Vessel_FlightNo" disabled placeholder="&mdash;">
+    </div>
+
+    <div class="field">
+        <label id="lbl_Route_placeRecipt">Place of Receipt</label>
+        <input id="txt_Route_placeRecipt" disabled placeholder="&mdash;">
+    </div>
+
+    <div class="field">
+        <label id="lbl_Route_shipmeentType">Shipment Type</label>
+        <select id="ddl_Route_shipmeentType" disabled>
+            <option>&mdash;</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label id="lbl_Route_freightTerms">Freight Terms</label>
+        <div class="pair">
+            <input id="txt_Route_freightTerms" disabled placeholder="&mdash;">
+            <input id="txt_Route_freightTerms" disabled placeholder="&mdash;">
+        </div>
+    </div>
+
+    <div class="field">
+        <label id="lbl_Route_HAWB">HAWB Number </label>
+    
+            <input id="txt_Route_HAWB" disabled placeholder="&mdash;">
+          
+    </div>
+    <div class="field">
+        <label id="lbl_Route_HAWB">HAWB Date</label>
+       
+            <input id="txt_Route_HAWB_date" type="date" disabled>
+     
+    </div>
+
+    <div class="field">
+        <label id="lbl_Route_ShipmentStatus">Shipment Status</label>
+        <select id="ddl_Route_ShipmentStatus" disabled>
+            <option>&mdash;</option>
+        </select>
+    </div>
+
+</div>
+</div>
+</details>
+
+</section>
+
+<!-- ════════ Tabbed workspace ════════ -->
+<section class="card">
+    <div class="tabs" role="tablist">
+        <button type="button" id="btn_AepcInv_Style_poNo" class="on" data-tab="t-style">Style / PO No</button>
+        <button type="button" id="btn_AepcInv_License_Bond" data-tab="t-bond">License / Bond</button>
+        <button type="button" id="btn_AepcInv_CartonWeight" data-tab="t-carton">Carton Weight</button>
+        
+        <button type="button" id="btn_AepcInv_GST_eInvoice" data-tab="t-gst">GST / E-Invoice</button>
+    </div>
+
+    <!-- ── Tab · Style / PO No ── -->
+    <div class="tabpane on" id="t-style">
+        <div class="table-wrap">
+            <table id="tbl_Style_poNo" style="min-width:4300px">
+                <thead>
+                    <tr>
+                        @* <th class="c fz1">View</th> *@
+                        <th class="c fz1">Action</th>
+                        <th class="fz2">Style</th>
+                        <th class="fz3">PO No.</th>
+                        <th class="fz4">GST HSN</th>
+                        <th class="fz5">HSN Feed</th>
+                        <th class="fz6">Category</th>
+                        <th>Invoice Desc.</th>
+                        <th>E-Invoice Desc.</th>
+                        <th>Art No</th>
+                        <th class="r">Quantity</th>
+                        <th>Unit</th>
+                        <th class="r">Rate</th>
+                        <th class="r">Amount</th>
+                        <th class="r">FOB Rate</th>
+                        <th class="r">FOB Value</th>
+                        <th>GST Item</th>
+                        <th class="c">Hanger</th>
+                        <th class="c">Hanger GST HSN</th>
+                        <th class="r">Hanger Value FC</th>
+                        <th class="r">Hanger Value INR</th>
+                        <th class="r">Weight</th>
+                        <th class="r">Total Weight</th>
+                        <th class="c">Print Weight</th>
+                        <th>DBK Code</th>
+                        <th class="r">DBK Rate</th>
+                        <th class="r">DBK SL.No</th>
+                        <th class="r">DBK PC(%)</th>
+                        <th class="r">DBK Amount</th>
+                        <th class="r">Depb PC</th>
+                        <th class="r">FOB ROSCTL</th>
+                        <th class="r">ROSCTL Entitlment</th>
+                        <th class="r">ROSCTL Rate (Center)</th>
+                        <th class="r">ROSCTL Rate (State)</th>
+                        <th class="r">Discount % 1</th>
+                        <th class="r">Discount Amount 1</th>
+                        <th class="r">Discount % 2</th>
+                        <th class="r">Discount Amount 2</th>
+                        <th>Discount Reason</th>
+                        <th class="r">Tariff Discount</th>
+                    </tr>
+                </thead>
+                <tbody id="tblbody_Style_poNo">
+                   
+                </tbody>
+                <tfoot id="tblfoot_Style_poNo">
+                   
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="charges">
+            <div class="panel">
+                <h4>Deductions</h4>
+                <div class="rows">
+                    <div class="charge-row">
+                        <span class="lbl">Commission %</span>
+                       <div class="d-flex align-items-center gap-2">
+
+                            <select id="ddl_Style_poNo_commission" class="form-select form-select-sm" style="width:70px;">
+                                <option selected>Yes</option>
+                                <option>No</option>
+                            </select>
+                        
+                            <select id="ddl_Style_poNo_commission2" class="form-select form-select-sm" style="width:70px;">
+                                <option selected>+</option>
+                                <option>-</option>
+                            </select>
+                        
+                            <input type="text"
+                                   id="txt_Style_poNo_commission"
+                                   value="0.00"
+                                   class="form-control form-control-sm"
+                                   style="width:200px;" />
+                        
+                        </div>
+                    </div>
+                    <div class="charge-row">
+                          <span class="lbl">Discount %</span>
+                       <div class="d-flex align-items-center gap-2">
+ 
+
+                            <select id="ddl_Style_poNo_commission" class="form-select form-select-sm" style="width:70px;">
+                                <option selected>Yes</option>
+                                <option>No</option>
+                            </select>
+                        
+                            <select id="ddl_Style_poNo_commission2" class="form-select form-select-sm" style="width:70px;">
+                                <option selected>+</option>
+                                <option>-</option>
+                            </select>
+                        
+                            <input type="text"
+                                   id="txt_Style_poNo_commission"
+                                   value="0.00"
+                                   class="form-control form-control-sm"
+                                   style="width:200px;" />
+                        
+                       
+                        
+                        </div>
+                    </div>
+                    <div class="charge-row">
+                        <span class="lbl">Discount</span>
+                       <div class="d-flex align-items-center gap-2">
+
+                            <select id="ddl_Style_poNo_discount" class="form-select form-select-sm" style="width:70px;">
+                                <option selected>Yes</option>
+                                <option>No</option>
+                            </select>
+                        
+                            <select id="ddl_Style_poNo_discountt2" class="form-select form-select-sm" style="width:70px;">
+                                <option selected>+</option>
+                                <option>-</option>
+                            </select>
+                        
+                            <input type="text"
+                                   id="txt_Style_poNo_discount"
+                                   value="0.00"
+                                   class="form-control form-control-sm"
+                                   style="width:200px;" />
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h4>Additions</h4>
+                <div class="rows">
+                    <div class="charge-row">
+                        <span class="lbl">Freight</span>
+                        <div class="d-flex align-items-center gap-2">
+                        
+                            <select id="ddl_Style_poNo_freight" class="form-select form-select-sm" style="width:70px;">
+                                <option selected>Yes</option>
+                                <option>No</option>
+                            </select>
+                        
+                            <select id="ddl_Style_poNo_freight2" class="form-select form-select-sm" style="width:70px;">
+                                <option selected>+</option>
+                                <option>-</option>
+                            </select>
+                        
+                            <input type="text"
+                                   id="txt_Style_poNo_freight"
+                                   value="0.00"
+                                   class="form-control"
+                                   style="width:200px;" />
+                        
+                        </div>
+                      
+                    </div>
+                    <div class="charge-row">
+                        <span class="lbl">Other</span>
+                        <div class="d-flex align-items-center gap-2">
+                        
+                            <select id="ddl_Style_poNo_freight" class="form-select form-select-sm" style="width:70px;">
+                                <option selected>Yes</option>
+                                <option>No</option>
+                            </select>
+                        
+                            <select id="ddl_Style_poNo_freight2" class="form-select form-select-sm" style="width:70px;">
+                                <option selected>+</option>
+                                <option>-</option>
+                            </select>
+                        
+                            <input type="text"
+                                   id="txt_Style_poNo_freight"
+                                   value="0.00"
+                                   class="form-control"
+                                   style="width:200px;" />
+                        
+                        </div>
+                    </div>
+                    <div class="charge-row">
+                        <span class="lbl">Insurance</span>
+                        <div class="d-flex align-items-center gap-2">
+                        
+                            <select id="ddl_Style_poNo_freight" class="form-select form-select-sm" style="width:70px;">
+                                <option selected>Yes</option>
+                                <option>No</option>
+                            </select>
+                        
+                            <select id="ddl_Style_poNo_freight2" class="form-select form-select-sm" style="width:70px;">
+                                <option selected>+</option>
+                                <option>-</option>
+                            </select>
+                        
+                            <input type="text"
+                                   id="txt_Style_poNo_freight"
+                                   value="0.00"
+                                   class="form-control"
+                                   style="width:200px;" />
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="totals">
+                <div class="t-row"><span>Total Quantity</span><b id="lbl_Style_poNo_Quantity">3,612</b></div>
+                <div class="t-row"><span>Total Amount</span><b id="lbl_Style_poNo_Amount">38,106.60</b></div>
+                <div class="t-row mr-5"><span> Amount In Words :</span> <b class="text-danger ms-5" id="lbl_Style_poNo_Word"> Thrity Eight Thousand One hunderd Six and Sixty Paise Only </b> </div>
+                <div class="t-row net"><span>Net Amount</span><b id="lbl_Style_poNo_NetAmu">0.00</b></div>
+            </div>
+                
+        
+    </div>
+    </div>
+    <!-- ── Tab · Carton Weight ── -->
+    <div class="tabpane" id="t-carton">
+        <div class="table-wrap">
+            <table id="tbl_Carton_Weight" style="width:100%">
+                <thead>
+                    <tr>
+                        <th class="c">#</th>
+                        <th>Carton Type</th>
+                        <th>Length</th>
+                        <th class="r">Width</th>
+                        <th class="r">Height</th>
+                        <th>UOM</th>
+                        <th class="r">Cartons</th>
+                        <th class="r">Carton GR Wt</th>
+                        <th class="r">Carton NT Wt</th>
+                        <th class="r">Carton Wt</th>
+                        <th class="r">Gross Wt</th>
+                    </tr>
+                </thead>
+                <tbody id="tblbody_Carton_Weight">
+                </tbody>
+            </table>
+        </div>
+
+            <div class="grid cols-5 mt-1">
+                    
+                <div class="field">
+                    <label id="lbl_GWM_marksNo">Marks &amp; Nos.</label>
+                    <textarea id="txt_GWM_marksNo" rows="2" disabled placeholder="&mdash;"></textarea>
+                </div>
+            
+                       
+            
+                <div class="field">
+                    <label id="lbl_GWM_GrossWeight">Gross Weight</label>
+                    <input id="txt_GWM_GrossWeight" class="num" value="1,091.630 KGS">
+                </div>
+            
+                <div class="field">
+                    <label id="lbl_GWM_NetWeight">Net Weight</label>
+                    <input id="txt_GWM_NetWeight" class="num" value="866.730 KGS">
+                </div>
+                <div class="field">
+                    <label id="lbl_GWM_NetNetWeight">Net Net Weight</label>
+                    <input id="txt_GWM_NetNetWeight" class="num" value="866.730 KGS">
+                </div>
+            
+                <div class="field">
+                    <label id="lbl_GWM_VolumneWeight">Volume Weight</label>
+                    <input id="txt_GWM_VolumneWeight" class="num" value="1,091.630 KGS">
+                </div>
+            
+                <div class="field">
+                    <label id="lbl_GWM_CBM">CBM</label>
+                    <input id="txt_GWM_CBM" class="num" value="866.730">
+                </div>
+            
+                <div class="field">
+                    <label id="lbl_GWM_Cartons">Total Cartons</label>
+                    <input id="txt_GWM_Cartons" class="num" disabled placeholder="&mdash;">
+                </div>
+            
+                       
+            
+                <div class="field span-2">
+                    <label id="lbl_GWM_Dimension">Dimension Details</label>
+                    <textarea id="txt_GWM_Dimension" rows="2" disabled placeholder="&mdash;"></textarea>
+                </div>
+
+            </div>
+
+        <div class="charges">
+            <div class="panel">
+                <h4>Deductions</h4>
+                <div class="rows">
+                    <div class="charge-row">
+                        <span class="lbl">Commission %</span>
+                                <div class="d-flex align-items-center gap-2">
+                                
+                                     <select id="ddl_Style_poNo_commission" class="form-select form-select-sm" style="width:70px;">
+                                         <option selected>Yes</option>
+                                         <option>No</option>
+                                     </select>
+                                 
+                                     <select id="ddl_Style_poNo_commission2" class="form-select form-select-sm" style="width:70px;">
+                                         <option selected>+</option>
+                                         <option>-</option>
+                                     </select>
+                                 
+                                     <input type="text"
+                                            id="txt_Style_poNo_commission"
+                                            value="0.00"
+                                            class="form-control form-control-sm"
+                                            style="width:200px;" />
+                                 
+                                 </div>
+                       
+                    </div>
+                    <div class="charge-row">
+                        <span class="lbl">Discount %</span>
+                          <div class="d-flex align-items-center gap-2">
+                                
+                                     <select id="ddl_Style_discount%" class="form-select form-select-sm" style="width:70px;">
+                                         <option selected>Yes</option>
+                                         <option>No</option>
+                                     </select>
+                                 
+                                     <select id="ddl_Style_poNo_discount%" class="form-select form-select-sm" style="width:70px;">
+                                         <option selected>+</option>
+                                         <option>-</option>
+                                     </select>
+                                 
+                                     <input type="text"
+                                            id="txt_Style_discount%"
+                                            value="0.00"
+                                            class="form-control form-control-sm"
+                                            style="width:200px;" />
+                                 
+                                 </div>
+                      
+                    </div>
+                    <div class="charge-row">
+                        <span class="lbl">Discount</span>
+                         <div class="d-flex align-items-center gap-2">
+  
+                             <select id="ddl_Style_poNo_discount" class="form-select form-select-sm" style="width:70px;">
+                                 <option selected>Yes</option>
+                                 <option>No</option>
+                             </select>
+                         
+                             <select id="ddl_Style_poNo_discount" class="form-select form-select-sm" style="width:70px;">
+                                 <option selected>+</option>
+                                 <option>-</option>
+                             </select>
+                         
+                             <input type="text"
+                                    id="txt_Style_poNo_discount"
+                                    value="0.00"
+                                    class="form-control form-control-sm"
+                                    style="width:200px;" />
+                         
+                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h4>Additions</h4>
+                <div class="rows">
+                    <div class="charge-row">
+                        <span class="lbl">Freight</span>
+                         <div class="d-flex align-items-center gap-2">
+  
+                                <select id="ddl_freight_yesno" class="form-select form-select-sm" style="width:70px;">
+                                    <option selected>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            
+                                <select id="ddl_freight_cal" class="form-select form-select-sm" style="width:70px;">
+                                    <option selected>+</option>
+                                    <option>-</option>
+                                </select>
+                            
+                                <input type="text"
+                                       id="txt_Styleddl_freight"
+                                       value="0.00"
+                                       class="form-control form-control-sm"
+                                       style="width:200px;" />
+                            
+                            </div>
+                    </div>
+                    <div class="charge-row">
+                        <span class="lbl">Other</span>
+                         <div class="d-flex align-items-center gap-2">
+  
+                                <select id="ddl_other_yesno" class="form-select form-select-sm" style="width:70px;">
+                                    <option selected>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            
+                                <select id="ddl_other_cal" class="form-select form-select-sm" style="width:70px;">
+                                    <option selected>+</option>
+                                    <option>-</option>
+                                </select>
+                            
+                                <input type="text"
+                                       id="txt_Styleddl_other"
+                                       value="0.00"
+                                       class="form-control form-control-sm"
+                                       style="width:200px;" />
+                            
+                            </div>
+                    </div>
+                    <div class="charge-row">
+                        <span class="lbl">Insurance</span>
+                        <div class="d-flex align-items-center gap-2">
+  
+                                <select id="ddl_insurance_yesno" class="form-select form-select-sm" style="width:70px;">
+                                    <option selected>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            
+                                <select id="ddl_Insurance_cal" class="form-select form-select-sm" style="width:70px;">
+                                    <option selected>+</option>
+                                    <option>-</option>
+                                </select>
+                            
+                                <input type="text"
+                                       id="txt_Insurance_freight"
+                                       value="0.00"
+                                       class="form-control form-control-sm"
+                                       style="width:200px;" />
+                            
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="totals">
+
+    <div class="t-row">
+        <span>Total Quantity</span>
+        <b id="lbl_Style_poNo_Quantity">3,612</b>
+    </div>
+
+    <div class="t-row">
+        <span>Total Amount</span>
+        <b id="lbl_Style_poNo_Amount">38,106.60</b>
+    </div>
+
+    <div class="t-row mr-5">
+        <span>Total Amount in Words :</span>
+           <b class="text-danger ms-5" id="lbl_Style_poNo_Word"> Thirty Eight Thousand One Hundred Six Rupees and Sixty Paise Only </b>
+    </div>
+
+    <div class="t-row net">
+        <span>Net Amount</span>
+        <b id="lbl_Style_poNo_NetAmu">0.00</b>
+    </div>
+
+</div>
+        </div>
+    </div>
+
+    <!-- ── Tab · License / Bond ── -->
+    <div class="tabpane" id="t-bond">
+        <div class="grid cols-1">
+           <div class="mt-0"> 
+           
+            <!-- TABLE 1 : License Details-->
+           @*  <div class="d-flex justify-content-end mt-0 mb-2 me-1">
+                <button
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    id="btnlicensedetails1">
+                    + Add button
+                </button>
+            </div> *@
+             <div class="table-wrap"> 
+            <table id="tbl_License_Bond" class="table table-sm table-bordered mb-1 mt-0" style="width:100%">
+
+                <thead>
+                    <tr>
+                                <th style="width:50px;">Action</th>
+                        <th>Qty</th>
+                        <th>UOM</th>
+                        <th>Item</th>
+                        <th>Cons./PC</th>
+                        <th>UOM</th>
+                        <th>Total Cons.</th>
+                        <th>IE Norms No.</th>
+                        <th>Imp SL No</th>
+                        <th>Exp SL No</th>
+                        <th>License No</th>
+                        <th>License Dt</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tblbody_License_Bond"></tbody>
+
+            </table>
+
+        </div>
+    </div>  
+
+        <!--  TABLE 2 : Bond Details -->
+         <div>
+             <!-- Add button -->
+             <div class="d-flex justify-content-end mb-2 me-1">
+              @*   <button
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    id="btnlicensedetails2">
+                    + Add button
+                </button> *@
+        </div>
+              <div class="table-wrap">
+
+            <table id="tbl_Bond_Details" class="table table-sm table-bordered text-nowrap mb-0" style="min-width:1100px">
+
+                <thead>
+                    <tr>
+                        <th style="width:50px;" >Action</th>
+                        <th>Bond No.</th>
+                        <th>Bond Value</th>
+                        <th>B/E No.</th>
+                        <th>B/E Date</th>
+                        <th>Rate</th>
+                        <th>Curr</th>
+                         <th>Item Description</th>
+                        <th>Qty</th>
+                        <th>UOM</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tblbody_Bond_Details"></tbody>
+
+            </table>
+
+        </div>
+        </div>
+        </div>
+
+        
+        <!-- Existing fields -->
+        <div class="grid cols-6 mt-4">
+
+             <div class="field d-flex justify-content-center gap-3">
+
+                <div>
+                    <label id="lbl_Licences_EPCGNo">
+                    EPCG License No.
+                </label>
+                     <select id="ddl_Licences_EPCG">
+                        <option selected>Choose one…</option>
+                    </select>
+                </div>
+            
+                <div>
+                    <label id="lbl_Licences_Date">
+                    EPCG License Date
+                </label>
+              
+                   
+                    <input id="txt_Licences_EPCG_Date"
+                           type="date"
+                           disabled>
+                    
+                </div>
+            
+            </div>
+
+             <div class="field d-flex justify-content-center gap-3">
+
+                <div>
+                      <label id="lbl_Licences_LCNo">
+                    LC Number
+                </label> 
+                     <select id="lbl_Licences_LCNo" disabled>
+                        <option>—</option>
+                    </select> 
+                </div>
+            
+                <div>
+                    <label id="lbl_Licences_Date">
+                    LC Date
+                </label>  
+              
+                    <input id="txt_Licences_LC_Date"
+                           type="date"
+                           disabled> 
+                    
+                </div>
+            
+            </div>
+         </div>
+
+
+        <div class="grid cols-2" style="margin-top:20px">
+
+            <div class="note-box">
+                <b>Drawback Details</b>
+
+                EQV to INR 82.20 per US$ — total FOB value ₹31,32,362.52.<br>
+
+                DBK &amp; ROSCTL Sl No. 61040303 —
+                DBK for KNT @@ 2.90% on FOB value.<br>
+
+                <b id="lbl_License_Bond_total_DBK" style="margin-top:8px">
+                    Total DBK Value: ₹90,838.00
+                </b>
+            </div>
+
+
+            <div class="note-box">
+                <b>ROSCTL Details</b>
+
+                ROSCTL State @@ 2.65% &amp; Central @@ 2.10% on FOB value.<br>
+
+                <b id="lbl_License_Bond_total_ROSCTL" style="margin-top:8px">
+                    Total ROSCTL Value: ₹1,48,787.00
+                </b>
+            </div>
+
+        </div>
+      </div>
+  
+    <!-- ── Tab · GST / E-Invoice ── -->
+    <div class="tabpane" id="t-gst">
+
+        <div class="grid cols-6">
+
+            <div class="field">
+                <label id="lbl_GST_eInvoice_no">Entry Number</label>
+                <input id="txt_GST_eInvoice_no" class="num" value="0" disabled>
+            </div>
+
+            <div class="field">
+                <label id="lbl_GST_eInvoice_date">Date</label>
+                <input id="txt_GST_eInvoice_date" type="date" value="2025-09-14">
+            </div>
+
+            <div class="field">
+                <label id="lbl_GST_eInvoice_shipping">
+                    Shipping Factory
+                    <button id="btn_GST_eInvoice_shipping" class="help-link" onclick="openModal('m-factory')">Help</button>
+                </label>
+                <input id="btn_GST_eInvoice_shipping" placeholder="Search&hellip;">
+            </div>
+
+            <div class="field">
+                <label id="lbl_GST_eInvoice_Transport">Transport Type</label>
+                <select id="ddl_GST_Transport">
+                    <option selected>Truck</option>
+                    <option>Rail</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label id="lbl_GST_eInvoice_VechicleNo">Vehicle Number</label>
+                <input id="txt_GST_eInvoice_VechicleNo" placeholder="&mdash;">
+            </div>
+
+            <div class="field">
+                <label id="lbl_GST_eInvoice_CourierInvoice">Courier Invoice</label>
+                <select id="ddl_GST_eInvoice_CourierInvoice">
+                    <option selected>N</option>
+                    <option>Y</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label id="lbl_GST_eInvoice_CommericalInvoice">
+                    Commercial Invoice No.
+                    <button id="btn_GST_eInvoice_CommericalInvoice" class="help-link" onclick="openModal('m-cominv')">Help</button>
+                </label>
+                <input id="txt_GST_eInvoice_CommericalInvoice" placeholder="Search&hellip;">
+            </div>
+
+            <div class="field">
+                <label id="lbl_GST_eInvoice_commericalDate">Commercial Invoice Date</label>
+                <input id="txt_GST_eInvoice_commericalDate" type="date" disabled>
+            </div>
+
+            <div class="field">
+                <label id="lbl_GST_eInvoice_GSTIN_no">
+                    GSTIN Invoice No
+                    <button id="btn_GST_eInvoice_GSTIN_no" class="help-link" onclick="openModal('m-salereturn')">Help</button>
+                </label>
+                <input id="txt_GST_eInvoice_GSTIN_no" disabled placeholder="&mdash;">
+            </div>
+
+            <div class="field">
+                <label id="lbl_GST_eInvoice_GSTIN_date">GSTIN Invoice Date</label>
+                <input id="txt_GST_eInvoice_GSTIN_date" type="date" disabled>
+            </div>
+
+            <div class="field">
+                <label id="lbl_GST_eInvoice_EwayBill">Eway-Bill Status</label>
+                <select id="ddl_GST_eInvoice_EwayBill" disabled>
+                    <option>&mdash;</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label id="lbl_GST_eInvoice_EwayBill_Remarks">Eway-Bill Remarks</label>
+                <input id="txt_GST_eInvoice_EwayBill_Remarks" disabled placeholder="&mdash;">
+            </div>
+
+            <div class="field">
+                <label id="lbl_GST_eInvoice_SaleReturn_Date">Sale Return Date</label>
+                <div class="pair">
+                    <input id="txt_GST_eInvoice_SaleReturn" value="F" style="max-width:56px">
+                    <input id="lbl_GST_eInvoice_SaleReturn_Date" type="date" disabled>
+                </div>
+            </div>
+
+            <div class="field">
+                <label id="lbl_GST_eInvoice_IGST_balance">IGST Balance</label>
+                <input id="txt_GST_eInvoice_IGST_balance" class="num" disabled placeholder="&mdash;">
+            </div>
+
+        </div>
+
+        <div class="tab-actions">
+            <button id="btn_GST_eInvoice_CancelGSTInvoice" class="btn-outline-danger btn-sm">Cancel GST Invoice</button>
+        </div>
+    </div>
+</section>
+ 
+ 
+@section Modals {
+
+    <!-- ═════════════════════════════════════════════════════════════
+         MODAL · Style / PO No — Edit Entry
+         ═════════════════════════════════════════════════════════════ -->
+
+                 <div class="modal fade"
+                      id="m-style-edit"
+                      tabindex="-1"
+                      aria-labelledby="lblStyleEditModal"
+                      aria-hidden="true">
+
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                 <div class="modal-content modal-box">
+
+                        <div class="modal-header">
+                              <div class="modal-header-text">
+                        <div class="modal-title" id="lblStyleEditModal">
+                      
+                            Edit Style / PO No Entry
+                      
+                            <span class="chip chip-teal mt-1 fs-6">
+                                Style 14310649
+                            </span>
+                        </div>
+
+                       
+
+
+                    </div>
+
+                    <div class="d-flex gap-2">
+
+                        <button type="button"
+                                class="modal-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+
+                </div>
+                 
+                <!-- =====================================================
+                 BODY
+                 ===================================================== -->
+                <div class="modal-body p-1">
+
+             <div class="hgroup border-bottom p-2 mb-1"
+                  style="border-color: var(--teal-tint-light) !important;">
+                 <div class="row g-2 align-items-start" style="margin-right:10px">
+
+                    <!-- Left: heading (toggle) -->
+                    <div class="col-12 col-md-2">
+                          <a class="hgroup-toggle d-inline-flex align-items-center gap-2 fw-semibold text-decoration-none text-dark text-nowrap"
+                             data-bs-toggle="collapse" href="#identBody" role="button"
+                             aria-expanded="true" aria-controls="identBody">
+                            <svg class="chev" width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                              <path d="M3 5l5 6 5-6z"/>
+                            </svg>
+                            <span>Identification</span>
+                          </a>
+                        </div>
+                
+                    <!-- Right: fields -->
+                    <div class="col-12 col-md-10">
+                      <div class="collapse show" id="identBody">
+                        <div class="row g-2 row-cols-2 row-cols-lg-3 row-cols-xl-6">
+                
+                          <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_Ident_Desc_style" style="color:#5d9cf7">Style</label>
+                            <input id="txt_Modal_Style_poNo_Ident_Desc_style"
+                                   class="form-control" value="14310649">
+                          </div>
+                
+                          <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_Ident_Desc_PoNo" style="color:#5d9cf7">PO No.</label>
+                            <input id="txt_Modal_Style_poNo_Ident_Desc_PoNo"
+                                   class="form-control form-control-sm mono font-monospace" value="2557659-US1BU-L">
+                          </div>
+                
+                          <div class="col field">
+                            <label
+                                   id="lbl_Modal_Style_poNo_Ident_Desc_HSN"  style="color:#5d9cf7">GST HSN</label>
+                            <input id="txt_Modal_Style_poNo_Ident_Desc_HSN"
+                                   class="form-control form-control-sm mono font-monospace" value="61045300">
+                          </div>
+                
+                          <div class="col field">
+                            <label 
+                                   id="lbl_Modal_Style_poNo_Ident_Desc_HSNFeed"  style="color:#5d9cf7">HSN Feed</label>
+                            <input id="txt_Modal_Style_poNo_Ident_Desc_HSNFeed"
+                                   class="form-control form-control-sm mono font-monospace" value="61045300">
+                          </div>
+                          
+                
+                          <div class="col-12 col-lg-6 col-xl-4 field mt-0">
+                            <label 
+                                   id="lbl_Modal_Style_poNo_Ident_Desc_Invoice_Desc"  style="color:#5d9cf7">Invoice Desc.</label>
+                            <input id="txt_Modal_Style_poNo_Ident_Desc_Invoice_Desc"
+                                   class="form-control form-control-sm" value="Ladies Skirt">
+                          </div>
+                          <div class="col-12 col-lg-6 col-xl-4 field">
+                                            <label id="lbl_Modal_Style_poNo_Ident_Desc_eInvoice_Desc" style="color:#5d9cf7">E-Invoice Desc.</label>
+                            <textarea id="txt_Modal_Style_poNo_Ident_Desc_eInvoice_Desc"
+                                      class="form-control form-control-sm" rows="2">Ladies skirt, 92% polyester / 8% elastane, polyknit lining</textarea>
+                          </div>
+                          <div class="col field mt-0">
+                            <label
+                                   id="lbl_Modal_Style_poNo_Ident_Desc_Category"  style="color:#5d9cf7">Category</label>
+                            <input id="txt_Modal_Style_poNo_Ident_Desc_Category"
+                                   class="form-control form-control-sm" value="USA/NA">
+                          </div>
+                
+                          <div class="col field mt-0">
+                            <label
+                                   id="lbl_Modal_Style_poNo_Ident_Desc_Art_No"  style="color:#5d9cf7">Art No</label>
+                            <input id="txt_Modal_Style_poNo_Ident_Desc_Art_No"
+                                   class="form-control form-control-sm" placeholder="—">
+                          </div>
+                            <div class="col field mt-0">
+                                            <label id="lbl_Licences_RITC" style="color:#5d9cf7">RITC No</label>
+                                     <input id="txt_Licences_RITC" disabled placeholder="&mdash;">
+                                 </div>
+
+                                 <div class="col field mt-0">
+                                     <label id="lbl_Licences_breakDiscount"  style="color:#5d9cf7">Break Discount</label>
+                                     <select id="ddl_Licences_breakDiscount">
+                                         <option selected>No</option>
+                                         <option>Yes</option>
+                                     </select>
+                                 </div>
+
+                                        <div class="col field">
+                                            <label id="lbl_Licences_DGFT" style="color:#5d9cf7">DGFT </label>
+                                            <select>
+                                                <option id="ddl_Licences_DGFT" selected>Yes</option>
+                                                <option>No</option>
+                                            </select>
+                                        </div>
+                                        <div class="col field">
+                                            <label id="lbl_Licences_Style" style="color:#5d9cf7"> DGFT Style</label>
+                                            <input id="txt_Licences_DGFT_Style" disabled placeholder="&mdash;">
+                                        </div>
+
+                
+
+                               @*   <div class="col field mt-1">
+                                     <label id="lbl_Licences_DGFT_Style">DGFT / DGFT Style</label>
+                                     <div class="pair">
+                                         <select>
+                                             <option id="ddl_Licences_DGFT" selected>Yes</option>
+                                             <option>No</option>
+                                         </select>
+                                         <input id="txt_Licences_DGFT_Style" disabled placeholder="&mdash;">
+                                     </div>
+                                 </div> *@
+                          
+                
+                        </div>
+                      </div>
+                    </div>
+                
+                  </div>
+                </div>
+                @* quality and value tab *@
+                <div class="hgroup border-bottom p-2 mb-1"
+                  style="border-color: var(--teal-tint-light) !important;">
+                      <div class="row g-2 align-items-start" style="margin-right:10px">
+                    
+                        <!-- Left: heading (toggle) -->
+                       <div class="col-12 col-md-2">
+                              <a class="hgroup-toggle d-inline-flex align-items-center gap-2 fw-semibold text-decoration-none text-dark text-nowrap"
+                                 data-bs-toggle="collapse" href="#qtyValBody" role="button"
+                                 aria-expanded="true" aria-controls="qtyValBody">
+                                <svg class="chev" width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                                  <path d="M3 5l5 6 5-6z"/>
+                                </svg> 
+                             Quality &amp; Value
+                          </a>
+                        </div>
+                    
+                        <!-- Right: fields -->
+                        <div class="col-12 col-md-10">
+                          <div class="collapse show" id="qtyValBody">
+                            <div class="row g-2 row-cols-2 row-cols-lg-3 row-cols-xl-6">
+                    
+                              <div class="col field">
+                                <label id="lbl_Modal_Style_poNo_Qty_Val_Qty"  style="color:#5d9cf7">Quantity</label>
+                                <input id="txt_Modal_Style_poNo_Qty_Val_Qty"
+                                       class="form-control num" value="3,612">
+                              </div>
+                    
+                              <div class="col field">
+                                <label id="lbl_Modal_Style_poNo_Qty_Val_Unit"  style="color:#5d9cf7">Unit</label>
+                                <select id="ddl_Modal_Style_poNo_Qty_Val_Unit" class="form-select">
+                                  <option selected>PCS</option>
+                                  <option>YRD</option>
+                                  <option>KGS</option>
+                                </select>
+                              </div>
+                    
+                              <div class="col field">
+                                <label id="lbl_Modal_Style_poNo_Qty_Val_Rate" style="color:#5d9cf7">Rate</label>
+                                <input id="txt_Modal_Style_poNo_Qty_Val_Rate"
+                                       class="form-control num" value="10.55">
+                              </div>
+                    
+                              <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_Qty_Val_Amount" style="color:#5d9cf7">Amount</label>
+                                <input id="txt_Modal_Style_poNo_Qty_Val_Amount"
+                                       class="form-control num" value="38,106.60" disabled>
+                              </div>
+                    
+                              <div class="col field">
+                                <label id="lbl_Modal_Style_poNo_Qty_Val_FOB" style="color:#5d9cf7">FOB Rate</label>
+                                <input id="txt_Modal_Style_poNo_Qty_Val_FOB"
+                                       class="form-control num" value="10.55">
+                              </div>
+                    
+                              <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_Qty_Val_FOB_Val" style="color:#5d9cf7">FOB Value</label>
+                                <input id="txt_Modal_Style_poNo_Qty_Val_FOB_Val"
+                                       class="form-control num" value="38,106.60" disabled>
+                              </div>
+                    
+                            </div>
+                          </div>
+                        </div>
+                    
+                        </div>
+                    </div>
+                    @* GST and Hunger tab  *@
+                    <div class="hgroup border-bottom p-2 mb-1"
+                         style="border-color: var(--teal-tint-light) !important;">
+                          <div class="row g-2 align-items-start" style="margin-right:10px">
+                        
+                            <!-- Left: heading (toggle) -->
+                           <div class="col-12 col-md-2">
+                              <a class="hgroup-toggle d-inline-flex align-items-center gap-2 fw-semibold text-decoration-none text-dark text-nowrap"
+                                 data-bs-toggle="collapse" href="#gstHangerBody" role="button"
+                                 aria-expanded="true" aria-controls="gstHangerBody">
+                                <svg class="chev" width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                                  <path d="M3 5l5 6 5-6z"/>
+                                </svg>
+                                 GST &amp; Hanger
+                              </a>
+                            </div>
+                        
+                            <!-- Right: fields -->
+                            <div class="col-12 col-md-10">
+                              <div class="collapse show" id="gstHangerBody">
+                                <div class="row g-2 row-cols-2 row-cols-lg-3 row-cols-xl-6">
+                        
+                                  <div class="col field">
+                                    <label id="lbl_Modal_Style_poNo_GST_Hanger_GST_Item" style="color:#5d9cf7">GST Item</label>
+                                    <input id="txt_Modal_Style_poNo_GST_Hanger_GST_Item"
+                                           class="form-control" value="NA">
+                                  </div>
+                        
+                                  <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_GST_Hanger_Hanger" style="color:#5d9cf7">Hanger</label>
+                                    <select id="ddl_Modal_Style_poNo_GST_Hanger_Hanger" class="form-select">
+                                      <option selected>N</option>
+                                      <option>Y</option>
+                                    </select>
+                                  </div>
+                        
+                                  <div class="col field">
+                                    <label id="lbl_Modal_Style_poNo_GST_Hanger_Hanger_HSN" style="color:#5d9cf7">Hanger GST HSN</label>
+                                    <select id="ddl_Modal_Style_poNo_GST_Hanger_Hanger_HSN" class="form-select">
+                                      <option selected>N</option>
+                                      <option>Y</option>
+                                    </select>
+                                  </div>
+                        
+                                  <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_GST_Hanger_Hanger_FC" style="color:#5d9cf7">Hanger Value FC</label>
+                                    <input id="txt_Modal_Style_poNo_GST_Hanger_Hanger_FC"
+                                           class="form-control num" value="0.00">
+                                  </div>
+                        
+                                  <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_GST_Hanger_Hanger_INR" style="color:#5d9cf7">Hanger Value INR</label>
+                                    <input id="txt_Modal_Style_poNo_GST_Hanger_Hanger_INR"
+                                           class="form-control num" value="0.00">
+                                  </div>
+                        
+                                </div>
+                              </div>
+                            </div>
+                        
+                          </div>
+                        </div>
+
+                        @* Weight Tab  *@
+
+                        <div class="hgroup border-bottom p-2 mb-1"
+                              style="border-color: var(--teal-tint-light) !important;">
+                              <div class="row g-2 align-items-start" style="margin-right:10px">
+                            
+                                <!-- Left: heading (toggle) -->
+                               <div class="col-12 col-md-2">
+                                      <a class="hgroup-toggle d-inline-flex align-items-center gap-2 fw-semibold text-decoration-none text-dark text-nowrap"
+                                         data-bs-toggle="collapse" href="#weightBody" role="button"
+                                         aria-expanded="true" aria-controls="weightBody">
+                                        <svg class="chev" width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                                          <path d="M3 5l5 6 5-6z"/>
+                                        </svg>
+                                    Weight
+                                  </a>
+                                </div>
+                            
+                                <!-- Right: fields -->
+                                <div class="col-12 col-md-10">
+                                  <div class="collapse show" id="weightBody">
+                                    <div class="row g-2 row-cols-2 row-cols-lg-3 row-cols-xl-6">
+                            
+                                      <div class="col field">
+                                        <label id="lbl_Modal_Style_poNo_Weight_Weight" style="color:#5d9cf7">Garment Weight</label>
+                                        <input id="txt_Modal_Style_poNo_Weight_Weight"
+                                               class="form-control num" value="1,091.630">
+                                      </div>
+                            
+                                      <div class="col field">
+                                        <label id="lbl_Modal_Style_poNo_Weight_TotalWeight" style="color:#5d9cf7">Total Weight</label>
+                                        <input id="txt_Modal_Style_poNo_Weight_TotalWeight"
+                                               class="form-control num" value="1,091.630" disabled>
+                                      </div>
+                            
+                                      <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_Weight_Print_Weight" style="color:#5d9cf7">Print Weight</label>
+                                        <select id="ddl_Modal_Style_poNo_Weight_Print_Weight" class="form-select">
+                                          <option selected>N</option>
+                                          <option>Y</option>
+                                        </select>
+                                      </div>
+                            
+                                    </div>
+                                  </div>
+                                </div>
+                            
+                              </div>
+                            </div>
+
+                            @* Drawback and Rosctl tab  *@
+
+                            <div class="hgroup border-bottom p-2 mb-1"
+                                 style="border-color: var(--teal-tint-light) !important;">
+                                  <div class="row g-2 align-items-start" style="margin-right:10px">
+                                
+                                    <!-- Left: heading (toggle) -->
+                                  <div class="col-12 col-md-2">
+                                      <a class="hgroup-toggle d-inline-flex align-items-center gap-2 fw-semibold text-decoration-none text-dark text-nowrap"
+                                         data-bs-toggle="collapse" href="#drawbackRosctlBody" role="button"
+                                         aria-expanded="true" aria-controls="drawbackRosctlBody">
+                                        <svg class="chev" width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                                          <path d="M3 5l5 6 5-6z"/>
+                                        </svg>
+                                         Drawback &amp; ROSCTL
+                                      </a>
+                                    </div>
+                                
+                                    <!-- Right: fields -->
+                                    <div class="col-12 col-md-10">
+                                      <div class="collapse show" id="drawbackRosctlBody">
+                                        <div class="row g-2 row-cols-2 row-cols-lg-3 row-cols-xl-6">
+                                
+                                          <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_ROSCTL_DBKCode" style="color:#5d9cf7">DBK Code</label>
+                                            <select id="ddl_Modal_Style_poNo_ROSCTL_DBKCode" class="form-select">
+                                              <option selected>61040303</option>
+                                            </select>
+                                          </div>
+                                
+                                          <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_ROSCTL_DBKRate" style="color:#5d9cf7">DBK Rate</label>
+                                            <select id="ddl_Modal_Style_poNo_ROSCTL_DBKRate" class="form-select num">
+                                              <option selected>2.90</option>
+                                            </select>
+                                          </div>
+                                
+                                          <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_ROSCTL_DBKSl" style="color:#5d9cf7">DBK SL.No</label>
+                                            <select id="ddl_Modal_Style_poNo_ROSCTL_DBKSl" class="form-select num">
+                                              <option selected>61040303</option>
+                                            </select>
+                                          </div>
+                                
+                                          <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_ROSCTL_DBKPC" style="color:#5d9cf7">DBK PC(%)</label>
+                                            <select id="ddl_Modal_Style_poNo_ROSCTL_DBKPC" class="form-select num">
+                                              <option selected>2.90</option>
+                                            </select>
+                                          </div>
+                                
+                                          <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_ROSCTL_DBKAmount" style="color:#5d9cf7">DBK Amount</label>
+                                            <input id="txt_Modal_Style_poNo_ROSCTL_DBKAmount"
+                                                   class="form-control num" value="0.00" disabled>
+                                          </div>
+                                
+                                          <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_ROSCTL_Depb_PC" style="color:#5d9cf7">Depb PC</label>
+                                            <input id="txt_Modal_Style_poNo_ROSCTL_Depb_PC"
+                                                   class="form-control num" value="0.00" disabled>
+                                          </div>
+                                
+                                          <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_ROSCTL_FOB_ROSCTL" style="color:#5d9cf7">FOB ROSCTL</label>
+                                            <input id="txt_Modal_Style_poNo_ROSCTL_FOB_ROSCTL"
+                                                   class="form-control num" value="0.00" disabled>
+                                          </div>
+                                
+                                          <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_ROSCTL_ROSCTL_Entil" style="color:#5d9cf7">ROSCTL Entitlment</label>
+                                            <select id="ddl_Modal_Style_poNo_ROSCTL_ROSCTL_Entil" class="form-select num">
+                                              <option selected>4.75</option>
+                                            </select>
+                                          </div>
+                                
+                                          <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_ROSCTL_ROSCTL_Rate_Cen" style="color:#5d9cf7">ROSCTL Rate (Center)</label>
+                                            <select id="ddl_Modal_Style_poNo_ROSCTL_ROSCTL_Rate_Cen" class="form-select num">
+                                              <option selected>2.10</option>
+                                            </select>
+                                          </div>
+                                
+                                          <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_ROSCTL_ROSCTL_Rate_State" style="color:#5d9cf7">ROSCTL Rate (State)</label>
+                                            <select id="ddl_Modal_Style_poNo_ROSCTL_ROSCTL_Rate_State" class="form-select num">
+                                              <option selected>2.65</option>
+                                            </select>
+                                          </div>
+                                           <div class="col field">
+                                            <label id="lbl_Licences_DBK" style="color:#5d9cf7">DBK Type</label>
+                                                <select id="ddl_Licences_DBK" disabled>
+                                                    <option>&mdash;</option>
+                                                </select>
+                                            </div>
+                                
+                                        </div>
+                                      </div>
+                                    </div>
+                                
+                                  </div>
+                                </div>
+
+                                @* discount Tab  *@
+                                <div class="hgroup border-bottom p-2 mb-1"
+                                      style="border-color: var(--teal-tint-light) !important;">
+                                      <div class="row g-2 align-items-start" style="margin-right:10px">
+                                    
+                                        <!-- Left: heading (toggle) -->
+                                       <div class="col-12 col-md-2">
+                                             <a class="hgroup-toggle d-inline-flex align-items-center gap-2 fw-semibold text-decoration-none text-dark text-nowrap"
+                                                data-bs-toggle="collapse" href="#discountBody" role="button"
+                                                aria-expanded="true" aria-controls="discountBody">
+                                               <svg class="chev" width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                                                 <path d="M3 5l5 6 5-6z"/>
+                                               </svg>
+                                             Discount
+                                          </a>
+                                        </div>
+                                    
+                                        <!-- Right: fields -->
+                                        <div class="col-12 col-md-10">
+                                          <div class="collapse show" id="discountBody">
+                                            <div class="row g-2 row-cols-2 row-cols-lg-3 row-cols-xl-6">
+                                    
+                                              <div class="col field">
+                                                <label id="lbl_Modal_Style_poNo_Discount_Discount_Per" style="color:#5d9cf7">Discount % 1</label>
+                                                <input id="txt_Modal_Style_poNo_Discount_Discount_Per"
+                                                       class="form-control num" value="0.00">
+                                              </div>
+                                    
+                                              <div class="col field">
+                                                <label id="lbl_Modal_Style_poNo_Discount_Discount_Amu1" style="color:#5d9cf7">Discount Amount 1</label>
+                                                <input id="txt_Modal_Style_poNo_Discount_Discount_Amu1"
+                                                       class="form-control num" value="0.00" disabled>
+                                              </div>
+                                    
+                                              <div class="col field">
+                                                <label id="lbl_Modal_Style_poNo_Discount_Discount_Per2" style="color:#5d9cf7">Discount % 2</label>
+                                                <select id="ddl_Modal_Style_poNo_Discount_Discount_Per2" class="form-select">
+                                                  <option selected>0.00</option>
+                                                </select>
+                                              </div>
+                                    
+                                              <div class="col field">
+                                                <label id="lbl_Modal_Style_poNo_Discount_Discount_Amu2" style="color:#5d9cf7">Discount Amount 2</label>
+                                                <input id="txt_Modal_Style_poNo_Discount_Discount_Amu2"
+                                                       class="form-control num" value="0.00" disabled>
+                                              </div>
+                                    
+                                              <div class="col field">
+                                                <label id="lbl_Modal_Style_poNo_Discount_Discount_Reason" style="color:#5d9cf7">Discount Reason</label>
+                                                <select id="ddl_Modal_Style_poNo_Discount_Discount_Reason" class="form-select">
+                                                  <option selected>—</option>
+                                                </select>
+                                              </div>
+                                    
+                                              <div class="col field">
+                                            <label id="lbl_Modal_Style_poNo_Discount_Tariff_Discount" style="color:#5d9cf7">Tariff Discount</label>
+                                                <input id="txt_Modal_Style_poNo_Discount_Tariff_Discount"
+                                                       class="form-control num" value="0.00">
+                                              </div>
+                                    
+                                            </div>
+                                          </div>
+                                        </div>
+                                    
+                                      </div>
+                                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+                </div>
+
+
+                 
+            </div>
+
+        </div>
+
+    </div>
+   
+     
+    <!-- ═════════════════════════════════════════════════════════════
+         MODAL · Shipping Factory Help
+         ═════════════════════════════════════════════════════════════ -->
+    <div class="modal fade"
+         id="m-factory"
+         tabindex="-1"
+         aria-labelledby="lblFactoryModal"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="tick"></span>
+
+                        <h5 class="modal-title mb-0"
+                            id="lblFactoryModal">
+                            Shipping Factory Help
+                        </h5>
+                    </div>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="table-wrap">
+                        <table id="tbl_factory_modal">
+
+                            <thead>
+                                <tr>
+                                    <th class="c">#</th>
+                                    <th>Unit</th>
+                                    <th class="r">Branch Code</th>
+                                    <th>Unit Name</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td class="c">1</td>
+                                    <td class="mono">RC408</td>
+                                    <td class="r num">15</td>
+                                    <td>Richaco Exports Private Limited</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="c">2</td>
+                                    <td class="mono">RC411</td>
+                                    <td class="r num">07</td>
+                                    <td>Richaco Exports Private Limited</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="c">3</td>
+                                    <td class="mono">RC461</td>
+                                    <td class="r num">14</td>
+                                    <td>Richaco Exports Private Limited</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="c">4</td>
+                                    <td class="mono">RC479</td>
+                                    <td class="r num">06</td>
+                                    <td>Richaco Exports Private Limited</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="c">5</td>
+                                    <td class="mono">RC506</td>
+                                    <td class="r num">18</td>
+                                    <td>Richaco Exports Private Limited</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="c">6</td>
+                                    <td class="mono">RC76</td>
+                                    <td class="r num">22</td>
+                                    <td>Richaco Exports Private Limited</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-bs-dismiss="modal">
+                        Done
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ═════════════════════════════════════════════════════════════
+         MODAL · Commercial Invoice Help
+         ═════════════════════════════════════════════════════════════ -->
+    <div class="modal fade"
+         id="m-cominv"
+         tabindex="-1"
+         aria-labelledby="lblComInvModal"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="tick"></span>
+
+                        <h5 class="modal-title mb-0"
+                            id="lblComInvModal">
+                            Commercial Invoice Help
+                        </h5>
+                    </div>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="table-wrap">
+
+                        <table id="tbl_cominv">
+
+                            <thead>
+                                <tr>
+                                    <th class="c">#</th>
+                                    <th>Invoice No.</th>
+                                    <th>Invoice Date</th>
+                                    <th>Buyer Name</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td class="c">1</td>
+                                    <td class="mono">RN/0207/25-26</td>
+                                    <td>29-08-2025</td>
+                                    <td>Abercrombie &amp; Fitch Trading</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="c">2</td>
+                                    <td class="mono">RN/0208/25-26</td>
+                                    <td>29-08-2025</td>
+                                    <td>AFH International Trading (Shenzhen)</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="c">3</td>
+                                    <td class="mono">RN/0209/25-26</td>
+                                    <td>29-08-2025</td>
+                                    <td>AFH International Trading (Shenzhen)</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="c">4</td>
+                                    <td class="mono">RN/0210/25-26</td>
+                                    <td>30-08-2025</td>
+                                    <td>AFH International Trading (Shenzhen)</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="c">5</td>
+                                    <td class="mono">RN/0211/25-26</td>
+                                    <td>30-08-2025</td>
+                                    <td>Abercrombie &amp; Fitch Trading</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="c">6</td>
+                                    <td class="mono">RN/0212/25-26</td>
+                                    <td>03-09-2025</td>
+                                    <td>Abercrombie &amp; Fitch Trading</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-bs-dismiss="modal">
+                        Done
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ═════════════════════════════════════════════════════════════
+         MODAL · Editing / Sale Return Help
+         ═════════════════════════════════════════════════════════════ -->
+    <div class="modal fade"
+         id="m-salereturn"
+         tabindex="-1"
+         aria-labelledby="lblSaleReturnModal"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="tick"></span>
+
+                        <h5 class="modal-title mb-0"
+                            id="lblSaleReturnModal">
+                            Editing / Sale Return Help
+                        </h5>
+                    </div>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="table-wrap">
+
+                        <table id="tbl_salereturn">
+
+                            <thead>
+                                <tr>
+                                    <th class="r">#</th>
+                                    <th>Invoice No.</th>
+                                    <th>GST Invoice No.</th>
+                                    <th>GST Invoice Date</th>
+                                    <th>Fac Unit</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td class="r num">52779</td>
+                                    <td class="mono">RE/2350/25-26</td>
+                                    <td class="mono">RE/ES/3092/25-26</td>
+                                    <td>02-09-2025</td>
+                                    <td class="mono">RC17</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="r num">52780</td>
+                                    <td class="mono">RE/2270/25-26</td>
+                                    <td class="mono">RE/ES/3093/25-26</td>
+                                    <td>03-09-2025</td>
+                                    <td class="mono">MAN02</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="r num">52781</td>
+                                    <td class="mono">RE/2267/25-26</td>
+                                    <td class="mono">RE/ES/3094/25-26</td>
+                                    <td>03-09-2025</td>
+                                    <td class="mono">MAN02</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="r num">52782</td>
+                                    <td class="mono">RE/2610/25-26</td>
+                                    <td class="mono">RE/ES/3095/25-26</td>
+                                    <td>03-09-2025</td>
+                                    <td class="mono">RC239</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="r num">52783</td>
+                                    <td class="mono">RE/2352/25-26</td>
+                                    <td class="mono">RE/ES/3096/25-26</td>
+                                    <td>03-09-2025</td>
+                                    <td class="mono">RC17</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="r num">52784</td>
+                                    <td class="mono">RE/1057/25-26</td>
+                                    <td class="mono">RE/ES/3097/25-26</td>
+                                    <td>04-09-2025</td>
+                                    <td class="mono">MAN30</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-bs-dismiss="modal">
+                        Done
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
+
+<!-- table modal open here start both table -->
+<div class="modal fade"
+     id="addLicencseBondTable1"
+     tabindex="-1"
+     aria-labelledby="addMenuLicensceBondTable1"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuLicensceBondTable1">
+                        License Bond Table 1
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+
+            <div class="modal-body p-3">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <label for="txtLicenseQty" class="form-label">
+                            Qty
+                        </label>
+                        <input type="text"
+                               id="txtLicenseQty"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="txtLicenseUom" class="form-label">
+                            UOM
+                        </label>
+                        <input type="text"
+                               id="txtLicenseUom"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="txtLicenseItem" class="form-label">
+                            Item
+                        </label>
+                        <input type="text"
+                               id="txtLicenseItem"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="txtLicenseConsPc" class="form-label">
+                            Cons./PC
+                        </label>
+                        <input type="text"
+                               id="txtLicenseConsPc"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="txtLicenseConsUom" class="form-label">
+                            UOM
+                        </label>
+                        <input type="text"
+                               id="txtLicenseConsUom"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="txtLicenseTotalCons" class="form-label">
+                            Total Cons.
+                        </label>
+                        <input type="text"
+                               id="txtLicenseTotalCons"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="txtLicenseIeNormsNo" class="form-label">
+                            IE Norms No.
+                        </label>
+                        <input type="text"
+                               id="txtLicenseIeNormsNo"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="txtLicenseImpSlNo" class="form-label">
+                            Imp SL No
+                        </label>
+                        <input type="text"
+                               id="txtLicenseImpSlNo"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="txtLicenseExpSlNo" class="form-label">
+                            Exp SL No
+                        </label>
+                        <input type="text"
+                               id="txtLicenseExpSlNo"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="txtLicenseNo" class="form-label">
+                            License No
+                        </label>
+                        <input type="text"
+                               id="txtLicenseNo"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="txtLicenseDt" class="form-label">
+                            License Dt
+                        </label>
+                        <input type="text"
+                               id="txtLicenseDt"
+                               class="form-control"
+                               placeholder="dd-mm-yyyy">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveLicenseBondTable1">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- table 2 -->
+<div class="modal fade"
+     id="addLicencseBondTable2"
+     tabindex="-1"
+     aria-labelledby="addMenuLicensceBondTable2"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuLicensceBondTable2">
+                        Bond Details
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+
+            <div class="modal-body p-3">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <label for="txtBondNo" class="form-label">
+                            Bond No.
+                        </label>
+                        <input type="text"
+                               id="txtBondNo"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="txtBondValue" class="form-label">
+                            Bond Value
+                        </label>
+                        <input type="text"
+                               id="txtBondValue"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="txtBeNo" class="form-label">
+                            B/E No.
+                        </label>
+                        <input type="text"
+                               id="txtBeNo"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="txtBeDate" class="form-label">
+                            B/E Date
+                        </label>
+                        <input type="text"
+                               id="txtBeDate"
+                               class="form-control"
+                               placeholder="dd-mm-yyyy">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="txtBondRate" class="form-label">
+                            Rate
+                        </label>
+                        <input type="text"
+                               id="txtBondRate"
+                               class="form-control num">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="txtBondCurr" class="form-label">
+                            Curr
+                        </label>
+                        <input type="text"
+                               id="txtBondCurr"
+                               class="form-control"
+                               value="US$">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="txtBondItemDescription" class="form-label">
+                            Item Description
+                        </label>
+                        <input type="text"
+                               id="txtBondItemDescription"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="txtBondQty" class="form-label">
+                            Qty
+                        </label>
+                        <input type="text"
+                               id="txtBondQty"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="txtBondUom" class="form-label">
+                            UOM
+                        </label>
+                        <input type="text"
+                               id="txtBondUom"
+                               class="form-control">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveLicenseBondTable2">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                       License/Bond
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-0">
+                @* @await Html.PartialAsync("_EBRC_Details") *@
+
+                <!-- ========================= -->
+                <!-- STYLE / PO TABLE FIELDS -->
+                <!-- ========================= -->
+               
+
+                <!-- LICENSE TABLE FIELDS -->
+               
+                <div id="licenseEditSection">
+
+                   <div class="card-body">
+
+                     <div class="grid cols-4">
+
+                        <div class="field">
+                            <label class="form-label">Qty</label>
+                            <input type="text"
+                                   id="editLicenseQty"
+                                   class="form-input ">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">UOM</label>
+                            <input type="text"
+                                   id="editLicenseUom"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Item</label>
+                            <input type="text"
+                                   id="editLicenseItem"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Cons./PC</label>
+                            <input type="text"
+                                   id="editLicenseConsPc"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">UOM</label>
+                            <input type="text"
+                                   id="editLicenseConsUom"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Total Cons.</label>
+                            <input type="text"
+                                   id="editLicenseTotalCons"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">IE Norms No.</label>
+                            <input type="text"
+                                   id="editLicenseIeNormsNo"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Imp SL No</label>
+                            <input type="text"
+                                   id="editLicenseImpSlNo"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Exp SL No</label>
+                            <input type="text"
+                                   id="editLicenseExpSlNo"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">License No</label>
+                            <input type="text"
+                                   id="editLicenseNo"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">License Dt</label>
+                            <input type="text"
+                                   id="editLicenseDt"
+                                   class="form-input">
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+                <!-- ========================= -->
+                <!-- BOND TABLE FIELDS -->
+                <!-- ========================= -->
+                <div id="bondEditSection" class="d-none">
+
+                    <div class="card-body">
+
+                     <div class="grid cols-4">
+
+                        <div class="field">
+                            <label class="form-label">Bond No.</label>
+                            <input type="text"
+                                   id="editBondNo"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Bond Value</label>
+                            <input type="text"
+                                   id="editBondValue"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">B/E No.</label>
+                            <input type="text"
+                                   id="editBeNo"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">B/E Date</label>
+                            <input type="text"
+                                   id="editBeDate"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Rate</label>
+                            <input type="text"
+                                   id="editBondRate"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Curr</label>
+                            <input type="text"
+                                   id="editBondCurr"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Item Description</label>
+                            <input type="text"
+                                   id="editBondItemDescription"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Qty</label>
+                            <input type="text"
+                                   id="editBondQty"
+                                   class="form-input">
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">UOM</label>
+                            <input type="text"
+                                   id="editBondUom"
+                                   class="form-input">
+                        </div>
+
+                    </div>
+                  </div>      
+
+                </div>
+
+            </div>
+
+          
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveLicenseBond">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/js/pages/aepc-invoice.js" asp-append-version="true"></script>

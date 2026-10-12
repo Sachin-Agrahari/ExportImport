@@ -1,0 +1,142 @@
+﻿
+ 
+<div class="bd_mainContainer">
+    <div class="page">
+
+
+   
+       
+            <div class="card-body">
+                <div class="grid cols-6">
+
+                    <div class="field">
+                        <label>Licence <span class="text-danger">*</span></label>
+                       
+                        <input type="text" id="txtLicenceNo_Add_LicenseMaster" placeholder="Licence number" />
+                    </div>
+                    <div class="field">
+                        <label>Date</label>
+                        <input type="text" id="txtDate_Add_LicenseMaster" placeholder="Select date..." />
+                    </div>
+                    <div class="field">
+                        <label>Licence Validity</label>
+                        <input type="number" class="num" id="txtLY_Add_LicenseMaster" placeholder="0" />
+                    </div>
+                    <div class="field">
+                        <label>Licence Expiry</label>
+                        <input type="text" id="txtLExp_Add_LicenseMaster" placeholder="Select date..." />
+                    </div>
+                    <div class="field">
+                        <label>Obligation Period</label>
+                        <input type="number" class="num" id="txtOY_Add_LicenseMaster" placeholder="0" />
+                    </div>
+                    <div class="field">
+                        <label>Obligation Expiry</label>
+                        <input type="text" id="txtOExp_Add_LicenseMaster" placeholder="Select date..." />
+                    </div>
+
+                    <div class="field">
+                        <label>Export Obligation Rs.</label>
+                        <input type="number" step="0.01" class="num" id="txtEORs_Add_LicenseMaster" placeholder="0.00" />
+                    </div>
+                    <div class="field">
+                        <label>Export Obligation USD</label>
+                        <input type="number" step="0.01" class="num" id="txtEOUSD_Add_LicenseMaster" placeholder="0.00" />
+                    </div>
+                    <div class="field">
+                        <label>CIF Rs.</label>
+                        <input type="number" step="0.01" class="num" id="txtCIFRs_Add_LicenseMaster" placeholder="0.00" />
+                    </div>
+                    <div class="field">
+                        <label>CIF USD</label>
+                        <input type="number" step="0.01" class="num" id="txtCIFUSD_Add_LicenseMaster" placeholder="0.00" />
+                    </div>
+                    <div class="field">
+                        <label>Port-Register  <span class="text-danger">*</span></label>
+                        <select id="ddlPortRegister_Add_LicenseMaster" class="select2-field">
+                            <option value="" selected disabled>Select port...</option>
+                            <option value="PATPARGANJ">PATPARGANJ</option>
+                            <option value="NHAVA SHEVA">NHAVA SHEVA</option>
+                            <option value="ICD TKD">ICD TKD</option>
+                            <option value="MUNDRA">MUNDRA</option>
+                            <option value="CHENNAI">CHENNAI</option>
+                        </select>
+                    </div>
+                     
+                    <div class="field">
+                        <label for="lblFileNo" class="form-label">
+                            File No
+                        </label>
+
+                        <div class="d-flex align-items-center gap-2">
+
+                            <input type="text"
+                                   id="txtFileNo"
+                                   class="form-control"
+                                    />
+ 
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Duty Save  <span class="text-danger">*</span></label>
+                        <input type="number" step="0.01" class="num" id="txtDutySave_Add_LicenseMaster" placeholder="0.00" />
+                    </div>
+                    <div class="field">
+                        <label>Avg Amt</label>
+                        <input type="number" step="0.01" class="num" id="txtAvgAmt_Add_LicenseMaster" placeholder="0.00" />
+                    </div>
+                    <div class="field">
+                        <label>Bond Amt  <span class="text-danger">*</span></label>
+                        <input type="number" step="0.01" class="num" id="txtBondAmt_Add_LicenseMaster" placeholder="0.00" />
+                    </div>
+
+                      <div class="field">
+                        <label>Date of Inst.Cert.Rcvd</label>
+                        <input type="text" id="txtInstCertRcvd_Add_LicenseMaster" placeholder="Select date..." />
+                    </div>   
+
+                      <div class="field">
+                        <label>File Rcvd on</label>
+                        <input type="text" id="txtFileRcvdOn_Add_LicenseMaster" placeholder="Select date..." />
+                    </div> 
+
+                    <div class="field">
+                        <label>Bond Date</label>
+                        <input type="text" id="txtBondDate_Add_LicenseMaster" placeholder="Select date..." />
+                    </div>
+                     <div class="field">
+                        <label>EOD Apply</label>
+                        <input type="text" id="txtEODApply_Add_LicenseMaster" placeholder="Select date..." />
+                    </div> 
+                     <div class="field">
+                        <label>Receivd</label>
+                        <input type="text" id="txtReceivd_Add_LicenseMaster" placeholder="Select date..." />
+                    </div>
+                   
+                   
+                    @* <div class="field">
+                        <label>Redm.Date</label>
+                        <input type="text" id="txtRedmDate_Add_LicenseMaster" placeholder="Select date..." />
+                    </div> *@
+                    <div class="field">
+                        <label>Bond Cancel Apply Date</label>
+                        <input type="text" id="txtBondCancelApplyDt_Add_LicenseMaster" class="form-Flatdate" placeholder="Select date..." />
+                    </div>
+                    <div class="field">
+                        <label>Bond Cancel Date</label>
+                        <input type="text" id="txtBondCancelDt_Add_LicenseMaster" class="form-Flatdate" placeholder="Select date..." />
+                    </div>
+                    <div class="field span-2">
+                        <label>Remarks  <span class="text-danger">*</span></label>
+                        <textarea id="txtRemarks_Add_LicenseMaster" rows="2" placeholder="Enter remarks..."></textarea>
+                    </div>
+
+                </div>
+            </div>
+        @* </section> *@
+
+    </div>
+</div>
+
+<script src="~/js/pages/Banking/EPCGLicense.js" asp-append-version="true"></script>

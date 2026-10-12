@@ -1,0 +1,404 @@
+﻿@{
+	ViewData["Title"] = "Duty Payment Request";
+	ViewData["Heading"] = "Duty Payment Request";
+}
+
+<div class="bd_mainContainer">
+    <div class="page">
+         
+        <section class="card">
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Duty Payment Request</h2>
+                </div>
+            
+            
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave_BOEAgainstFabric"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+                    <button type="button"
+                            class="btn btn-outline-danger btn-sm"
+                            id="btnRefresh_BOEAgainstFabric">
+                        ↻ Refresh
+                    </button>
+                </div>
+            </div>
+            
+
+            <div class="card-body">
+
+                <div class="grid cols-6">
+
+                    <div class="field">
+                        <label>Entry Number <button class="help-link" id="btnEntryNo">Help</button></label>
+
+                        <input type="text"
+                               id="txtEntryNo_DutyPaymentRequest"
+                               placeholder="Enter Entry Number..." />
+                    </div>
+                     
+                    <div class="field">
+                        <label> Date</label>
+
+                        <input type="text"
+                               id="txtDt_DutyPaymentRequest"
+                               placeholder="Select date.." />
+                    </div>
+
+                     <div class="field">
+                        <label>Style Number</label>
+
+                        <select id="ddlStyleNo_DutyPaymentRequest" class="form-select">
+                            <option value="XYZ">XYZ</option>
+                            <option value="ABC">ABC</option>
+                        </select> 
+
+                    </div>
+                    @* <div class="field">
+                        <label>Party Number</label>
+
+                        <select id="ddlPartyNo_DutyPaymentRequest" class="form-select">
+                            <option value="XYZ">XYZ</option>
+                            <option value="ABC">ABC</option>
+                        </select> *@
+
+                      @*   <input type="text"
+                               id="txtPartyNo_DutyPaymentRequest"
+                               placeholder="Enter Party Number...." /> *@
+                    @* </div> *@
+                    <div class="field">
+                        <label>Party Name</label>
+
+                        <input type="text"
+                               id="txtPartyName_DutyPaymentRequest"
+                               placeholder="Enter Party Name...." />
+                    </div>
+                    <div class="field">
+                        <label>Payment For</label>
+                        <select id="ddlPaymentFor_DutyPaymentRequest" class="form-select">
+                            <option value="IGST+Custom Duty">IGST+Custom Duty</option>
+                            <option value="Do Charges">Do Charges</option>
+                        </select>
+
+                      @*   <input type="text"
+                               id="txtPaymentFor_DutyPaymentRequest"
+                               placeholder="Enter Payment For...." /> *@
+                    </div>
+                    <div class="field">
+                        <label>CHA Name</label>
+                        <select id="ddlCHAName_DutyPaymentRequest" class="form-select">
+                            <option value="XYZ">XYZ</option>
+                            <option value="ABC">ABC</option>
+                        </select>
+
+                        @* <input type="text"
+                               id="txtCHAName_DutyPaymentRequest"
+                               placeholder="Enter CHA Name...." /> *@
+                    </div>
+
+                    <div class="field">
+                        <label>Port Name</label>
+
+                        <select id="ddlPort_PhysicalDeliveryTag" class="form-select">
+                            <option value="XYZ">XYZ</option>
+                            <option value="ABC">ABC</option>
+                        </select>
+
+                        @* <input type="text"
+                               id="txtPort_PhysicalDeliveryTag"
+                               placeholder="Enter Port Name.." /> *@
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card gsp-table-card">
+
+            <div class="card-head d-flex justify-content-end">
+                <div class="d-flex justify-content-end align-items-end">
+
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnAddItem_DutyPaymentRequest">
+
+                        <i class="fa-solid fa-plus me-1"></i>
+                        Add Item
+
+                    </button>
+
+                </div>
+
+
+
+            </div>
+
+            <div class="card-body px-2">
+
+                <div class="gsp-table-scroll">
+
+                    <table id="tblDutyPaymentRequest"
+                           class="display"
+                           style="width:100%">
+
+                        <thead>
+                            <tr>
+                                <th style="width:50px !important;" >Action</th>
+                                <th>Item</th>
+                                <th>Style</th>
+                                <th>Invoice No</th>
+                                <th>Invoice Date</th>
+                                <th>BOE</th>
+                                <th>BOE Date</th>
+                                <th>Amount</th>
+                                <th>Unit</th>
+                               
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyDutyPaymentRequest">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>  
+
+        </section>
+
+
+    </div>
+</div>
+
+@* modal open in entry number help *@
+
+
+<div class="modal fade" id="addMenuModalEntryHelp" tabindex="-1" aria-labelledby="addMenuModalEntryHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalEntryHelpLabel">
+                        Entry help
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2">
+                <div class="table-responsive">
+
+                    <table id="tblLCHelpDutyPayment" class="table table-sm table-bordered align-middle mb-0">
+
+                        <thead class="table-primary">
+                            <tr>
+                                <th class="text-center">
+                                    Select
+                                </th>
+
+                                <th>
+                                   Entry No
+                                </th>
+
+                                <th>
+                                   Entry Date
+                                </th>
+
+                                <th>
+                                   Party
+                                </th>
+                                <th>
+                                    Payment for
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyLCHelpDutyPayment">
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveEntryHelp">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* add button to open modal for the  *@
+
+<div class="modal fade" id="addMenuModalAdd" tabindex="-1" aria-labelledby="addMenuModalAdd" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalAddLabel">
+                        Entry help
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2">
+                <div class="grid cols-4">
+
+                    <div class="field">
+                        <label class="form-label">Item</label>
+                        <input type="text"
+                               id="txtItem"
+                               class="form-input"
+                               placeholder="Enter Item">
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Invoice No</label>
+                        <input type="text"
+                               id="txtInvoiceNo"
+                               class="form-input"
+                               placeholder="Enter Invoice No">
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Invoice Date</label>
+                        <input type="text"
+                               id="txtInvoiceDate"
+                               class="form-input form-Flatdate"
+                               placeholder="Select Invoice Date">
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">BOE</label>
+                        <input type="text"
+                               id="txtBOE"
+                               class="form-input"
+                               placeholder="Enter BOE">
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">BOE Date</label>
+                        <input type="text"
+                               id="txtBOEDate"
+                               class="form-input form-Flatdate"
+                               placeholder="Select BOE Date">
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Amount</label>
+                        <input type="number"
+                               id="txtAmount"
+                               class="form-input"
+                               placeholder="Enter Amount">
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Unit</label>
+                        <input type="text"
+                               id="txtUnit"
+                               class="form-input"
+                               placeholder="Enter Unit">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveAdd">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/pages/importsfabric/duty_payment_request.js" asp-append-version="true"></script>

@@ -1,0 +1,130 @@
+﻿@* 
+@{
+	ViewData["Title"] = "SCB Against Imported Fabric/Machinery/Courier ";
+	ViewData["Heading"] = "SCB Against Imported Fabric/Machinery/Courier ";
+} *@
+
+<div class="bd_mainContainer">
+
+    <div class="page">
+
+        @* <section class="card"> *@
+            @* <div class="card-head"> *@
+              @*   <div>
+                    <span class="tick"></span>
+                    @* <h2 class="mt-2" id="txtHeaderMain">Service Charges Bill Tag</h2> *@
+                @* </div> *@
+ 
+
+              @*   <div class="d-flex gap-2"> *@
+                    @* @await Html.PartialAsync("Components/_UploadAndViewButtons") *@
+                    @* <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave_BOEAgainstFabric"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button> *@
+                    @* <button type="button"
+                            class="btn btn-outline-danger btn-sm"
+                            id="btnRefresh_BOEAgainstFabric">
+                        ↻ Refresh
+                    </button> *@
+                @* </div> *@
+            @* </div> *@
+            
+            @* <div class="card-body">
+
+                <div class="grid cols-6">
+
+                    <div class="field">
+                        <label>Entry</label>
+
+                        <input type="text"
+                               id="txtEntry_SCBTag"
+                               placeholder="Enter Entry Number.." />
+                    </div>
+                    <div class="field">
+                        <label> Date</label>
+
+                        <input type="text"
+                               id="txtDt_SCBTag"
+                               placeholder="Select date.." />
+                    </div>
+
+                </div>
+            </div> *@
+        @* </section> *@
+
+        <section class="card gsp-table-card">
+
+            <div class="d-flex justify-content-end m-1 align-items-end">
+                <button type="button"
+                        class="btn btn-primary btn-sm fs-6"
+                        id="btnAdd_SCBTag">
+                    Add Row
+                </button>
+            </div>
+
+            <div class="card-body px-2">
+
+                <div class="table-responsive">
+
+                    <table id="tblSCBTag"
+                           class="display"
+                           style="width:100%">
+
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Party</th>
+                                <th>Party Name</th>
+                                <th>Buyer Name</th>
+                                <th>Bill No</th>
+                                <th>Bill Date</th>
+                                <th>Bill Amount</th>
+                                <th>Ass value</th>
+                                <th>Debit Amount</th>
+                                <th>Net Amount</th>
+                                <th>Bill Type</th>
+                                <th>Be No</th>
+                                <th>Licensce No</th>
+                                <th>Recive Date</th>
+                                <th>Grn No</th>
+                                <th>Grn Dt</th>
+                                <th>Grn Unit</th>
+                                
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodySCBTag">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </div>
+</div>
+
+<script src="~/js/pages/importsfabric/service_charge_bill_tag.js" asp-append-version="true"></script>

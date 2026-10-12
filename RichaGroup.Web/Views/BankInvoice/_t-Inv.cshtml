@@ -1,0 +1,190 @@
+﻿ 
+<div class="table-wrap">
+    <table style="min-width:1280px">
+        <thead>
+            <tr>
+                <th class="c">Action</th> 
+                <th>Style No</th>
+                <th>PO No.</th>
+                <th>GST HSN</th>
+                <th>HSN Feed</th>
+                <th>Category</th>
+                <th>Invoice Desc.</th>
+                <th>E-Invoice Desc.</th>
+                <th class="r">Qty</th>
+                <th>Unit</th>
+                <th class="r">Rate</th>
+                <th class="r">Amount</th>
+                <th class="r">FOB Rate</th>
+                <th class="r">FOB Value</th>
+                <th class="r">Weight</th>
+                <th class="c">Wt Print</th>
+            </tr>
+        </thead>
+        <tbody id="tblInvDtlBody"> </tbody>
+    </table>
+
+   
+</div>
+@* calculation field  *@
+<div class="charges">
+    <div class="panel">
+        <h4>Deductions</h4>
+        <div class="rows">
+            <div class="charge-row">
+                <span class="lbl">Commission %</span>
+                <div class="d-flex align-items-center gap-2">
+
+                    <select id="ddl_Style_poNo_commission" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <select id="ddl_Style_poNo_commission1" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>+</option>
+                        <option>-</option>
+                    </select>
+
+                    <input type="text"
+                           id="txt_Style_poNo_commission"
+                           value="0.00"
+                           class="form-control form-control-sm"
+                           style="width:200px;" />
+
+                </div>
+            </div>
+            <div class="charge-row">
+                <span class="lbl">Discount %</span>
+                <div class="d-flex align-items-center gap-2">
+
+ 
+                    <select id="ddl_Style_poNo_commission" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <select id="ddl_Style_poNo_commission1" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>+</option>
+                        <option>-</option>
+                    </select>
+
+                    <input type="text"
+                           id="txt_Style_poNo_commission"
+                           value="0.00"
+                           class="form-control form-control-sm"
+                           style="width:200px;" />
+
+                        
+                       
+                </div>
+            </div>
+            <div class="charge-row">
+                <span class="lbl">Discount</span>
+                <div class="d-flex align-items-center gap-2">
+
+                    <select id="ddl_Style_poNo_discount" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <select id="ddl_Style_poNo_discountt1" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>+</option>
+                        <option>-</option>
+                    </select>
+
+                    <input type="text"
+                           id="txt_Style_poNo_discount"
+                           value="0.00"
+                           class="form-control form-control-sm"
+                           style="width:200px;" />
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h4>Additions</h4>
+        <div class="rows">
+            <div class="charge-row">
+                <span class="lbl">Freight</span>
+                <div class="d-flex align-items-center gap-2">
+
+                    <select id="ddl_Style_poNo_freight" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <select id="ddl_Style_poNo_freight1" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>+</option>
+                        <option>-</option>
+                    </select>
+
+                    <input type="text"
+                           id="txt_Style_poNo_freight"
+                           value="0.00"
+                           class="form-control"
+                           style="width:200px;" />
+
+                </div>
+
+            </div>
+         
+            <div class="charge-row">
+                <span class="lbl">Insurance</span>
+                <div class="d-flex align-items-center gap-2">
+
+                    <select id="ddl_Style_poNo_freight" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <select id="ddl_Style_poNo_freight2" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>+</option>
+                        <option>-</option>
+                    </select>
+
+                    <input type="text"
+                           id="txt_Style_poNo_freight"
+                           value="0.00"
+                           class="form-control"
+                           style="width:200px;" />
+
+                </div>
+            </div>
+            <div class="charge-row">
+                <span class="lbl">Other</span>
+                <div class="d-flex align-items-center gap-2">
+
+                    <select id="ddl_Style_poNo_freight" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <select id="ddl_Style_poNo_freight1" class="form-select form-select-sm" style="width:70px;">
+                        <option selected>+</option>
+                        <option>-</option>
+                    </select>
+
+                    <input type="text"
+                           id="txt_Style_poNo_freight"
+                           value="0.00"
+                           class="form-control"
+                           style="width:200px;" />
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="totals">
+        <div class="t-row"><span>Total Quantity</span><b id="lbl_Style_poNo_Quantity">3,612</b></div>
+        <div class="t-row"><span>Total Amount</span><b id="lbl_Style_poNo_Amount">38,106.60</b></div>
+        <div class="t-row mr-5"><span> Amount In Words :</span> <b class="text-danger ms-5" id="lbl_Style_poNo_Word"> Thrity Eight Thousand One hunderd Six and Sixty Paise Only </b> </div>
+        <div class="t-row net"><span>Net Amount</span><b id="lbl_Style_poNo_NetAmu">0.00</b></div>
+    </div>
+
+                
+</div>
+
+ 

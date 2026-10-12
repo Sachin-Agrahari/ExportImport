@@ -1,0 +1,269 @@
+﻿@{
+	ViewData["Title"] = "TT Adjustment";
+}
+
+<style>
+    /* Table checkbox fix */
+    #tblTTAdjustment .form-check-input[type="checkbox"] {
+        width: 16px !important;
+        height: 16px !important;
+        min-width: 16px;
+        max-width: 16px;
+        padding: 0 !important;
+        margin: 0 !important;
+        flex: 0 0 16px;
+        cursor: pointer;
+    }
+</style>
+
+
+<div class="bd_mainContainer">
+    <div class="page">
+
+      
+
+        <section class="card">
+
+
+            <!-- HEADER -->
+            <div class="card-head">
+
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">TT Adjustment</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <div class="d-flex gap-2">
+                        @await Html.PartialAsync("Components/_CheckBoxComponent")
+                        @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                        <button class="btn btn-primary btn-sm"
+                                id="btnAdd">
+                            ＋ Add
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-wrap">
+                    <table id="tblTTAdjustment" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width:50px !important;">Action</th>
+                                <th style="width:50px !important; text-align:right !important;">S.No</th>
+                                <th>TT No</th>
+                                <th>Buyer Name</th>
+                                <th>Currency</th>
+                                <th style=" text-align:right !important;">Converstion Rate</th>
+                                <th style=" text-align:right !important;">Adjustment</th>
+                              
+                   
+                            </tr>
+                        </thead>
+                            <tbody id="tblbodyTTAdjustment" class="text-truncate"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+ 
+<div class="modal fade" id="addTTAdjustmentModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                        TT Adjustment
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    @*                     @await Html.PartialAsync("Components/_UploadAndViewButtons") *@
+                   
+                    <button type="button"
+                            style=" "
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="app-modal-header-actions">
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+
+                    <div class="grid cols-4">
+
+                        <div class="field">
+
+                            <label for="txtTTNo" class="form-label">
+                                @* <span class="text-danger">*</span> *@
+                                TT No
+                            </label>
+
+
+                            <input type="text"
+                                   id="txtTTNo"
+                                   class="form-control"
+                                   placeholder="Enter TT No" />
+
+
+                        </div>
+
+                        <div class="field">
+
+                            <label for="txtDate" class="form-label">
+
+                                Date
+                                <span class="text-danger">*</span>
+                            </label>
+
+
+                            <input type="text"
+                                   id="txtDate"
+                                   class="form-control"
+                                   placeholder="Select Date" />
+
+
+                        </div>
+
+                        <div class="field">
+
+                            <label for="ddlbuyerName" class="form-label">
+                                Buyer Name
+                            </label>
+
+                            <select id="ddlbuyerName"
+                                    class="form-select">
+
+                                <option value="">--Choose One--</option>
+                                <option value="XYZ">XYZ</option>
+                                <option value="WXYZ">WXYZ</option>
+                                <option value="ABC">ABC</option>
+
+                            </select>
+
+                        </div>
+                        <div class="field">
+
+                            <label for="txtCurrency" class="form-label">
+
+                                Currency
+                                <span class="text-danger">*</span>
+                            </label>
+
+
+                            <input type="text"
+                                   id="txtCurrency"
+                                   class="form-control"
+                                   placeholder="Enter Currency" />
+
+
+                        </div>
+                        <div class="field">
+
+                            <label for="txtConvRate" class="form-label">
+                                @* <span class="text-danger">*</span> *@
+                                Converstion Rate
+                            </label>
+
+
+                            <input type="text"
+                                   id="txtConvRate"
+                                   class="form-control"
+                                   placeholder="Enter Cov Rate.." />
+                        </div>
+
+                        <div class="field">
+
+                            <label for="txtAmount" class="form-label">
+                                @* <span class="text-danger">*</span> *@
+                                Amount
+                            </label>
+
+
+                            <input type="text"
+                                   id="txtAmount"
+                                   class="form-control"
+                                   placeholder="Enter Amount.." />
+
+
+                        </div>
+                        <div class="field">
+
+                            <label for="txtAdjustment" class="form-label">
+                                @* <span class="text-danger">*</span> *@
+                                Adjustment
+                            </label>
+
+
+                            <input type="text"
+                                   id="txtAdjustment"
+                                   class="form-control"
+                                   placeholder="Enter Adjustment" />
+
+
+                        </div>
+                        <div class="field">
+
+                            <label for="txtBalanceAmount" class="form-label">
+                                @* <span class="text-danger">*</span> *@
+                                Balance Amount
+                            </label>
+
+
+                            <input type="text"
+                                   id="txtBalanceAmount"
+                                   class="form-control"
+                                   placeholder="Enter Balance Amount" />
+
+
+                        </div>
+
+                    </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/js/pages/mastersjs/ttadjustment.js" asp-append-version="true"></script>

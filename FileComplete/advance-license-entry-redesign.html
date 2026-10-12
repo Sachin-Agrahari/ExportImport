@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advance License Entry — Richa Group (Redesign)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16233a; --ink-soft:#22334f;
+    --paper:#f3f5f8; --card:#ffffff;
+    --line:#dde3ec; --line-strong:#c6cfdc;
+    --text:#243044; --muted:#6b7a90;
+    --teal:#0e7c72; --teal-dark:#0b6159; --teal-tint:#e6f2f0;
+    --amber:#b45309; --amber-tint:#fdf3e3;
+    --red:#b3363d; --red-tint:#fbebec;
+    --disabled:#eef1f5;
+    --radius:10px;
+    --shadow:0 1px 2px rgba(22,35,58,.06), 0 4px 14px rgba(22,35,58,.05);
+    --shadow-lg:0 8px 20px rgba(22,35,58,.14), 0 20px 60px rgba(22,35,58,.18);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:var(--paper);color:var(--text);display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+
+  aside{background:var(--ink);color:#c9d4e5;padding:20px 0 28px;position:sticky;top:0;height:100vh;overflow-y:auto}
+  .brand{display:flex;align-items:center;gap:10px;padding:4px 22px 20px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:14px}
+  .brand-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#0e7c72,#28a598);display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;color:#fff;font-size:15px}
+  .brand-name{font-family:'Space Grotesk';font-weight:600;color:#fff;font-size:1.02rem}
+  nav a{display:flex;align-items:center;gap:10px;padding:9px 22px;color:#aebad0;text-decoration:none;font-size:.88rem;border-left:3px solid transparent;transition:background .15s,color .15s}
+  nav a:hover{background:rgba(255,255,255,.05);color:#fff}
+  nav a:focus-visible{outline:2px solid #28a598;outline-offset:-2px}
+  nav .group{padding:16px 22px 6px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#5d6d88;font-weight:600}
+  nav a.sub{padding-left:38px;font-size:.84rem}
+  nav a.active{background:rgba(14,124,114,.18);border-left-color:#28a598;color:#fff;font-weight:500}
+  .caret{margin-left:auto;font-size:.7rem;opacity:.6}
+
+  main{display:flex;flex-direction:column;min-width:0}
+  header.topbar{background:var(--card);border-bottom:1px solid var(--line);padding:12px 32px;display:flex;align-items:center;justify-content:flex-end;gap:14px;position:sticky;top:0;z-index:20}
+  .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;cursor:pointer;position:relative;color:var(--muted)}
+  .icon-btn:hover{border-color:var(--line-strong);color:var(--ink)}
+  .dot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--amber);border:1.5px solid #fff}
+  .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#22334f,#0e7c72);color:#fff;display:grid;place-items:center;font-weight:600;font-size:.8rem}
+
+  .page{padding:26px 32px 120px;max-width:1400px;width:100%}
+  .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+  .crumbs{font-size:.76rem;color:var(--muted);margin-bottom:6px}
+  .crumbs b{color:var(--teal);font-weight:500}
+  h1{font-family:'Space Grotesk';font-weight:700;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em}
+  .chip{display:inline-block;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--amber-tint);color:var(--amber);border-radius:99px;padding:3px 10px;margin-left:8px;vertical-align:middle}
+  .chip-teal{background:var(--teal-tint);color:var(--teal)}
+
+  .btn{font-family:'IBM Plex Sans';font-size:.86rem;font-weight:600;border-radius:8px;padding:10px 20px;cursor:pointer;border:1px solid transparent;transition:all .15s}
+  .btn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+  .btn-primary{background:var(--teal);color:#fff}
+  .btn-primary:hover{background:var(--teal-dark)}
+  .btn-outline{background:#fff;color:var(--teal);border-color:var(--teal)}
+  .btn-outline:hover{background:var(--teal-tint)}
+  .btn-ghost{background:var(--ink);color:#fff}
+  .btn-ghost:hover{background:var(--ink-soft)}
+  .btn-danger{background:#fff;color:var(--red);border-color:var(--red)}
+  .btn-danger:hover{background:var(--red-tint)}
+
+  section.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:10px;padding:14px 22px;border-bottom:1px solid var(--line);background:linear-gradient(to bottom,#fbfcfe,#f7f9fc)}
+  .card-head .tick{width:4px;height:18px;border-radius:2px;background:var(--teal)}
+  .card-head h2{font-family:'Space Grotesk';font-size:.95rem;font-weight:600;color:var(--ink)}
+  .card-head .hint{margin-left:auto;font-size:.74rem;color:var(--muted)}
+  .card-body{padding:20px 22px 24px}
+
+  .grid{display:grid;gap:16px 20px}
+  .cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .span-2{grid-column:span 2}
+  .field label{display:flex;align-items:center;gap:6px;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .field input,.field select{width:100%;font:inherit;font-size:.88rem;color:var(--text);padding:9px 12px;border:1px solid var(--line-strong);border-radius:8px;background:#fff;transition:border-color .15s,box-shadow .15s}
+  .field input:hover:not(:disabled),.field select:hover:not(:disabled){border-color:#a7b4c6}
+  .field input:focus,.field select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,124,114,.15)}
+  .field input:disabled,.field select:disabled{background:var(--disabled);color:#94a1b3;border-color:var(--line);cursor:not-allowed}
+  .field .num{font-variant-numeric:tabular-nums}
+  .help-link{font-size:.62rem;font-weight:600;letter-spacing:.05em;color:var(--teal);background:var(--teal-tint);border:none;border-radius:5px;padding:2px 7px;cursor:pointer}
+  .help-link:hover{background:#d5eae7}
+
+  /* Flag + date pattern: a Y/N toggle beside its date */
+  .flag-row{display:grid;grid-template-columns:76px 1fr;gap:8px}
+  .yn{display:inline-flex;border:1px solid var(--line-strong);border-radius:8px;overflow:hidden;height:38px}
+  .yn button{font:inherit;font-size:.78rem;font-weight:600;border:none;background:#fff;color:var(--muted);width:38px;cursor:pointer}
+  .yn button.on-y{background:var(--teal);color:#fff}
+  .yn button.on-n{background:#8b98ab;color:#fff}
+  .yn button:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
+
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+  table{width:100%;border-collapse:collapse;font-size:.85rem}
+  thead th{font-size:.66rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:10px 13px;background:#f7f9fc;border-bottom:1px solid var(--line);white-space:nowrap}
+  thead th.r,td.r{text-align:right}
+  thead th.c,td.c{text-align:center}
+  tbody td{padding:10px 13px;border-bottom:1px solid var(--line);white-space:nowrap}
+  tbody td.num{font-variant-numeric:tabular-nums}
+  tbody tr:hover{background:#f6faf9;cursor:pointer}
+  tbody tr:last-child td{border-bottom:none}
+  .mono{font-variant-numeric:tabular-nums;letter-spacing:.01em}
+
+  /* Modals */
+  .overlay{position:fixed;inset:0;background:rgba(22,35,58,.5);backdrop-filter:blur(2px);display:none;place-items:center;z-index:100;padding:24px}
+  .overlay.on{display:grid}
+  .modal{background:#fff;border-radius:14px;box-shadow:var(--shadow-lg);width:min(640px,100%);max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
+  .modal-head{display:flex;align-items:center;gap:10px;padding:16px 24px;border-bottom:1px solid var(--line)}
+  .modal-head .tick{width:4px;height:18px;border-radius:2px;background:var(--teal)}
+  .modal-head h3{font-family:'Space Grotesk';font-size:1.02rem;font-weight:600;color:var(--ink)}
+  .modal-close{margin-left:auto;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--muted);font-size:1rem}
+  .modal-close:hover{border-color:var(--red);color:var(--red)}
+  .modal-body{padding:20px 24px;overflow:auto}
+  .modal-foot{padding:14px 24px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px;background:#fbfcfe}
+  .search{position:relative;margin-bottom:14px}
+  .search input{width:100%;font:inherit;font-size:.86rem;padding:9px 12px 9px 34px;border:1px solid var(--line-strong);border-radius:8px}
+  .search input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,124,114,.15)}
+  .search::before{content:"⌕";position:absolute;left:11px;top:50%;transform:translateY(-54%);font-size:1.05rem;color:var(--muted)}
+
+  /* Action bar */
+  .savebar{position:fixed;bottom:0;left:248px;right:0;z-index:30;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:14px 32px;display:flex;align-items:center;gap:10px}
+  .savebar .status{margin-right:auto;font-size:.8rem;color:var(--muted)}
+  .savebar .status b{color:var(--teal);font-weight:600}
+
+  @media (max-width:1150px){.cols-4{grid-template-columns:repeat(2,minmax(0,1fr))}.cols-3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:900px){
+    body{grid-template-columns:1fr}aside{display:none}.savebar{left:0;flex-wrap:wrap}
+    .cols-3,.cols-4{grid-template-columns:1fr}
+    .span-2{grid-column:span 1}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ══════════ Sidebar ══════════ -->
+<aside>
+  <div class="brand"><div class="brand-mark">RG</div><div class="brand-name">Richa Group</div></div>
+  <nav>
+    <a href="#">Dashboard</a>
+    <a href="#">Master <span class="caret">▾</span></a>
+    <div class="group">Transactions</div>
+    <a href="#" class="sub">Invoice <span class="caret">▾</span></a>
+    <a href="#" class="sub">Carton Details <span class="caret">▾</span></a>
+    <a href="#" class="sub">Shipment Planning</a>
+    <a href="#" class="sub">Sales Register <span class="caret">▾</span></a>
+    <a href="#" class="sub">Doc Sent</a>
+    <a href="#" class="sub">Custom Paper</a>
+    <a href="#" class="sub">CHA Bill Entry</a>
+    <a href="#" class="sub active">Buyer Order Maintenance</a>
+    <a href="#" class="sub">Import Accessory Style Detail</a>
+    <a href="#" class="sub">GSP <span class="caret">▾</span></a>
+    <div class="group">General</div>
+    <a href="#">Reports <span class="caret">▾</span></a>
+    <a href="#">Edit</a>
+    <a href="#">Logout</a>
+  </nav>
+</aside>
+
+<!-- ══════════ Main ══════════ -->
+<main>
+  <header class="topbar">
+    <button class="icon-btn" aria-label="Messages">✉<span class="dot"></span></button>
+    <button class="icon-btn" aria-label="Notifications">🔔<span class="dot"></span></button>
+    <div class="avatar">AK</div>
+  </header>
+
+  <div class="page">
+    <div class="page-head">
+      <div>
+        <div class="crumbs">TRX / <b>Advance License Entry</b></div>
+        <h1>Advance License Entry <span class="chip">Entry 1597</span> <span class="chip chip-teal">Adv. Lic</span></h1>
+      </div>
+      <button class="btn btn-outline" onclick="openModal('m-lic')">Find License ⌕</button>
+    </div>
+
+    <!-- ════════ License identity ════════ -->
+    <section class="card">
+      <div class="card-head"><span class="tick"></span><h2>License Identity</h2></div>
+      <div class="card-body">
+        <div class="grid cols-4">
+          <div class="field"><label>Entry Number</label><input class="num" value="1597"></div>
+          <div class="field"><label>Company Code</label><input class="num" value="01"></div>
+          <div class="field"><label>Diary Serial No.</label><input class="num" value="2389"></div>
+          <div class="field"><label>IGST</label>
+            <div class="yn" data-flag><button class="on-y">Y</button><button>N</button></div></div>
+          <div class="field"><label>License Number <button class="help-link" onclick="openModal('m-lic')">Help</button></label><input class="num" value="0511029698"></div>
+          <div class="field"><label>License Date</label><input type="date" value="2024-12-26"></div>
+          <div class="field"><label>CLA File Number</label><input value="05/AX/040/03265/AM25"></div>
+          <div class="field"><label>CLA File Date</label><input type="date" value="2024-12-21"></div>
+          <div class="field"><label>Port of Regn.</label><input value="Cochin"></div>
+          <div class="field"><label>CHA Name</label><input value="WFB"></div>
+          <div class="field"><label>SION / Norms</label><input value="SION"></div>
+          <div class="field"><label>Ch 19</label>
+            <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ Fixation & norms ════════ -->
+    <section class="card">
+      <div class="card-head"><span class="tick"></span><h2>Fixation &amp; Norms</h2></div>
+      <div class="card-body">
+        <div class="grid cols-4">
+          <div class="field"><label>Adv Fixation Applied</label>
+            <div class="flag-row">
+              <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+              <input type="date" disabled title="Date applied">
+            </div></div>
+          <div class="field"><label>Norms Fixed</label>
+            <div class="flag-row">
+              <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+              <input type="date" disabled title="Date fixed">
+            </div></div>
+          <div class="field"><label>Fixed</label>
+            <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div></div>
+          <div class="field"><label>Meeting No</label><input disabled placeholder="—"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ Status & completion ════════ -->
+    <section class="card">
+      <div class="card-head"><span class="tick"></span><h2>Status &amp; Completion</h2></div>
+      <div class="card-body">
+        <div class="grid cols-4">
+          <div class="field"><label>H.O. File Number</label><input disabled placeholder="—"></div>
+          <div class="field"><label>License Status</label><input disabled placeholder="—"></div>
+          <div class="field"><label>Order Status</label><input value="To be Shipped"></div>
+          <div class="field"><label>Merchant</label><input disabled placeholder="—"></div>
+          <div class="field"><label>Imports Complete</label>
+            <div class="flag-row">
+              <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+              <input type="date" title="Completion date">
+            </div></div>
+          <div class="field"><label>Balance to be Shipped</label>
+            <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div></div>
+          <div class="field"><label>Duty Ready Payment</label>
+            <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div></div>
+          <div class="field"><label>Duty Paid</label>
+            <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div></div>
+          <div class="field"><label>Excess</label><input class="num" placeholder="0.00"></div>
+          <div class="field"><label>License Rcvd Back On</label><input type="date"></div>
+          <div class="field"><label>Surrender Rcvd Date</label><input type="date"></div>
+          <div class="field"><label>Confirmed by Merchant</label><input disabled placeholder="—"></div>
+          <div class="field"><label>Mail Sent Date &amp; Time</label>
+            <div class="flag-row" style="grid-template-columns:1fr 1fr">
+              <input type="date" disabled><input type="time" disabled>
+            </div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ Redemption & bond ════════ -->
+    <section class="card">
+      <div class="card-head"><span class="tick"></span><h2>Redemption &amp; Bond</h2>
+        <span class="hint">Bond No. tracked after registration</span></div>
+      <div class="card-body">
+        <div class="grid cols-4">
+          <div class="field"><label>Redemption Filed</label>
+            <div class="flag-row">
+              <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+              <input type="date" disabled title="Date filed">
+            </div></div>
+          <div class="field"><label>Redemption Rcvd</label>
+            <div class="flag-row">
+              <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+              <input type="date" value="2014-09-05" title="Date received">
+            </div></div>
+          <div class="field"><label>Deficiency Reason <button class="help-link" onclick="openModal('m-dreason')">Help</button></label>
+            <select><option selected>Choose one…</option><option>Mismatch of Fab/GSM</option><option>Norms Issue</option><option>TR6 Attested</option></select></div>
+          <div class="field"></div>
+          <div class="field"><label>Bond Registered</label>
+            <div class="flag-row">
+              <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+              <input type="date" disabled title="Registration date">
+            </div></div>
+          <div class="field"><label>Bond Number</label><input disabled placeholder="—"></div>
+          <div class="field"><label>Bond Cancel Filed</label>
+            <div class="flag-row">
+              <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+              <input type="date" disabled title="Filing date">
+            </div></div>
+          <div class="field"><label>Bond Cancelled</label>
+            <div class="flag-row">
+              <div class="yn" data-flag><button>Y</button><button class="on-n">N</button></div>
+              <input type="date" disabled title="Cancellation date">
+            </div></div>
+          <div class="field span-2"><label>Bond Status</label>
+            <div class="flag-row" style="grid-template-columns:1fr 1fr">
+              <input disabled placeholder="—"><input disabled placeholder="—">
+            </div></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Action bar -->
+  <div class="savebar">
+    <span class="status">Editing entry <b>1597</b> · license <b>0511029698</b></span>
+    <button class="btn btn-outline">+ Add</button>
+    <button class="btn btn-outline">Edit</button>
+    <button class="btn btn-outline">View</button>
+    <button class="btn btn-danger">Delete</button>
+    <button class="btn btn-primary">Save</button>
+  </div>
+</main>
+
+<!-- ══════════ MODAL · License lookup ══════════ -->
+<div class="overlay" id="m-lic" role="dialog" aria-modal="true" aria-label="License lookup">
+  <div class="modal">
+    <div class="modal-head"><span class="tick"></span><h3>License Lookup</h3>
+      <button class="modal-close" onclick="closeModal('m-lic')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="search"><input type="search" placeholder="Search license number…"></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="c">#</th><th class="r">CM</th><th>LIC No</th><th>LIC Date</th></tr></thead>
+          <tbody>
+            <tr><td class="c">1</td><td class="r num">01</td><td class="mono">0511034767</td><td>29-08-2025</td></tr>
+            <tr><td class="c">2</td><td class="r num">01</td><td class="mono">0511034809</td><td>01-09-2025</td></tr>
+            <tr><td class="c">3</td><td class="r num">01</td><td class="mono">0511034810</td><td>01-09-2025</td></tr>
+            <tr><td class="c">4</td><td class="r num">01</td><td class="mono">0511034811</td><td>01-09-2025</td></tr>
+            <tr><td class="c">5</td><td class="r num">01</td><td class="mono">0511034860</td><td>03-09-2025</td></tr>
+            <tr><td class="c">6</td><td class="r num">01</td><td class="mono">0511034861</td><td>03-09-2025</td></tr>
+            <tr><td class="c">7</td><td class="r num">01</td><td class="mono">0511034862</td><td>03-09-2025</td></tr>
+            <tr><td class="c">8</td><td class="r num">01</td><td class="mono">0511034863</td><td>03-09-2025</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('m-lic')">Cancel</button>
+      <button class="btn btn-primary" onclick="closeModal('m-lic')">Select License</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL · Deficiency reasons ══════════ -->
+<div class="overlay" id="m-dreason" role="dialog" aria-modal="true" aria-label="Deficiency reasons">
+  <div class="modal">
+    <div class="modal-head"><span class="tick"></span><h3>Deficiency Reasons</h3>
+      <button class="modal-close" onclick="closeModal('m-dreason')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="c">#</th><th>Reason</th></tr></thead>
+          <tbody>
+            <tr><td class="c">1</td><td>Mismatch of Fab/GSM</td></tr>
+            <tr><td class="c">2</td><td>Norms Issue</td></tr>
+            <tr><td class="c">3</td><td>TR6 Attested</td></tr>
+            <tr><td class="c">4</td><td>EBRC Bank Certificate</td></tr>
+            <tr><td class="c">5</td><td>NA</td></tr>
+            <tr><td class="c">6</td><td>DL Clubbing</td></tr>
+            <tr><td class="c">7</td><td>GN19 Third Party</td></tr>
+            <tr><td class="c">8</td><td>G-19</td></tr>
+            <tr><td class="c">9</td><td>DL G-19</td></tr>
+            <tr><td class="c">10</td><td>TR-6 Attested</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('m-dreason')">Cancel</button>
+      <button class="btn btn-primary" onclick="closeModal('m-dreason')">Select Reason</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Y/N toggle behaviour
+  document.querySelectorAll('.yn[data-flag]').forEach(group => {
+    const [y, n] = group.querySelectorAll('button');
+    y.addEventListener('click', () => { y.classList.add('on-y'); n.classList.remove('on-n'); });
+    n.addEventListener('click', () => { n.classList.add('on-n'); y.classList.remove('on-y'); });
+  });
+  // Modals
+  function openModal(id){ document.getElementById(id).classList.add('on'); }
+  function closeModal(id){ document.getElementById(id).classList.remove('on'); }
+  document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e => { if(e.target === o) o.classList.remove('on'); }));
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') document.querySelectorAll('.overlay.on').forEach(o => o.classList.remove('on')); });
+</script>
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drawback Entry — Richa Group (Redesign)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16233a; --ink-soft:#22334f;
+    --paper:#f3f5f8; --card:#ffffff;
+    --line:#dde3ec; --line-strong:#c6cfdc;
+    --text:#243044; --muted:#6b7a90;
+    --teal:#0e7c72; --teal-dark:#0b6159; --teal-tint:#e6f2f0;
+    --amber:#b45309; --amber-tint:#fdf3e3;
+    --red:#b3363d; --red-tint:#fbebec;
+    --disabled:#eef1f5;
+    --radius:10px;
+    --shadow:0 1px 2px rgba(22,35,58,.06), 0 4px 14px rgba(22,35,58,.05);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:var(--paper);color:var(--text);display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+
+  aside{background:var(--ink);color:#c9d4e5;padding:20px 0 28px;position:sticky;top:0;height:100vh;overflow-y:auto}
+  .brand{display:flex;align-items:center;gap:10px;padding:4px 22px 20px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:14px}
+  .brand-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#0e7c72,#28a598);display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;color:#fff;font-size:15px}
+  .brand-name{font-family:'Space Grotesk';font-weight:600;color:#fff;font-size:1.02rem}
+  nav a{display:flex;align-items:center;gap:10px;padding:9px 22px;color:#aebad0;text-decoration:none;font-size:.88rem;border-left:3px solid transparent}
+  nav a:hover{background:rgba(255,255,255,.05);color:#fff}
+  nav .group{padding:16px 22px 6px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#5d6d88;font-weight:600}
+  nav a.sub{padding-left:38px;font-size:.84rem}
+  nav a.active{background:rgba(14,124,114,.18);border-left-color:#28a598;color:#fff;font-weight:500}
+  .caret{margin-left:auto;font-size:.7rem;opacity:.6}
+
+  main{display:flex;flex-direction:column;min-width:0}
+  header.topbar{background:var(--card);border-bottom:1px solid var(--line);padding:12px 32px;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:20}
+  .screen-switch{display:flex;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:4px;overflow-x:auto}
+  .screen-switch button{font:inherit;font-size:.78rem;font-weight:600;color:var(--muted);background:none;border:none;border-radius:99px;padding:7px 15px;cursor:pointer;white-space:nowrap}
+  .screen-switch button.on{background:var(--ink);color:#fff}
+  .top-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+  .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;cursor:pointer;position:relative;color:var(--muted)}
+  .dot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--amber);border:1.5px solid #fff}
+  .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#22334f,#0e7c72);color:#fff;display:grid;place-items:center;font-weight:600;font-size:.8rem}
+
+  .page{padding:26px 32px 120px;max-width:1460px;width:100%}
+  .view{display:none}
+  .view.on{display:block}
+  .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+  .crumbs{font-size:.76rem;color:var(--muted);margin-bottom:6px}
+  .crumbs b{color:var(--teal);font-weight:500}
+  h1{font-family:'Space Grotesk';font-weight:700;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em}
+  .chip{display:inline-block;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--amber-tint);color:var(--amber);border-radius:99px;padding:3px 10px;margin-left:8px;vertical-align:middle}
+  .chip-teal{background:var(--teal-tint);color:var(--teal)}
+
+  .btn{font-family:'IBM Plex Sans';font-size:.86rem;font-weight:600;border-radius:8px;padding:10px 20px;cursor:pointer;border:1px solid transparent;transition:all .15s}
+  .btn-primary{background:var(--teal);color:#fff}
+  .btn-primary:hover{background:var(--teal-dark)}
+  .btn-outline{background:#fff;color:var(--teal);border-color:var(--teal)}
+  .btn-outline:hover{background:var(--teal-tint)}
+  .btn-ghost{background:var(--ink);color:#fff}
+  .btn-ghost:hover{background:var(--ink-soft)}
+  .btn-sm{padding:6px 13px;font-size:.78rem}
+
+  .segment{display:inline-flex;border:1px solid var(--line-strong);border-radius:9px;overflow:hidden}
+  .segment button{font:inherit;font-size:.8rem;font-weight:600;border:none;background:#fff;color:var(--muted);padding:8px 16px;cursor:pointer}
+  .segment button.on{background:var(--teal);color:#fff}
+
+  section.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:10px;padding:14px 22px;border-bottom:1px solid var(--line);background:linear-gradient(to bottom,#fbfcfe,#f7f9fc);flex-wrap:wrap}
+  .card-head .tick{width:4px;height:18px;border-radius:2px;background:var(--teal)}
+  .card-head h2{font-family:'Space Grotesk';font-size:.95rem;font-weight:600;color:var(--ink)}
+  .card-head .hint{margin-left:auto;font-size:.74rem;color:var(--muted)}
+  .card-body{padding:20px 22px 24px}
+
+  .grid{display:grid;gap:16px 20px}
+  .cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .span-2{grid-column:span 2}
+  .field label{display:block;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .field input,.field select,.field textarea{width:100%;font:inherit;font-size:.88rem;color:var(--text);padding:9px 12px;border:1px solid var(--line-strong);border-radius:8px;background:#fff;transition:border-color .15s,box-shadow .15s;resize:vertical}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,124,114,.15)}
+  .field input:disabled,.field select:disabled{background:var(--disabled);color:#94a1b3;border-color:var(--line);cursor:not-allowed}
+  .field .num{font-variant-numeric:tabular-nums;text-align:right}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .checkbox{display:flex;align-items:center;gap:8px;font-size:.86rem}
+  .checkbox input{width:16px;height:16px;accent-color:var(--teal);cursor:pointer}
+
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+  table{width:100%;border-collapse:collapse;font-size:.83rem}
+  thead th{font-size:.66rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:10px 13px;background:#f7f9fc;border-bottom:1px solid var(--line);white-space:nowrap}
+  thead th.r,td.r{text-align:right}
+  thead th.c,td.c{text-align:center}
+  tbody td{padding:10px 13px;border-bottom:1px solid var(--line);white-space:nowrap}
+  tbody td.num{font-variant-numeric:tabular-nums}
+  tbody tr:hover{background:#f6faf9}
+  tbody tr:last-child td{border-bottom:none}
+  tbody input{font:inherit;font-size:.8rem;padding:6px 9px;border:1px solid var(--line-strong);border-radius:6px;width:100%;min-width:88px}
+  tbody input.num{font-variant-numeric:tabular-nums;text-align:right}
+  tbody input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 2px rgba(14,124,114,.15)}
+  .mono{font-variant-numeric:tabular-nums;letter-spacing:.01em}
+  .row-btn{width:30px;height:30px;border-radius:7px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--muted);font-size:.85rem}
+  .row-btn:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-tint)}
+  .row-btn.danger:hover{border-color:var(--red);color:var(--red);background:var(--red-tint)}
+  .tag{display:inline-block;font-size:.7rem;font-weight:600;border-radius:6px;padding:3px 9px;background:var(--teal-tint);color:var(--teal)}
+
+  .dropzone{border:2px dashed var(--line-strong);border-radius:12px;padding:52px 24px;text-align:center;color:var(--muted);transition:border-color .15s,background .15s;cursor:pointer}
+  .dropzone:hover{border-color:var(--teal);background:var(--teal-tint)}
+  .dropzone .big{font-size:2rem;margin-bottom:8px}
+  .dropzone b{color:var(--teal)}
+
+  .savebar{position:fixed;bottom:0;left:248px;right:0;z-index:30;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:14px 32px;display:flex;align-items:center;gap:10px}
+  .savebar .status{margin-right:auto;font-size:.8rem;color:var(--muted)}
+  .savebar .status b{color:var(--teal);font-weight:600}
+
+  @media (max-width:1200px){.cols-5{grid-template-columns:repeat(3,minmax(0,1fr))}.cols-4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:900px){
+    body{grid-template-columns:1fr}aside{display:none}.savebar{left:0;flex-wrap:wrap}
+    .cols-3,.cols-4,.cols-5{grid-template-columns:1fr}
+    .span-2{grid-column:span 1}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ══════════ Sidebar ══════════ -->
+<aside>
+  <div class="brand"><div class="brand-mark">RG</div><div class="brand-name">Richa Group</div></div>
+  <nav>
+    <a href="#">Dashboard</a>
+    <a href="#">Master <span class="caret">▾</span></a>
+    <div class="group">Transactions</div>
+    <a href="#" class="sub">Invoice <span class="caret">▾</span></a>
+    <a href="#" class="sub">Shipment Planning</a>
+    <a href="#" class="sub active">Sales Register <span class="caret">▾</span></a>
+    <a href="#" class="sub">CHA Bill Entry</a>
+    <a href="#" class="sub">Buyer Order Maintenance</a>
+    <a href="#" class="sub">GSP <span class="caret">▾</span></a>
+    <div class="group">General</div>
+    <a href="#">Reports <span class="caret">▾</span></a>
+    <a href="#">Edit</a>
+    <a href="#">Logout</a>
+  </nav>
+</aside>
+
+<!-- ══════════ Main ══════════ -->
+<main>
+  <header class="topbar">
+    <div class="screen-switch" role="tablist" aria-label="Views">
+      <button class="on" data-view="list">Drawback</button>
+      <button data-view="partial">Partial</button>
+      <button data-view="supp">Supplementary</button>
+      <button data-view="advance">Advance Drawback</button>
+      <button data-view="excel">Excel Import</button>
+    </div>
+    <div class="top-right">
+      <button class="icon-btn" aria-label="Messages">✉<span class="dot"></span></button>
+      <button class="icon-btn" aria-label="Notifications">🔔<span class="dot"></span></button>
+      <div class="avatar">AK</div>
+    </div>
+  </header>
+
+  <div class="page">
+
+    <!-- ════════ VIEW · Drawback list ════════ -->
+    <div class="view on" id="view-list">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / <b>Drawback Entry</b></div>
+          <h1>Drawback</h1>
+        </div>
+      </div>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Search</h2></div>
+        <div class="card-body">
+          <div class="grid cols-5">
+            <div class="field"><label>Consignee</label><select><option selected>Choose one…</option></select></div>
+            <div class="field"><label>From Date</label><input type="date" value="2014-01-03"></div>
+            <div class="field"><label>To Date</label><input type="date" value="2014-03-31"></div>
+            <div class="checkbox" style="padding-top:26px"><input type="checkbox" id="pend"><label for="pend" style="all:unset;cursor:pointer">Pending only</label></div>
+            <div class="field" style="align-self:end"><button class="btn btn-primary" style="width:100%">Search ⌕</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Drawback Entries</h2><span class="hint">6 records · filterable headers</span></div>
+        <div class="table-wrap" style="border:none;border-radius:0">
+          <table style="min-width:1250px">
+            <thead><tr>
+              <th class="c">#</th><th>Invoice No. ⏷</th><th>GST Invoice No</th><th>Rel Date</th><th>Shipping Bill No ⏷</th>
+              <th>Shipping Bill Date</th><th>Mode</th><th class="r">DBK Rec</th><th>EP Date</th><th>DBK Type ⏷</th><th>Location</th><th class="c">Actions</th>
+            </tr></thead>
+            <tbody>
+              <tr><td class="c">1</td><td class="mono">RG/0016/13-14</td><td>—</td><td>—</td><td>—</td><td>—</td><td>By Sea</td><td class="r num">0</td><td>—</td><td><span class="tag">DBK</span></td><td>RichaCO Export</td>
+                <td class="c"><button class="row-btn" title="Landing">📄</button> <button class="row-btn" title="View">🔍</button> <button class="row-btn" title="Edit" onclick="show('detail')">✎</button> <button class="row-btn danger" title="Delete">🗑</button></td></tr>
+              <tr><td class="c">2</td><td class="mono">ABC/SG/194/13.1/0008/13-14</td><td>—</td><td>—</td><td>—</td><td>—</td><td>By Air</td><td class="r num">2,000</td><td>—</td><td><span class="tag">DBK</span></td><td>RichaCO Export</td>
+                <td class="c"><button class="row-btn">📄</button> <button class="row-btn">🔍</button> <button class="row-btn" onclick="show('detail')">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+              <tr><td class="c">3</td><td class="mono">INV/0006/13-14</td><td>—</td><td>—</td><td class="mono">145GH</td><td>11-09-2014</td><td>By Road</td><td class="r num">0</td><td>11-09-2014</td><td><span class="tag">DBK</span></td><td>RichaCO Export</td>
+                <td class="c"><button class="row-btn">📄</button> <button class="row-btn">🔍</button> <button class="row-btn" onclick="show('detail')">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+              <tr><td class="c">4</td><td class="mono">RG/INV/0005/13-14</td><td>—</td><td>—</td><td class="mono">145XYRGB</td><td>16-02-2014</td><td>By Air</td><td class="r num">5,000</td><td>16-02-2014</td><td><span class="tag">DBK</span></td><td>RichaCO Export</td>
+                <td class="c"><button class="row-btn">📄</button> <button class="row-btn">🔍</button> <button class="row-btn" onclick="show('detail')">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+              <tr><td class="c">5</td><td class="mono">RG/INV/0004/13-14</td><td>16-10-2014</td><td>16-10-2014</td><td class="mono">Chip</td><td>—</td><td>By Road</td><td class="r num">0</td><td>—</td><td><span class="tag">DBK</span></td><td>RichaCO Export</td>
+                <td class="c"><button class="row-btn">📄</button> <button class="row-btn">🔍</button> <button class="row-btn" onclick="show('detail')">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+              <tr><td class="c">6</td><td class="mono">INV/0003/13-14</td><td>14-02-2014</td><td>14-02-2014</td><td class="mono">EWQE</td><td>13-03-2014</td><td>By Sea</td><td class="r num">15,000</td><td>13-03-2014</td><td><span class="tag">DBK</span></td><td>RichaCO Export</td>
+                <td class="c"><button class="row-btn">📄</button> <button class="row-btn">🔍</button> <button class="row-btn" onclick="show('detail')">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ════════ VIEW · Drawback detail ════════ -->
+    <div class="view" id="view-detail">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / Drawback Entry / <b>Detail</b></div>
+          <h1>Drawback Detail <span class="chip">RG/INV/0004/13-14</span></h1>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-ghost" onclick="show('list')">← Back to List</button>
+          <button class="btn btn-outline">Update Detail</button>
+        </div>
+      </div>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Invoice</h2></div>
+        <div class="card-body">
+          <div class="grid cols-3">
+            <div class="field"><label>Invoice No</label><input value="RG/INV/0004/13-14"></div>
+            <div class="field"><label>Invoice Date</label><input type="date" value="2013-10-03"></div>
+            <div class="field"><label>Consignee Name</label><input value="Sanjeev"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Shipment &amp; Value</h2></div>
+        <div class="card-body">
+          <div class="grid cols-4">
+            <div class="field"><label>Shipment Basis</label><select><option selected>RC FOB</option></select></div>
+            <div class="field"><label>Exchange</label><input class="num" value="70.00"></div>
+            <div class="field"><label>Shipping Bill / Date</label>
+              <div class="pair"><input class="num" value="70.00"><input type="date" disabled></div></div>
+            <div class="field"><label>Shipment Mode</label><input class="num" value="1,355.00"></div>
+            <div class="field"><label>Invoice Value (INR)</label><input class="num" value="2,021"></div>
+            <div class="field"><label>Total Qty</label><input class="num" value="1,355.00"></div>
+            <div class="field"><label>Less Amount (INR)</label><input class="num" value="0.00"></div>
+            <div class="field"><label>Less Value Remarks</label><input class="num" value="8,13,650.00"></div>
+            <div class="field"><label>HS Code</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Garments Type (RM)</label><select><option selected>—</option></select></div>
+            <div class="field"><label>Country in EP Copy</label><select><option selected>Bangladesh</option></select></div>
+            <div class="field"><label>EP Copy Rate &amp; Date</label>
+              <div class="pair"><input disabled placeholder="—"><input type="date" disabled></div></div>
+            <div class="field"><label>Freight / %</label>
+              <div class="pair"><input class="num" value="0.00"><input class="num" value="0.00"></div></div>
+            <div class="field"><label>Freight Type / Amount</label>
+              <div class="pair"><input disabled placeholder="—"><input class="num" disabled placeholder="0.00"></div></div>
+            <div class="field"><label>MAWB No. &amp; Date</label>
+              <div class="pair"><input class="num" value="8,13,650.00"><input type="date" disabled></div></div>
+            <div class="field"><label>HAWB No.</label><input disabled placeholder="—"></div>
+            <div class="field"><label>FCR No. &amp; Date</label>
+              <div class="pair"><input disabled placeholder="—"><input type="date" disabled></div></div>
+            <div class="field"><label>Vessel / Airline &amp; Sailing Date</label>
+              <div class="pair"><input disabled placeholder="—"><input type="date" disabled></div></div>
+            <div class="field"><label>Applications</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Licence Type</label>
+              <div class="pair"><select><option selected>0.00</option></select><select><option selected>0.00</option></select></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Drawback &amp; ROSCTL</h2></div>
+        <div class="card-body">
+          <div class="grid cols-4">
+            <div class="field"><label>Drawback Basis</label><select><option selected>—</option></select></div>
+            <div class="field"><label>FOB for Drawback (INR)</label><input value="818650 — FOB in FC: 1,63,730.00"></div>
+            <div class="field"><label>Total Drawback (INR)</label><input class="num" value="85,958.00"></div>
+            <div class="field"><label>Net DBK Applied (INR)</label><input class="num" value="85,958.00"></div>
+            <div class="field"><label>S.Tax (DBK) % / Amount</label>
+              <div class="pair"><input class="num" value="0"><input class="num" value="0.00"></div></div>
+            <div class="field"><label>S.Tax (Hanger) % / Amount</label>
+              <div class="pair"><input class="num" value="0"><input class="num" value="0.00"></div></div>
+            <div class="field"><label>ROSCTL Applied</label><input disabled placeholder="—"></div>
+            <div class="field"><label>ROSCTL Received / Date</label>
+              <div class="pair"><input disabled placeholder="—"><input type="date" disabled></div></div>
+            <div class="field"><label>DBK Received Amount / Date</label>
+              <div class="pair"><input class="num" disabled placeholder="0.00"><input type="date" disabled></div></div>
+            <div class="field"><label>DBK Writeoff Date</label><input type="date" disabled></div>
+            <div class="field"><label>MEIS Details</label>
+              <div class="pair"><input disabled placeholder="—"><input disabled placeholder="—"></div></div>
+            <div class="field"><label>Submission / Status</label>
+              <div class="pair"><select><option selected>—</option></select><input disabled placeholder="—"></div></div>
+            <div class="field"><label>Statement Date</label><input type="date" disabled></div>
+            <div class="field"><label>Realization Date</label><input type="date" disabled></div>
+            <div class="field"><label>Paper Filed On</label><input disabled placeholder="—"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Agents, Port &amp; Bank</h2></div>
+        <div class="card-body">
+          <div class="grid cols-4">
+            <div class="field"><label>Cargo Code / Agent Name</label>
+              <div class="pair"><select><option selected>—</option></select><input disabled placeholder="—"></div></div>
+            <div class="field"><label>Agent Code / Name</label>
+              <div class="pair"><select><option selected>—</option></select><input class="num" value="85,958.00"></div></div>
+            <div class="field"><label>Port</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Port Code / City</label>
+              <div class="pair"><select><option selected>—</option></select><input disabled placeholder="—"></div></div>
+            <div class="field"><label>Bank / Account Number</label>
+              <div class="pair"><select><option selected>—</option></select><input disabled placeholder="—"></div></div>
+            <div class="field"><label>GR-1 / Date</label>
+              <div class="pair"><input disabled placeholder="—"><input type="date" disabled></div></div>
+            <div class="field"><label>Entered On / Updated On</label>
+              <div class="pair"><input disabled placeholder="—"><input disabled placeholder="—"></div></div>
+            <div class="field"><label>Flag</label><input disabled placeholder="—"></div>
+            <div class="field span-2"><label>Remarks</label><input disabled placeholder="—"></div>
+            <div class="field span-2"><label>Special Remarks</label><input disabled placeholder="—"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ════════ VIEW · Partial ════════ -->
+    <div class="view" id="view-partial">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / Drawback Entry / <b>Partial</b></div>
+          <h1>DBK for Invoice <span class="chip chip-teal">Partial</span></h1>
+        </div>
+        <div class="segment">
+          <button class="on">Invoice</button>
+          <button>Shipping Bill</button>
+        </div>
+      </div>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Invoice</h2>
+          <button class="btn btn-sm btn-outline" style="margin-left:auto">Update Detail</button></div>
+        <div class="card-body">
+          <div class="grid cols-3">
+            <div class="field"><label>Invoice No</label><input value="RG/INV/0004/13-14"></div>
+            <div class="field"><label>Invoice Date</label><input type="date" value="2013-10-03"></div>
+            <div class="field"><label>Consignee Name</label><input value="Sanjeev"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" style="max-width:960px">
+        <div class="card-head"><span class="tick"></span><h2>Partial Drawback Details</h2></div>
+        <div class="card-body">
+          <div class="grid cols-4">
+            <div class="field"><label>EP Copy Rcvd</label><input value="18-10-2023"></div>
+            <div class="field"><label>Total FOB</label><input class="num" value="31,32,362.52"></div>
+            <div class="field"><label>FOB for DBK</label><input class="num" value="31,32,362.52"></div>
+            <div class="field"><label>DBK Applied</label><input class="num" value="90,839.00"></div>
+            <div class="field"><label>Recd Amount / Date</label>
+              <div class="pair"><input class="num" value="90,839.00"><input type="date" value="2023-10-09"></div></div>
+            <div class="field"><label>Flag</label><select disabled><option>—</option></select></div>
+            <div class="field"><label>Statement Date</label><input type="date" value="2023-10-09"></div>
+            <div class="field"><label>Realization Date</label><input type="date" value="2023-10-09"></div>
+            <div class="field"><label>Cheque Number / Date</label>
+              <div class="pair"><input disabled placeholder="—"><input type="date" disabled></div></div>
+            <div class="field"><label>Agent Report / Date</label>
+              <div class="pair"><select><option selected>No</option><option>Yes</option></select><input type="date" disabled></div></div>
+            <div class="field"><label>Status</label>
+              <div class="pair"><select disabled><option>—</option></select><select disabled><option>—</option></select></div></div>
+            <div class="field"><label>Current Status</label><select><option selected>No EGM</option></select></div>
+            <div class="field"><label>Write Off Date</label><input type="date" disabled></div>
+            <div class="field"><label>Less Value Remarks</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Query Remarks</label><input disabled placeholder="—"></div>
+            <div class="field"><label>After Remarks</label><input disabled placeholder="—"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ════════ VIEW · Supplementary ════════ -->
+    <div class="view" id="view-supp">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / Drawback Entry / <b>Supplementary</b></div>
+          <h1>Supplementary DBK for Invoice</h1>
+        </div>
+        <button class="btn btn-outline">Update Detail</button>
+      </div>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Invoice</h2></div>
+        <div class="card-body">
+          <div class="grid cols-4">
+            <div class="field"><label>Invoice No</label><input value="RC/3223/07-08"></div>
+            <div class="field"><label>Invoice Date</label><input type="date" value="2007-10-29"></div>
+            <div class="field"><label>Buyer Name</label><input value="CSI Industries, Inc."></div>
+            <div class="field"><label>Supplementary DBK Type</label><select><option selected>—</option></select></div>
+            <div class="field"><label>SB Bill / Date</label>
+              <div class="pair"><input class="num" value="1785722"><input type="date" value="2007-11-14"></div></div>
+            <div class="field"><label>Frt</label><input class="num" value="0.00"></div>
+            <div class="field"><label>PC</label><input class="num" value="0.00"></div>
+            <div class="field"><label>Amount</label><input class="num" disabled placeholder="0.00"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Filing History</h2><span class="hint">One row per supplementary claim</span></div>
+        <div class="table-wrap" style="border:none;border-radius:0">
+          <table style="min-width:1150px">
+            <thead><tr>
+              <th class="c">#</th><th>Filed On</th><th>S. Chq</th><th>Chq Date</th><th class="r">Amount</th>
+              <th>Stat. Date</th><th>Rlzn Date</th><th class="r">Spl. Value</th><th class="r">Received</th><th>RCV Date</th><th>Remarks</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td class="c">1</td><td><input type="date" value="2008-01-25"></td><td><input placeholder="—"></td><td><input type="date"></td>
+                <td><input class="num" value="0.00"></td><td><input type="date"></td><td><input type="date"></td>
+                <td><input class="num" value="14,109.00"></td><td><input class="num" value="1.00"></td><td><input type="date" value="2012-02-06"></td><td><input value="Write off"></td>
+              </tr>
+              <tr>
+                <td class="c">2</td><td><input type="date"></td><td><input placeholder="—"></td><td><input type="date"></td>
+                <td><input class="num" value="0.00"></td><td><input type="date"></td><td><input type="date"></td>
+                <td><input class="num" value="0.00"></td><td><input class="num" value="0.00"></td><td><input type="date"></td><td><input placeholder="—"></td>
+              </tr>
+              <tr>
+                <td class="c">3</td><td><input type="date"></td><td><input placeholder="—"></td><td><input type="date"></td>
+                <td><input class="num" value="0.00"></td><td><input type="date"></td><td><input type="date"></td>
+                <td><input class="num" value="0.00"></td><td><input class="num" value="0.00"></td><td><input type="date"></td><td><input placeholder="—"></td>
+              </tr>
+              <tr>
+                <td class="c">4</td><td><input type="date"></td><td><input placeholder="—"></td><td><input type="date"></td>
+                <td><input class="num" value="0.00"></td><td><input type="date"></td><td><input type="date"></td>
+                <td><input class="num" value="0.00"></td><td><input class="num" value="0.00"></td><td><input type="date"></td><td><input placeholder="—"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ════════ VIEW · Advance drawback ════════ -->
+    <div class="view" id="view-advance">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / Drawback Entry / <b>Advance Drawback</b></div>
+          <h1>Advance Drawback</h1>
+        </div>
+      </div>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Search</h2></div>
+        <div class="card-body">
+          <div class="grid cols-5">
+            <div class="field"><label>Entry No.</label><input class="num" value="8310"></div>
+            <div class="field"><label>SB No.</label><input class="num" value="4953128"></div>
+            <div class="field"><label>SB Date</label><input type="date" value="2014-03-31"></div>
+            <div class="field"><label>Rcvd Amount</label><input class="num" value="4,887.99"></div>
+            <div class="field"><label>Stat Date</label><input type="date" value="2014-01-03"></div>
+            <div class="field"><label>Relzn Date</label><input type="date" value="2014-01-03"></div>
+            <div class="field"><label>Port</label><input value="Ballabhgarh"></div>
+            <div class="field"><label>Rcvd Date</label><input type="date" value="2014-01-03"></div>
+            <div class="field"><label>For Posting Fill Date</label><input type="date"></div>
+            <div class="field" style="align-self:end"><button class="btn btn-primary" style="width:100%">Search ⌕</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Invoice-wise Amounts</h2></div>
+        <div class="table-wrap" style="border:none;border-radius:0">
+          <table style="min-width:900px">
+            <thead><tr><th class="c">#</th><th>Invoice No.</th><th class="r">Drawback Amount (Invoice-wise)</th><th>Posted On</th><th>Drawback Rcv Date</th></tr></thead>
+            <tbody>
+              <tr><td class="c">1</td><td class="mono">RE/2135/23-24</td><td class="r num">4,887.00</td><td><input type="date"></td><td><input type="date"></td></tr>
+              <tr><td class="c">2</td><td class="mono">RE/2136/23-24</td><td class="r">—</td><td><input type="date"></td><td><input type="date"></td></tr>
+              <tr><td class="c">3</td><td class="mono">RE/2137/23-24</td><td class="r">—</td><td><input type="date"></td><td><input type="date"></td></tr>
+              <tr><td class="c">4</td><td class="mono">RE/2138/23-24</td><td class="r">—</td><td><input type="date"></td><td><input type="date"></td></tr>
+              <tr><td class="c">5</td><td class="mono">RE/2139/23-24</td><td class="r">—</td><td><input type="date"></td><td><input type="date"></td></tr>
+              <tr><td class="c">6</td><td class="mono">RE/2140/23-24</td><td class="r">—</td><td><input type="date"></td><td><input type="date"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ════════ VIEW · Excel import ════════ -->
+    <div class="view" id="view-excel">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / Drawback Entry / <b>Excel Import</b></div>
+          <h1>Excel Import</h1>
+        </div>
+      </div>
+
+      <section class="card" style="max-width:720px;margin-inline:auto">
+        <div class="card-head"><span class="tick"></span><h2>Import Drawback Data</h2></div>
+        <div class="card-body">
+          <div class="dropzone">
+            <div class="big">📊</div>
+            <p><b>Click to browse</b> or drag &amp; drop an Excel file here</p>
+            <p style="font-size:.78rem;margin-top:6px">Accepted: .xlsx, .xls · Max 10 MB</p>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px">
+            <button class="btn btn-outline">Download Template</button>
+            <button class="btn btn-primary">Import</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Save bar -->
+  <div class="savebar">
+    <span class="status">Drawback Entry · <b>RG/INV/0004/13-14</b></span>
+    <button class="btn btn-ghost" onclick="show('list')">Back</button>
+    <button class="btn btn-primary">Save</button>
+  </div>
+</main>
+
+<script>
+  const viewBtns = document.querySelectorAll('.screen-switch button');
+  function show(name){
+    document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === 'view-' + name));
+    viewBtns.forEach(b => b.classList.toggle('on', b.dataset.view === name));
+    window.scrollTo({top:0});
+  }
+  viewBtns.forEach(b => b.addEventListener('click', () => show(b.dataset.view)));
+
+  // Segment toggles (visual only)
+  document.querySelectorAll('.segment').forEach(seg => {
+    seg.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => {
+      seg.querySelectorAll('button').forEach(b => b.classList.toggle('on', b === btn));
+    }));
+  });
+</script>
+</body>
+</html>

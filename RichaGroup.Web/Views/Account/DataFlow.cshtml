@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "DataFlow";
+    ViewData["Heading"] = "DataFlow";
+}
+
+
+
+<section class="card">
+
+    <div class="card-head">
+        <div>
+            <span class="tick"></span>
+            <h2 class="mt-2" id="txtHeaderMain">Data Flow</h2>
+        </div>
+        <div class="d-flex gap-2">
+            @await Html.PartialAsync("Components/_CheckBoxComponent")
+            @await Html.PartialAsync("Components/_UploadAndViewButtons")
+        </div>
+    </div>
+    <div class="card-body" >
+
+   
+        <div class="tabs" role="tablist">
+            <button type="button" id="btnDutyStructure" class="on" data-tab="Drawback">Drawback</button>
+            <button type="button" id="btnDutyVsDrawback" data-tab="E-WaybillandBOE" class="">E-Way bill and BOE</button>
+            <button type="button" id="btnDutyVsDrawback" data-tab="ExportPayment" class="">Export Payment</button>
+            <button type="button" id="btnDutyVsDrawback" data-tab="ExportSales" class="">Export Sales</button>
+            <button type="button" id="btnDutyVsDrawback" data-tab="ImportPayment" class="">Import Payment</button>
+            <button type="button" id="btnDutyVsDrawback" data-tab="AdvanceLicense" class="">Advance License</button>
+            <button type="button" id="btnDutyVsDrawback" data-tab="EPCGLicence" class="">EPCG Licence</button>
+            <button type="button" id="btnDutyVsDrawback" data-tab="ReconciliationofEinvoice" class="">Reconciliation of E invoice</button>
+            <button type="button" id="btnDutyVsDrawback" data-tab="ReconciliationofEDPMS_IDPMS" class="">Reconciliation of EDPMS/IDPMS</button>
+            <button type="button" id="btnDutyVsDrawback" data-tab="ROSCTLLicense" class="">ROSCTL License</button>
+            <button type="button" id="btnDutyVsDrawback" data-tab="Shippingbills" class="">Shipping bills</button>
+            <button type="button" id="btnDutyVsDrawback" data-tab="DocumentLibrary" class="">Document Library</button>
+        </div>
+
+        <!-- ── Tab 1── -->
+        <div class="tabpane on" id="Drawback">
+            Duty Drawback applied & received data flow to accounts
+        </div>
+        <!-- ── Tab 2── -->
+        <div class="tabpane" id="E-WaybillandBOE">
+            Eway bill generation for import BOE to done through integrated system 
+            directed through cleartax only. BOE to be saved alongwith Eway bill. 
+            Currently these are generated manually i.e. directly on Government Eway Bill portal
+        </div>
+        <!-- ── Tab 3── -->
+        <div class="tabpane" id="ExportPayment">
+            Export Payment received data flow from banking to accounts alongwith EBRC
+        </div>
+        <!-- ── Tab 4── -->
+        <div class="tabpane" id="ExportSales">
+            Export Sale invoice No, date, Amount & Eway Bill data flow to accounts
+        </div>
+        <!-- ── Tab 5── -->
+        <div class="tabpane" id="ImportPayment">
+            Import payment to flow from baking to accounts & its PI/ Invoice to flow from import/banking to accounts
+        </div>
+        <!-- ── Tab 6── -->
+        <div class="tabpane" id="AdvanceLicense">
+            No of Advance Authorisation licenses applied, received, utilised & balance
+        </div>
+        <!-- ── Tab 7── -->
+        <div class="tabpane" id="EPCGLicence">
+            No of EPCG licenses applied, received, utilised & 
+            unutilised balance alongwith Duty saved & pending 
+            liability due to non-fulfilment of export obligation
+        </div>
+        <!-- ── Tab 8── -->
+        <div class="tabpane" id="ReconciliationofEinvoice">
+            Reconciliation of E invoice with E way bill alongwith reasons for cancellation of E Invoice/ E way bill
+        </div>
+        <!-- ── Tab 9── -->
+        <div class="tabpane" id="ReconciliationofEDPMS_IDPMS">
+            Reconciliation of EDPMS/IDPMS
+        </div>
+        <!-- ── Tab 10── -->
+        <div class="tabpane" id="ROSCTLLicense">
+            ROSCTL License applied, received & sold data flow to accounts
+        </div>
+        <!-- ── Tab 11── -->
+        <div class="tabpane" id="Shippingbills">
+            Shipping bill number & date data flow to accounts
+        </div>
+        <!-- ── Tab 12── -->
+        <div class="tabpane" id="DocumentLibrary">
+            System to save copy of Export invoice, Shipping bill, Eway bill & EBRC
+        </div>
+    </div>
+</section>
+
+<script>
+
+    $(function () {
+        const tabBtns = [...document.querySelectorAll('.tabs button')];
+        tabBtns.forEach(b => b.addEventListener('click', () => {
+            document.querySelectorAll('.tabpane').forEach(p => p.classList.toggle('on', p.id === b.dataset.tab));
+            tabBtns.forEach(x => x.classList.toggle('on', x === b));
+        }));
+    });
+</script>

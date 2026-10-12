@@ -1,0 +1,801 @@
+﻿@{
+    ViewData["Title"] = "Export Redemption To EPCG Module";
+    ViewData["Heading"] = "Export Redemption To EPCG";
+}
+
+<style>
+    .cols-6 {
+        grid-template-columns: repeat(6,minmax(0,1fr));
+    }
+</style>
+
+<div class="bd_mainContainer">
+    <div class="page">
+        <!-- EPCG Details -->
+        <section class="card">
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Redemption To EPCG</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+                     @await Html.PartialAsync("Components/_CheckBoxComponent")
+                     @await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+
+                     </button>
+                        <button type="button"
+                           class="btn btn-primary btn-sm"
+                           id="btnAdd">
+                       ＋ Add
+                     </button>
+
+                    <button type="button"
+                            class="btn btn-cancel-custom"
+                            id="btnCancel">
+                        ✕ Cancel
+                    </button>
+
+                </div>
+            </div>
+             
+            <div class="card-body">
+
+                <!-- EPCG Number -->
+                <div class="grid cols-3">
+
+                    <div class="field">
+
+                        <div class="grid">
+                            <div class="field">
+
+                                <label class="text-primary">EPCG #</label>
+
+                                <input type="text"
+                                       id="txtEPCGNo_ExportRedemptionEPCG"
+                                       placeholder="Enter EPCG No..." />
+
+                            </div>
+
+                            <!-- DATE ROW 1 --> 
+                            <div class="grid cols-2">
+
+                                <div class="field">
+                                    <label class="form-label"> From </label>
+                                    <input type="text" id="txtFromdate1" class="form-Flatdate" />
+                                </div>
+
+                                <div class="field">
+                                    <label class="form-label"> To </label>
+                                    <input type="text" id="txtTodate1" class="form-Flatdate" />
+                                </div>
+ 
+
+                                <div class="field">
+                                    <label class="form-label"> From </label>
+                                    <input type="text" id="txtFromdate2" class="form-Flatdate" />
+                                </div>
+
+                                <div class="field">
+                                    <label class="form-label"> To </label>
+                                    <input type="text" id="txtTodate2" class="form-Flatdate" />
+                                </div>
+ 
+
+                                <div class="field">
+                                    <label class="form-label"> From </label>
+                                    <input type="text" id="txtFromdate3" class="form-Flatdate" />
+                                </div>
+
+                                <div class="field">
+                                    <label class="form-label"> To </label>
+                                    <input type="text" id="txtTodate3" class="form-Flatdate" />
+                                </div>
+  
+                            </div>
+                             
+                        </div>
+                        
+                    </div>
+
+                    <div class="field span-2">
+
+                        <div class="epcg-currency-section px-2" style="border-left:1px solid gray">
+
+                            <label class="epcg-currency-title text-primary">
+                                1. Currency
+                            </label> 
+
+                            <div class="grid cols-6">
+                                 
+                                <div class="field">
+
+                                    <select id="ddlCurrency11_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <input type="text" id="txtAmount11_ExportRedemptionEPCG" class="text-end"  placeholder="0.00" />
+                                </div>
+                                <!-- Currency 12 -->
+                                <div class="field">
+                                    <select id="ddlCurrency12_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+                                    </select>
+                                </div>
+
+                                <!-- Amount 12 -->
+                                <div class="field">
+                                    <input type="text" id="txtAmount12_ExportRedemptionEPCG" class="text-end" placeholder="0.00" />
+                                </div>
+
+
+                                <!-- Currency 13 -->
+                                <div class="field">
+                                    <select id="ddlCurrency13_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+
+                                    </select>
+
+                                </div>
+
+                                <!-- Amount 13 -->
+                                <div class="field">
+                                    <input type="text" id="txtAmount13_ExportRedemptionEPCG" class="text-end" placeholder="0.00" />
+                                </div>
+                                 
+                                <div class="field">
+
+                                    <select id="ddlCurrency11_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <input type="text" id="txtAmount11_ExportRedemptionEPCG" class="text-end"  placeholder="0.00" />
+                                </div>
+                                <!-- Currency 12 -->
+                                <div class="field">
+                                    <select id="ddlCurrency12_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+                                    </select>
+                                </div>
+
+                                <!-- Amount 12 -->
+                                <div class="field">
+                                    <input type="text" id="txtAmount12_ExportRedemptionEPCG" class="text-end" placeholder="0.00" />
+                                </div>
+
+
+                                <!-- Currency 13 -->
+                                <div class="field">
+                                    <select id="ddlCurrency13_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+
+                                    </select>
+
+                                </div>
+
+                                <!-- Amount 13 -->
+                                <div class="field">
+                                    <input type="text" id="txtAmount13_ExportRedemptionEPCG" class="text-end" placeholder="0.00" />
+                                </div>
+                                 
+                                <div class="field">
+
+                                    <select id="ddlCurrency11_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <input type="text" id="txtAmount11_ExportRedemptionEPCG" class="text-end"  placeholder="0.00" />
+                                </div>
+                                <!-- Currency 12 -->
+                                <div class="field">
+                                    <select id="ddlCurrency12_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+                                    </select>
+                                </div>
+
+                                <!-- Amount 12 -->
+                                <div class="field">
+                                    <input type="text" id="txtAmount12_ExportRedemptionEPCG" class="text-end" placeholder="0.00" />
+                                </div>
+
+
+                                <!-- Currency 13 -->
+                                <div class="field">
+                                    <select id="ddlCurrency13_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+
+                                    </select>
+
+                                </div>
+
+                                <!-- Amount 13 -->
+                                <div class="field">
+                                    <input type="text" id="txtAmount13_ExportRedemptionEPCG" class="text-end" placeholder="0.00" />
+                                </div>
+                                 
+                                <div class="field">
+
+                                    <select id="ddlCurrency11_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <input type="text" id="txtAmount11_ExportRedemptionEPCG" class="text-end"  placeholder="0.00" />
+                                </div>
+                                <!-- Currency 12 -->
+                                <div class="field">
+                                    <select id="ddlCurrency12_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+                                    </select>
+                                </div>
+
+                                <!-- Amount 12 -->
+                                <div class="field">
+                                    <input type="text" id="txtAmount12_ExportRedemptionEPCG" class="text-end" placeholder="0.00" />
+                                </div>
+
+
+                                <!-- Currency 13 -->
+                                <div class="field">
+                                    <select id="ddlCurrency13_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+
+                                    </select>
+
+                                </div>
+
+                                <!-- Amount 13 -->
+                                <div class="field">
+                                    <input type="text" id="txtAmount13_ExportRedemptionEPCG" class="text-end" placeholder="0.00" />
+                                </div>
+                                 
+                                <div class="field">
+
+                                    <select id="ddlCurrency11_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <input type="text" id="txtAmount11_ExportRedemptionEPCG" class="text-end"  placeholder="0.00" />
+                                </div>
+                                <!-- Currency 12 -->
+                                <div class="field">
+                                    <select id="ddlCurrency12_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+                                    </select>
+                                </div>
+
+                                <!-- Amount 12 -->
+                                <div class="field">
+                                    <input type="text" id="txtAmount12_ExportRedemptionEPCG" class="text-end" placeholder="0.00" />
+                                </div>
+
+
+                                <!-- Currency 13 -->
+                                <div class="field">
+                                    <select id="ddlCurrency13_ExportRedemptionEPCG" class="form-select">
+                                        <option value=""> Currency </option>
+                                        <option value="USD">USD</option>
+                                        <option value="UK">UK</option>
+                                        <option value="EURO">EURO</option>
+                                        <option value="DM">DM</option>
+                                        <option value="NA">N.A.</option>
+
+                                    </select>
+
+                                </div>
+
+                                <!-- Amount 13 -->
+                                <div class="field">
+                                    <input type="text" id="txtAmount13_ExportRedemptionEPCG" class="text-end" placeholder="0.00" />
+                                </div>
+
+                            </div>
+
+                        </div>
+                       
+                        <div class="d-flex justify-content-end mt-2 gap-3">
+                            
+                            <button type="button"
+                                    class="btn btn-primary btn-sm"
+                                    id="btnExportObligationBillNo">
+                                Obligation Shipping Bill No
+                            </button>
+                            <button type="button"
+                                    class="btn btn-primary btn-sm"
+                                    id="btnExportObligationAvg">
+                                Export Obligation + Avg Amount
+                            </button>
+                            
+                            <button type="button" class="btn btn-primary btn-sm" id="btnTagLine">
+                                Tag License
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+ 
+            <div class="table-wrap">
+                <table id="tblExportRedemptionEPCG" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="table-header-fixed">Action</th>
+                            <th class="table-header-fixed">Select</th>
+                            <th>Prod_Exp</th>
+                            <th>Invoice No</th>
+                            <th>Shipping Bill</th>
+                            <th>Shp_bill_Dt</th>
+                            <th>Net_Fob</th>
+                            <th>Currency</th>
+                            <th>Flag</th>
+                            <th>Dbk_Type</th>
+                            <th>Bank</th>
+                            <th>Remark</th>
+                            <th>M_Export</th>
+                            <th>Currency Type</th>
+                            <th>Currency Rate</th>
+                            <th>Net Imp</th>
+                            <th>USD Rate</th>
+                            <th>Net USD</th>
+                            <th>Party</th>
+                            <th>CO</th>
+                            <th>Ref No</th>
+                            <th>Ref Date</th>
+                            <th>bank Account Transfer</th>
+                            <th>PP</th>
+                            <th>Realzation Date</th>
+                            <th>Fob</th>
+                            <th>CF</th>
+                            <th>BRC Amount</th>
+                            <th>Realization Rate</th>
+                            <th>Cou_Cuurency</th>
+                            <th>Free INR</th>
+                            <th>INS INR</th>
+                            <th>Free Currency</th>
+                            <th>Invoice Date</th>
+                            <th>Ins Currency</th>
+                            <th>Discount Currency</th>
+                            <th>Discount INR</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblbodyExportRedemptionEPCG"></tbody>
+                </table>
+                
+            </div>
+
+            <div class="grid cols-5 d-none mt-3 px-2" id="exportObligationResultFields">
+
+                <div class="field">
+                    <div class="field border border-primary-subtle bg-primary bg-opacity-10 rounded-3 p-3 shadow-sm">
+
+                        <label for="txtExportObligation"
+                               class="form-label mb-2 fw-semibold text-primary">
+                            Export Obligation: <span id="spnExportObligation">24334433</span>
+                        </label>
+
+
+                    </div>
+                </div>
+
+                <!-- Avg Amount -->
+                <div class="field span-3 d-flex gap-3" id="dvAvrageAmound"> </div>
+
+            </div>
+        </section>  
+    </div>
+</div>
+
+@* modal open for edit and add  *@
+<div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                        ROSCTL License Entry
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+          <div class="modal-body px-2">
+                 @await Html.PartialAsync("_Redemption_EPCG")
+        </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* open modal in click of tag line  *@
+
+<div class="modal fade" id="OpenMenuModalTagLine" tabindex="-1" aria-labelledby="OpenMenuModalTagLine" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-l">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="OpenMenuModalTagLineLabel">
+                     Tag line modal 
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            
+             <div class="modal-body px-2">
+
+                 <div class="row g-3">
+
+            <!-- LIC to Tag -->
+            <div class="col-md-6">
+                <div class="field">
+                    <label for="txtLicToTag" class="form-label">
+                        LIC to Tag
+                        <button type="button"
+                                class="help-link"
+                                id="btnLicTpTag">
+                            Help
+                        </button>
+                    </label>
+
+                    <input type="text"
+                           id="txtLicToTag"
+                           class="form-input"
+                           placeholder="Enter LIC to Tag">
+                </div>
+            </div>
+
+            <!-- Serial Number -->
+            <div class="col-md-6">
+                <div class="field">
+                    <label for="txtSerialNumber" class="form-label">
+                        Serial Number
+                    </label>
+
+                    <input type="text"
+                           id="txtSerialNumber"
+                           class="form-input"
+                           placeholder="Enter Serial Number">
+                </div>
+            </div>
+
+                    </div>
+            
+             </div>
+
+             <div class="modal-footer">
+                 <button type="button"
+                         class="btn btn-primary btn-sm"
+                         id="btnSave">
+
+                     <svg width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round">
+
+                         <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                         <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                         <polyline points="7 3 7 8 15 8"></polyline>
+
+                     </svg>
+
+                     Save
+                 </button>
+             </div>
+
+        </div>
+    </div>
+</div>
+ 
+<div class="modal fade" id="OpenMenuModalLicTagHelp" tabindex="-1" aria-labelledby="OpenMenuModalLicTagHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="OpenMenuModalLicTagHelpLabel">
+                    Help Lic To Tag
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body px-2">
+                 <div class="table-wrap">
+                     <table id="tblLicTag" class="display" style="width:100%">
+                          <thead>
+                              <tr>
+                                  <th>Select</th>
+                                  <th>License #</th>
+                                  <th>RS Obligenations</th>
+                                  <th>Date</th>
+                                  <th>USD Obligation</th>
+                                  <th>Average Amount</th>
+                              </tr>
+                          </thead>
+                          <tbody id="tblbodyLicTag"></tbody>
+                     </table>
+                 </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveHelp">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* after seelct checkbox and click a button the open  a modal  *@
+
+<div class="modal fade" id="exportObligationDateModal"  tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-md">
+
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+
+                <div class="modal-header-text">
+                    <div class="modal-title">
+                        Export Obligation + Avg Amount
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+            <div class="modal-body px-2">
+
+                <div class="row g-3">
+
+                    <!-- From Date -->
+                    <div class="col-md-6">
+                        <div class="field">
+
+                            <label for="txtExportFromDate" class="form-label">
+                                From Date
+                            </label>
+
+                            <input type="text" id="txtExportFromDate" class="form-input form-Flatdate" placeholder="From Date">
+                        </div>
+                    </div>
+
+                    <!-- To Date -->
+                    <div class="col-md-6">
+                        <div class="field">
+
+                            <label for="txtExportToDate" class="form-label">
+                                To Date
+                            </label>
+
+                            <input type="text" id="txtExportToDate" class="form-input form-Flatdate" placeholder="To Date">
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="field">
+
+                            <label for="txtLicenseNo" class="form-label">
+                                License No
+                            </label>
+
+                            <input type="text" id="txtLicenseNo" placeholder="License No">
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary btn-sm" id="btnExportObligationDateOK">
+                    OK
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<script src="~/js/pages/banking/redemption_to_epcg.js" asp-append-version="true"></script>

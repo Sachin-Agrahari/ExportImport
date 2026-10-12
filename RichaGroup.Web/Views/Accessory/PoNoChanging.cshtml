@@ -1,0 +1,186 @@
+﻿@{
+	ViewData["Title"] = "Po No Changing";
+	ViewData["Heading"] = "Po No Changing";
+}
+<style>
+  .tt-radio-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    background: var(--clr-surface);
+    border: 1.5px solid var(--teal-tint-light);
+    border-radius: 999px;
+    padding: 3px;
+    gap: 2px;
+    overflow: hidden;
+}
+
+.tt-radio-toggle input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.tt-radio-toggle label {
+    position: relative;
+    z-index: 2;
+    min-width: 90px;
+    text-align: center;
+    padding: 5px 16px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    font-family: var(--font-body);
+    color: var(--clr-neutral-soft);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    user-select: none;
+}
+
+.tt-radio-toggle input[type="radio"]:checked + label {
+    color: #fff;
+}
+
+#rdoPOchangeFabric:checked ~ .tt-radio-slider {
+    transform: translateX(calc(100% + 2px));
+}
+</style>
+
+<div class="bd_mainContainer">
+
+    <div class="page">
+
+        <section class="card">
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Po No Changing</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+                    <button type="button"
+                            class="btn btn-outline-danger btn-sm"
+                            id="btnRefresh">
+                        ↻ Refresh
+                    </button>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+
+
+    <div class="card-body p-3">
+
+        <!-- TYPE TOGGLE -->
+        <div class="mb-4">
+            <div class="d-inline-flex align-items-center border rounded-pill bg-light p-1">
+
+                    <input type="radio"
+                           name="PochnageAccessory"
+                           id="rdoPochnageAccessory"
+                           value="Accessory"
+                           checked>
+
+                    <label for="rdoPochnageAccessory">
+                        Accessory
+                    </label>
+            </div>
+        </div>
+
+
+        <!-- PO FIELDS -->
+        <div class="row g-3">
+
+            <!-- OLD PO -->
+            <div class="col-md-4">
+
+                <div class="card h-100 border shadow-sm">
+
+                    <div class="card-body p-3">
+
+                        <label for="txtOldPoNumer"
+                               class="form-label fw-semibold text-secondary mb-2">
+                            Old PO Number
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-primary">
+                                <i class="fa-solid fa-file-circle-minus"></i>
+                            </span>
+
+                            <input type="text"
+                                   id="txtOldPoNumer"
+                                   class="form-control"
+                                   placeholder="Enter Old PO Number">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- NEW PO -->
+            <div class="col-md-4">
+
+                <div class="card h-100 border shadow-sm">
+
+                    <div class="card-body p-3">
+
+                        <label for="txtNewPoNumer"
+                               class="form-label fw-semibold text-secondary mb-2">
+                            New PO Number
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-success">
+                                <i class="fa-solid fa-file-circle-plus"></i>
+                            </span>
+
+                            <input type="text"
+                                   id="txtNewPoNumer"
+                                   class="form-control"
+                                   placeholder="Enter New PO Number">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+        </section>
+    </div>
+</div>
+

@@ -1,0 +1,301 @@
+﻿@{
+    bool isFabric = ViewBag.isFabric;
+    bool formType = ViewBag.IsModal;
+    string Type = ViewBag.Type;
+    ViewData["Title"] = $"Letter of Credit ({Type})";
+    if (ViewBag.IsModal == true)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<style>
+    .cols-6 {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+</style>
+
+<div class="bd_mainContainer" id="@Type">
+    <div class="page"> 
+        <section class="card">
+            <div class="card-head">
+
+                <div class="d-flex flex-row ">
+
+                    <h2 class="mt-2"><span id="txtHeaderMain">Letter of Credit</span> (@Type)</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <div class="d-flex gap-2">
+                        @if (formType == false)
+                        {
+                            @await Html.PartialAsync("Components/_CheckBoxComponent")
+                            @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                        }
+                    </div>
+                   
+                    <button class="btn btn-primary btn-sm"
+                            id="lcBtnAdd">
+                        ＋ Add
+                    </button>
+
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Confirm" id="lcBtnConfirm">
+
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        <span>Confirm</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Save" id="lcBtnSave">
+
+                        <img src="~/assets/icon/save.svg" alt="save-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Save</span>
+                    </button>
+
+                    <button class="btn-outline-danger d-flex flex-row align-center justify-content-center px-2" title="Delete" id="lcBtnDelete">
+                        <img src="~/assets/icon/delete.svg" class="w-50 h-50 me-1 white-icon" />
+                       
+                        <span>Delete</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm  d-flex flex-row align-center justify-content-center" title="Print" id="lcBtnPrint">
+
+                        <img src="~/assets/icon/print.svg" alt="print-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Print</span>
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="grid cols-6">
+
+                    
+                    <div class="field">
+                        <label class="form-label">Vendor <span class="text-danger">*</span></label>
+                        <select id="ddlVendor" class="form-select">
+                            <option value="">— Select Vendor —</option>
+                            <option value="1" selected>SHAOXING TAOSEN TEXTILE CO., LTD.</option>
+                            <option value="2">ORIENT ACCESSORIES LTD</option>
+                            <option value="3">METRO GARMENT SUPPLIERS</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">LC Request No.</label>
+                        <select id="ddlRequestNo" class="form-select">
+                            <option value="8" selected>8</option>
+                            <option value="7">7</option>
+                            <option value="6">6</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">LC Request Dt.</label>
+                        <input type="text" id="txtRequestDate" class="form-control" value="18-Apr-2025" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">LC Dt.</label>
+                        <input type="text" id="txtLcDate" class="form-control" value="18-Apr-2025" />
+                    </div>
+                    
+                    <div class="field">
+                        <label class="form-label">PI No.</label>
+                        <select id="ddlPiNo" class="form-select">
+                            <option value="123454334">123454334</option>
+                            <option value="123454334">123454334</option>
+                            <option value="123454334">123454334</option>
+                            <option value="123454334">123454334</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">LC No.</label>
+                        <input type="text" id="lcNumber" class="form-control" placeholder="LC No..." />
+                    </div>
+                </div>
+
+            </div>
+             
+        </section>
+
+        <section class="card"> 
+            <div class="card-body">
+                <div class="table-wrap">
+                    <table id="tblLetterOfCreadit" class="table-component">
+                        <thead>
+                            <tr>
+                                <th>PINO</th>
+                                <th>Buyer</th>
+                                <th>Style No</th>
+                                <th>Description</th>
+                                <th class="r num">Width</th>
+                                <th class="r num">GSM</th>
+                                <th class="r num">Qty</th>
+                                <th>UOM</th>
+                                <th style="width: 120px;">Shipment Date</th>
+                                <th>Lic No.</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblLetterOfCreaditBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="card">
+            <div class="card-head">
+
+                <div class="d-flex flex-row ">
+                    <h2 class="mt-2">Terms & Conditions</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-primary btn-sm"  id="BtnOpeningPerforma">L/C Opening Performa</button>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="grid cols-6">
+                    <div class="field">
+                        <label class="form-label">Term</label>
+                        <select id="ddlTerm" class="form-select">
+                            <option value="FOB" selected>FOB</option>
+                            <option value="CIF">CIF</option>
+                            <option value="EX WORKS">EX WORKS</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Payment Terms</label>
+                        <select id="ddlPaymentTerms" class="form-select">
+                            <option value="LC AT SIGHT" selected>LC AT SIGHT</option>
+                            <option value="TT">TT</option>
+                            <option value="DA">DA</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Currency</label>
+                        <select id="ddlCurrency" class="form-select">
+                            <option value="US$" selected>US$</option>
+                            <option value="INR">INR</option>
+                            <option value="EUR">EUR</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Amount</label>
+                        <input type="number" id="txtAmount" class="form-control" placeholder="82419.2000" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Mode</label>
+                        <select id="ddlMode" class="form-select">
+                            <option value="AIR" selected>AIR</option>
+                            <option value="SEA">SEA</option>
+                            <option value="ROAD">ROAD</option>
+                        </select>
+                    </div>
+                  
+
+                    <div class="field">
+                        <label class="form-label">Variation</label>
+                        <input type="text" id="txtVariation" class="form-control" placeholder="+/-3% ALLOWED IN QTY AND AMOUNT" />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Port of Loading</label>
+                        <input type="text" id="txtPortOfLoading" class="form-control" placeholder="SHANGHAI CHINA" />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Port of Discharge</label>
+                        <select id="ddlPortOfDischarge" class="select2">
+                            <option value="NEW DELHI" selected>NEW DELHI</option>
+                            <option value="MUMBAI">MUMBAI</option>
+                            <option value="CHENNAI">CHENNAI</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Trans Shipments</label>
+                        <input type="text" id="txtTransShipments" class="form-control" placeholder="ALLOWED" />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Partial Shipment</label>
+                        <input type="text" id="txtPartialShipment" class="form-input" placeholder="ALLOWED" />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">OGL</label>
+                        <input type="text" id="txtOgl" class="form-control" placeholder="52.08" />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Merchant</label>
+                        <select id="ddlMerchant" class="form-select">
+                            <option value="ABHINAV BEHL" selected>ABHINAV BEHL</option>
+                            <option value="KAPIL">KAPIL</option>
+                            <option value="RAHUL">RAHUL</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Port of Destination</label>
+                        <select id="ddlPortOfDestination" class="form-select">
+                            <option value="NEW DELHI" selected>NEW DELHI</option>
+                            <option value="MUMBAI">MUMBAI</option>
+                            <option value="CHENNAI">CHENNAI</option>
+                        </select>
+                    </div>
+
+                    <div class="field span-2">
+                        <label class="form-label">Spl Clause</label>
+                        <textarea id="txtarSplClause" class="form-control"> </textarea>
+                    </div>
+
+                    <div class="field span-2">
+                        <label class="form-label">Bank Details</label>
+                        <textarea id="txtarBankDetails" class="form-control" placeholder="Bank details..."></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+    </div>
+</div>
+<div class="modal fade" id="PerformaModal" tabindex="-1" aria-labelledby="PerformaModal" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content checklist-modal">
+            <div class="modal-header checklist-modal-header">
+
+                <div class="modal-header-text">
+                   
+                    <div class="modal-title">L/C Opening Performa</div>
+                </div>
+
+                <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="table-scroll table-scroll--fixed" style="height:60vh !important;">
+                    <table id="tblModal" class="table-component">
+                        <tbody id="tblModalBody"> </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="module" src="~/js/pages/import/letterofcredit.js" asp-append-version="true"></script>

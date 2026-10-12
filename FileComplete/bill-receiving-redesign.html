@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bill Receiving — Richa Group (Redesign)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16233a; --ink-soft:#22334f;
+    --paper:#f3f5f8; --card:#ffffff;
+    --line:#dde3ec; --line-strong:#c6cfdc;
+    --text:#243044; --muted:#6b7a90;
+    --teal:#0e7c72; --teal-dark:#0b6159; --teal-tint:#e6f2f0;
+    --amber:#b45309; --amber-tint:#fdf3e3;
+    --red:#b3363d; --red-tint:#fbebec;
+    --disabled:#eef1f5;
+    --radius:10px;
+    --shadow:0 1px 2px rgba(22,35,58,.06), 0 4px 14px rgba(22,35,58,.05);
+    --shadow-lg:0 8px 20px rgba(22,35,58,.14), 0 20px 60px rgba(22,35,58,.18);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:var(--paper);color:var(--text);display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+
+  aside{background:var(--ink);color:#c9d4e5;padding:20px 0 28px;position:sticky;top:0;height:100vh;overflow-y:auto}
+  .brand{display:flex;align-items:center;gap:10px;padding:4px 22px 20px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:14px}
+  .brand-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#0e7c72,#28a598);display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;color:#fff;font-size:15px}
+  .brand-name{font-family:'Space Grotesk';font-weight:600;color:#fff;font-size:1.02rem}
+  nav a{display:flex;align-items:center;gap:10px;padding:9px 22px;color:#aebad0;text-decoration:none;font-size:.88rem;border-left:3px solid transparent;transition:background .15s,color .15s}
+  nav a:hover{background:rgba(255,255,255,.05);color:#fff}
+  nav .group{padding:16px 22px 6px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#5d6d88;font-weight:600}
+  nav a.sub{padding-left:38px;font-size:.84rem}
+  nav a.active{background:rgba(14,124,114,.18);border-left-color:#28a598;color:#fff;font-weight:500}
+  .caret{margin-left:auto;font-size:.7rem;opacity:.6}
+
+  main{display:flex;flex-direction:column;min-width:0}
+  header.topbar{background:var(--card);border-bottom:1px solid var(--line);padding:12px 32px;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:20}
+  .screen-switch{display:flex;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:4px}
+  .screen-switch button{font:inherit;font-size:.78rem;font-weight:600;color:var(--muted);background:none;border:none;border-radius:99px;padding:7px 16px;cursor:pointer}
+  .screen-switch button.on{background:var(--ink);color:#fff}
+  .top-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+  .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;cursor:pointer;position:relative;color:var(--muted)}
+  .dot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--amber);border:1.5px solid #fff}
+  .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#22334f,#0e7c72);color:#fff;display:grid;place-items:center;font-weight:600;font-size:.8rem}
+
+  .page{padding:26px 32px 120px;max-width:1420px;width:100%}
+  .view{display:none}
+  .view.on{display:block}
+  .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+  .crumbs{font-size:.76rem;color:var(--muted);margin-bottom:6px}
+  .crumbs b{color:var(--teal);font-weight:500}
+  h1{font-family:'Space Grotesk';font-weight:700;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em}
+  .chip{display:inline-block;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--amber-tint);color:var(--amber);border-radius:99px;padding:3px 10px;margin-left:8px;vertical-align:middle}
+
+  .btn{font-family:'IBM Plex Sans';font-size:.86rem;font-weight:600;border-radius:8px;padding:10px 20px;cursor:pointer;border:1px solid transparent;transition:all .15s}
+  .btn-primary{background:var(--teal);color:#fff}
+  .btn-primary:hover{background:var(--teal-dark)}
+  .btn-outline{background:#fff;color:var(--teal);border-color:var(--teal)}
+  .btn-outline:hover{background:var(--teal-tint)}
+  .btn-ghost{background:var(--ink);color:#fff}
+  .btn-ghost:hover{background:var(--ink-soft)}
+  .btn-sm{padding:6px 13px;font-size:.78rem}
+
+  section.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:10px;padding:14px 22px;border-bottom:1px solid var(--line);background:linear-gradient(to bottom,#fbfcfe,#f7f9fc)}
+  .card-head .tick{width:4px;height:18px;border-radius:2px;background:var(--teal)}
+  .card-head h2{font-family:'Space Grotesk';font-size:.95rem;font-weight:600;color:var(--ink)}
+  .card-head .hint{margin-left:auto;font-size:.74rem;color:var(--muted)}
+  .card-body{padding:20px 22px 24px}
+
+  .grid{display:grid;gap:16px 20px}
+  .cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .field label{display:block;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .field input,.field select{width:100%;font:inherit;font-size:.88rem;color:var(--text);padding:9px 12px;border:1px solid var(--line-strong);border-radius:8px;background:#fff;transition:border-color .15s,box-shadow .15s}
+  .field input:focus,.field select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,124,114,.15)}
+  .field input:disabled,.field select:disabled{background:var(--disabled);color:#94a1b3;border-color:var(--line);cursor:not-allowed}
+  .field .num{font-variant-numeric:tabular-nums;text-align:right}
+
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+  table{width:100%;border-collapse:collapse;font-size:.84rem}
+  thead th{font-size:.66rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:10px 13px;background:#f7f9fc;border-bottom:1px solid var(--line);white-space:nowrap}
+  thead th.r,td.r{text-align:right}
+  thead th.c,td.c{text-align:center}
+  tbody td{padding:10px 13px;border-bottom:1px solid var(--line);white-space:nowrap}
+  tbody td.num{font-variant-numeric:tabular-nums}
+  tbody tr:hover{background:#f6faf9}
+  tbody tr:last-child td{border-bottom:none}
+  tbody input,tbody select{font:inherit;font-size:.82rem;padding:6px 9px;border:1px solid var(--line-strong);border-radius:6px;width:100%;min-width:90px}
+  tbody input.num{font-variant-numeric:tabular-nums;text-align:right}
+  tbody input:focus,tbody select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 2px rgba(14,124,114,.15)}
+  .mono{font-variant-numeric:tabular-nums;letter-spacing:.01em}
+  .row-btn{width:30px;height:30px;border-radius:7px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--muted);font-size:.85rem}
+  .row-btn:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-tint)}
+  .row-btn.danger:hover{border-color:var(--red);color:var(--red);background:var(--red-tint)}
+  .tag{display:inline-block;font-size:.7rem;font-weight:600;border-radius:6px;padding:3px 9px;background:var(--teal-tint);color:var(--teal)}
+
+  .subhead{font-family:'Space Grotesk';font-size:.88rem;font-weight:600;color:var(--ink);margin:22px 0 12px;display:flex;align-items:center;gap:8px}
+  .subhead::before{content:"";width:4px;height:15px;border-radius:2px;background:var(--teal)}
+
+  /* Tax detail two-column layout */
+  .tax-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
+  .tax-row{display:grid;grid-template-columns:1fr 150px;align-items:center;gap:14px;padding:9px 0;border-bottom:1px dashed var(--line)}
+  .tax-row:last-child{border-bottom:none}
+  .tax-row .lbl{font-size:.84rem;color:var(--text)}
+  .tax-row input,.tax-row select{font:inherit;font-size:.84rem;padding:7px 10px;border:1px solid var(--line-strong);border-radius:7px;width:100%;font-variant-numeric:tabular-nums;text-align:right}
+  .tax-row select{text-align:left}
+  .tax-row input:disabled{background:var(--disabled);color:#94a1b3;border-color:var(--line)}
+  .tax-row input:focus,.tax-row select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 2px rgba(14,124,114,.15)}
+  .tax-row.total .lbl{font-weight:600;color:var(--ink)}
+  .tax-row.total input{font-weight:600;border-color:var(--teal);background:var(--teal-tint);color:var(--teal-dark)}
+
+  /* Modals */
+  .overlay{position:fixed;inset:0;background:rgba(22,35,58,.5);backdrop-filter:blur(2px);display:none;place-items:center;z-index:100;padding:24px}
+  .overlay.on{display:grid}
+  .modal{background:#fff;border-radius:14px;box-shadow:var(--shadow-lg);width:min(560px,100%);max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
+  .modal-head{display:flex;align-items:center;gap:10px;padding:16px 24px;border-bottom:1px solid var(--line)}
+  .modal-head .tick{width:4px;height:18px;border-radius:2px;background:var(--teal)}
+  .modal-head h3{font-family:'Space Grotesk';font-size:1.02rem;font-weight:600;color:var(--ink)}
+  .modal-close{margin-left:auto;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--muted);font-size:1rem}
+  .modal-close:hover{border-color:var(--red);color:var(--red)}
+  .modal-body{padding:20px 24px;overflow:auto}
+  .modal-foot{padding:14px 24px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px;background:#fbfcfe}
+
+  .savebar{position:fixed;bottom:0;left:248px;right:0;z-index:30;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:14px 32px;display:flex;align-items:center;gap:10px}
+  .savebar .status{margin-right:auto;font-size:.8rem;color:var(--muted)}
+  .savebar .status b{color:var(--teal);font-weight:600}
+
+  @media (max-width:1150px){.cols-5{grid-template-columns:repeat(3,minmax(0,1fr))}.cols-4{grid-template-columns:repeat(2,minmax(0,1fr))}.tax-grid{grid-template-columns:1fr}}
+  @media (max-width:900px){
+    body{grid-template-columns:1fr}aside{display:none}.savebar{left:0;flex-wrap:wrap}
+    .cols-4,.cols-5{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ══════════ Sidebar ══════════ -->
+<aside>
+  <div class="brand"><div class="brand-mark">RG</div><div class="brand-name">Richa Group</div></div>
+  <nav>
+    <a href="#">Dashboard</a>
+    <a href="#">Master <span class="caret">▾</span></a>
+    <div class="group">Transactions</div>
+    <a href="#" class="sub">Invoice <span class="caret">▾</span></a>
+    <a href="#" class="sub">Carton Details <span class="caret">▾</span></a>
+    <a href="#" class="sub">Shipment Planning</a>
+    <a href="#" class="sub">Sales Register <span class="caret">▾</span></a>
+    <a href="#" class="sub">Doc Sent</a>
+    <a href="#" class="sub">Custom Paper</a>
+    <a href="#" class="sub active">CHA Bill Entry</a>
+    <a href="#" class="sub">Buyer Order Maintenance</a>
+    <a href="#" class="sub">GSP <span class="caret">▾</span></a>
+    <div class="group">General</div>
+    <a href="#">Reports <span class="caret">▾</span></a>
+    <a href="#">Edit</a>
+    <a href="#">Logout</a>
+  </nav>
+</aside>
+
+<!-- ══════════ Main ══════════ -->
+<main>
+  <header class="topbar">
+    <div class="screen-switch" role="tablist" aria-label="Views">
+      <button class="on" data-view="list">1 · Bill Receiving</button>
+      <button data-view="expense">2 · Expense</button>
+      <button data-view="details">3 · Bill Details</button>
+    </div>
+    <div class="top-right">
+      <button class="icon-btn" aria-label="Messages">✉<span class="dot"></span></button>
+      <button class="icon-btn" aria-label="Notifications">🔔<span class="dot"></span></button>
+      <div class="avatar">AK</div>
+    </div>
+  </header>
+
+  <div class="page">
+
+    <!-- ════════ VIEW 1 · List ════════ -->
+    <div class="view on" id="view-list">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / CHA Bill Entry / <b>Bill Receiving</b></div>
+          <h1>Bill Receiving</h1>
+        </div>
+        <button class="btn btn-primary" onclick="show('expense')">+ Add Expense</button>
+      </div>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Search</h2></div>
+        <div class="card-body">
+          <div class="grid cols-5">
+            <div class="field"><label>Bill To</label><select><option selected>Choose one…</option></select></div>
+            <div class="field"><label>Bill To (Name)</label><input placeholder="—"></div>
+            <div class="field"><label>From Date</label><input type="date" value="2014-01-04"></div>
+            <div class="field"><label>To Date</label><input type="date" value="2014-03-31"></div>
+            <div class="field" style="align-self:end"><button class="btn btn-primary" style="width:100%">Search ⌕</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Received Bills</h2><span class="hint">3 records · headers are filterable</span></div>
+        <div class="table-wrap" style="border:none;border-radius:0">
+          <table style="min-width:1000px">
+            <thead><tr>
+              <th class="c">#</th><th class="r">Entry No. ⏷</th><th class="r">Bill No ⏷</th><th>Bill Date</th>
+              <th>CHA Forwarder ⏷</th><th class="r">Amount</th><th>Expense Type ⏷</th><th class="c">Actions</th>
+            </tr></thead>
+            <tbody>
+              <tr><td class="c">1</td><td class="r num">3</td><td class="r num">3</td><td>12-03-2014</td><td class="mono">3321diad</td><td class="r num">500</td><td><span class="tag">CHA Bill</span></td>
+                <td class="c"><button class="row-btn" title="View">🔍</button> <button class="row-btn" title="Edit" onclick="show('expense')">✎</button> <button class="row-btn danger" title="Delete">🗑</button></td></tr>
+              <tr><td class="c">2</td><td class="r num">2</td><td class="r num">1</td><td>11-03-2014</td><td class="mono">CHA0509</td><td class="r num">1,500</td><td><span class="tag">Air Freight INTL</span></td>
+                <td class="c"><button class="row-btn" title="View">🔍</button> <button class="row-btn" title="Edit" onclick="show('expense')">✎</button> <button class="row-btn danger" title="Delete">🗑</button></td></tr>
+              <tr><td class="c">3</td><td class="r num">1</td><td class="r num">1</td><td>09-03-2014</td><td class="mono">3321diad</td><td class="r num">40,000</td><td><span class="tag">Air Freight Domestic</span></td>
+                <td class="c"><button class="row-btn" title="View">🔍</button> <button class="row-btn" title="Edit" onclick="show('expense')">✎</button> <button class="row-btn danger" title="Delete">🗑</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ════════ VIEW 2 · Expense ════════ -->
+    <div class="view" id="view-expense">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / CHA Bill Entry / Bill Receiving / <b>Expense</b></div>
+          <h1>Expense Entry</h1>
+        </div>
+        <button class="btn btn-ghost" onclick="show('list')">← Back to List</button>
+      </div>
+
+      <!-- Bill header -->
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Bill Header</h2></div>
+        <div class="card-body">
+          <div class="grid cols-4">
+            <div class="field"><label>Entry No</label><select><option selected>Choose one…</option></select></div>
+            <div class="field"><label>Code</label><input placeholder="—"></div>
+            <div class="field"><label>Name</label><input placeholder="—"></div>
+            <div class="field"><label>GST No</label><input placeholder="—"></div>
+            <div class="field"><label>Bill No</label><input placeholder="—"></div>
+            <div class="field"><label>Bill Date</label><input type="date" value="2014-03-31"></div>
+            <div class="field"><label>Bill Amount</label><input class="num" placeholder="0.00"></div>
+            <div class="field"><label>Unit / Expense Type</label>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <select><option selected>—</option></select><input placeholder="—">
+              </div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tag invoices -->
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Tag Invoices to Bill</h2>
+          <span class="hint">Fill the top row and press + to add</span></div>
+        <div class="card-body">
+          <!-- Inline add row -->
+          <div class="table-wrap" style="margin-bottom:16px">
+            <table style="min-width:1100px">
+              <thead><tr>
+                <th>Invoice No</th><th>Invoice Date</th><th class="r">Cartons</th><th class="r">Quantity</th>
+                <th class="r">Gross Weight</th><th class="r">CBM</th><th class="r">Chargeable CBM</th><th>Buyer</th><th class="c">Add</th>
+              </tr></thead>
+              <tbody>
+                <tr style="background:var(--teal-tint)">
+                  <td><select><option selected>Choose…</option></select></td>
+                  <td><input type="date"></td>
+                  <td><input class="num" placeholder="0"></td>
+                  <td><input class="num" placeholder="0.000"></td>
+                  <td><input class="num" placeholder="0.000"></td>
+                  <td><input class="num" placeholder="0.000"></td>
+                  <td><input class="num" placeholder="0.000"></td>
+                  <td><input placeholder="—"></td>
+                  <td class="c"><button class="row-btn" title="Add" style="border-color:var(--teal);color:var(--teal)">＋</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Tagged invoices -->
+          <div class="table-wrap">
+            <table style="min-width:1100px">
+              <thead><tr>
+                <th class="c">#</th><th>Invoice No.</th><th>Invoice Date</th><th class="r">Cartons</th><th class="r">Buyer Code</th>
+                <th class="r">Gross Weight</th><th class="r">CBM</th><th class="r">Chargeable CBM</th><th class="r">Buyer</th><th class="c">Delete</th>
+              </tr></thead>
+              <tbody>
+                <tr><td class="c">1</td><td class="mono">RE/2135/23-24</td><td>25-10-2023</td><td class="r num">9</td><td class="r num">422</td><td class="r num">69.250</td><td class="r num">0.295</td><td class="r num">0.409</td><td class="r num">5795</td><td class="c"><button class="row-btn danger">🗑</button></td></tr>
+                <tr><td class="c">2</td><td class="mono">RE/2136/23-24</td><td>01-11-2023</td><td class="r num">3</td><td class="r num">607</td><td class="r num">99.500</td><td class="r num">0.417</td><td class="r num">0.591</td><td class="r num">5795</td><td class="c"><button class="row-btn danger">🗑</button></td></tr>
+                <tr><td class="c">3</td><td class="mono">RE/2137/23-24</td><td>25-10-2023</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="c"><button class="row-btn danger">🗑</button></td></tr>
+                <tr><td class="c">4</td><td class="mono">RE/2138/23-24</td><td>01-11-2023</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="c"><button class="row-btn danger">🗑</button></td></tr>
+                <tr><td class="c">5</td><td class="mono">RE/2139/23-24</td><td>21-10-2023</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="c"><button class="row-btn danger">🗑</button></td></tr>
+                <tr><td class="c">6</td><td class="mono">RE/2140/23-24</td><td>21-10-2023</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="c"><button class="row-btn danger">🗑</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="display:flex;justify-content:center;gap:10px;margin-top:20px;flex-wrap:wrap">
+            <button class="btn btn-outline" onclick="openModal('m-breakup')">Break Up</button>
+            <button class="btn btn-outline" onclick="show('details')">Bill Details</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ════════ VIEW 3 · Bill Details ════════ -->
+    <div class="view" id="view-details">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / CHA Bill Entry / Bill Receiving / <b>Bill Details</b></div>
+          <h1>Bill Details <span class="chip">GST &amp; Taxes</span></h1>
+        </div>
+        <button class="btn btn-ghost" onclick="show('expense')">← Back to Expense</button>
+      </div>
+
+      <!-- Bill header (same as expense) -->
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Bill Header</h2></div>
+        <div class="card-body">
+          <div class="grid cols-4">
+            <div class="field"><label>Entry No</label><select><option selected>Choose one…</option></select></div>
+            <div class="field"><label>Code</label><input placeholder="—"></div>
+            <div class="field"><label>Name</label><input placeholder="—"></div>
+            <div class="field"><label>GST No</label><input placeholder="—"></div>
+            <div class="field"><label>Bill No</label><input placeholder="—"></div>
+            <div class="field"><label>Bill Date</label><input type="date" value="2014-03-31"></div>
+            <div class="field"><label>Bill Amount</label><input class="num" placeholder="0.00"></div>
+            <div class="field"><label>Unit / Expense Type</label>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <select><option selected>—</option></select><input placeholder="—">
+              </div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tax breakdown -->
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>GST &amp; Tax Breakdown</h2>
+          <span class="hint">Rates on the left · computed amounts on the right</span></div>
+        <div class="card-body">
+          <div class="tax-grid">
+            <div>
+              <div class="tax-row"><span class="lbl">SAC Code</span><input value="0.00"></div>
+              <div class="tax-row"><span class="lbl">IGST %</span><input value="6.00"></div>
+              <div class="tax-row"><span class="lbl">CGST %</span><input value="6.00" disabled></div>
+              <div class="tax-row"><span class="lbl">SGST %</span><input value="0.00"></div>
+              <div class="tax-row"><span class="lbl">Discount</span><input value="0.00" disabled></div>
+              <div class="tax-row"><span class="lbl">S. Tax</span><input value="0.00" disabled></div>
+              <div class="tax-row"><span class="lbl">E. Cess</span><input value="0.00"></div>
+              <div class="tax-row"><span class="lbl">S. Bharat</span><input value="0.00"></div>
+              <div class="tax-row"><span class="lbl">K. Kalyan</span><input value="0.00"></div>
+            </div>
+            <div>
+              <div class="tax-row"><span class="lbl">Basic Amount</span><input value="4,344.00"></div>
+              <div class="tax-row"><span class="lbl">IGST Amount</span><input value="0.00" disabled></div>
+              <div class="tax-row"><span class="lbl">CGST Amount</span><input value="260.50"></div>
+              <div class="tax-row"><span class="lbl">SGST Amount</span><input value="260.50"></div>
+              <div class="tax-row"><span class="lbl">Exempt Amount</span><input value="0.00" disabled></div>
+              <div class="tax-row"><span class="lbl">Gross Bill Amount</span><input disabled placeholder="—"></div>
+              <div class="tax-row"><span class="lbl">Feed Debit Amount</span>
+                <select><option selected>N</option><option>Y</option></select></div>
+              <div class="tax-row"><span class="lbl">Debit Amount</span><input disabled placeholder="—"></div>
+              <div class="tax-row total"><span class="lbl">Net Bill Amount</span><input disabled placeholder="—"></div>
+            </div>
+          </div>
+          <div class="field" style="margin-top:18px"><label>Misc. Remarks</label><input placeholder="—"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Save bar -->
+  <div class="savebar">
+    <span class="status">Bill Receiving · <b>new expense</b></span>
+    <button class="btn btn-ghost" onclick="show('list')">Back</button>
+    <button class="btn btn-primary">Save</button>
+  </div>
+</main>
+
+<!-- ══════════ MODAL · Break Up ══════════ -->
+<div class="overlay" id="m-breakup" role="dialog" aria-modal="true" aria-label="Break up">
+  <div class="modal">
+    <div class="modal-head"><span class="tick"></span><h3>Break Up</h3>
+      <button class="modal-close" onclick="closeModal('m-breakup')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="subhead" style="margin-top:0">Measures</div>
+      <div class="tax-row"><span class="lbl">Cartons</span><input value="000"></div>
+      <div class="tax-row"><span class="lbl">Quantity</span><input value="1,029.000"></div>
+      <div class="tax-row"><span class="lbl">Gross Weight</span><input value="168.750" disabled></div>
+      <div class="tax-row"><span class="lbl">CBM</span><input value="0.172"></div>
+      <div class="tax-row"><span class="lbl">Chargeable CBM</span><input value="1.000" disabled></div>
+
+      <div class="subhead">Charges</div>
+      <div class="tax-row"><span class="lbl">Freight Charge</span><input value="700.00" disabled></div>
+      <div class="tax-row"><span class="lbl">Labour</span><input value="44.00"></div>
+      <div class="tax-row"><span class="lbl">Door Delivery Charge</span><input value="1,500.00"></div>
+      <div class="tax-row"><span class="lbl">Stationery Charge</span><input value="100.00"></div>
+      <div class="tax-row"><span class="lbl">Express</span><input value="2,000.00" disabled></div>
+      <div class="tax-row"><span class="lbl">Local Charges</span><input value="0.00"></div>
+      <div class="tax-row"><span class="lbl">Unloading Charges</span><input value="0.00" disabled></div>
+      <div class="tax-row"><span class="lbl">Pickup Charge</span><input value="0.00" disabled></div>
+      <div class="tax-row"><span class="lbl">Misc.</span><input value="0.00"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('m-breakup')">Cancel</button>
+      <button class="btn btn-primary" onclick="closeModal('m-breakup')">Save Break Up</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const viewBtns = document.querySelectorAll('.screen-switch button');
+  function show(name){
+    document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === 'view-' + name));
+    viewBtns.forEach(b => b.classList.toggle('on', b.dataset.view === name));
+    window.scrollTo({top:0});
+  }
+  viewBtns.forEach(b => b.addEventListener('click', () => show(b.dataset.view)));
+  function openModal(id){ document.getElementById(id).classList.add('on'); }
+  function closeModal(id){ document.getElementById(id).classList.remove('on'); }
+  document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e => { if(e.target === o) o.classList.remove('on'); }));
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') document.querySelectorAll('.overlay.on').forEach(o => o.classList.remove('on')); });
+</script>
+</body>
+</html>

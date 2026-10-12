@@ -1,0 +1,568 @@
+﻿@{
+    ViewData["Title"] = "Import Tag Entry Accessory";
+    ViewData["Heading"] = "Import Tag Entry Accessory";
+}
+ 
+<style>
+    .col-1 {
+        flex: 0 0 auto;
+        width: 12.333333%;
+    }
+</style>
+
+<div class="bd_mainContainer">
+    <div class="page">
+
+        <!-- Order summary (editable) -->
+        <section class="card">
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Import Tag Entry Accessory</h2>
+                </div>
+
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+
+                  
+
+                    <button type="button"
+                            class="btn btn-cancel-custom"
+                            id="btnCancel">
+                        ✕ Cancel
+                    </button>
+                     
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-1">
+                        <label>Auto</label>
+                        <input type="text" class="form-control" id="txtAuto_ImportTagEntry" value="Auto" />
+                    </div>
+                    <div class="col-1">
+                        <label>Bond</label>
+                        <input type="text" id="txtBond_ImportTagEntry" placeholder="Enter Bond ..." class="form-control" />
+                    </div>
+                    <div class="col-1">
+                        <label>Bond Date</label>
+                        <input type="text" id="txtBonddate_ImportTagEntry" placeholder="Selct Bond Date" class="form-control" />
+                    </div>
+                    <div class="col-1">
+                        <label>C Invoice</label>
+                        @* <input type="text"  class="num form-control" id="txtCinvoice_ImportTagEntry" value="" placeholder="Enter C Invoice .." /> *@
+                        <select id="ddlCInvoice" class="form-select">
+                            <option value="xyz" selected>xyz</option>
+                            <option value="xyz">xyz</option>
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <label>Tag Date</label>
+                        <input type="text" id="txtTagdate_ImportTagEntry" placeholder="Selct Tag Date" class="form-control" />
+                    </div>
+                    <div class="col-1">
+                        <label>Import Company</label>
+                        <input type="text" class="num form-control" id="txtImportCompany_ImportTagEntry" value="" placeholder="Enter Import Company .." />
+                    </div>
+                    <div class="col-1">
+                        <label>Thrid party</label>
+                        <select id="ddlThridParty_ImportTagEntry" class="select2-field">
+                            <option value="Y" selected>Y</option>
+                            <option value="N">N</option>
+                           
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <label>Final/Post</label>
+                        <select id="ddlFinal_ImportTagEntry" class="select2-field">
+                            <option value="Y" selected>Y</option>
+                            <option value="N">N</option>
+
+                        </select>
+                    </div>
+                     
+                </div>
+            </div>
+        </section>
+
+        <!-- Bond entries -->
+        <section class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-end align-center mb-2">
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnAddBillEntry">
+                        ＋ Bill Of Entry
+                    </button>
+                </div>
+               
+
+                <div class="table-wrap">
+                    <table id="tbl_ImportTagEntry" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                 <th>Action</th>
+                                <th>Sno</th>
+                                <th>Import#</th>
+                                <th>Cth</th>
+                                 <th>ItemDesc</th>
+                                <th>Type</th>
+                                <th>Size</th>
+                                <th>Rate</th>
+                                <th>Trim Qty</th>
+                                <th>G Uom</th>
+                                <th>Item Avg</th>
+                                 <th>Buyer</th>
+                                 <th>BOE</th>
+                                 <th>Rate </th>
+                                 <th>Pc%</th>
+                                 <th>Curr</th>
+                                 <th>Vendor</th>
+                                 <th>Item UOM</th>
+                                 <th>G Qty</th>
+                                 <th>Rate Type</th>
+                                 <th>Group_CD</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody id="tblbody_ImportTagEntry"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                       Import Tag Entry
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+          <div class="modal-body px-2">
+                @await Html.PartialAsync("_ImportTagEntryEdit")
+        </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* open a modal on click of bill entry *@
+
+<div class="modal fade" id="addMenuModalBillEntry" tabindex="-1" aria-labelledby="addMenuModalBillEntry" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalBillEntryLabel">
+                            Bill Of Entry
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+          <div class="modal-body px-2">
+              <div class="table-wrap">
+                    <table id="tbl_BillEntry" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                 <th>Action</th>
+                                <th>BOE Date</th>
+                                <th>Port</th>
+                                <th>Date Of Clearance</th>
+                                 <th>Assable Value</th>
+                                <th>Value Of Imp Goods</th>
+                                <th>Duty% age</th>
+                                <th>IGST% Type</th>
+                                <th>BCD</th>
+                                <th>Other Custom Duty</th>
+                                <th>IGST Amount</th>
+                                 <th>CESS</th>
+                                 <th>Recived Dt Goods</th>
+                                 <th>Qty Not Recived</th>
+                                 <th>Used For Domestically</th>
+                                 <th>END Dt Recipicent</th>
+                                 <th>Goods Re-Export</th>
+                                 <th>Goods Clr Payment of Duty</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="tblbody_BillEntry"></tbody>
+                    </table>
+                </div>
+        </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveBillEntry">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@* open a modal on click of Help of Import *@
+
+<div class="modal fade" id="addMenuModalHelpImport" tabindex="-1" aria-labelledby="addMenuModalHelpImport" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalHelpImportLabel">
+                            Help Of Import
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+          <div class="modal-body px-2">
+              <div class="table-wrap">
+                    <table id="tbl_HelpImport" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                 <th>Select</th>
+                                <th>Import#</th>
+                                <th>Buyer</th>
+                                <th>Style No</th>
+                                 <th>Rate</th>
+                                <th>Trim Qty</th>
+                                <th>G_UOM</th>
+                                <th>Item Avg</th>
+                                <th>BOE</th>
+                                <th>Rate/Pc</th>
+                                <th>Currency</th>
+                                 <th>Vendor</th>
+                                 <th>Dt UOM</th>
+                                 <th>G_Qty</th>
+                                 <th>Rate Type</th>
+                               
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="tblbody_HelpImport"></tbody>
+                    </table>
+                </div>
+        </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveHelpImport">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* on click of edit button in bill of entry open a edit modal  *@
+
+<div class="modal fade" id="addMenuModalEditBillofEntry" tabindex="-1" aria-labelledby="addMenuModalEditBillofEntry" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalEditBillofEntryLabel">
+                     Bill Of Entry Edit
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+          <div class="modal-body px-2">
+               <div class="grid cols-4">
+
+                    <div class="field">
+                        <label>Sno</label>
+                        <input type="text" id="txtSno_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Import#</label>
+                        <input type="text" id="txtImportNo_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Cth</label>
+                        <input type="text" id="txtCth_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>ItemDesc</label>
+                        <input type="text" id="txtItemDesc_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Type</label>
+                        <input type="text" id="txtType_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Size</label>
+                        <input type="text" id="txtSize_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Rate</label>
+                        <input type="text" id="txtRate_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Trim Qty</label>
+                        <input type="text" id="txtTrimQty_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>G Uom</label>
+                        <input type="text" id="txtGUom_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Item Avg</label>
+                        <input type="text" id="txtItemAvg_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Buyer</label>
+                        <input type="text" id="txtBuyer_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>BOE</label>
+                        <input type="text" id="txtBOE_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Rate</label>
+                        <input type="text" id="txtRate2_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Pc%</label>
+                        <input type="text" id="txtPcPercent_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Curr</label>
+                        <input type="text" id="txtCurr_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Vendor</label>
+                        <input type="text" id="txtVendor_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Item UOM</label>
+                        <input type="text" id="txtItemUOM_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>G Qty</label>
+                        <input type="text" id="txtGQty_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Rate Type</label>
+                        <input type="text" id="txtRateType_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                    <div class="field">
+                        <label>Group_CD</label>
+                        <input type="text" id="txtGroupCD_ImportTagEntry"
+                               class="form-control">
+                    </div>
+
+                </div>
+        </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveEditBillofEntry">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/js/pages/accessory/import_tag_entry.js" asp-append-version="true"></script>

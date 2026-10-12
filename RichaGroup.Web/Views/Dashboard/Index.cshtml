@@ -1,0 +1,1107 @@
+@* @using System.Collections.Generic
+
+@{
+    ViewData["Title"] = "Dashboard";
+    ViewData["Heading"] = "Dashboard";
+
+    // =========================================================
+    // DUMMY DATA
+    // GI COLUMN REMOVED FROM ALL TABLES
+    // =========================================================
+
+    var salesData = new List<(string Label, string RC, string Total)>
+    {
+        ("2022", "746.25", "1,242.78"),
+        ("2023", "998.75", "1,469.66"),
+        ("2024", "1,144.87", "1,475.58"),
+        ("2025", "1,429.26", "1,748.63"),
+        ("2026", "1,469.66", "1,518.02"),
+        ("Current Year", "441.15", "442.27")
+    };
+
+    var freightData = new List<(string Label, string RC, string Total)>
+    {
+        ("2012-2013", "2.44", ""),
+        ("2013-2014", "3.65", ""),
+        ("2014-2015", "4.22", ""),
+        ("2015-2016", "5.18", ""),
+        ("2016-2017", "4.50", ""),
+        ("2017-2018", "4.41", "")
+    };
+
+    var advanceData = new List<(string Label, string RC, string Total)>
+    {
+        ("Realisation", "140.79", "144.01"),
+        ("Taken", "18.83", "41.84"),
+        ("Booked", "43.39", "60.83"),
+        ("Adjusted", "25.20", "38.75"),
+        ("Total", "78.56", "41.34")
+    };
+
+    var drawbackData = new List<(string Label, string RC, string Total)>
+    {
+        ("EP Copy Pending", "0.63", ""),
+        ("Filed but not Received", "1.30", ""),
+        ("Drawback Received (Current Year)", "12.10", ""),
+        ("Current Year Total", "1.33", ""),
+        ("Under Verification", "2.45", "")
+    };
+
+    var clData = new List<(string Label, string RC, string Total)>
+    {
+        ("Balance", "0.00", "0.00"),
+        ("Advance Balance", "0.00", "0.00"),
+        ("Opening Balance", "25.50", "25.50"),
+        ("Closing Balance", "18.25", "18.25"),
+        ("Pending Adjustment", "7.25", "7.25")
+    };
+
+    var docsData = new List<(string Label, string RC, string Total)>
+    {
+        ("Docs Pending with Agent", "61.94", ""),
+        ("Docs not frwd to Banking", "96.59", ""),
+        ("Pending for IC", "0.00", ""),
+        ("Payment pending in Bank", "2.90", ""),
+        ("Total", "161.43", "")
+    };
+
+    var redemptionData = new List<(string Label, string RC, string Total)>
+    {
+        ("Pending for Redemption", "12.50", "12.50"),
+        ("EPCG Obligation", "8.25", "8.25"),
+        ("Advance Licence", "5.75", "5.75"),
+        ("Redemption Pending", "3.40", "3.40"),
+        ("Under Process", "2.10", "2.10")
+    };
+
+    var negotiatedData = new List<(string Label, string RC, string Total)>
+    {
+        ("O/S Negotiated docs", "0.00", ""),
+        ("Docs Pending Submission", "4.50", ""),
+        ("Docs Under Review", "2.25", ""),
+        ("Bank Confirmation Pending", "1.75", ""),
+        ("Other Outstanding", "0.50", "")
+    };
+}
+
+@section Styles {
+    <style>
+
+        /* =========================================================
+                   RICHA GROUP DASHBOARD
+                   Bootstrap 5 + Minimal Custom CSS
+                   ========================================================= */
+
+        :root {
+            --rg-blue: #257def;
+            --rg-blue-dark: #155fc2;
+            --rg-bg: #f4f6fa;
+            --rg-text: #16233a;
+            --rg-muted: #7c8ba1;
+            --rg-border: #e3e9f2;
+            --rg-sales: #ff777d;
+            --rg-freight: #a767d9;
+            --rg-advance: #5c87f5;
+            --rg-drawback: #edb253;
+            --rg-cl: #55adbd;
+            --rg-docs: #7778e9;
+            --rg-redemption: #e6a04c;
+            --rg-negotiated: #65c0d0;
+        }
+
+        /* =========================================================
+                   PAGE
+                   ========================================================= */
+
+        .dashboard-page {
+            width: 100%;
+            min-height: 100%;
+            padding: 16px;
+            background: var(--rg-bg);
+            color: var(--rg-text);
+            font-family: "Segoe UI", Calibri, Arial, sans-serif;
+        }
+
+        /* =========================================================
+                   HEADER
+                   ========================================================= */
+
+        .dashboard-header {
+            background: #fff;
+            border: 1px solid var(--rg-border) !important;
+            border-radius: 12px !important;
+        }
+
+        .dashboard-breadcrumb {
+            margin-bottom: 4px;
+            color: #8995a8;
+            font-size: 11px;
+        }
+
+            .dashboard-breadcrumb span {
+                margin: 0 6px;
+                color: #c0c8d3;
+            }
+
+        .dashboard-header{
+            margin-left:0px !important;
+        }
+
+        .dashboard-title {
+            margin: 0;
+            color: var(--rg-text);
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -.2px;
+        }
+
+        .dashboard-action,
+        .dashboard-upload,
+        .dashboard-select {
+            height: 36px;
+            font-size: 12px;
+        }
+
+        .dashboard-action {
+            border-color: #dce4ee;
+            color: #52647d;
+            background: #fff;
+        }
+
+            .dashboard-action:hover {
+                border-color: var(--rg-blue);
+                color: var(--rg-blue);
+                background: #f7faff;
+            }
+
+        .dashboard-upload {
+            min-width: 100px;
+            background: var(--rg-blue);
+            border-color: var(--rg-blue);
+        }
+
+            .dashboard-upload:hover {
+                background: var(--rg-blue-dark);
+                border-color: var(--rg-blue-dark);
+            }
+
+        .dashboard-select {
+            width: 160px;
+            border-color: #dce4ee;
+            color: #52647d;
+        }
+
+        /* =========================================================
+                   DASHBOARD CARD
+                   ========================================================= */
+
+        .dashboard-card {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            min-width: 0;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid var(--rg-border);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(22, 35, 58, .05);
+            transition: box-shadow .2s ease;
+        }
+
+            .dashboard-card:hover {
+                box-shadow: 0 5px 16px rgba(22, 35, 58, .08);
+            }
+
+        /* =========================================================
+                   COLORED RAIL
+                   ========================================================= */
+
+        .dashboard-card-rail {
+            display: flex;
+            flex: 0 0 42px;
+            width: 42px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0 10px;
+            color: #fff;
+            background: var(--rail-color);
+        }
+
+        .rail-title {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .05em;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .rail-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .28);
+            font-size: 13px;
+        }
+
+        /* =========================================================
+                   CARD BODY
+                   ========================================================= */
+
+        .dashboard-card-body {
+            display: flex;
+            flex: 1;
+            min-width: 0;
+            flex-direction: column;
+        }
+
+        /* =========================================================
+                   CARD TITLE
+                   ========================================================= */
+
+        .dashboard-card-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            min-height: 40px;
+            padding: 0 16px;
+            border-bottom: 1px solid var(--rg-border);
+            background: #fff;
+        }
+
+            .dashboard-card-title h2 {
+                margin: 0;
+                color: var(--rg-text);
+                font-size: 15px;
+                font-weight: 700;
+                letter-spacing: -.2px;
+            }
+
+            .dashboard-card-title small {
+                flex-shrink: 0;
+                color: var(--rg-muted);
+                font-size: 10px;
+                white-space: nowrap;
+            }
+
+        /* =========================================================
+                   TABLE
+                   ========================================================= */
+
+        .dashboard-table {
+            width: 100%;
+            min-width: 0;
+            margin-bottom: 0;
+            color: #475569;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+            .dashboard-table thead th {
+                padding: 9px 11px;
+                background: var(--rg-blue);
+                color: #fff;
+                border: 1px solid #d9e4f2;
+                font-size: 10px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: .03em;
+                vertical-align: middle;
+            }
+
+            .dashboard-table tbody td {
+                padding: 7px 11px;
+                color: #2563c7;
+                border-color: #e9eef5;
+                font-variant-numeric: tabular-nums;
+                vertical-align: middle;
+            }
+
+                .dashboard-table tbody td:first-child {
+                    color: #475569;
+                    font-variant-numeric: normal;
+                }
+
+            /* Alternating rows */
+            .dashboard-table tbody tr:nth-child(even) {
+                background: #fafcff;
+            }
+
+            /* Hover */
+            .dashboard-table.table-hover > tbody > tr:hover > * {
+                background-color: #f0f6ff;
+            }
+
+            /* Total */
+            .dashboard-table .total-row td {
+                background: #edf5ff;
+                color: #1454a4;
+                font-weight: 700;
+                border-top: 1px solid #d9e8fb;
+            }
+
+            /* Expand column */
+            .dashboard-table .expand-col {
+                width: 28px;
+                min-width: 28px;
+                text-align: center;
+            }
+
+        /* =========================================================
+                   RAIL COLORS
+                   ========================================================= */
+
+        .card-sales {
+            --rail-color: var(--rg-sales);
+        }
+
+        .card-freight {
+            --rail-color: var(--rg-freight);
+        }
+
+        .card-advance {
+            --rail-color: var(--rg-advance);
+        }
+
+        .card-drawback {
+            --rail-color: var(--rg-drawback);
+        }
+
+        .card-cl {
+            --rail-color: var(--rg-cl);
+        }
+
+        .card-docs {
+            --rail-color: var(--rg-docs);
+        }
+
+        .card-redemption {
+            --rail-color: var(--rg-redemption);
+        }
+
+        .card-negotiated {
+            --rail-color: var(--rg-negotiated);
+        }
+
+        /* =========================================================
+                   RESPONSIVE
+                   ========================================================= */
+
+        @@media (max-width: 991.98px) {
+
+            .dashboard-page {
+                padding: 12px;
+            }
+
+            .dashboard-title {
+                font-size: 17px;
+            }
+
+            .dashboard-card-title h2 {
+                font-size: 14px;
+            }
+        }
+
+        @@media (max-width: 575.98px) {
+
+            .dashboard-page {
+                padding: 10px;
+            }
+
+            .dashboard-header .col-auto {
+                width: 100%;
+            }
+
+            .dashboard-header .d-flex {
+                flex-wrap: wrap;
+            }
+
+            .dashboard-action,
+            .dashboard-select,
+            .dashboard-upload {
+                flex: 1;
+            }
+
+            .dashboard-select {
+                width: auto;
+            }
+
+            .dashboard-card-rail {
+                flex-basis: 36px;
+                width: 36px;
+            }
+
+            .dashboard-card-title {
+                min-height: 50px;
+                padding: 0 12px;
+            }
+
+                .dashboard-card-title h2 {
+                    font-size: 13px;
+                }
+
+                .dashboard-card-title small {
+                    font-size: 9px;
+                }
+
+            .dashboard-table {
+                font-size: 11px;
+            }
+
+                .dashboard-table thead th,
+                .dashboard-table tbody td {
+                    padding: 8px 9px;
+                }
+        }
+
+    </style>
+}
+
+<!-- =========================================================
+     DASHBOARD PAGE
+     ========================================================= -->
+
+<div class="dashboard-page">
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <div class="dashboard-header card border-0 shadow-sm mb-3">
+
+        <div class="card-body py-2 px-3">
+
+            <div class="row align-items-center g-2">
+
+                <div class="col">
+                     
+                    <h1 class="dashboard-title">
+                        Dashboard
+                    </h1>
+
+                </div>
+
+                <div class="col-auto">
+
+                    <div class="d-flex align-items-center gap-2">
+
+                        <button type="button"
+                                class="btn btn-outline-secondary btn-sm dashboard-action">
+
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                            <span>Reset all values</span>
+
+                        </button>
+
+                        <select class="form-select form-select-sm dashboard-select">
+
+                            <option>Figure in: Actual</option>
+                            <option>Figure in: Thousands</option>
+                            <option>Figure in: Lakhs</option>
+
+                        </select>
+
+                        <button type="button"
+                                class="btn btn-primary btn-sm dashboard-upload">
+
+                            <i class="bi bi-upload"></i>
+                            Upload
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         DASHBOARD CARDS
+         ===================================================== -->
+
+    <div class="row g-3">
+
+
+        <!-- =================================================
+             SALES
+             ================================================= -->
+
+        <div class="col-xl-4 col-lg-6 col-12">
+
+            <section class="dashboard-card card-sales">
+
+                <div class="dashboard-card-rail">
+
+                    <span class="rail-title">
+                        SALES
+                    </span>
+
+                    <span class="rail-icon">
+                        <i class="bi bi-receipt"></i>
+                    </span>
+
+                </div>
+
+                <div class="dashboard-card-body">
+
+                    <div class="dashboard-card-title">
+
+                        <h2>Sales</h2>
+
+                        <small>Yearly Overview</small>
+
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-sm table-hover dashboard-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Sales</th>
+                                    <th>RC</th>
+                                    <th>Total</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in salesData)
+                                {
+                                    <tr class="@(item.Label == "Current Year" ? "total-row" : "")">
+
+                                        <td>@item.Label</td>
+                                        <td>@item.RC</td>
+                                        <td>@item.Total</td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- =================================================
+             FREIGHT
+             ================================================= -->
+
+        <div class="col-xl-4 col-lg-6 col-12">
+
+            <section class="dashboard-card card-freight">
+
+                <div class="dashboard-card-rail">
+
+                    <span class="rail-title">
+                        FREIGHT
+                    </span>
+
+                    <span class="rail-icon">
+                        <i class="bi bi-truck"></i>
+                    </span>
+
+                </div>
+
+                <div class="dashboard-card-body">
+
+                    <div class="dashboard-card-title">
+
+                        <h2>Freight</h2>
+
+                        <small>Year Wise</small>
+
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-sm table-hover dashboard-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th class="expand-col"></th>
+                                    <th>Freight</th>
+                                    <th>RC</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in freightData)
+                                {
+                                    <tr>
+
+                                        <td class="expand-col">›</td>
+                                        <td>@item.Label</td>
+                                        <td>@item.RC</td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- =================================================
+             ADVANCE REALISATION
+             ================================================= -->
+
+        <div class="col-xl-4 col-lg-6 col-12">
+
+            <section class="dashboard-card card-advance">
+
+                <div class="dashboard-card-rail">
+
+                    <span class="rail-title">
+                        ADVANCE
+                    </span>
+
+                    <span class="rail-icon">
+                        <i class="bi bi-receipt"></i>
+                    </span>
+
+                </div>
+
+                <div class="dashboard-card-body">
+
+                    <div class="dashboard-card-title">
+
+                        <h2>Advance Realisation</h2>
+
+                        <small>Summary</small>
+
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-sm table-hover dashboard-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Advance Realisation</th>
+                                    <th>RC</th>
+                                    <th>Total</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in advanceData)
+                                {
+                                    <tr class="@(item.Label == "Total" ? "total-row" : "")">
+
+                                        <td>@item.Label</td>
+                                        <td>@item.RC</td>
+                                        <td>@item.Total</td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- =================================================
+             DRAWBACK
+             ================================================= -->
+
+        <div class="col-xl-4 col-lg-6 col-12">
+
+            <section class="dashboard-card card-drawback">
+
+                <div class="dashboard-card-rail">
+
+                    <span class="rail-title">
+                        DRAWBACK
+                    </span>
+
+                    <span class="rail-icon">
+                        <i class="bi bi-receipt"></i>
+                    </span>
+
+                </div>
+
+                <div class="dashboard-card-body">
+
+                    <div class="dashboard-card-title">
+
+                        <h2>Drawback</h2>
+
+                        <small>Documents</small>
+
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-sm table-hover dashboard-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th class="expand-col"></th>
+                                    <th>Docs</th>
+                                    <th>RC</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in drawbackData)
+                                {
+                                    <tr>
+
+                                        <td class="expand-col">›</td>
+                                        <td>@item.Label</td>
+                                        <td>@item.RC</td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- =================================================
+             CL BALANCE
+             ================================================= -->
+
+        <div class="col-xl-4 col-lg-6 col-12">
+
+            <section class="dashboard-card card-cl">
+
+                <div class="dashboard-card-rail">
+
+                    <span class="rail-title">
+                        CL BALANCE
+                    </span>
+
+                    <span class="rail-icon">
+                        <i class="bi bi-wallet2"></i>
+                    </span>
+
+                </div>
+
+                <div class="dashboard-card-body">
+
+                    <div class="dashboard-card-title">
+
+                        <h2>CL Balance</h2>
+
+                        <small>Balance Summary</small>
+
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-sm table-hover dashboard-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>CL</th>
+                                    <th>RC</th>
+                                    <th>Total</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in clData)
+                                {
+                                    <tr>
+
+                                        <td>@item.Label</td>
+                                        <td>@item.RC</td>
+                                        <td>@item.Total</td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- =================================================
+             DOC'S CONTROL
+             ================================================= -->
+
+        <div class="col-xl-4 col-lg-6 col-12">
+
+            <section class="dashboard-card card-docs">
+
+                <div class="dashboard-card-rail">
+
+                    <span class="rail-title">
+                        DOCS CONTROL
+                    </span>
+
+                    <span class="rail-icon">
+                        <i class="bi bi-file-earmark-text"></i>
+                    </span>
+
+                </div>
+
+                <div class="dashboard-card-body">
+
+                    <div class="dashboard-card-title">
+
+                        <h2>Doc's Control</h2>
+
+                        <small>Pending Documents</small>
+
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-sm table-hover dashboard-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th class="expand-col"></th>
+                                    <th>Docs</th>
+                                    <th>RC</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in docsData)
+                                {
+                                    <tr class="@(item.Label == "Total" ? "total-row" : "")">
+
+                                        <td class="expand-col">
+                                            @(item.Label == "Total" ? "" : "›")
+                                        </td>
+
+                                        <td>@item.Label</td>
+                                        <td>@item.RC</td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- =================================================
+             PENDING FOR REDEMPTION
+             ================================================= -->
+
+        <div class="col-xl-4 col-lg-6 col-12">
+
+            <section class="dashboard-card card-redemption">
+
+                <div class="dashboard-card-rail">
+
+                    <span class="rail-title">
+                        REDEMPTION
+                    </span>
+
+                    <span class="rail-icon">
+                        <i class="bi bi-receipt"></i>
+                    </span>
+
+                </div>
+
+                <div class="dashboard-card-body">
+
+                    <div class="dashboard-card-title">
+
+                        <h2>Pending for Redemption</h2>
+
+                        <small>Pending</small>
+
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-sm table-hover dashboard-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th class="expand-col"></th>
+                                    <th>Docs</th>
+                                    <th>RC</th>
+                                    <th>Total</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in redemptionData)
+                                {
+                                    <tr>
+
+                                        <td class="expand-col">›</td>
+                                        <td>@item.Label</td>
+                                        <td>@item.RC</td>
+                                        <td>@item.Total</td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- =================================================
+             O/S NEGOTIATED DOCS
+             ================================================= -->
+
+        <div class="col-xl-4 col-lg-6 col-12">
+
+            <section class="dashboard-card card-negotiated">
+
+                <div class="dashboard-card-rail">
+
+                    <span class="rail-title">
+                        NEGOTIATED
+                    </span>
+
+                    <span class="rail-icon">
+                        <i class="bi bi-file-earmark-text"></i>
+                    </span>
+
+                </div>
+
+                <div class="dashboard-card-body">
+
+                    <div class="dashboard-card-title">
+
+                        <h2>O/S Negotiated docs</h2>
+
+                        <small>Outstanding</small>
+
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-sm table-hover dashboard-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th class="expand-col"></th>
+                                    <th>Docs</th>
+                                    <th>RC</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in negotiatedData)
+                                {
+                                    <tr>
+
+                                        <td class="expand-col">›</td>
+                                        <td>@item.Label</td>
+                                        <td>@item.RC</td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+    </div>
+
+</div> *@

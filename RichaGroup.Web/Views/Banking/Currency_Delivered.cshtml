@@ -1,0 +1,215 @@
+﻿@{
+	ViewData["Title"] = "Currency Delivered";
+	ViewData["Heading"] = "Currency Delivered";
+}
+
+
+<div class="bd_mainContainer">
+    <div class="page">
+
+        <section class="card">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>  
+                    <h2 class="mt-2" id="txtHeaderMain">Currency Delivered</h2>
+                </div>
+
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+
+                      <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnAdd">
+                    ＋ Add
+                         </button>
+                    <button type="button"
+                            class="btn btn-cancel-custom"
+                            id="btnCancel">
+                        ✕ Cancel
+                    </button>
+                </div>
+            </div>
+
+        <div class="card shadow-sm border-0 mt-2">
+            <div class="card-body">
+ 
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle table-bordered mb-0" id="tblCurrencyDelivered">
+                        <thead class="table-light">
+                            <tr> 
+                                <th>Action</th>
+                                <th>Transaction  No</th> 
+                                <th>Company Code</th>
+                                <th>Currency</th>
+                                <th>Cancel Date</th>
+                                <th>Cancel Amount</th>
+                                <th>Transcation Amount</th>
+                                <th>Booking Rate</th>
+                                <th>Currency Rate</th>
+                                <th>Currency INR</th>
+                                <th>Master Transaction No </th>
+                                <th>Contract No#</th>
+                                
+                                @* <th>Converstion Rate</th>
+                                <th>Bank</th>
+                                <th>Trx Type</th>
+                                <th>Remark</th> *@
+                               
+                            </tr>
+                        </thead>
+                        <tbody id="tblCurrencyDeliveredBody">
+                            <!-- rows injected  -->
+                        </tbody>
+                    </table>
+
+                    <div id="noRecordsFound_CurrencyDelivered" class="text-center text-muted py-4 d-none">
+                        No matching records found.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        </section>
+
+    </div>
+</div>
+
+
+<div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                        Currency Delivered
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-0">
+                @await Html.PartialAsync("_Currency_Delivered")
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+@* fpr the entry no help opening modal *@
+
+<div class="modal fade" id="addMenuModalHelpEntryNo" tabindex="-1" aria-labelledby="addMenuModalHelpEntryNo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalHelpEntryNoLabel">
+                       Help Entry No
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-0">
+                @await Html.PartialAsync("_CurrencyDeliveredHelpEntryNo")
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveHelpEntryno">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/pages/banking/currency_delivered.js" asp-append-version="true"></script>

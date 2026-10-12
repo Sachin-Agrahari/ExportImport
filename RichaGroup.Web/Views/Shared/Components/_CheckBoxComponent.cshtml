@@ -1,0 +1,194 @@
+﻿<style>
+    .custom-checkbox-wrapper {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        user-select: none;
+    }
+
+        .custom-checkbox-wrapper input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+    .custom-checkbox {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #adb5bd;
+        border-radius: 4px;
+        background: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+
+    .custom-checkbox-wrapper:hover .custom-checkbox {
+        border-color: #0d6efd;
+    }
+
+    .custom-checkbox-wrapper input:checked + .custom-checkbox {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+
+    .custom-checkbox-wrapper input:checked + .custom-checkbox::after {
+        content: "";
+        width: 5px;
+        height: 9px;
+        border: solid #fff;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        margin-top: -2px;
+    }
+
+    .custom-checkbox-label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #343a40;
+    }
+</style>
+
+<div class="d-flex align-items-center gap-3">
+
+    <label class="custom-checkbox-wrapper" for="chkFinalLayout">
+
+        <input type="checkbox" id="chkFinalLayout" />
+
+        <span class="custom-checkbox"></span>
+
+        <span class="custom-checkbox-label">
+            Final Layout
+        </span>
+
+    </label>
+
+    <button type="button"
+            class="btn btn-primary btn-sm d-none"
+            id="btnSaveFinalLayout">
+
+        <svg width="14"
+             height="14"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+
+        </svg>
+
+        Save
+    </button>
+
+</div>
+<script>
+    let ID 
+    const empCode = sessionStorage.getItem("empCode");
+    $(document).ready(function () {
+          
+        const urlParams = new URLSearchParams(window.location.search);
+        ID = urlParams.get('ID');
+         
+        if (ID) {
+            getFinalLayout(ID);
+        }
+
+        $('#chkFinalLayout').on('change', function () {
+
+             if (!empCode) {
+                $('#chkFinalLayout').prop('checked', false).prop('disabled', true);
+                $('#btnSaveFinalLayout').addClass('d-none');
+
+                Swal.fire({
+                    title: 'Login Required',
+                    text: 'You must log in to save the final layout.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Login',
+                    cancelButtonText: 'Cancel',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/auth/login';
+                    }
+                });
+            }
+
+            $('#btnSaveFinalLayout').toggleClass('d-none', !this.checked);
+        });
+
+    });
+
+
+    function getFinalLayout(ID) {
+
+        $.ajax({
+            url: '/FileHandler/GetFinalLayout',
+            type: 'GET',
+            data: {
+                ID: ID
+            },
+            success: function (response) {
+
+                if (response.success && response.data === true) { 
+                    $('#chkFinalLayout').prop('checked', true).prop('disabled', true); 
+                    $('#btnSaveFinalLayout').addClass('d-none');
+                }
+                else {
+
+                    $('#chkFinalLayout').prop('checked', false).prop('disabled', false); 
+                    $('#btnSaveFinalLayout').addClass('d-none');
+                }
+            },
+            error: function (xhr) { 
+                $('#chkFinalLayout').prop('checked', false).prop('disabled', false);
+            }
+        });
+    }
+
+    $('#btnSaveFinalLayout').on('click', function () {
+ 
+        if (!ID) {
+            alert('ID not found.');
+            return;
+        }
+
+        $.ajax({
+            url: '/FileHandler/SaveFinalLayout',
+            type: 'POST',
+            data: {
+                ID: ID
+            },
+            success: function (response) {
+
+                if (response.success) { 
+                    $('#chkFinalLayout').prop('checked', true).prop('disabled', true); 
+                    $('#btnSaveFinalLayout').addClass('d-none'); 
+                     
+                    Swal.fire({
+                        title: `SUCCESS`,
+                        text: `${response.message}`,
+                        icon: `success`
+                    });
+                }
+            },
+            error: function (xhr) { 
+                const response = xhr.responseJSON; 
+                 Swal.fire({
+                     title: `ERROR`,
+                     text: `${response?.message || 'Failed to save Final Layout.'}`,
+                     icon: `error`
+                 }); 
+            }
+        });
+
+    });
+
+</script>

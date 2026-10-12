@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    ViewData["Heading"] = "Dashboard";
+}
+
+<div class="page-head">
+  <div>
+    <div class="crumbs">Richa Group / <b>Dashboard</b></div>
+    @* <h1>Dashboard</h1> *@
+  </div>
+</div>
+
+<section class="card">
+  <div class="card-head"><span class="tick"></span><h2>Transactions</h2><span class="hint">Jump to a screen</span></div>
+  <div class="card-body">
+    <div class="grid cols-4">
+      <a asp-controller="AepcInvoice" asp-action="Index" class="btn btn-outline" style="text-align:center;text-decoration:none">AEPC Invoice</a>
+      <a asp-controller="BankInvoice" asp-action="Index" class="btn btn-outline" style="text-align:center;text-decoration:none">Bank Invoice</a>
+      <a asp-controller="ShipmentDiary" asp-action="Index" class="btn btn-outline" style="text-align:center;text-decoration:none">Shipment Diary</a>
+      <a asp-controller="AdvanceLicenseEntry" asp-action="Index" class="btn btn-outline" style="text-align:center;text-decoration:none">Advance License Entry</a>
+    </div>
+  </div>
+</section>

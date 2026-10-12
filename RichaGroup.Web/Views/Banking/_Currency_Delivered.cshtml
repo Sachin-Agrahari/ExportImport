@@ -1,0 +1,221 @@
+﻿
+<div class="bd_mainContainer">
+    <div class="page">
+         <div class="card-body">
+
+                <div class="grid cols-6">
+
+                    <div class="field">
+                        <label>Trx Number  <span class="text-danger">*</span></label>
+                        <input type="text"
+                               id="txtTrxNumber_CurrencyDelivered"
+                               value="1746"
+                               placeholder="Enter Trx Number" />
+                    </div>
+
+                    <div class="field">
+                        <label>Code <span class="text-danger">*</span></label>
+                        <input type="text"
+                               id="txtCode_CurrencyDelivered"
+                               value="01"
+                               placeholder="Enter Code..." />
+                    </div>
+                    <div class="field">
+                        <label>Cancel Date</label>
+                        <input type="text"
+                               id="txtCancelDate_CurrencyDelivered"
+                               value="04-06-2025"
+                               placeholder="Select Cancel date..." />
+                    </div>
+
+                    <div class="field">
+                        <label>Currency <span class="text-danger">*</span></label>
+                        @* <input type="text"
+                               id="txtCurrency_CurrencyDelivered"
+                               placeholder="Enter Currency..." /> *@
+                            <select id="ddlCurrency_CurrencyDelivered" class="select2-field">
+                                 <option value="Dollar">Dollar</option>
+                                 <option value="INR">INR</option>
+                                 <option value="Euro">Euro</option>
+                                        
+                         </select>
+                    </div>
+
+                     <div class="field">
+                        <label>Entry Number <span class="text-danger">*</span> <button id="btnentryNoHelp" class="help-link">help</button></label>
+                        <input type="text"
+                               id="txtEntryNo_CurrencyDelivered"
+                               value=""
+                               placeholder="Enter Entry Number..." />
+                    </div>
+
+                    <div class="field">
+                        <label>Entry Date</label>
+                        <input type="text"
+                               id="txtEntryDate_CurrencyDelivered"
+                               value="04-06-2025"
+                               placeholder="Select Entry date..." />
+                    </div>
+                    <div class="field">
+                        <label>Due Date</label>
+                        <input type="text"
+                               id="txtDueDate_CurrencyDelivered"
+                               value="06-06-2025"
+                               placeholder="Select Due date..." />
+                    </div>
+                    <div class="field">
+                        <label>To Date</label>
+                        <input type="text"
+                               id="txtToDate_CurrencyDelivered"
+                               value="10-06-2025"
+                               placeholder="Select To date..." />
+                    </div>
+
+
+                    @* <div class="field">
+                        <label>Export Bond Number <span class="text-danger">*</span></label>
+                        <input type="text"
+                               id="txtExportBondNo_CurrencyDelivered"
+                               value="2002444129"
+                               placeholder="Enter Export Bond Number" />
+                    </div> *@
+
+                    
+
+                    <div class="field">
+                        <label>Amount <span class="text-danger">*</span></label>
+                        <input type="text"
+                               id="txtAmount_CurrencyDelivered"
+                               placeholder="Enter Amount...." />
+                    </div>
+
+                    <div class="field">
+                        <label>Converstion Rate <span class="text-danger">*</span></label>
+                        <input type="text"
+                               id="txtConverstionRate_CurrencyDelivered"
+                               value=""
+                               placeholder="Enter Converstion Rate..." />
+                    </div>
+                    <div class="field">
+                        <label>Amt</label>
+                        <input type="text"
+                               id="txtAmt_CurrencyDelivered"
+                               value=""
+                               placeholder="Enter Amt..." />
+                    </div>
+                    <div class="field">
+                        <label>@@</label>
+                        <input type="text"
+                               id="txt$_CurrencyDelivered"
+                               value=""
+                               placeholder="Enter @@..." />
+                    </div>
+                    <div class="field">
+                        <label>INR</label>
+                        <input type="text"
+                               id="txtINR_CurrencyDelivered"
+                               value=""
+                               placeholder="Enter INR..." />
+                    </div>
+                    <div class="field">
+                        <label>Balance</label>
+                        <input type="text"
+                               id="txtBalance_CurrencyDelivered"
+                               value=""
+                               placeholder="Enter Balance..." />
+                    </div>
+                    <div class="field">
+                        <label>INR</label>
+                        <input type="text"
+                               id="txtINR1_CurrencyDelivered"
+                               value=""
+                               placeholder="Enter INR..." />
+                    </div>
+                    <div class="field">
+                        <label>Bank <span class="text-danger">*</span></label>
+                       
+                                <select id="ddlBank_CurrencyDelivered" class="select2-field">
+                                 <option value="Bank06">Bank 06</option>
+                                 <option value="Bank01">Bank 01</option>
+                                 <option value="Bank04">Bank 04</option>
+                                
+                                        
+                         </select>
+
+                    </div>
+                    <div class="field">
+                        <label>Trx Type <span class="text-danger">*</span></label>
+                        @* <input type="text"
+                               id="txtTrxType_CurrencyDelivered"
+                               value=""
+                               placeholder="Enter Trx Type..." /> *@
+                                <select id="ddlCurrency_CurrencyDelivered" class="select2-field">
+                                 <option value="Delivery">Delivery</option>
+                                 <option value="OnWay">On Way</option>
+                                 @* <option value="Euro">Euro</option> *@
+                                        
+                         </select>
+                    </div>
+                    <div class="field span-2">
+                        <label>Remark <span class="text-danger">*</span></label>
+                        <input type="text"
+                               id="txtRemark_CurrencyDelivered"
+                               value=""
+                               placeholder="Enter Remarks..." />
+                    </div>
+                    <div class="field span-2">
+                 
+
+                        <div class="d-flex justify-content-between align-item-center mt-2">
+
+                            <label class="currency-radio">
+                                <input type="radio"
+                                       id="rdoExport_CurrencyDelivered"
+                                       name="ExportImport_CurrencyDelivered"
+                                       value="Export"
+                                       checked />
+
+                                <span class="currency-radio-mark"></span>
+                                <span class="currency-radio-text">Export</span>
+                            </label>
+
+                            <label class="currency-radio">
+                                <input type="radio"
+                                       id="rdoSell_CurrencyDelivered"
+                                       name="ExportImport_CurrencyDelivered"
+                                       value="Sell" />
+
+                                <span class="currency-radio-mark"></span>
+                                <span class="currency-radio-text">Sell</span>
+                            </label>
+                            <label class="currency-radio">
+                                <input type="radio"
+                                       id="rdoRelzn_CurrencyDelivered"
+                                       name="ExportImport_CurrencyDelivered"
+                                       value="Relzn" />
+
+                                <span class="currency-radio-mark"></span>
+                                <span class="currency-radio-text">Relzn</span>
+                            </label>
+                            <label class="currency-radio">
+                                <input type="radio"
+                                       id="rdoSightBill_CurrencyDelivered"
+                                       name="ExportImport_CurrencyDelivered"
+                                       value="SightBill" />
+
+                                <span class="currency-radio-mark"></span>
+                                <span class="currency-radio-text">Sight Bill</span>
+                            </label>
+                          
+
+                        </div>
+                    </div>
+     </div>
+     </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/js/pages/banking/currency_delivered.js" asp-append-version="true"></script>

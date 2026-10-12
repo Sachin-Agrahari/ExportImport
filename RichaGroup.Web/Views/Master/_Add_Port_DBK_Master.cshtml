@@ -1,0 +1,65 @@
+﻿@* @{
+    ViewData["Title"] = "Add Port DBK Master";
+    ViewData["Heading"] = "Add Port DBK Master";
+}
+  *@
+<div class="bd_mainContainer">
+    <div class="page">
+  
+        <div class="grid cols-4">
+
+            <div class="field">
+                <label for="txtPortCode_Add_DBKPortMaster">Port Code</label>
+                <input type="text" id="txtPortCode_Add_DBKPortMaster" placeholder="Enter Port Code" />
+            </div>
+
+            <div class="field">
+                <label for="txtPort_Add_DBKPortMaster">Port</label>
+                <input type="text" id="txtPort_Add_DBKPortMaster" placeholder="Enter Port" />
+            </div>
+          
+            <div class="field">
+                <label for="txtShipMode_Add_DBKPortMaster">Ship Mode</label>
+                <input type="text" id="txtShipMode_Add_DBKPortMaster" placeholder="Enter Enter Ship Mode" />
+            </div>
+
+            <div class="field">
+                <label for="txtDBKAc_Add_DBKPortMaster">DBK A/c</label>
+                <input type="text" id="txtDBKAc_Add_DBKPortMaster" placeholder="Enter DBK Account " />
+            </div>         
+           
+        </div>
+
+        <div class="grid cols-4 mt-3">
+
+            <div class="field">
+                <label for="txtBankAdd1_Add_DBKPortMaster">Bank Address 1</label>
+                <input type="text" id="txtBankAdd1_Add_DBKPortMaster" placeholder="Enter Bank Address 1" />
+            </div>
+
+            <div class="field">
+                <label for="txtBankAdd2_Add_DBKPortMaster">Bank Address 2</label>
+                <input type="text" id="txtBankAdd2_Add_DBKPortMaster" placeholder="Enter Bank Address 2" />
+            </div>
+
+            <div class="field">
+                <label for="txtBankAdd3_Add_DBKPortMaster">Bank Address 3</label>
+                <input type="text" id="txtBankAdd3_Add_DBKPortMaster" placeholder="Enter Bank Address 3" />
+            </div>
+
+            <div class="field">
+                <label for="ddlCity">City Name</label>
+                <select id="ddlCity"
+                  class="form-select">
+                    <option value="">Select City</option>
+                    <option value="Gurguram">Gurguram</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Kolkata">Kolkata</option>
+                  
+                </select>
+            </div>
+        </div>
+         
+    </div>
+</div>
+<script src="~/js/pages/mastersjs/add_port_dbk_master.js" asp-append-version="true"></script>

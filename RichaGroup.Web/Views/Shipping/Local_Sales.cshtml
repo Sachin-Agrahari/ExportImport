@@ -1,0 +1,192 @@
+﻿@{
+	ViewData["Title"] = "Local Sales";
+	ViewData["Heading"] = "Local Sales";
+}
+
+<link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/pages/shipping/debit_note_entry.css" rel="stylesheet" asp-append-version="true" />
+
+
+
+<div class="bd_mainContainer">
+    <div class="page">
+
+       
+        <section class="card">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Local Sales</h2>
+                </div>
+
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-cancel-custom"
+                            id="btnCancel">
+                        ✕ Cancel
+                    </button>
+
+                
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="grid cols-6">
+                    <div class="field">
+                        <label>Entry No</label>
+                        <input type="text" id="txtEntry_LocalSales" value="" placeholder="Enter Entry No .. " />
+                    </div>
+                    <div class="field">
+                        <label>Entry Date</label>
+                        <input type="text" id="txtEntrydate_LocalSales" placeholder="Select Entry Date.. " />
+                    </div>
+                    <div class="field">
+                        <label>Invoice</label>
+                        <input type="text" id="txtInvoice_LocalSales" value="" placeholder="Enter Invoice... " />
+                    </div>
+                    <div class="field">
+                        <label>Invoice Date</label>
+                        <input type="text" id="txtInvoicedate_LocalSales" placeholder="Select Invoice Date.. " />
+                    </div>
+                    <div class="field">
+                        <label>Po Number</label>
+                        <input type="text" id="txtPoNo_LocalSales" value="" placeholder="Enter Po Number... " />
+                    </div>
+                    <div class="field">
+                        <label>Unit</label>
+                        <select id="ddlUnit_LocalSales" class="select2-field">
+                            <option value="Y" selected>MN215</option>
+                            <option value="OC">OC</option>
+                            <option value="R389W">R389W</option>
+                            <option value="R389K">R389K</option>
+                            <option value="RC165">RC165</option>
+                            <option value="RC192">RC192</option>
+                            <option value="RC193">RC193</option>
+                            <option value="RC239">RC239</option>
+                            <option value="RC411">RC411</option>
+                        </select>
+                    </div>
+
+                    <div class="field span-2">
+                        <label>Company Name</label>
+                        <input type="text" id="txtCompanyName_LocalSales" value="" placeholder="Enter Company Name.. " />
+                    </div>
+                    <div class="field span-2">
+                        <label>Consignee Name</label>
+                        <input type="text" id="txtConsigneeName_LocalSales" value="" placeholder="Enter Consignee Name.. " />
+                    </div>
+                    <div class="field span-2">
+                        <label>Buying House</label>
+                        <input type="text" id="txtBuyingHouse_LocalSales" value="" placeholder="Enter Buying House Name.. " />
+                    </div>
+                    <div class="field">
+                        <label>Country Name</label>
+                        <input type="text" id="txtCountry_LocalSales" value="" placeholder="Enter Country Name.. " />
+                    </div>
+                    <div class="field">
+                        <label>Invoice Amount</label>
+                        <input type="text" id="txtInvoiceAmt_LocalSales" value="" placeholder="Enter Invoice Amount.. " />
+                    </div>
+                    <div class="field">
+                        <label>PI Type</label>
+                        <input type="text" id="txtPiType_LocalSales" value="" placeholder="Enter Pi Type.. " />
+                    </div>
+                    <div class="field">
+                        <label>PI Mode</label>
+                        <input type="text" id="txtPiMode_LocalSales" value="" placeholder="Enter Pi Mode.. " />
+                    </div>
+                    <div class="field">
+                        <label>Currency Type</label>
+                        <input type="text" id="txtCurr_LocalSales" value="" placeholder="Enter Currency Type.. " />
+                    </div>
+
+                    <div class="field">
+                        <label>Account Type</label>
+                        <input type="text" id="txtAcType_LocalSales" value="" placeholder="Enter Account Type.. " />
+                    </div>
+
+                    <div class="field">
+                        <label>Account Mode</label>
+                        <input type="text" id="txtAcMode_LocalSales" value="" placeholder="Enter Account Mode.. " />
+                    </div>
+
+                    <div class="field">
+                        <label>Conv. Rate</label>
+                        <input type="text" id="txtConvRate_LocalSales" value="" placeholder="Enter Conv Rate.. " />
+                    </div>
+                    <div class="field">
+                        <label>INR Amount</label>
+                        <input type="text" id="txtInrAmount_LocalSales" value="" placeholder="Enter INR Amount.. " />
+                    </div>
+                    <div class="field">
+                        <label>Status</label>
+                        <input type="text" id="txtStatus_LocalSales" value="" placeholder="Enter Status.. " />
+                    </div>
+                    <div class="field span-2">
+                        <label>CHA</label>
+                        <input type="text" id="txtCha_LocalSales" value="" placeholder="Enter CHA .. " />
+                    </div>
+                    <div class="field">
+                        <label>Freight</label>
+                        <input type="text" id="txtfreight_LocalSales" value="" placeholder="Enter freight .. " />
+                    </div>
+                    <div class="field">
+                        <label>Frt. Amount</label>
+                        <input type="text" id="txtFrtAmount_LocalSales" value="" placeholder="Enter Frt Amount .. " />
+                    </div>
+                    <div class="field">
+                        <label>Doc Recived On</label>
+                        <input type="text" id="txtdocRcvd_LocalSales" value="" placeholder="Enter Doc Rcvd On .. " />
+                    </div>
+                    <div class="field">
+                        <label>Gri</label>
+                        <input type="text" id="txtGri_LocalSales" value="" placeholder="Enter Gri.. " />
+                    </div>
+                    <div class="field span-2">
+                        <label>Body</label>
+                        <input type="text" id="txtBody_LocalSales" value="" placeholder="Enter Body .. " />
+                    </div>
+                    <div class="field">
+                        <label>NFEI</label>
+                        <input type="text" id="txtNFEI_LocalSales" value="" placeholder="Enter NFEI.. " />
+                    </div>
+                    <div class="field">
+                        <label>Total Qty</label>
+                        <input type="text" id="txtTotalQty_LocalSales" value="" placeholder="Enter Total Qty.. " />
+                    </div>
+                     
+                </div>
+              
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="~/js/pages/shipping/local_sales.js" asp-append-version="true"></script>

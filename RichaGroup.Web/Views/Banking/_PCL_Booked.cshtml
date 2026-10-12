@@ -1,0 +1,110 @@
+﻿
+<div class="bd_mainContainer p-2">
+    <div class="page">
+
+        <div class="grid cols-4">
+
+            <div class="field">
+                <label for="txtEntryNo_PCLBooked">Entry Number</label>
+                <input type="text" id="txtEntryNo_PCLBooked"
+                       placeholder="Enter Entry Number" />
+            </div>
+
+            <div class="field">
+                <label for="txtType_PCLBooked">Type</label>
+                <input type="text" id="txtType_PCLBooked"
+                       placeholder="Enter Type..." />
+            </div>
+
+            <div class="field">
+                <label for="txtLoanNo_PCLBooked">Loan Number</label>
+                <input type="text" id="txtLoanNo_PCLBooked"
+                       placeholder="Enter Loan Number" />
+            </div>
+
+            <div class="field">
+                <label for="txtOpendate_PCLBooked">Open Date</label>
+                <input type="text" id="txtOpendate_PCLBooked"
+                       placeholder="Select Open Date" />
+            </div>
+
+            <div class="field">
+                <label for="txtDays_PCLBooked">Days</label>
+                <input type="text" id="txtDays_PCLBooked"
+                       placeholder="Enter Days..." />
+            </div>
+
+            <div class="field">
+                <label for="txtLoanAmt_PCLBooked">Loan Amount</label>
+                <input type="text" id="txtLoanAmt_PCLBooked"
+                       placeholder="Enter Loan Amount..." />
+            </div>
+
+            <div class="field">
+                <label for="txtRateInterest_PCLBooked">Rate Of Interest</label>
+                <input type="text" id="txtRateInterest_PCLBooked"
+                       placeholder="Enter Rate of Interest..." />
+            </div>
+
+            <div class="field">
+                <label for="txtDuedate_PCLBooked">Due Date</label>
+                <input type="text" id="txtDuedate_PCLBooked"
+                       placeholder="Select Due Date" />
+            </div>
+
+            <div class="field">
+                <label for="txtBank_PCLBooked">Bank</label>
+                <input type="text" id="txtBank_PCLBooked"
+                       placeholder="Enter Bank..." />
+            </div>
+
+           <div class="grid cols-2 d-none" id="extendFields_PCLBooked">
+
+    <div class="field">
+        <label>Extend Days</label>
+        <input type="number"
+               id="txtExtendDays_PCLBooked"
+               placeholder="Enter Extend Days"
+               min="1" />
+    </div>
+
+    <div class="field">
+        <label>Extend Date</label>
+        <input type="text"
+            class="form-Flatdate"
+               id="txtExtendDate_PCLBooked"
+               placeholder="Select Extend Date" />
+    </div>
+
+</div>
+
+            @* <div class="field">
+                <label for="txtExtendDays_PCLBooked">Extend Days</label>
+                <input type="number" id="txtExtendDays_PCLBooked"
+                       class="form-control"
+                       placeholder="Enter Extend Days" min="1" />
+            </div>
+
+            <div class="field">
+                <label for="txtExtendDate_PCLBooked">Extend Date</label>
+                <input type="date" id="txtExtendDate_PCLBooked"
+                       class="form-control" />
+            </div> *@
+
+              <!-- Extend Day Button -->
+        <div class="field d-flex justify-content-end mt-3">
+            <button type="button"
+                    id="btnExtendDay_PCLBooked"
+                    class="btn btn-primary btn-sm"
+                    title="Extend Day">
+                <i class="fa-solid fa-calendar-plus"></i>
+                <span>Extend Day</span>
+            </button>
+        </div>
+
+        </div>
+
+      
+
+    </div>
+</div>

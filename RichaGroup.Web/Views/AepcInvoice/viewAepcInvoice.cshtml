@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "AEPC Invoice";
+    ViewData["Heading"] = "AEPC Invoice";
+}
+
+
+<div class="bd_mainContainer">
+    <div class="page">
+
+
+        <div class="card shadow-sm border-0 mt-2">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">AEPC Invoice</h2>
+                </div>
+
+    
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons") 
+                    <button class="btn btn-primary btn-sm"
+                            id="btnAdd">
+                        ＋ Add
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body"> 
+                
+                <!-- Table Section -->
+                <div class="border rounded-3 bg-white shadow-sm p-2">
+
+                    <div class="table-responsive">
+                        <table id="tblInvoiceList" class="invoice-table w-100 mb-0">
+
+                            <thead>
+                                <tr>
+                                    <th class="c" width="80px">Action</th>
+                                    <th>Invoice Number</th>
+                                    <th>Invoice Dt.</th>
+                                    <th>Buyer Name</th>
+                                    <th>Currency</th>
+                                    <th class="r">Amount</th>
+                                    <th>LC No.</th>
+                                    <th>SB No.</th>
+                                    <th>Initial</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="invoiceListBody"></tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+
+<script src="~/js/pages/aepc-invoice.js" asp-append-version="true"></script>

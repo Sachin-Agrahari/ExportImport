@@ -1,0 +1,284 @@
+﻿@{
+    ViewData["Title"] = "EBRC Bulk Uploader";
+    ViewData["Heading"] = "EBRC Bulk Uploader";
+}
+
+<link href="~/css/pages/banking/ebrc_bulk_uploader.css"
+      rel="stylesheet"
+      asp-append-version="true" />
+
+<div class="bd_mainContainer">
+    <div class="page">
+
+        <!-- EBRC Bulk Upload -->
+        <section class="card">
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">ROSCTL Bulk Uploader</h2>
+                </div>
+
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-outline-danger btn-sm"
+                            id="btnRefresh_EBRCBulkUploader">
+                        ↻ Refresh
+                    </button>
+                    @* <button class="btn btn-primary btn-sm" id="btnSave_AdvLicApplication">Save</button> *@
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="ebrc-bulk-upload-box">
+
+                    <!-- FILE UPLOAD -->
+                    <div class="field">
+
+                        <label>Excel File</label>
+
+                        <div class="ebrc-upload-control">
+
+                            <!-- Hidden File -->
+                            <input type="file"
+                                   id="fileXls_EBRCBulkUploader"
+                                   accept=".xls,.xlsx"
+                                   hidden />
+
+                            <!-- File Preview -->
+                            <div class="ebrc-file-display"
+                                 id="ebrcFileDisplay_EBRCBulkUploader">
+
+                                <div class="ebrc-folder-icon">
+
+                                    <div class="ebrc-folder-back"></div>
+
+                                    <div class="ebrc-folder-front">
+
+                                        <div class="ebrc-folder-tab"></div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="ebrc-file-text">
+
+                                    <span class="ebrc-file-title">
+                                        Choose Excel File
+                                    </span>
+
+                                    <small>
+                                        .xls / .xlsx
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Browse -->
+                            <label class="ebrc-browse-btn"
+                                   for="fileXls_EBRCBulkUploader">
+
+                                <i class="fa-solid fa-folder-open"></i>
+
+                                <span>Browse XLS File</span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SEARCH ON -->
+                    <div class="field">
+
+                        <label>Search On</label>
+
+                        <select id="ddlSearchOn_EBRCBulkUploader"
+                                class="select2-field">
+
+                            <option value="">
+                                Select Search On
+                            </option>
+
+                            <option value="BOExchange">
+                                B.O. Exchange #
+                            </option>
+
+                            <option value="BankRef">
+                                Bank Ref. #
+                            </option>
+
+                            <option value="RealizationDate">
+                                Realization Date
+                            </option>
+
+                            <option value="EBRCNo">
+                                EBRC #
+                            </option>
+
+                            <option value="InvoiceNo">
+                                Invoice No
+                            </option>
+
+                            <option value="SBNumber">
+                                S.B. Number
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- UPLOAD -->
+                    <button type="button"
+                            class="ebrc-upload-button"
+                            id="btnUpload_EBRCBulkUploader">
+
+                        <!-- Main SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 100 50">
+
+                            <rect class="ebrc-upload-border"
+                                  pathLength="100">
+                            </rect>
+
+                            <rect class="ebrc-upload-loading"
+                                  pathLength="100">
+                            </rect>
+
+                        </svg>
+
+
+                        <!-- Normal text -->
+                        <span class="ebrc-upload-text">
+                            Upload
+                        </span>
+
+
+                        <!-- SUCCESS CHECK -->
+                        <span class="ebrc-success-icon">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 viewBox="0 0 24 24">
+
+                                <path d="M5 12.5L9.5 17L19 7"></path>
+
+                            </svg>
+
+                        </span>
+
+                    </button>
+                    </div>
+
+                </div>
+
+
+                <!-- Selected File -->
+                <div id="ebrcSelectedFileInfo"
+                     class="ebrc-selected-file d-none">
+
+                    <div>
+
+                        <i class="fa-solid fa-file-excel"></i>
+
+                        <span>
+                            Selected File:
+                            <strong id="lblSelectedFile_EBRCBulkUploader">
+                                -
+                            </strong>
+                        </span>
+
+                    </div>
+
+                    <span class="ebrc-status">
+                        Ready
+                    </span>
+
+                </div>
+
+
+        </section>
+
+
+        <!-- EBRC Bulk Data -->
+        <section class="card">
+
+            <div class="card-head">
+
+                @* <span class="tick"></span> *@
+
+                <h2 class="mt-2">
+                    Uploaded Files
+                </h2>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-wrap">
+
+                    <table id="tblEBRCBulkUploader"
+                           class="display"
+                           style="width:100%">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>File Name</th>
+
+                                <th>Type</th>
+
+                                <th>Size</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="tblbodyEBRCBulkUploader">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- Footer -->
+                <div class="ebrc-bulk-footer">
+
+                    <div class="ebrc-record-count">
+
+                        Total Files:
+                        <strong id="lblRecordCount_EBRCBulkUploader">
+                            0
+                        </strong>
+
+                    </div>
+
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSaveBulk_EBRCBulkUploader">
+
+                        <i class="fa-solid fa-floppy-disk me-1"></i>
+                        Save Bulk Data
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+</div>
+
+<script src="~/js/pages/banking/ebrc_bulk_uploader.js" asp-append-version="true"></script>

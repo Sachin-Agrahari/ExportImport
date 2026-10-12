@@ -1,0 +1,217 @@
+﻿
+@{
+	ViewData["Title"] = "Shipping Bills Details";
+	ViewData["Heading"] = "Shipping Bills Details";
+}
+
+
+<div class="bd_mainContainer">
+    <div class="page">   
+       <section class="card">
+
+    <!-- Header -->
+    <div class="card-head">
+
+        <div>
+            <span class="tick"></span>
+            <h2 class="mt-2" id="txtHeaderMain">
+                Shipping Bills Details
+            </h2>
+        </div>
+
+        <div class="d-flex gap-2">
+            @await Html.PartialAsync("Components/_CheckBoxComponent")
+            @await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+            <button type="button"
+                    class="btn btn-primary btn-sm"
+                    id="btnSave"
+                    title="Save">
+
+                <svg width="14"
+                     height="14"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+
+                </svg>
+
+                Save
+            </button>
+                 <button type="button"
+                    class="btn btn-primary btn-sm"
+                    id="btnAdd">
+                ＋ Add
+              </button>
+
+            <button type="button"
+                    class="btn btn-cancel-custom"
+                    id="btnCancel">
+                ✕ Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+        <div class="card-body">
+             <div class="grid cols-4">
+
+                     <!-- Entry No -->
+                     <div class="field">
+                         <label class="form-label">Entry Number <button id="btnhelpentry" class="help-link">help</button></label>
+                         <input type="text"
+                                id="txtEntryNo"
+                                placeholder="Enter Entry Number...">
+                      </div>
+                     <div class="field">
+                         <label class="form-label">Entry Date</label>
+                         <input type="text"
+                                id="txtEntryDt"
+                                class=" form-Flatdate"
+                                placeholder="Select Entry Date">
+                      </div>
+                     <div class="field">
+                         <label class="form-label">Invoice No</label>
+                         <input type="text"
+                                id="txtInvoiceDt"
+                                placeholder="Enter Invoice No ..">
+                      </div>
+                     <div class="field">
+                         <label class="form-label">Month</label>
+                         <input type="text"
+                                id="txtMonth"
+                                placeholder="Enter Month ..">
+                      </div>
+                     <div class="field">
+                         <label class="form-label">SB No</label>
+                         <input type="text"
+                                id="txtSBeDt"
+                                placeholder="Enter SB No ..">
+                      </div>
+                       <div class="field">
+                         <label class="form-label">SB Date</label>
+                         <input type="text"
+                                id="txtSBDt"
+                                class=" form-Flatdate"
+                                placeholder="Select SB Date">
+                      </div>
+
+                       <div class="field">
+                         <label class="form-label">Month</label>
+                         <input type="text"
+                                id="txtMonth"
+                                placeholder="Enter Month ..">
+                      </div>
+
+                       <div class="field">
+                         <label class="form-label">LEO Date</label>
+                         <input type="text"
+                                id="txtLeoDt"
+                                class=" form-Flatdate"
+                                placeholder="Select SB Date">
+                      </div>
+                       <div class="field">
+                         <label class="form-label">EP Rate</label>
+                         <input type="text"
+                                id="txtEpRate"
+                                placeholder="Enter EP Rate ..">
+                      </div>
+                       <div class="field">
+                         <label class="form-label">DBK Port</label>
+                         <input type="text"
+                                id="txtDbkPort"
+                                placeholder="Enter DBK Port ..">
+                      </div>
+                       <div class="field">
+                         <label class="form-label">DBK Port CD</label>
+                         <input type="text"
+                                id="txtDbkPortcd"
+                                placeholder="Enter DBK Port CD ..">
+                      </div>
+                       <div class="field">
+                         <label class="form-label">DBK Applied</label>
+                         <input type="text"
+                                id="txtDbkApplied"
+                                placeholder="Enter DBK Applied ..">
+                      </div>
+                       <div class="field">
+                         <label class="form-label">ROSCTL Appld</label>
+                         <input type="text"
+                                id="txtROSCTLAppld"
+                                placeholder="Enter ROSCTL Applied ..">
+                      </div>
+                 </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+@* entry help open here in modal *@
+
+<div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                        Entry Help Shippind Bills Deatils
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+          <div class="modal-body px-2">
+                 @* @await Html.PartialAsync("_ROSCTL_Licensce_Entry") *@
+                @* <h1 class="text-danger fs-3 text-center"> field will enter soon </h1> *@
+                @await Html.PartialAsync("_HelpEntryShippingBillDetails");
+        </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/js/pages/banking/shipping_bills_details.js" asp-append-version="true"></script>

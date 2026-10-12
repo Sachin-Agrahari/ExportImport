@@ -1,0 +1,422 @@
+﻿@{
+	ViewData["Title"] = "Form Advance Master";
+	ViewData["Heading"] = "Form Advance Master";
+}
+
+<div class="bd_mainContainer">
+	<div class="page">
+
+
+
+
+		<div class="grid cols-5">
+
+			<!-- Advance No -->
+			<div class="field">
+
+				<label for="txtAdvanceNo" class="form-label">
+					Advance No
+				</label>
+
+				<input type="text"
+					   id="txtAdvanceNo"
+					   class="form-control"
+					   placeholder="Enter Advance No" />
+
+			</div>
+
+
+			<!-- Date -->
+			<div class="field">
+
+				<label for="txtAdvanceDate" class="form-label">
+					Date
+				</label>
+
+				<input type="text"
+					   id="txtAdvanceDate"
+					   class="form-control"
+					   placeholder="Select Date" />
+
+			</div>
+
+
+			<!-- Buyer Name -->
+			<div class="field">
+
+				<label for="ddlBuyerName" class="form-label">
+
+					Buyer Name
+					<span class="text-danger">*</span>
+				</label>
+
+				<select id="ddlBuyerName"
+						class="form-select">
+
+					<option value="">--Choose One--</option>
+					<option value="Amit">Amit</option>
+					<option value="Anil">Anil</option>
+					<option value="Anil Thakur">Anil Thakur</option>
+
+				</select>
+
+			</div>
+
+
+			<!-- Amount -->
+			<div class="field">
+
+				<label for="txtAmount" class="form-label">
+					Amount
+				</label>
+
+				<input type="text"
+					   id="txtAmount"
+					   class="form-control"
+					   placeholder="Enter Amount" />
+
+			</div>
+
+
+			<!-- Currency -->
+			<div class="field">
+
+				<label for="ddlCurrency" class="form-label">
+
+					Currency
+					<span class="text-danger">*</span>
+				</label>
+
+				<select id="ddlCurrency"
+						class="form-select">
+
+					<option value="">--Choose One--</option>
+					<option value="USD">USD</option>
+					<option value="EUR">EUR</option>
+					<option value="INR">INR</option>
+					<option value="GBP">GBP</option>
+
+				</select>
+
+			</div>
+
+
+			<!-- Conversion Rate -->
+			<div class="field">
+
+				<label for="txtConversionRate" class="form-label">
+					Conversion Rate
+				</label>
+
+				<input type="text"
+					   id="txtConversionRate"
+					   class="form-control"
+					   placeholder="Enter Conversion Rate" />
+
+			</div>
+
+
+			<!-- Amount INR -->
+			<div class="field">
+
+				<label for="txtAmountINR" class="form-label">
+					Amount INR
+				</label>
+
+				<input type="text"
+					   id="txtAmountINR"
+					   class="form-control"
+					   placeholder="Enter Amount INR" />
+
+			</div>
+
+
+			<!-- Invoice Detail -->
+			<div class="field">
+
+				<label for="ddlInvoiceDetail" class="form-label">
+					Invoice Detail
+				</label>
+
+				<select id="ddlInvoiceDetail"
+						class="form-select">
+
+					<option value="">--Choose One--</option>
+					<option value="Yes">Yes</option>
+					<option value="No">No</option>
+
+				</select>
+
+			</div>
+
+
+			<!-- Manual Adjustment -->
+			<div class="field">
+
+				<label for="txtManualAdjustment" class="form-label">
+					Manual Adjustment
+				</label>
+
+				<input type="text"
+					   id="txtManualAdjustment"
+					   class="form-control"
+					   placeholder="Enter Manual Adjustment" />
+
+			</div>
+
+
+			<!-- BOE Adjustment -->
+			<div class="field">
+
+				<label for="txtBOEAdjustment" class="form-label">
+					BOE Adjustment
+				</label>
+
+				<input type="text"
+					   id="txtBOEAdjustment"
+					   class="form-control"
+					   placeholder="Enter BOE Adjustment" />
+
+			</div>
+
+
+			<!-- Balance Amount -->
+			<div class="field">
+
+				<label for="txtBalanceAmount" class="form-label">
+					Balance Amount
+				</label>
+
+				<input type="text"
+					   id="txtBalanceAmount"
+					   class="form-control"
+					   placeholder="Enter Balance Amount" />
+
+			</div>
+
+
+			<!-- Remarks -->
+			<div class="field">
+
+				<label for="txtRemarks" class="form-label">
+					Remarks
+				</label>
+
+				<input type="text"
+					   id="txtRemarks"
+					   class="form-control"
+					   placeholder="Enter Remarks" />
+
+			</div>
+			<div class="field">
+
+				<label class="form-label">
+					FORWARD BOOKING
+				</label>
+
+				<div class="d-flex align-items-center gap-3 mt-1">
+
+					<div class="form-check d-flex align-items-center mb-0 p-0">
+
+						<input type="radio"
+							   class="form-check-input m-0"
+							   name="ForwardBooking"
+							   id="rdoForwardNo"
+							   value="No"
+							   checked />
+
+						<label class="form-check-label ms-1 mb-0"
+							   for="rdoForwardNo">
+							NO
+						</label>
+
+					</div>
+
+					<div class="form-check d-flex align-items-center mb-0 p-0">
+
+						<input type="radio"
+							   class="form-check-input m-0"
+							   name="ForwardBooking"
+							   id="rdoForwardYes"
+							   value="Yes" />
+
+						<label class="form-check-label ms-1 mb-0"
+							   for="rdoForwardYes">
+							YES
+						</label>
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+			<!-- Location -->
+			<div class="field">
+
+				<label for="ddlLocation" class="form-label">
+
+					Location
+					<span class="text-danger">*</span>
+				</label>
+
+				<select id="ddlLocation"
+						class="form-select">
+
+					<option value="">--Choose One--</option>
+					<option value="ABC Co Pvt Ltd">
+						ABC Co Pvt Ltd
+					</option>
+					<option value="Richa Group">
+						Richa Group
+					</option>
+
+				</select>
+
+			</div>
+
+
+			<!-- Debit Note -->
+			<div class="field">
+				<input type="checkbox"
+					   class="form-check-input"
+					   id="chkDebitNote"
+					   checked />
+
+				<label class="form-check-label"
+					   for="chkDebitNote">
+					Debit Note
+				</label>
+			</div>
+
+		</div>
+
+
+		<section class="card" id="adjustmentNoSection" style="display:none;">
+
+			<div class="card-head">
+
+				<div>
+					<span class="tick"></span>
+					<h2 class="mt-2">Adjustment No.</h2>
+				</div>
+			</div>
+
+
+			<div class="card-body">
+				<div class="table-wrap">
+
+					<table class="table table-bordered table-sm align-middle"
+						   id="tblAdvanceAdjustment">
+
+						<thead class="table-light">
+
+							<tr>
+								<th class="text-center">S.No.</th>
+								<th class="text-center">Entry No</th>
+								<th class="text-center">Date</th>
+								<th class="text-center">From Date</th>
+								<th class="text-center">To Date</th>
+								<th class="text-center">Conv Rate</th>
+								<th class="text-end">Amount</th>
+								<th class="text-end">Bal. Amt</th>
+							</tr>
+
+						</thead>
+
+						<tbody id="tblbodyAdvanceAdjustment">
+						</tbody>
+
+					</table>
+
+				</div>
+			</div>
+		</section>
+
+		<div class="field ms-4">
+
+			<label class="form-label">
+				PCFC BOOKING
+			</label>
+
+			<div class="d-flex align-items-center gap-3 mt-1">
+
+				<div class="form-check d-flex align-items-center mb-0 p-0">
+
+					<input type="radio"
+						   class="form-check-input m-0"
+						   name="PCFCBooking"
+						   id="rdoPCFCNo"
+						   value="No"
+						   checked />
+
+					<label class="form-check-label ms-1 mb-0"
+						   for="rdoPCFCNo">
+						NO
+					</label>
+
+				</div>
+
+				<div class="form-check d-flex align-items-center mb-0 p-0">
+
+					<input type="radio"
+						   class="form-check-input m-0"
+						   name="PCFCBooking"
+						   id="rdoPCFCYes"
+						   value="Yes" />
+
+					<label class="form-check-label ms-1 mb-0"
+						   for="rdoPCFCYes">
+						YES
+					</label>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<section class="card">
+
+			<div class="card-head">
+
+				<div>
+					<span class="tick"></span>
+					<h2 class="mt-2">Adjustment Against Currency Booked</h2>
+				</div>
+			</div>
+
+
+			<div class="card-body">
+				<div class="table-wrap">
+
+					<table class="table table-bordered table-sm align-middle"
+						   id="tblAdjustCurrBooked">
+
+						<thead class="table-light">
+
+							<tr>
+								<th class="text-center">S.No.</th>
+								<th class="text-center">Entry No</th>
+								<th class="text-center">Date</th>
+								<th class="text-end">Amount</th>
+								<th class="text-end">Remarks</th>
+							</tr>
+
+						</thead>
+
+						<tbody id="tblbodyAdjustCurrBooked">
+						</tbody>
+
+					</table>
+
+				</div>
+			</div>
+		</section>
+
+	</div>
+</div>
+
+<script src="~/js/pages/mastersjs/advancemaster.js"
+		asp-append-version="true"></script>

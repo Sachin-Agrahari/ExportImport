@@ -1,0 +1,162 @@
+﻿@{
+	ViewData["Title"] = "Physical Delivery To Shipping Department";
+	ViewData["Heading"] = "Physical Delivery To Shipping Department";
+}
+
+<div class="bd_mainContainer">
+    <div class="page">
+
+        <section class="card">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Physical Delivery Tag</h2>
+                </div>
+
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave_BOEAgainstFabric"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+                    <button type="button"
+                            class="btn btn-outline-danger btn-sm"
+                            id="btnRefresh_BOEAgainstFabric">
+                        ↻ Refresh
+                    </button>
+                </div>
+            </div> 
+            <div class="card-body">
+
+                <div class="grid cols-6">
+
+                    <div class="field">
+                        <label>From Date</label>
+
+                        <input type="text"
+                               id="txtfromDt_PhysicalDeliveryTag"
+                              placeholder="Select from date.." />
+                    </div>
+                    <div class="field">
+                        <label>To Date</label>
+
+                        <input type="text"
+                               id="txtToDt_PhysicalDeliveryTag"
+                              placeholder="Select To date.." />
+                    </div>
+                    <div class="field">
+                        <label>Company Name</label>
+
+                        <input type="text"
+                               id="txtCompanyName_PhysicalDeliveryTag"
+                               placeholder="Enter Company Name...." />
+                    </div>
+                    <div class="field">
+                        <label>Buyer Name</label>
+
+                        <input type="text"
+                               id="txtBuyerName_PhysicalDeliveryTag"
+                               placeholder="Enter Buyer Name...." />
+                    </div>
+                    <div class="field">
+                        <label>Style No</label>
+
+                        <input type="text"
+                               id="txtStyleNo_PhysicalDeliveryTag"
+                              placeholder="Enter Style No...." />
+                    </div>
+                    <div class="field">
+                        <label>IMP No</label>
+
+                        <input type="text"
+                               id="txtIMPNo_PhysicalDeliveryTag"
+                              placeholder="Enter IMP No...." />
+                    </div>
+
+                    <div class="field">
+                        <label>IMP Date</label>
+
+                        <input type="text"
+                               id="txtIMPDt_PhysicalDeliveryTag"
+                               placeholder="Select IMP date.." />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card gsp-table-card">
+
+            <div class="card-head d-flex justify-content-end">
+                <div class="d-flex justify-content-end align-items-end">
+
+                    
+                    <h5 class="text-primary">Calender Year 2024</h5>
+
+                </div>
+
+
+
+            </div>
+
+            <div class="card-body px-2">
+
+                <div class="gsp-table-scroll">
+
+                    <table id="tblPhysicalDeliveryTag"
+                           class="display"
+                           style="width:100%">
+
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Imp</th>
+                                <th>Qty</th>
+                                <th>Value/Inr</th>
+                                <th>BOE</th>
+                                <th>Dated</th>
+                                <th>BOE Qty</th>
+                                <th>Adv Lic Dated</th>
+                                <th>DEFC/Dated</th>
+                                <th>GAr Desc / Imp Remarks</th>
+                                <th>Norms No GSM Waste%</th>
+                                <th>Imported Qty</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyPhysicalDeliveryTag">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+      </div>
+    </div>
+
+<script src="~/js/pages/importsfabric/physical_delivery_tag.js" asp-append-version="true"></script>

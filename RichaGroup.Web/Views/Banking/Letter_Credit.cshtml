@@ -1,0 +1,1535 @@
+﻿@{
+	ViewData["Title"] = " Letter Credit";
+	ViewData["Heading"] = " Letter Credit";
+}
+@* 
+<style>
+    .tabpane {
+    display: none;
+}
+
+.tabpane.on {
+    display: block;
+} *@
+
+@* </style> *@
+
+
+<div class="bd_mainContainer">
+	<div class="page">
+
+		<section class="card">
+
+			<div class="card-head">
+				<div>
+					<span class="tick"></span>
+					<h2 class="mt-2" id="txtHeaderMain">Letter Credit</h2>
+				</div>
+
+
+				<div class="d-flex gap-2">
+					@await Html.PartialAsync("Components/_CheckBoxComponent")
+					@await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+
+					<div class="yn-field">
+						<div class="yn-checkbox">
+
+							<label>
+								<input type="radio"
+									   name="letterCreditType"
+									   class="rdoLetterCreditType"
+									   id="rbImport_LetterCredit"
+									   value="Import">
+								<span>Import</span>
+							</label>
+
+							<label>
+								<input type="radio"
+									   name="letterCreditType"
+									   class="rdoLetterCreditType"
+									   id="rbExport_LetterCredit"
+									   value="Export">
+								<span>Export</span>
+							</label>
+
+						</div>
+					</div>
+					@* <button type="button" class="btn btn-primary btn-sm import-field" id="btnAdd_LetterCredit">
+                        + Add
+                    </button> *@
+				</div>
+			</div>
+
+			<div class="page">
+
+				<form id="frmAdd_EntryLoanCredit" novalidate>
+					<div class="card-body">
+
+						<div class="tabs" role="tablist">
+							<button type="button"
+									id="btnLC"
+									class="on"
+									data-tab="t-LC">
+								Letter Credit
+							</button>
+
+							<button type="button"
+									id="btnLCAmendment"
+									data-tab="t-Amendment">
+								Letter Credit <strong>(Amendment)</strong>
+							</button>
+
+							<button type="button"
+									id="btnLCTransfer"
+									data-tab="t-Transfer">
+								Letter Credit <strong>(Transfer)</strong>
+							</button>
+						</div>
+
+						<div class="tabpane on" id="t-LC">
+							<div class="grid cols-6">
+
+								<!-- Buyer -->
+								<div class="field">
+									<label>Buyer</label>
+									<input type="text"
+										   id="txtBuyer_Add_EntryLoanCredit"
+										   placeholder="Enter Buyer..." />
+								</div>
+
+								<div class="field span-2">
+									<label>
+										LC No
+										<button id="btnLCNoHelp" class="help-link">Help</button>
+									</label>
+									<input type="text"
+										   id="txtLCNo_Add_EntryLoanCredit"
+										   placeholder="Enter LC Number..." />
+								</div>
+
+								<div class="field">
+									<label>Open A/C</label>
+									<select id="ddlOpenAC_Add_EntryLoanCredit"
+											class="select2-field">
+										<option value="">Select</option>
+										<option value="Y">Y</option>
+										<option value="N">N</option>
+									</select>
+								</div>
+
+
+								<div class="field">
+									<label>Transfer From</label>
+									<input type="text"
+										   id="txtTrfrFrom_Add_EntryLoanCredit"
+										   placeholder="Enter Transfer From..." />
+								</div>
+
+								<div class="field span-2">
+									<label>Reference</label>
+									<input type="text"
+										   id="txtRef_Add_EntryLoanCredit"
+										   placeholder="Enter Reference..." />
+								</div>
+
+
+								<div class="field">
+									<label>Expiry</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtExpiry_Add_EntryLoanCredit"
+										   placeholder="Select Expiry Date..." />
+								</div>
+
+								<div class="field">
+									<label>Type</label>
+									<input type="text"
+										   id="txtType_Add_EntryLoanCredit"
+										   placeholder="Enter Type..." />
+								</div>
+
+								<div class="field">
+									<label>Curr</label>
+									<input type="text"
+										   id="txtCurr_Add_EntryLoanCredit"
+										   placeholder="Enter Currency..." />
+								</div>
+
+								<div class="field">
+									<label>Amount</label>
+									<input type="text"
+										   id="txtAmount_Add_EntryLoanCredit"
+										   class="num"
+										   placeholder="Enter Amount..." />
+								</div>
+
+								<div class="field">
+									<label>Issue Date</label>
+									<input type="text"
+										   class="form-input form-Flatdate"
+										   id="txtissuedt_Add_EntryLoanCredit"
+										   placeholder="Select LC Adv. Date..." />
+								</div>
+
+								<div class="field span-2">
+									<label>At</label>
+									<input type="text"
+										   id="txtAt_Add_EntryLoanCredit"
+										   placeholder="Enter At..." />
+								</div>
+
+								<div class="field">
+									<label>Shipment</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtShipment_Add_EntryLoanCredit"
+										   placeholder="Select Shipment Date..." />
+								</div>
+
+
+								<div class="field">
+									<label>Payment Terms</label>
+									<input type="text"
+										   id="txtPTerms_Add_EntryLoanCredit"
+										   placeholder="Enter Payment Terms..." />
+								</div>
+
+								<div class="field">
+									<label>Date of BL</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtDateOfBL_Add_EntryLoanCredit"
+										   placeholder="Select BL Date..." />
+								</div>
+
+								<div class="field span-2">
+									<label>Remark</label>
+									<input type="text"
+										   id="txtRemark_Add_EntryLoanCredit"
+										   placeholder="Enter Remark..." />
+								</div>
+
+								<div class="field">
+									<label>Issue By</label>
+									<input type="text"
+										   id="txtIssueBy_Add_EntryLoanCredit"
+										   placeholder="Enter Issue By..." />
+								</div>
+
+								<div class="field">
+									<label>Corrsp.</label>
+									<input type="text"
+										   id="txtCorrsp_Add_EntryLoanCredit"
+										   placeholder="Enter Correspondence..." />
+								</div>
+								<div class="field">
+									<label>In Favour</label>
+									<input type="text"
+										   id="txtCorrsp_Add_EntryLoanCredit"
+										   placeholder="Enter Correspondence..." />
+								</div>
+								<div class="field">
+									<label>Bank Charges</label>
+									<input type="text"
+										   id="txtBankCharges_Add_EntryLoanCredit"
+										   placeholder="Enter Bank charges..." />
+								</div>
+								<div class="field">
+									<label>Bank Charges Date</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtBankChargesdt_Add_EntryLoanCredit"
+										   placeholder="Select Bank charges dt ..." />
+								</div>
+
+								<div class="field">
+									<label>Advising</label>
+									<input type="text"
+										   id="txtAdvising_Add_EntryLoanCredit"
+										   placeholder="Enter Advising..." />
+								</div>
+
+							</div>
+						</div>
+
+						<div class="tabpane" id="t-Amendment">
+							<div class="grid cols-6">
+
+								<div class="field">
+									<label>Buyer</label>
+									<input type="text"
+										   id="txtBuyer_LetterCreditAmendment"
+										   placeholder="Enter Buyer..." />
+								</div>
+
+								<div class="field span-2">
+									<label>L/C Number</label>
+									<input type="text"
+										   id="txtLCNumber_LetterCreditAmendment"
+										   placeholder="Enter L/C Number..." />
+								</div>
+
+								<div class="field">
+									<label>Amend #</label>
+									<input type="text"
+										   id="txtAmendNo_LetterCreditAmendment"
+										   placeholder="Enter Amend Number..." />
+								</div>
+
+								<div class="field">
+									<label>L/C Open On</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtLCOpenOn_LetterCreditAmendment"
+										   placeholder="Select Open Date..." />
+								</div>
+
+								<div class="field">
+									<label>Amend Date</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtAmendDate_LetterCreditAmendment"
+										   placeholder="Select Amend Date..." />
+								</div>
+
+								<div class="field">
+									<label>Type</label>
+									<input type="text"
+										   id="txtType_LetterCreditAmendment"
+										   placeholder="Enter Type..." />
+								</div>
+								<div class="field">
+									<label>Currency</label>
+									<input type="text"
+										   id="txtCurrency_LetterCreditAmendment"
+										   placeholder="Enter Currency..." />
+								</div>
+
+								<div class="field">
+									<label>L/C Amount</label>
+									<input type="text"
+										   id="txtLCAmount_LetterCreditAmendment"
+										   class="num"
+										   placeholder="Enter L/C Amount..." />
+								</div>
+
+								<div class="field span-2">
+									<label>Payment Terms</label>
+									<input type="text"
+										   id="txtPaymentTerms_LetterCreditAmendment"
+										   placeholder="Enter Payment Terms..." />
+								</div>
+
+								<div class="field">
+									<label>Expiry</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtExpiry_LetterCreditAmendment"
+										   placeholder="Select Expiry Date..." />
+								</div>
+
+								<div class="field">
+									<label>Shipment On</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtShipmentOn_LetterCreditAmendment"
+										   placeholder="Select Shipment Date..." />
+								</div>
+								<div class="field">
+									<label>F.Dest</label>
+									<input type="text"
+										   id="txtFDest_LetterCreditAmendment"
+										   placeholder="Enter Final Destination..." />
+								</div>
+
+								<div class="field span-2">
+									<label>Remarks</label>
+									<input type="text"
+										   id="txtRemarks_LetterCreditAmendment"
+										   placeholder="Enter Remarks..." />
+								</div>
+
+								<div class="field">
+									<label>Issuing Bank</label>
+									<input type="text"
+										   id="txtIssuingBank_LetterCreditAmendment"
+										   placeholder="Enter Issuing Bank..." />
+								</div>
+
+								<div class="field">
+									<label>Corresponding Bank</label>
+									<input type="text"
+										   id="txtCorrespondingBank_LetterCreditAmendment"
+										   placeholder="Enter Corresponding Bank..." />
+								</div>
+
+								<div class="field">
+									<label>Our Bank</label>
+									<input type="text"
+										   id="txtOurBank_LetterCreditAmendment"
+										   placeholder="Enter Our Bank..." />
+								</div>
+
+								<div class="field export-field">
+									<label>C.H.A</label>
+									<input type="text"
+										   id="txtCHA_LetterCreditAmendment"
+										   placeholder="Enter C.H.A..." />
+								</div>
+
+								@*   <div class="field export-field">
+                                    <label>L/C Transferable</label>
+                                    <select id="ddlLCTransferable_LetterCreditAmendment"
+                                            class="select2-field">
+                                        <option value="">Select</option>
+                                        <option value="Y">Y</option>
+                                        <option value="N">N</option>
+                                    </select>
+                                </div> *@
+
+								<div class="yn-field export-field">
+
+									<label class="yn-field-label">
+										L/C Transferable
+									</label>
+
+									<div class="yn-checkbox">
+
+										<label>
+											<input type="radio"
+												   name="LCTransferable_LetterCreditAmendment"
+												   class="rdoLCTransferable_LetterCreditAmendment"
+												   id="rbLCTransferableY_LetterCreditAmendment"
+												   value="Y">
+
+											<span>Y</span>
+										</label>
+
+										<label>
+											<input type="radio"
+												   name="LCTransferable_LetterCreditAmendment"
+												   class="rdoLCTransferable_LetterCreditAmendment"
+												   id="rbLCTransferableN_LetterCreditAmendment"
+												   value="N">
+
+											<span>N</span>
+										</label>
+
+									</div>
+
+								</div>
+
+								<div class="yn-field export-field">
+
+									<label class="yn-field-label">
+										Restrctn Trfr
+									</label>
+
+									<div class="yn-checkbox">
+
+										<label>
+											<input type="radio"
+												   name="RestrctnTrfr_LetterCreditAmendment"
+												   class="rdoRestrctnTrfr_LetterCreditAmendment"
+												   id="rbRestrctnTrfrY_LetterCreditAmendment"
+												   value="Y">
+
+											<span>Y</span>
+										</label>
+
+										<label>
+											<input type="radio"
+												   name="RestrctnTrfr_LetterCreditAmendment"
+												   class="rdoRestrctnTrfr_LetterCreditAmendment"
+												   id="rbRestrctnTrfrN_LetterCreditAmendment"
+												   value="N">
+
+											<span>N</span>
+										</label>
+
+									</div>
+
+								</div>
+
+
+								<div class="yn-field export-field">
+
+									<label class="yn-field-label">
+										Restricted to Bank
+									</label>
+
+									<div class="yn-checkbox">
+
+										<label>
+											<input type="radio"
+												   name="RestrictedToBank_LetterCreditAmendment"
+												   class="rdoRestrictedToBank_LetterCreditAmendment"
+												   id="rbRestrictedToBankY_LetterCreditAmendment"
+												   value="Y">
+
+											<span>Y</span>
+										</label>
+
+										<label>
+											<input type="radio"
+												   name="RestrictedToBank_LetterCreditAmendment"
+												   class="rdoRestrictedToBank_LetterCreditAmendment"
+												   id="rbRestrictedToBankN_LetterCreditAmendment"
+												   value="N">
+
+											<span>N</span>
+										</label>
+
+									</div>
+
+								</div>
+
+
+								<div class="yn-field export-field">
+
+									<label class="yn-field-label">
+										PO Details
+									</label>
+
+									<div class="yn-checkbox">
+
+										<label>
+											<input type="radio"
+												   name="PODetails_LetterCreditAmendment"
+												   class="rdoPODetails_LetterCreditAmendment"
+												   id="rbPODetailsY_LetterCreditAmendment"
+												   value="Y">
+
+											<span>Y</span>
+										</label>
+
+										<label>
+											<input type="radio"
+												   name="PODetails_LetterCreditAmendment"
+												   class="rdoPODetails_LetterCreditAmendment"
+												   id="rbPODetailsN_LetterCreditAmendment"
+												   value="N">
+
+											<span>N</span>
+										</label>
+
+									</div>
+
+								</div>
+
+								<div class="field">
+									<label>Audit / Transfer Charges</label>
+									<input type="text"
+										   id="txtTransferCharges_LetterCreditAmendment"
+										   class="num"
+										   placeholder="Enter Transfer Charges..." />
+								</div>
+
+								<div class="field">
+									<label>Chg No.</label>
+									<input type="text"
+										   id="txtChgNo_LetterCreditAmendment"
+										   placeholder="Enter Charge Number..." />
+								</div>
+
+								<div class="field">
+									<label>Ref. Number</label>
+									<input type="text"
+										   id="txtRefNumber_LetterCreditAmendment"
+										   placeholder="Enter Reference Number..." />
+								</div>
+
+								<div class="field">
+									<label>Ref. Date</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   class="form-Flatdate"
+										   id="txtRefDate_LetterCreditAmendment"
+										   placeholder="Select Reference Date..." />
+								</div>
+
+								<div class="field">
+									<label>Curr</label>
+									<input type="text"
+										   id="txtCurr_LetterCreditAmendment"
+										   placeholder="Enter Currency..." />
+								</div>
+
+
+								<div class="field">
+									<label>Advising Amount</label>
+									<input type="text"
+										   id="txtAdvisingAmount1_LetterCreditAmendment"
+										   class="num"
+										   placeholder="Enter Amount..." />
+								</div>
+
+								<div class="field">
+									<label>Advising Ref.</label>
+									<input type="text"
+										   id="txtAdvisingRef1_LetterCreditAmendment"
+										   placeholder="Enter Reference..." />
+								</div>
+
+								<div class="field">
+									<label>Advising Chg No.</label>
+									<input type="text"
+										   id="txtAdvisingChgNo1_LetterCreditAmendment"
+										   placeholder="Enter Charge No..." />
+								</div>
+
+								<div class="field">
+									<label>Advising Ref. Date</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtAdvisingRefDate1_LetterCreditAmendment"
+										   placeholder="Select Date..." />
+								</div>
+
+								<div class="field">
+									<label>Advising Curr</label>
+									<input type="text"
+										   id="txtAdvisingCurr1_LetterCreditAmendment"
+										   placeholder="Enter Currency..." />
+								</div>
+
+								<div class="field">
+									<label>Adv. Bank</label>
+									<input type="text"
+										   id="txtAdvBank1_LetterCreditAmendment"
+										   placeholder="Enter Advising Bank..." />
+								</div>
+
+
+								<div class="field">
+									<label>Advising Amount 2</label>
+									<input type="text"
+										   id="txtAdvisingAmount2_LetterCreditAmendment"
+										   class="num"
+										   placeholder="Enter Amount..." />
+								</div>
+
+								<div class="field">
+									<label>Advising Ref. 2</label>
+									<input type="text"
+										   id="txtAdvisingRef2_LetterCreditAmendment"
+										   placeholder="Enter Reference..." />
+								</div>
+
+								<div class="field">
+									<label>Advising Chg No. 2</label>
+									<input type="text"
+										   id="txtAdvisingChgNo2_LetterCreditAmendment"
+										   placeholder="Enter Charge No..." />
+								</div>
+
+								<div class="field">
+									<label>Advising Ref. Date 2</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtAdvisingRefDate2_LetterCreditAmendment"
+										   placeholder="Select Date..." />
+								</div>
+
+								<div class="field">
+									<label>Advising Curr 2</label>
+									<input type="text"
+										   id="txtAdvisingCurr2_LetterCreditAmendment"
+										   placeholder="Enter Currency..." />
+								</div>
+
+								<div class="field">
+									<label>Adv. Bank 2</label>
+									<input type="text"
+										   id="txtAdvBank2_LetterCreditAmendment"
+										   placeholder="Enter Advising Bank..." />
+								</div>
+
+
+								<div class="field span-2 export-field">
+									<label>LC Transferred From</label>
+									<input type="text"
+										   id="txtLCTransferredFrom_LetterCreditAmendment"
+										   placeholder="Enter LC Transferred From..." />
+								</div>
+
+								<div class="field">
+									<label>Balance</label>
+									<input type="text"
+										   id="txtBalance_LetterCreditAmendment"
+										   class="num"
+										   placeholder="Enter Balance..." />
+								</div>
+
+
+								<div class="field export-field">
+									<label>Buyer</label>
+									<input type="text"
+										   id="txtBottomBuyer_LetterCreditAmendment"
+										   placeholder="Enter Buyer..." />
+								</div>
+
+								<div class="field export-field">
+									<label>Byr/Bnk</label>
+									<input type="text"
+										   id="txtByrBnk_LetterCreditAmendment"
+										   placeholder="Enter Buyer Bank..." />
+								</div>
+
+								<div class="field export-field">
+									<label>Crspnd</label>
+									<input type="text"
+										   id="txtCrspnd_LetterCreditAmendment"
+										   placeholder="Enter Correspondence..." />
+								</div>
+
+								<div class="field export-field">
+									<label>Our Bnk</label>
+									<input type="text"
+										   id="txtBottomOurBank_LetterCreditAmendment"
+										   placeholder="Enter Our Bank..." />
+								</div>
+
+								<div class="field export-field">
+									<label>C.H.A</label>
+									<input type="text"
+										   id="txtBottomCHA_LetterCreditAmendment"
+										   placeholder="Enter C.H.A..." />
+								</div>
+
+								<div class="field export-field">
+									<label>Trfr To</label>
+									<input type="text"
+										   id="txtTrfrTo_LetterCreditAmendment"
+										   placeholder="Enter Transfer To..." />
+								</div>
+
+							</div>
+						</div>
+
+						<div class="tabpane" id="t-Transfer">
+							<div class="grid cols-6">
+
+								<div class="field">
+									<label>Buyer</label>
+									<input type="text"
+										   id="txtBuyer_LetterCreditTransfer"
+										   placeholder="Enter Buyer..." />
+								</div>
+
+								<div class="field span-2">
+									<label>Buyer Name</label>
+									<input type="text"
+										   id="txtBuyerName_LetterCreditTransfer"
+										   placeholder="Enter Buyer Name..." />
+								</div>
+
+								<div class="field span-2">
+									<label>L/C Number</label>
+									<input type="text"
+										   id="txtLCNumber_LetterCreditTransfer"
+										   placeholder="Enter L/C Number..." />
+								</div>
+
+								<div class="field">
+									<label>Trfr #</label>
+									<input type="text"
+										   id="txtTrfrNo_LetterCreditTransfer"
+										   placeholder="Enter Transfer Number..." />
+								</div>
+
+								<div class="field">
+									<label>L/C Open On</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtLCOpenOn_LetterCreditTransfer"
+										   placeholder="Select Open Date..." />
+								</div>
+
+								<div class="field">
+									<label>Trfr Date</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtTrfrDate_LetterCreditTransfer"
+										   placeholder="Select Transfer Date..." />
+								</div>
+
+								<div class="field">
+									<label>Type</label>
+									<input type="text"
+										   id="txtType_LetterCreditTransfer"
+										   placeholder="Enter Type..." />
+								</div>
+
+								<div class="field">
+									<label>Currency</label>
+									<input type="text"
+										   id="txtCurrency_LetterCreditTransfer"
+										   placeholder="Enter Currency..." />
+								</div>
+
+								<div class="field">
+									<label>L/C Amount</label>
+									<input type="text"
+										   id="txtLCAmount_LetterCreditTransfer"
+										   class="num"
+										   placeholder="Enter L/C Amount..." />
+								</div>
+
+								<div class="field span-2">
+									<label>Payment Terms</label>
+									<input type="text"
+										   id="txtPaymentTerms_LetterCreditTransfer"
+										   placeholder="Enter Payment Terms..." />
+								</div>
+
+								<div class="field">
+									<label>Expiry</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtExpiry_LetterCreditTransfer"
+										   placeholder="Select Expiry Date..." />
+								</div>
+
+								<div class="field span-2">
+									<label>At</label>
+									<input type="text"
+										   id="txtAt_LetterCreditTransfer"
+										   placeholder="Enter At..." />
+								</div>
+
+								<div class="field">
+									<label>Shipment On</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtShipmentOn_LetterCreditTransfer"
+										   placeholder="Select Shipment Date..." />
+								</div>
+
+								<div class="field">
+									<label>F.Dest</label>
+									<input type="text"
+										   id="txtFDest_LetterCreditTransfer"
+										   placeholder="Enter Final Destination..." />
+								</div>
+
+								<!-- Remarks -->
+								<div class="field span-2">
+									<label>Remarks</label>
+									<input type="text"
+										   id="txtRemarks_LetterCreditTransfer"
+										   placeholder="Enter Remarks..." />
+								</div>
+
+								<div class="field">
+									<label>Issuing Bank</label>
+									<input type="text"
+										   id="txtIssuingBank_LetterCreditTransfer"
+										   placeholder="Enter Issuing Bank..." />
+								</div>
+
+								<div class="field">
+									<label>Corresponding Bank</label>
+									<input type="text"
+										   id="txtCorrespondingBank_LetterCreditTransfer"
+										   placeholder="Enter Corresponding Bank..." />
+								</div>
+
+								<div class="field">
+									<label>Our Bank</label>
+									<input type="text"
+										   id="txtOurBank_LetterCreditTransfer"
+										   placeholder="Enter Our Bank..." />
+								</div>
+
+								<div class="field">
+									<label>C.H.A.</label>
+									<input type="text"
+										   id="txtCHA_LetterCreditTransfer"
+										   placeholder="Enter C.H.A..." />
+								</div>
+
+								@* <div class="field">
+                                    <label>L/C Transferable</label>
+                                    <select id="ddlLCTransferable_LetterCreditTransfer"
+                                            class="select2-field">
+                                        <option value="">Select</option>
+                                        <option value="Y">Y</option>
+                                        <option value="N">N</option>
+                                    </select>
+                                </div> *@
+
+
+								<div class="yn-field export-field">
+									<label class="yn-field-label">L/C Transferable</label>
+
+									<div class="yn-checkbox">
+										<label>
+											<input type="radio"
+												   name="LCTransferable_LetterCreditTransfer"
+												   class="rdoLCTransferable_LetterCreditAmendment"
+												   id="rdoLCTransferableY_LetterCreditTransfer"
+												   value="Y">
+											<span>Y</span>
+										</label>
+
+										<label>
+											<input type="radio"
+												   name="LCTransferable_LetterCreditTransfer"
+												   class="rdoLCTransferable_LetterCreditAmendment"
+												   id="rdoLCTransferableN_LetterCreditTransfer"
+												   value="N">
+											<span>N</span>
+										</label>
+									</div>
+								</div>
+
+								<div class="yn-field export-field">
+									<label class="yn-field-label">Restrctn Trfr Cl</label>
+
+									<div class="yn-checkbox">
+										<label>
+											<input type="radio"
+												   name="RestrctnTrfr_LetterCreditTransfer"
+												   class="rdoRestrctnTrfr_LetterCreditAmendment"
+												   id="rdoRestrctnTrfrClY_LetterCreditTransfer"
+												   value="Y">
+											<span>Y</span>
+										</label>
+
+										<label>
+											<input type="radio"
+												   name="RestrctnTrfr_LetterCreditTransfer"
+												   class="rdoRestrctnTrfr_LetterCreditAmendment"
+												   id="rdoRestrctnTrfrClN_LetterCreditTransfer"
+												   value="N">
+											<span>N</span>
+										</label>
+									</div>
+								</div>
+
+								<div class="yn-field export-field">
+									<label class="yn-field-label">Restricted to Bank</label>
+
+									<div class="yn-checkbox">
+										<label>
+											<input type="radio"
+												   name="RestrictedToBank_LetterCreditTransfer"
+												   class="rdoRestrictedToBank_LetterCreditAmendment"
+												   id="rdoRestrictedToBankY_LetterCreditTransfer"
+												   value="Y">
+											<span>Y</span>
+										</label>
+
+										<label>
+											<input type="radio"
+												   name="RestrictedToBank_LetterCreditTransfer"
+												   class="rdoRestrictedToBank_LetterCreditAmendment"
+												   id="rdoRestrictedToBankN_LetterCreditTransfer"
+												   value="N">
+											<span>N</span>
+										</label>
+									</div>
+								</div>
+
+								<div class="yn-field export-field">
+									<label class="yn-field-label">PO Details</label>
+
+									<div class="yn-checkbox">
+										<label>
+											<input type="radio"
+												   name="PODetails_LetterCreditTransfer"
+												   class="rdoPODetails_LetterCreditAmendment"
+												   id="rdoPODetailsY_LetterCreditTransfer"
+												   value="Y">
+											<span>Y</span>
+										</label>
+
+										<label>
+											<input type="radio"
+												   name="PODetails_LetterCreditTransfer"
+												   class="rdoPODetails_LetterCreditAmendment"
+												   id="rdoPODetailsN_LetterCreditTransfer"
+												   value="N">
+											<span>N</span>
+										</label>
+									</div>
+								</div>
+
+								<div class="field">
+									<label>Transfer Charges</label>
+									<input type="text"
+										   id="txtTransferCharges_LetterCreditTransfer"
+										   class="num"
+										   placeholder="Enter Transfer Charges..." />
+								</div>
+
+								<div class="field">
+									<label>Chq No.</label>
+									<input type="text"
+										   id="txtChqNo_LetterCreditTransfer"
+										   placeholder="Enter Cheque Number..." />
+								</div>
+
+								<div class="field">
+									<label>Ref. Number</label>
+									<input type="text"
+										   id="txtRefNumber_LetterCreditTransfer"
+										   placeholder="Enter Reference Number..." />
+								</div>
+
+								<div class="field">
+									<label>Ref. Date</label>
+									<input type="text"
+										   class="form-Flatdate"
+										   id="txtRefDate_LetterCreditTransfer"
+										   placeholder="Select Reference Date..." />
+								</div>
+
+								<div class="field">
+									<label>Currency2</label>
+									<input type="text"
+										   id="txtCurr_LetterCreditTransfer"
+										   placeholder="Enter Currency 2..." />
+								</div>
+
+
+								<div class="field">
+									<label>Advising</label>
+									<input type="text"
+										   id="txtAdvising_LetterCreditTransfer"
+										   class="num"
+										   placeholder="Enter Advising..." />
+								</div>
+
+								<div class="field">
+									<label>Adv. Bank</label>
+									<input type="text"
+										   id="txtAdvBank_LetterCreditTransfer"
+										   placeholder="Enter Advising Bank..." />
+								</div>
+
+								<div class="field">
+									<label>Transfer To</label>
+									<input type="text"
+										   id="txtTransferTo_LetterCreditTransfer"
+										   placeholder="Enter Transfer To..." />
+								</div>
+
+								<div class="field">
+									<label>Amount</label>
+									<input type="text"
+										   id="txtAmount_LetterCreditTransfer"
+										   class="num"
+										   placeholder="Enter Amount..." />
+								</div>
+
+								<!-- Remarks 2 -->
+								<div class="field span-2">
+									<label>Remarks2</label>
+									<input type="text"
+										   id="txtTransferRemarks2_LetterCreditTransfer"
+										   placeholder="Enter Remarks..." />
+								</div>
+
+
+								<!-- LC Transferred From -->
+								<div class="field span-2">
+									<label>LC Transferred From</label>
+									<input type="text"
+										   id="txtLCTransferredFrom_LetterCreditTransfer"
+										   placeholder="Enter LC Transferred From..." />
+								</div>
+
+								<div class="field">
+									<label>Balance</label>
+									<input type="text"
+										   id="txtBalance_LetterCreditTransfer"
+										   class="num"
+										   placeholder="Enter Balance..." />
+								</div>
+
+								<div class="field">
+									<label>Buyer</label>
+									<input type="text"
+										   id="txtBottomBuyer_LetterCreditTransfer"
+										   placeholder="Enter Buyer..." />
+								</div>
+
+								<div class="field span-2">
+									<label>Buyer Bank</label>
+									<input type="text"
+										   id="txtByrBnk_LetterCreditTransfer"
+										   placeholder="Enter Buyer Bank..." />
+								</div>
+
+								<div class="field">
+									<label>Crspnd</label>
+									<input type="text"
+										   id="txtCrspnd_LetterCreditTransfer"
+										   placeholder="Enter Corresponding..." />
+								</div>
+
+								<div class="field">
+									<label>Our Bank</label>
+									<input type="text"
+										   id="txtBottomOurBank_LetterCreditTransfer"
+										   placeholder="Enter Our Bank..." />
+								</div>
+
+								<div class="field">
+									<label>C.H.A.</label>
+									<input type="text"
+										   id="txtBottomCHA_LetterCreditTransfer"
+										   placeholder="Enter C.H.A..." />
+								</div>
+
+								<div class="field span-2">
+									<label>TrFr To</label>
+									<input type="text"
+										   id="txtTrfrTo_LetterCreditTransfer"
+										   placeholder="Enter Transfer To..." />
+								</div>
+
+							</div>
+						</div>
+					</div>
+					@* </section> *@
+				</form>
+			</div>
+
+			<section class="card d-none" id="letterCreditTableWrap">
+				<div class="">
+
+					<div class="table-wrap">
+						<table id="tblLetterCredit" class="display" style="width:100%">
+							<thead>
+								<tr>
+									<th class="text-center">Action</th>
+									<th>Style</th>
+									<th>Po Details</th>
+									<th>Art</th>
+									<th class="r num">Quantity</th>
+									<th class="r num">Rate</th>
+									<th class="r num">Amount</th>
+									<th class="r num">Debit Amount</th>
+
+								</tr>
+							</thead>
+							<tbody id="tblbodyLetterCredit" class="text-truncate"></tbody>
+						</table>
+					</div>
+				</div>
+			</section>
+
+
+			<section class="card" id="SecletterCreditImportCase">
+				<div class="card-head">
+					<div class="d-flex justify-content-end align-items-center w-100 p-1 me-3">
+						@* <button type="button"
+                                class="btn btn-primary btn-sm me-2"
+                                id="btnAddNewRecord">
+                            Add Record
+                        </button> *@
+						<button type="button"
+								class="btn btn-primary btn-sm me-2"
+								id="btnCopyRecord">
+							Copy
+						</button>
+						<button type="button"
+								class="btn btn-outline-danger btn px-2"
+								id="btnDeleteRecord">
+							Delete
+						</button>
+
+					</div>
+				</div>
+				<div class="card-body">
+
+					<div class="table-wrap">
+						<table id="tblLCLocal" class="display" style="width:100%">
+							<thead>
+								<tr>
+									@* <th>Action</th> *@
+									<th>Delivery Date</th>
+									<th>Bank Reference No</th>
+									<th>Amount</th>
+									<th>Status</th>
+									<th>Payment Status</th>
+									<th>Bank Reference Date</th>
+									<th>Bill Due Date</th>
+									<th>Payment Date</th>
+									<th>Amount</th>
+									<th>Debit Amt</th>
+									<th>Consent Req to Bnk</th>
+									<th>Req Date</th>
+									<th>Remark</th>
+									<th>LC Status</th>
+								</tr>
+							</thead>
+							<tbody id="tblbodyLCLocal"></tbody>
+						</table>
+						<div class="d-flex justify-content-end mt-3">
+
+							<div class="lc-balance-box">
+
+								<span class="lc-balance-label">
+									Balance
+								</span>
+
+								<span class="lc-balance-value"
+									  id="lblBalance_LCLocal">
+									1,625,223.00
+								</span>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+		</section>
+
+
+	</div>
+</div>
+
+<!-- ================================
+	 Add Menu Modal
+================================ -->
+@* 
+<div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                     PO Details 
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+             <div class="modal-body p-0">
+                @await Html.PartialAsync("_Letter_Credit")
+            </div>
+             <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+ *@
+
+@* edit modal  *@
+
+<div class="modal fade"
+	 id="editLetterCreditModal"
+	 tabindex="-1"
+	 aria-labelledby="editLetterCreditModalLabel"
+	 aria-hidden="true">
+
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+
+		<div class="modal-content modal-box">
+
+			<!-- Header -->
+			<div class="modal-header">
+
+				<div class="modal-header-text">
+					<div class="modal-title" id="editLetterCreditModalLabel">
+						Edit Letter Credit
+					</div>
+				</div>
+
+				<div class="d-flex gap-2">
+
+					<button type="button"
+							class="modal-close"
+							data-bs-dismiss="modal"
+							aria-label="Close">
+
+						<svg viewBox="0 0 24 24">
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+
+					</button>
+
+				</div>
+
+			</div>
+
+			<!-- Body -->
+			<div class="modal-body">
+
+				@* @await Html.PartialAsync("_Edit_Letter_Credit") *@
+				<div class="card border-0">
+
+					<div class="card-body px-2">
+
+						<div class="row g-3">
+
+							<!-- Style -->
+							<div class="col-md-6 col-lg-4">
+								<label class="form-label">
+									Style
+								</label>
+
+								<input type="text"
+									   id="txtEditLetterCreditStyle"
+									   class="form-input w-100">
+							</div>
+
+							<!-- PO Details -->
+							<div class="col-md-6 col-lg-4">
+								<label class="form-label">
+									PO Details
+								</label>
+
+								<input type="text"
+									   id="txtEditLetterCreditPoDetails"
+									   class="form-input w-100">
+							</div>
+
+							<!-- Art -->
+							<div class="col-md-6 col-lg-4">
+								<label class="form-label">
+									Art
+								</label>
+
+								<input type="text"
+									   id="txtEditLetterCreditArt"
+									   class="form-input w-100">
+							</div>
+
+							<!-- Quantity -->
+							<div class="col-md-6 col-lg-4">
+								<label class="form-label">
+									Quantity
+								</label>
+
+								<input type="number"
+									   id="txtEditLetterCreditQuantity"
+									   class="form-input w-100">
+							</div>
+
+							<!-- Rate -->
+							<div class="col-md-6 col-lg-4">
+								<label class="form-label">
+									Rate
+								</label>
+
+								<input type="number"
+									   step="0.01"
+									   id="txtEditLetterCreditRate"
+									   class="form-input w-100">
+							</div>
+
+							<!-- Amount -->
+							<div class="col-md-6 col-lg-4">
+								<label class="form-label">
+									Amount
+								</label>
+
+								<input type="number"
+									   step="0.01"
+									   id="txtEditLetterCreditAmount"
+									   class="form-input w-100">
+							</div>
+							<div class="col-md-6 col-lg-4">
+								<label class="form-label">
+									Debit Amount <button id="btnhelpDebitAmt" class="help-link">Help</button>
+								</label>
+
+								<input type="number"
+									   step="0.01"
+									   id="txtEditLetterCreditDebtAmt"
+									   class="form-input w-100">
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<!-- Footer -->
+			<div class="modal-footer">
+
+				<button type="button"
+						class="btn btn-primary btn-sm"
+						id="btnSaveEditLetterCredit">
+
+					<svg width="14"
+						 height="14"
+						 viewBox="0 0 24 24"
+						 fill="none"
+						 stroke="currentColor"
+						 stroke-width="2"
+						 stroke-linecap="round"
+						 stroke-linejoin="round">
+
+						<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+						<polyline points="17 21 17 13 7 13 7 21"></polyline>
+						<polyline points="7 3 7 8 15 8"></polyline>
+
+					</svg>
+
+					Save
+				</button>
+
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+@* open a modal in lc Help  *@
+<div class="modal fade"
+	 id="debitLCHelpModal"
+	 tabindex="-1"
+	 aria-labelledby="debitLCHelpModalLabel"
+	 aria-hidden="true">
+
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+
+		<div class="modal-content">
+
+			<div class="modal-header">
+
+				<h5 class="modal-title"
+					id="debitLCHelpModalLabel">
+					LC Help
+				</h5>
+				<button type="button" style=" " class="modal-close" data-bs-dismiss="modal" aria-label="Close">
+					<svg viewBox="0 0 24 24">
+						<line x1="18" y1="6" x2="6" y2="18"></line>
+						<line x1="6" y1="6" x2="18" y2="18"></line>
+					</svg>
+				</button>
+
+			</div>
+
+			<div class="modal-body">
+				@await Html.PartialAsync("_EntryLetterCreditHelpLC")
+			</div>
+
+			<div class="modal-footer">
+
+				<button type="button"
+						class="btn btn-primary btn-sm"
+						id="btnSaveLCNoHelp">
+					Save
+				</button>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+@* debit note help open modal *@
+<div class="modal fade"
+	 id="debitNoteHelpModal"
+	 tabindex="-1"
+	 aria-labelledby="debitNoteHelpModalLabel"
+	 aria-hidden="true">
+
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+
+		<div class="modal-content">
+
+			<div class="modal-header">
+
+				<h5 class="modal-title"
+					id="debitNoteHelpModalLabel">
+					Select Debit Note
+				</h5>
+
+				<button type="button"
+						class="btn-close"
+						data-bs-dismiss="modal">
+				</button>
+
+			</div>
+
+			<div class="modal-body">
+
+				<div class="table-responsive">
+
+					<table class="table table-sm table-bordered align-middle mb-0">
+
+						<thead class="table-primary">
+							<tr>
+								<th class="text-center">
+									Action
+								</th>
+
+								<th>
+									Debit Note No
+								</th>
+
+								<th>
+									Date
+								</th>
+
+								<th class="text-end">
+									Amount
+								</th>
+							</tr>
+						</thead>
+
+						<tbody id="tblbody_DebitNoteHelp">
+						</tbody>
+
+					</table>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+
+<script src="~/js/pages/banking/letter_credit.js" asp-append-version="true"></script>

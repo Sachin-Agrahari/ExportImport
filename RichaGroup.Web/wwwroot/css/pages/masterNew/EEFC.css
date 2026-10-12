@@ -1,0 +1,14 @@
+﻿#tblEEFC .forward-booking-checkbox {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    max-width: 16px !important;
+    min-height: 16px !important;
+    max-height: 16px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    display: block;
+    cursor: pointer;
+    appearance: auto !important;
+    -webkit-appearance: checkbox !important;
+}

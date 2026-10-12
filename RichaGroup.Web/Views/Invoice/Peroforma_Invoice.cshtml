@@ -1,0 +1,927 @@
+﻿@{
+    ViewData["Title"] = "Performance Invoice";
+    var isFabric = ViewBag.IsFabric;
+    var Type = ViewBag.Type;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} 
+ 
+<style>
+    #PerformaModal {
+        z-index: 1090;
+    }
+
+        #PerformaModal + .modal-backdrop,
+        .modal-backdrop.perfoma-backdrop {
+            z-index: 1085;
+        }
+</style>
+
+<div class="bd_mainContainer" id="@Type">
+    <div class="page">
+
+        <section class="card">
+
+            <!-- HEADER -->
+            <div class="card-head">
+
+                <div class="d-flex flex-row " style="width: 163px;">
+
+                    <h2 class="mt-2" id="txtHeaderMain">Proforma Invoice</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+                   
+                    <span id="headerStatusBadge" class="badge rounded-pill text-bg-success p-auto m-auto fs-6">
+                        Fresh
+                    </span>
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="New" id="btnPerferomaNew">
+						
+                        <img src="~/assets/icon/plus.svg" alt="save-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Add</span>
+                    </button>
+                     <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Edit" id="btnPerferomaEdit">
+				
+                        <img src="~/assets/icon/edit.svg" alt="edit-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Edit</span>
+                    </button>
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Save" id="btnperformanceSave">
+
+                        <img src="~/assets/icon/save.svg" alt="save-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Save</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Update" id="performanceBtnConfirm">
+                        <span>Delete</span>
+                    </button>
+                    <button class="btn btn-primary btn-sm  d-flex flex-row align-center justify-content-center" title="Print" id="btnperformancePrint">
+
+                        <img src="~/assets/icon/print.svg" alt="print-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Print</span>
+                    </button>
+                   
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="grid cols-6">
+                    <div class="field">
+                        <div class="col-2">
+                            <div class="d-flex align-items-center justify-content-center gap-1">
+                                <label class="form-label mb-0 pe-2">
+                                    PI# <span class="text-danger" style="color:red !important;">*</span>
+                                </label>
+
+                                <input type="checkbox" id="chkPiNo" class="form-check-inpu" />
+                            </div>
+                        </div>
+
+                        <input type="text"
+                               id="txtPiNumber"
+                               class="form-control"
+                               value="RE-31288"
+                               readonly />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Supplier<span class="text-danger" style="color:red !important;">*</span></label>
+                        <select id="ddlSupplier" class="form-select">
+                            <option value="">— Select Supplier —</option>
+                            <option value="1">PROLOGIC (HK) LIMITED</option>
+                            <option value="2">SUDARSHAN BOOK DISTRIBUTORS (N)</option>
+                            <option value="3">ORIENT ACCESSORIES LTD</option>
+                            <option value="4">METRO GARMENT SUPPLIERS</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Dated <span class="text-danger" style="color:red !important;">*</span></label>
+                        <input type="text" id="txtProformaDate" class="form-control form-Flatdate" placeholder="DD/MMM/YYYY" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Adv Payment</label>
+                        <select id="ddlAdvancePayment" class="form-select">
+                            <option value="">— Select —</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Exp Ship Dt <span class="text-danger" style="color:red !important;">*</span></label>
+                        <input type="text" id="txtExpShipDt" class="form-control form-Flatdate" placeholder="DD/MMM/YYYY" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Entry#</label>
+                        <input type="text" id="txtEntryNo" class="form-control" value="2010" readonly />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Currency</label>
+                        <select id="ddlCurrencyTop" class="form-select">
+                            <option value="US$">US$</option>
+                            <option value="INR">INR</option>
+                            <option value="EUR">EUR</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Rate Type</label>
+                        <select id="ddlRateTypeTop" class="form-select">
+                            <option value="1.00">1.00</option>
+                            <option value="1.05">1.05</option>
+                            <option value="1.10">1.10</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label"><span id="spnReqPoNo">PO</span> No <span class="text-danger" style="color:red !important;">*</span></label>
+                        <div class="d-flex gap-1">
+                        <select id="ddlOrderType" class="form-select" style="height: 31px; font-size: 0.72rem">
+                            <option value="PO">PO</option>
+                            <option value="REQ">REQ</option>
+                        </select>
+                        <select id="ddlPoReqNo" class="form-select" style="height: 31px; font-size: 0.72rem">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="col-1 d-flex justify-content-start">
+                        <button class="btn btn-primary btn-sm mt-3" id="btnExecute">
+                           
+                            Execute
+                        </button>
+                    </div>
+
+                </div>
+             </div>
+        </section>
+
+        <section class="card">
+            <div class="card-head">
+
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2">Order Line Items</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+
+                    <span class="form-label mx-2" style="color: var(--clr-danger); font-size: 0.95rem">Total Qty : <b>1100</b></span>
+                    <span class="form-label mx-2" style="color: var(--clr-danger); font-size: 0.95rem">Total Amount : <b>44.6000</b></span>
+                     <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Rate" id="performanceBtnRate">
+
+                        <span>Rate</span>
+                    </button>
+                     <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Currency" id="performanceBtnCurr">
+
+                        <span>Currency</span>
+                    </button>
+                     <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Rate Type" id="performanceBtnRtType">
+
+                        <span>Rate Type</span>
+                    </button>
+                     <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Item" id="performanceBtnItem">
+
+                        <span>Item</span>
+                    </button>
+                     <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="New Expt Date" id="performanceBtnNewExptDt">
+
+                        <span>New Expt Date</span>
+                    </button>
+                     <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Delay Reason" id="performanceBtnDealyReason">
+
+                        <span>Delay Reason</span>
+                    </button>
+                     <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Refresh" id="performanceBtnClear">
+
+                        <img src="~/assets/icon/refresh.svg" alt="refresh-icon" class=" h-75 mt-1 me-1 white-icon" />
+                        <span>Refresh</span>
+                    </button>
+                </div>
+
+            </div>
+            <div class="card-body">
+                <div class="table-wrap">
+                    <table id="tblPerformaInv" class="table-component">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <input type="checkbox" id="selectAll">
+                                </th>
+                                <th>PO Number</th>
+                                <th>Item</th>
+                                <th>ItemDesc</th>
+                                <th>Size</th>
+                                <th>Colour</th>
+                                <th class="r num">Qty</th>
+                                <th>PO UOM</th>
+                                <th>PI/UOM</th>
+                                <th class="r num">Rate</th>
+                                <th class="r num">Amount</th>
+                                <th>Curr</th>
+                                <th class="r num">RtType</th>
+                                <th>Req No</th>
+                                <th>Style</th>
+                                <th>Buyer</th>
+                                <th>ItSupplr</th>
+                                <th>ItCode</th>
+                                 
+                                <th class="r num">% age</th>
+                                @{
+                                    if (isFabric)
+                                    {
+                                        <th>Print</th>
+                                    }
+                                    else
+                                    {
+                                        <th>Type</th>
+                                    }
+                                }
+                                 
+                                <th>CONV</th> 
+                                <th>Expected Date</th>
+                                <th>New Exp. Date</th>
+                                <th>Reason for Delay</th>
+                                <th>ACTPOQTY</th>
+                                <th>S_ITEMCODE</th>
+                                <th>Process</th>
+                                <th>Width</th>
+                                <th>Fin Width</th>
+                                <th>GSM From</th>
+                                <th>GSM To</th>
+                                <th>Requisition Process</th>
+                                @{
+                                    if (isFabric)
+                                    {
+                                        <th>Fabric Type</th>
+                                        <th>Blended</th>
+                                    }
+                                }
+                            </tr>
+                        </thead>
+                        <tbody id="PerformatblBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="card">
+            <div class="card-head">
+
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2">Payments and Terms</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary  btn-sm" id="btnPayment">Payment</button>
+                    @{
+                        if (isFabric)
+                        {
+                            <button class="btn btn-secondary  btn-sm" id="btnDeliveryDateBrakUp">Delivery Dates Brakup</button>
+                        }
+                    }
+                    <button class="btn btn-secondary btn-sm" id="btnOtherCharges">Other Charges</button>
+                    <button class="btn btn-warning bg-opacity-50  btn-sm" id="btnConfirmChecklist">Confirm Checklist</button>
+                   
+                </div>
+
+            </div>
+
+             <div class="card-body">
+
+                <div class="grid cols-2">
+
+                    <div class="field">
+                        <div class="grid cols-4">
+
+                            <div class="field">
+                                <label class="form-label">Pay Terms</label>
+                                <select id="ddlPayTerms" class="form-select">
+                                    <option value="TT">TT</option>
+                                    <option value="LC">LC</option>
+                                  @*   <option value="DA">DA</option>
+                                    <option value="DP">DP</option> *@
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label class="form-label">Div Terms</label>
+                                <select id="ddlDivTerms" class="form-select">
+                                    <option value="EX WORKS">EX WORKS</option>
+                                    <option value="FOB">FOB</option>
+                                    <option value="CIF">CIF</option>
+                                    <option value="CNF">CNF</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label class="form-label">Mode</label>
+                                <select id="ddlMode" class="form-select">
+                                    <option value="AIR">AIR</option>
+                                    <option value="SEA">SEA</option>
+                                    <option value="ROAD">ROAD</option>
+                                    <option value="TBA">TBA</option>
+                                </select>
+                            </div>
+                            @* <div class="field">
+                                <label class="form-label">Mode</label>
+                                <select id="ddlMode2" class="form-select">
+                                    <option value="AIR">AIR</option>
+                                    <option value="SEA">SEA</option>
+                                    <option value="ROAD">ROAD</option>
+                                </select>
+                            </div> *@
+
+                            <div class="field">
+                                <label class="form-label">Currency</label>
+                                <select id="ddlCurrency" class="form-select">
+                                    <option value="US$">US$</option>
+                                    <option value="INR">INR</option>
+                                    <option value="EUR">EUR</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label class="form-label">Total Amount</label>
+                                <input type="text" id="txtTotalAmount" class="form-control" value="41.10000" />
+                            </div>
+
+                            <div class="field">
+                                <label class="form-label">Net Amount</label>
+                                <input type="text" id="txtNetAmount" class="form-control" value="41.10000" />
+                            </div>
+                            <div class="field">
+                                <label class="form-label">Currency</label>
+                                <select id="ddlCurrency2" class="form-select">
+                                    <option value="US$">US$</option>
+                                    <option value="INR">INR</option>
+                                    <option value="EUR">EUR</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label class="form-label">Amount to be Paid</label>
+                                <input type="text" id="txteAmountToBePaid" class="form-control" value="44.60000" />
+                            </div>
+
+                            <div class="field">
+                                <label class="form-label">Calculation (+/-)</label>
+                                <select id="ddlPlusMinus" class="form-select">
+                                    <option value="+">+</option>
+                                    <option value="-">-</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label class="form-label">Amount</label>
+                                <input type="text" id="txtPlusMinusAmt" class="form-control" value="0.00000" />
+                            </div>
+
+                            <div class="field">
+                                <label class="form-label">Total Amt.</label>
+                                <input type="text" id="txtTotalAmt" class="form-control" value="44.6" readonly />
+                            </div>
+
+                            <div class="field">
+                                <label class="form-label">Disc. (if any)</label>
+                                <input type="text" id="txtDiscount" class="form-control" value="0.00000" />
+                            </div>
+
+                            <div class="field span-4">
+                                <label class="form-label">Remarks</label>
+                                <input type="text" id="txtRemarks" class="form-control" placeholder="Remarks..." />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <fieldset class="border p-3 rounded mb-4">
+                        <legend class="w-auto px-2 fs-6 fw-bold">Payment Information</legend>
+
+                        @* <div class="field"> *@
+                            <div class="grid cols-4">
+                                <div class="field">
+                                    <label class="form-label">Payment Date</label>
+                                    <input type="text" id="txtPaymentDate" class="form-control form-Flatdate" placeholder="DD/MMM/YYYY" />
+                                </div>
+                                <div class="field">
+                                    <label class="form-label">Amount</label>
+                                    <input type="text" id="txtAmount" class="form-control" placeholder="0" />
+                                </div>
+                                <div class="field">
+                                    <label class="form-label">Pmt Term</label>
+                                    <select id="ddlPaymentTerms" class="form-select">
+                                        <option value="">— Select —</option>
+                                        <option value="ADVANCE">ADVANCE</option>
+                                        <option value="BALANCE">BALANCE</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <button class="btn btn-primary btn-sm mt-3" id="btnAddPaymentMethod"> <span> Add </span> </button>
+                                    <button class="btn btn-outline-danger btn-sm px-2 mt-3" id="btnRemovePayment">Remove</button>
+                                </div>
+                            </div>
+
+                            <div class="card-body mt-3">
+                                <div class="table-responsive">
+                                    <table id="tblPayment" class="table-component w-100">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>PI No</th>
+                                                <th>P. Payment Date</th>
+                                                <th class="r num">Amount</th>
+                                                <th>P. Terms</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblPaymentBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                       @*  </div> *@
+                    </fieldset>
+                </div> 
+            </div> 
+        </section>
+    </div>
+</div>
+ 
+<div class="modal fade" id="otherChargesModal" tabindex="-1" aria-labelledby="otherChargesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" style="max-width:460px; width:460px">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="otherChargesModalLabel">
+                        Other Charges
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                <div class="table-responsive">
+                    <div class="table-scroll table-scroll--fixed" style="height:23vh !important;">
+                        <table id="tblOtherCharges" class="table-component">
+                            <thead>
+                                <tr>
+                                    <th>SR NO</th>
+                                    <th>Charges Type</th>
+                                    <th>Charges</th>
+                                    <th>Currency</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>
+                                        <select id="ddlCharges" class="table-input performance-currency-select">
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtCharges"/>
+                                    </td>
+                                    <td>
+                                        <select id="ddlChargesCurrency" class="table-input performance-currency-select">
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>
+                                        <select id="ddlCharges" class="table-input performance-currency-select">
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtCharges"/>
+                                    </td>
+                                    <td>
+                                        <select id="ddlChargesCurrency" class="table-input performance-currency-select">
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                            <option value="">select</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+ 
+<div class="modal fade" id="confirmChecklistModal" tabindex="-1" aria-labelledby="confirmChecklistModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="confirmChecklistModalLabel">
+                        Confirm Checklist
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle table-bordered mb-0" id="tblPIChecklist">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Checklist</th> 
+                                <th>Responsible Person</th>
+                                <th>Target Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblPIChecklistBody">
+                            <!-- Rows injected by JavaScript -->
+                        </tbody>
+
+                    </table>
+                     
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+ 
+<div class="modal fade" id="confirmFabricContentModal" tabindex="-1" aria-labelledby="confirmFabricContentModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="confirmFabricContentModal">
+                        Fabric Content
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button" class="btn btn-outline" id="btnFabricAddRow">
+                        Add Row
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btnFabricRemoveRow">
+                        Remove
+                    </button>
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+               
+                <div class="table-responsive"> 
+                    <table id="tblPiAttachment" class="table table-bordered table-sm align-middle mb-0">
+
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Fabric Content</th>
+                                <th>Process</th>
+                                <th class="r num">Width</th>
+                                <th class="r num">Final Width</th>
+                                <th class="r num">GSM Start</th>
+                                <th class="r num">GSM End</th>
+                                <th class="r num">Qty</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="fabricTbody"> </tbody>
+
+                    </table> 
+                </div> 
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div> 
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmPiAttachmentModal" tabindex="-1" aria-labelledby="confirmPiAttachmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="confirmPiAttachmentModalLabel">
+                        Proforma Invoice Attachment
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                <!-- PI INFO -->
+                <div class="row align-items-end g-2 mb-2">
+
+                    <div class="col-md-2">
+                        <label class="form-label mb-1"> PI No. </label> 
+                        <input type="text" class="form-control form-control-sm" id="txtPiNo" readonly />
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <label class="form-label mb-1"> Dated </label> 
+                        <input type="text" class="form-control form-control-sm" id="txtPiDate" readonly />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label mb-1"> Qty / Remarks </label> 
+                        <input type="text" class="form-control form-control-sm" id="txtPiQtyRemarks" placeholder="Qty / Remarks" />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label mb-1"> Responsible Person </label> 
+                        <select class="form-select form-select" id="ddlPiResponsiblePerson"> 
+                            <option value="">Select</option>
+                            <option value="1">Person 1</option>
+                            <option value="2">Person 2</option>
+                            <option value="3">Person 3</option> 
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label mb-1"> Target Date </label> 
+                        <input type="date" class="form-control form-control-sm form-Flatdate" id="txtPiTargetDate" />
+                    </div>
+                     
+                </div>
+
+
+                <!-- QTY / REMARKS -->
+                <div class="row g-2 mb-2">
+                    <div id="dropZone" class="fu-dropzone mt-2" tabindex="0">
+
+                        <input type="file" id="fileInput" multiple hidden />
+
+                        <!-- Dropzone Content -->
+
+                        <div id="dropZoneContent">
+
+                            <p class="fu-dropzone-text">
+                                Drag &amp; drop files here, paste (Ctrl+V), or
+
+                                <button type="button"
+                                        id="btnBrowse"
+                                        class="btn btn-sm btn-outline-primary fu-browse">
+                                    Browse
+                                </button>
+                            </p>
+
+                            <p class="fu-dropzone-subtext">
+                                You can select multiple files at once
+                            </p>
+                             
+                        </div>
+                         
+                        <div id="filePreviewContainer"
+                             class="file-preview-container d-none">
+
+                            <div id="filePreviewList"
+                                 class="file-preview-list">
+                            </div> 
+                        </div> 
+                    </div> 
+                </div>
+                 
+                <!-- ATTACHMENT TABLE -->
+                <div class="table-responsive">
+
+                    <table id="tblPiAttachment"
+                           class="table table-bordered table-sm align-middle mb-0">
+
+                        <thead>
+                            <tr> 
+                                <th style="width:40px;"></th> 
+                                <th>Entry Dt</th> 
+                                <th>Qty / Remarks</th> 
+                                <th>Responsible Person</th> 
+                                <th>Target Date</th> 
+                            </tr>
+                        </thead>
+
+                        <tbody id="piAttachmentTbody">
+                        </tbody>
+
+                    </table> 
+                </div> 
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div> 
+        </div>
+    </div>
+</div>
+ 
+
+
+<div class="modal fade" id="PaymentModal" tabindex="-1" aria-labelledby="PaymentModalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xxl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="PaymentModalModalLabel">
+                        Payment
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                <div id="paymentContainer"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="module" src="~/js/pages/import/peroformainvoice.js" asp-append-version="true"></script>

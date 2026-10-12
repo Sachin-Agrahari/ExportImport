@@ -1,0 +1,284 @@
+@{
+    ViewData["Title"] = "Bank Invoice";
+    ViewData["Heading"] = "Bank Invoice";
+}
+
+@section Styles {
+    <link href="~/css/pages/aepc-invoice.css" rel="stylesheet" asp-append-version="true" />
+}
+ 
+<section class="card">
+
+    <div class="card-head">
+        <div>
+            <span class="tick"></span>
+            <h2 class="mt-2" id="txtHeaderMain">Bank Invoice</h2>
+        </div>
+
+
+        <div class="d-flex gap-2">
+            <div class="d-flex gap-2">
+                @await Html.PartialAsync("Components/_CheckBoxComponent")
+                @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave"
+                        title="Save">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+                <button type="button"
+                        class="action-btn action-back"
+                        id="btnBack">
+                    ← Back
+                </button>
+ 
+            </div>
+        </div>
+    </div>
+
+    <details class="hgroup" open>
+       
+        <summary>
+            Parties &amp; Addresses 
+            <span class="count">consignee &middot; buyer &middot; notify</span>
+        </summary>
+
+        <div class="hgroup-body">
+            @await Html.PartialAsync("_PartiesAddresses")
+        </div>
+    </details>
+
+    <details class="hgroup">
+       
+        <summary>
+            Route &amp; Transport
+            <span class="count">consignee &middot; buyer &middot; notify</span>
+        </summary>
+
+        <div class="hgroup-body">
+            @await Html.PartialAsync("_RouteTransport")
+        </div>
+    </details>
+
+    <details class="hgroup">
+       
+        <summary>
+            References &amp; Licences
+            <span class="count">consignee &middot; buyer &middot; notify</span>
+        </summary>
+
+        <div class="hgroup-body">
+            @await Html.PartialAsync("_ReferencesLicences")
+        </div>
+    </details>
+
+    <details class="hgroup">
+       
+        <summary>
+            Goods, Weights &amp; Measures
+            <span class="count">consignee &middot; buyer &middot; notify</span>
+        </summary>
+
+        <div class="hgroup-body">
+            @await Html.PartialAsync("_GoodsWeightMeasures")
+        </div>
+    </details>
+
+</section>
+ 
+<section class="card">
+    <div class="tabs" role="tablist">
+        <button class="on" data-tab="t-inv">Invoice Detail</button>
+        <button data-tab="t-boe">BOE Amount</button>
+        <button data-tab="t-ic">IC Module</button>
+        <button data-tab="t-ebrc">EBRC Details</button>
+    </div>
+     
+    <div class="tabpane on" id="t-inv">
+        @await Html.PartialAsync("_t-Inv")
+    </div>
+     
+    <div class="tabpane" id="t-boe">
+        @await Html.PartialAsync("_t-boe")
+    </div>
+      
+    <div class="tabpane" id="t-ic">
+        @await Html.PartialAsync("_t-IC")
+    </div>
+     
+    <div class="tabpane" id="t-ebrc">
+        @await Html.PartialAsync("_t-ebrc")
+    </div>
+   
+</section>
+ 
+<div class="modal fade" id="ebrcHelp" tabindex="-1" aria-labelledby="ebrcHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="ebrcHelpLabel">
+                        List of Invoices
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                
+                <table style="width:1120px">
+                    <thead>
+                        <tr>
+                            <th class="c">#</th>
+                            <th>Invoice</th>
+                            <th>Invoice Date</th>
+                            <th>GR No.</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="invoiceBody"> </tbody>
+                </table>
+                 
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="logDtls" tabindex="-1" aria-labelledby="logDtls" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="logDtlsLabel">
+                       Log Details
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                 
+                <table style="min-width:1200px;">
+
+                    <thead>
+                        <tr>
+                            <th class="c">#</th>
+                            <th>Invoice No</th>
+                            <th>Office Set Rcvd</th>
+                            <th class="c">IC</th>
+                            <th class="c">Sent for IC</th>
+                            <th>IC Rcvd</th>
+                            <th>Custom Doc Rcvd</th>
+                            <th>Doc Type</th>
+                            <th>Sent to Bank</th>
+                            <th>Sent to Buyer</th>
+                            <th>Pay Mode</th>
+                            <th>User</th>
+                            <th>Log Date</th>
+                            <th>Log Time</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="logDetailsBody">
+                        <!-- Records will be bound using jQuery -->
+                    </tbody> 
+                </table> 
+                 
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/pages/bank-invoice.js" asp-append-version="true"></script>
+}

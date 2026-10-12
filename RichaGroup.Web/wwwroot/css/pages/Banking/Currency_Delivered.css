@@ -1,0 +1,72 @@
+﻿/*
+
+.currency-delivery-radio-group {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    gap: 24px;
+    min-height: 42px;
+}
+
+.currency-radio {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    margin: 0;
+    user-select: none;
+}
+
+    .currency-radio input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+.currency-radio-mark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #cbd5e1;
+    border-radius: 50%;
+    background: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+    .currency-radio-mark::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--teal);
+        transform: scale(0);
+        transition: transform 0.2s ease;
+    }
+
+.currency-radio input:checked + .currency-radio-mark {
+    border-color: #4891f1;
+    box-shadow: 0 0 0 3px rgba(72, 145, 241, 0.15);
+}
+
+    .currency-radio input:checked + .currency-radio-mark::after {
+        transform: scale(1);
+    }
+
+.currency-radio-text {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--muted);
+    transition: color 0.2s ease;
+}
+
+.currency-radio:hover .currency-radio-mark {
+    border-color: var(--teal);
+}
+
+.currency-radio:hover .currency-radio-text {
+    color: var(--teal);
+}
+*/

@@ -1,0 +1,358 @@
+﻿@{
+    ViewData["Title"] = "Rosctl Master";
+    ViewData["Heading"] = "Rosctl Detail Master";
+}
+<div class="bd_mainContainer">
+    <div class="page">
+     
+        <!-- Bond entries -->
+        <section class="card">
+
+
+            <!-- HEADER -->
+            <div class="card-head">
+                 <div>
+                     <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Rosctl Master</h2>
+                 </div>
+
+                <div class="d-flex gap-2">
+                    <div class="d-flex gap-2">
+                        @await Html.PartialAsync("Components/_CheckBoxComponent")
+                        @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                        <button class="btn btn-primary btn-sm"
+                                id="btnAdd">
+                            ＋ Add
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-wrap">
+                    <table id="tblRosctlMaster" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width:50px !important; text-align:right !important;">Action</th>
+                                <th>ROSCTL_CODE</th>
+                                <th>ROSCTLSERIAL_NO</th>
+                                <th>ROSCTL_FROM_DATE</th>
+                                <th>ROSCTL_TO_DATE</th>
+                                <th>DRAWBACK_ITEM_DESCRIPTION</th>
+                                <th>STATE_UNIT_OF_MEASURMENT</th>
+                                <th>STATE_PERCENTAGE</th>
+                                <th>STATE_PER_PIECE_CAPPING</th>
+                                <th>STATE_UNIT_OF_MEASURMENT_SPL_ADV_LIC</th>
+                                <th>STATE_PERCENTAGE_SPL_ADV_LIC</th>
+                                <th>CENTER_UNIT_OF_MEASURMENT</th>
+                                <th>CENTER_PERCENTAGE</th>
+                                <th>CENTER_PER_PIECE_CAPPING</th>
+                                <th>CENTER_UNIT_OF_MEASURMENT_SPL_ADV_LIC</th>
+                                <th>CENTER_PERCENTAGE_SPL_ADV_LIC</th>
+
+                                @* <th>Unit_S</th>
+                                <th style="text-align:right !important;">Rt_Pc_C</th>
+                                <th style="text-align:right !important;">Capunit_S</th>
+                                <th>Unit_C</th>
+                                <th style="text-align:right !important;">Rt_Pc_S</th>
+                                <th style="text-align:right !important;">Capunit_C</th>
+                                <th>Unit_Ac</th>
+                                <th style="text-align:right !important;">Rt_Pc_Ac</th>
+                                <th>Unit_As</th>
+                                <th style="text-align:right !important;">Rt_Pc_As</th>
+                                <th>Rsctl_Fm</th>
+                                <th>Rsctl_To</th> *@
+                               
+                            </tr>
+                        </thead>
+                        <tbody id="tblbodyRosctlMaster"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="addRosctlDetailMasterModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                        Rosctl Detail Master
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            style=" "
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+
+                </div>
+                <div class="app-modal-header-actions">
+                </div>
+            </div>
+
+            @* <div class="modal-body p-2">
+             
+                 <div class="grid cols-4">
+                            <div class="field">
+                                <label>Code</label>
+                                <input type="text" id="txtCode_RosctlMaster" value="" placeholder="Enter Code ..." />
+                            </div>
+                            <div class="field">
+                                <label>SI No</label>
+                                <input type="text" id="txtSINo_RosctlMaster" placeholder="Enter SI No..." />
+                            </div>
+                            <div class="field">
+                                <label>Unit S</label>
+                                <input type="text" id="txtUnit_S_RosctlMaster" value="" placeholder="Enter Unit_S..." />
+                            </div>
+                            <div class="field">
+                                <label>Rt Pc S</label>
+                                <input type="text" id="txtRt_Pc_S_RosctlMaster" value="" placeholder="Enter Rt_pc_s...." />
+                            </div>
+                            <div class="field">
+                                <label>Capunit S</label>
+                                <input type="text" id="txtCapunit_S_RosctlMaster" value="" placeholder="Enter Capunit S...." />
+                            </div>
+
+                            <div class="field">
+                                <label>Unit C</label>
+                                <input type="text" id="txtUnit_C_RosctlMaster" value="" placeholder="Enter Unit C...." />
+                            </div>
+                            <div class="field">
+                                <label>Rt Pc C</label>
+                                <input type="text" id="txtRt_Pc_C_RosctlMaster" value="" placeholder="Enter Rt Pc C...." />
+                            </div>
+                            <div class="field">
+                                <label>Capunit C</label>
+                                <input type="text" id="txtCapunit_C_RosctlMaster" value="" placeholder="Enter Capunit C...." />
+                            </div>
+                            <div class="field">
+                                <label>Unit Ac</label>
+                                <input type="text" id="txtUnit_Ac_RosctlMaster" value="" placeholder="Enter Unit Ac...." />
+                            </div>
+                            <div class="field">
+                                <label>Rt Pc Ac</label>
+                                <input type="text" id="txtRt_Pc_Ac_RosctlMaster" value="" placeholder="Enter Rt Pc Ac...." />
+                            </div>
+                            <div class="field">
+                                <label>Unit As</label>
+                                <input type="text" id="txtUnit_As_RosctlMaster" value="" placeholder="Enter Unit As...." />
+                            </div>
+                            <div class="field">
+                                <label>Unit Pc As</label>
+                                <input type="text" id="txtUnit_Pc_As_RosctlMaster" value="" placeholder="Enter Unit Pc As...." />
+                            </div>
+                            <div class="field">
+                                <label>Rsctl Fm</label>
+                                <input type="text" id="txtRsctl_Fm_RosctlMaster" value="" placeholder="Enter Rsctl Fm...." />
+                            </div>
+                            <div class="field">
+                                <label>Rsctl To</label>
+                                <input type="text" id="txtRsctl_To_RosctlMaster" value="" placeholder="Enter Rsctl To...." />
+                            </div>
+
+                        </div>
+            </div> *@
+
+                         <div class="modal-body p-2 bg-light">
+
+                            <!-- ROSCTL & Drawback Details -->
+                           <div class="mb-1 border-bottom border-info-subtle rounded-3 p-1 bg-white">
+                        
+      @*                           <div class="card-header px-2 py-1 mb-1 bg-primary bg-opacity-10 border border-primary-subtle border-start border-4 rounded-2">
+                                    <div class="fw-semibold text-primary">
+                                        ROSCTL &amp; Drawback Details
+                                    </div>
+                                </div> *@
+                        
+                                <div class="grid cols-5">
+                        
+                                    <div class="field">
+                                        <label for="txtCode_RosctlMaster" class="form-label">ROSCTL Code</label>
+                                        <input type="text" id="txtCode_RosctlMaster"
+                                               class="form-control form-control-sm border-secondary-subtle"
+                                               placeholder="Enter ROSCTL Code" />
+                                    </div>
+                        
+                                    <div class="field">
+                                        <label for="txtSINo_RosctlMaster" class="form-label">ROSCTL Serial No</label>
+                                        <input type="text" id="txtSINo_RosctlMaster"
+                                               class="form-control form-control-sm border-secondary-subtle"
+                                               placeholder="Enter Serial No" />
+                                    </div>
+                        
+                                    <div class="field">
+                                        <label for="txtRsctl_Fm_RosctlMaster" class="form-label">ROSCTL From Date</label>
+                                        <input type="text" id="txtRsctl_Fm_RosctlMaster"
+                                               class="form-Flatdate border-secondary-subtle"
+                                               placeholder="Enter From Date" />
+                                    </div>
+                        
+                                    <div class="field">
+                                        <label for="txtRsctl_To_RosctlMaster" class="form-label">ROSCTL To Date</label>
+                                        <input type="text" id="txtRsctl_To_RosctlMaster"
+                                               class="form-control form-control-sm border-secondary-subtle"
+                                               placeholder="Enter To Date" />
+                                    </div>
+                        
+                                    <div class="field">
+                                        <label for="txtDBK_Item_Desc_RosctlMaster" class="form-label">Drawback Item Description</label>
+                                        <input type="text" id="txtDBK_Item_Desc_RosctlMaster"
+                                               class="form-control form-control-sm border-secondary-subtle"
+                                               placeholder="Enter Item Description" />
+                                    </div>
+                        
+                                </div>
+                            </div>
+                        
+                            <!-- State Details -->
+                           <div class="mb-1 border-bottom border-info-subtle rounded-3 p-1 bg-white">
+                        
+                                @* <div class="card-header px-2 py-1 mb-1 bg-success bg-opacity-10 border border-success-subtle border-start border-4 rounded-2">
+                                    <div class="fw-semibold text-success">
+                                        State Details
+                                    </div>
+                                </div> *@
+                        
+                                <div class="grid cols-5">
+                        
+                                    <div class="field">
+                                        <label for="txtUnit_S_RosctlMaster" class="form-label">State Unit of Measurement</label>
+                                        <input type="text" id="txtUnit_S_RosctlMaster"
+                                               class="form-control form-control-sm border-secondary-subtle"
+                                               placeholder="Enter State Unit" />
+                                    </div>
+                        
+                                    <div class="field">
+                                        <label for="txtRt_Pc_S_RosctlMaster" class="form-label">State Percentage</label>
+                                        <input type="number" id="txtRt_Pc_S_RosctlMaster"
+                                               class="form-control form-control-sm border-secondary-subtle"
+                                               placeholder="Enter State Percentage" step="0.01" />
+                                    </div>
+                        
+                                    <div class="field">
+                                        <label for="txtCapunit_S_RosctlMaster" class="form-label">State Per Piece Capping</label>
+                                        <input type="number" id="txtCapunit_S_RosctlMaster"
+                                               class="form-control form-control-sm border-secondary-subtle"
+                                               placeholder="Enter State Capping" step="0.01" />
+                                    </div>
+                        
+                                    <div class="field">
+                                        <label for="txtUnit_As_RosctlMaster" class="form-label">State Unit SPL ADV LIC</label>
+                                        <input type="text" id="txtUnit_As_RosctlMaster"
+                                               class="form-control form-control-sm border-secondary-subtle"
+                                               placeholder="Enter State SPL ADV LIC Unit" />
+                                    </div>
+                        
+                                    <div class="field">
+                                        <label for="txtUnit_Pc_As_RosctlMaster" class="form-label">State Percentage SPL ADV LIC</label>
+                                        <input type="number" id="txtUnit_Pc_As_RosctlMaster"
+                                               class="form-control form-control-sm border-secondary-subtle"
+                                               placeholder="Enter State SPL ADV LIC Percentage" step="0.01" />
+                                    </div>
+                        
+                                </div>
+                            </div>
+                        
+                            <!-- Center Details -->
+                            @* <div class="mb-1 border-top border-info-subtle rounded-3 p-1 bg-white"> *@
+                        
+                                @* <div class="card-header px-2 py-1 mb-1 bg-info bg-opacity-10 border border-info-subtle border-start border-4 rounded-2">
+                                    <div class="fw-semibold text-info-emphasis">
+                                        Center Details
+                                    </div>
+                                </div> *@
+                        
+                                <div class="grid cols-5">
+                        
+                                    <div class="field">
+                                        <label for="txtUnit_C_RosctlMaster" class="form-label">Center Unit of Measurement</label>
+                                        <input type="text" id="txtUnit_C_RosctlMaster"
+                                               class="form-control form-control-sm border-secondary-subtle"
+                                               placeholder="Enter Center Unit" />
+                                    </div>
+                        
+                                    <div class="field">
+                                        <label for="txtRt_Pc_C_RosctlMaster" class="form-label">Center Percentage</label>
+                                        <input type="number" id="txtRt_Pc_C_RosctlMaster"
+                                               class="form-control form-control-sm border-secondary-subtle"
+                                               placeholder="Enter Center Percentage" step="0.01" />
+                                    </div>
+                        
+                                    <div class="field">
+                                        <label for="txtCapunit_C_RosctlMaster" class="form-label">Center Per Piece Capping</label>
+                                        <input type="number" id="txtCapunit_C_RosctlMaster"
+                                               class="form-control form-control-sm border-secondary-subtle"
+                                               placeholder="Enter Center Capping" step="0.01" />
+                                    </div>
+                        
+                                    <div class="field">
+                                        <label for="txtUnit_Ac_RosctlMaster" class="form-label">Center Unit SPL ADV LIC</label>
+                                        <input type="text" id="txtUnit_Ac_RosctlMaster"
+                                               class="form-control form-control-sm border-secondary-subtle"
+                                               placeholder="Enter Center SPL ADV LIC Unit" />
+                                    </div>
+                        
+                                    <div class="field">
+                                        <label for="txtRt_Pc_Ac_RosctlMaster" class="form-label">Center Percentage SPL ADV LIC</label>
+                                        <input type="number" id="txtRt_Pc_Ac_RosctlMaster"
+                                               class="form-control form-control-sm border-secondary-subtle"
+                                               placeholder="Enter Center SPL ADV LIC Percentage" step="0.01" />
+                                    </div>
+                        
+                                </div>
+                            @* </div> *@
+                        
+                        </div>
+
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/js/pages/mastersjs/rosctl_master.js" asp-append-version="true"></script>

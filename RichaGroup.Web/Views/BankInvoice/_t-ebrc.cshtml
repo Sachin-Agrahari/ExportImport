@@ -1,0 +1,157 @@
+﻿<div class="grid cols-6">
+
+    <div class="field">
+        <label>Bill of Exchange No
+            <button id="btnEbrcHelp" class="help-link">Help</button>
+        </label>
+        <input class="num" value="15119" disabled>
+    </div>
+
+    <div class="field">
+        <label>Bank Ref No</label>
+        <input value="572BC73233040015" disabled>
+    </div>
+
+    <div class="field">
+        <label>Realization Date</label>
+        <input type="text" class="form-Flatdate" value="2023-10-10">
+    </div>
+
+    <div class="field">
+        <label>Payment Received</label>
+        <div class="pair">
+            <select>
+                <option selected>Y</option>
+                <option>N</option>
+            </select>
+
+            <span class="checkbox" style="padding-top:8px">
+                <input type="checkbox" checked id="pp">
+                <label for="pp"
+                       style="all:unset;cursor:pointer;font-size:.78rem">
+                    Partial
+                </label>
+            </span>
+        </div>
+    </div>
+
+    <div class="field">
+        <label>B.R.C. Received</label>
+        <select>
+            <option selected>Y</option>
+            <option>N</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>B.R.C. Received On</label>
+        <input type="text" class="form-Flatdate" value="2024-01-20">
+    </div>
+
+    <div class="field">
+        <label>IFSC</label>
+        <input value="HDFC000572" disabled>
+    </div>
+
+    <div class="field">
+        <label>S.B Number</label>
+        <input class="num" value="4019638" disabled>
+    </div>
+
+    <div class="field">
+        <label>S.B Date</label>
+        <input type="text" class="form-Flatdate" value="2024-01-20">
+    </div>
+
+    <div class="field">
+        <label>Port Code</label>
+        <input disabled placeholder="—">
+    </div>
+
+    <div class="field">
+        <label>Commission</label>
+        <input class="num" value="0.00">
+    </div>
+
+    <div class="field">
+        <label>Discount</label>
+        <input class="num" value="0.00">
+    </div>
+
+    <div class="field">
+        <label>Other Charges</label>
+        <input class="num" value="0.00">
+    </div>
+
+    <div class="field">
+        <label>Bank Charges</label>
+        <input class="num" value="9,680.66">
+    </div>
+
+    <div class="field">
+        <label>Invoice Amount</label>
+        <input class="num" value="31,32,362.52" disabled>
+    </div>
+
+    <div class="field">
+        <label>Currency</label>
+        <input class="num" value="0.00" disabled>
+    </div>
+
+    <div class="field">
+        <label>EP Rate</label>
+        <input class="num" value="82.2000">
+    </div>
+
+    <div class="field">
+        <label>FOB INR</label>
+        <input class="num" value="0.00" disabled>
+    </div>
+
+    <div class="field">
+        <label>Freight INR</label>
+        <input class="num" value="0.00">
+    </div>
+
+    <div class="field">
+        <label>Net FOB INR</label>
+        <input class="num" value="0.00" disabled>
+    </div>
+
+    <div class="field">
+        <label>FOB F. Currency</label>
+        <input class="num" value="38,106.60" disabled>
+    </div>
+
+    <div class="field span-2">
+        <label>E-BRC Remarks</label>
+        <input value="B/C of $1,087.85">
+    </div>
+
+</div>
+ 
+<div>
+
+    <div class="subhead">
+        EBRC No / Date / Amount
+    </div>
+
+    <div class="table-wrap"> 
+        <table> 
+            <thead>
+                <tr>
+                    <th class="c" style="width:80px">Actions</th>
+                    <th>EBRC No</th>
+                    <th>Date</th>
+                    <th class="r">Amount</th>
+                </tr>
+            </thead>
+
+            <tbody id="ebrcBody">
+                <!-- jQuery binding -->
+            </tbody>
+
+        </table> 
+    </div> 
+</div>
+ 

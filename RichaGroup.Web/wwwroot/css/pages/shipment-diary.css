@@ -1,0 +1,36 @@
+  
+
+
+/*.modal-side{
+    display:grid;
+    grid-template-columns:1fr 168px;
+    gap:18px;
+    align-items:start
+}*/
+/*.side-actions{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    position:sticky;
+    top:0
+}
+.side-actions .label{
+    font-size:.68rem;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:6px
+}*/
+/*
+@media (max-width:900px){
+  .modal-side{
+      grid-template-columns:1fr
+  }
+  .side-actions{
+      flex-direction:row;
+      flex-wrap:wrap
+  }
+}*/
+
+ 

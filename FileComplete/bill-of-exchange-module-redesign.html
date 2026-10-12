@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bill of Exchange — Richa Group (Redesign)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16233a; --ink-soft:#22334f;
+    --paper:#f3f5f8; --card:#ffffff;
+    --line:#dde3ec; --line-strong:#c6cfdc;
+    --text:#243044; --muted:#6b7a90;
+    --teal:#0e7c72; --teal-dark:#0b6159; --teal-tint:#e6f2f0;
+    --amber:#b45309; --amber-tint:#fdf3e3;
+    --red:#b3363d; --red-tint:#fbebec;
+    --disabled:#eef1f5;
+    --radius:10px;
+    --shadow:0 1px 2px rgba(22,35,58,.06), 0 4px 14px rgba(22,35,58,.05);
+    --shadow-lg:0 8px 20px rgba(22,35,58,.14), 0 20px 60px rgba(22,35,58,.18);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:var(--paper);color:var(--text);display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+
+  aside{background:var(--ink);color:#c9d4e5;padding:20px 0 28px;position:sticky;top:0;height:100vh;overflow-y:auto}
+  .brand{display:flex;align-items:center;gap:10px;padding:4px 22px 20px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:14px}
+  .brand-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#0e7c72,#28a598);display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;color:#fff;font-size:15px}
+  .brand-name{font-family:'Space Grotesk';font-weight:600;color:#fff;font-size:1.02rem}
+  nav a{display:flex;align-items:center;gap:10px;padding:9px 22px;color:#aebad0;text-decoration:none;font-size:.88rem;border-left:3px solid transparent;transition:background .15s,color .15s}
+  nav a:hover{background:rgba(255,255,255,.05);color:#fff}
+  nav .group{padding:16px 22px 6px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#5d6d88;font-weight:600}
+  nav a.sub{padding-left:38px;font-size:.84rem}
+  nav a.active{background:rgba(14,124,114,.18);border-left-color:#28a598;color:#fff;font-weight:500}
+  .caret{margin-left:auto;font-size:.7rem;opacity:.6}
+
+  main{display:flex;flex-direction:column;min-width:0}
+  header.topbar{background:var(--card);border-bottom:1px solid var(--line);padding:12px 32px;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:20}
+  .screen-switch{display:flex;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:4px}
+  .screen-switch button{font:inherit;font-size:.78rem;font-weight:600;color:var(--muted);background:none;border:none;border-radius:99px;padding:7px 16px;cursor:pointer}
+  .screen-switch button.on{background:var(--ink);color:#fff}
+  .top-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+  .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;cursor:pointer;position:relative;color:var(--muted)}
+  .dot{position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--amber);border:1.5px solid #fff}
+  .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#22334f,#0e7c72);color:#fff;display:grid;place-items:center;font-weight:600;font-size:.8rem}
+
+  .page{padding:26px 32px 120px;max-width:1500px;width:100%}
+  .view{display:none}
+  .view.on{display:block}
+  .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+  .crumbs{font-size:.76rem;color:var(--muted);margin-bottom:6px}
+  .crumbs b{color:var(--teal);font-weight:500}
+  h1{font-family:'Space Grotesk';font-weight:700;font-size:1.55rem;color:var(--ink);letter-spacing:-.01em}
+  .chip{display:inline-block;font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--amber-tint);color:var(--amber);border-radius:99px;padding:3px 10px;margin-left:8px;vertical-align:middle}
+
+  .btn{font-family:'IBM Plex Sans';font-size:.86rem;font-weight:600;border-radius:8px;padding:10px 20px;cursor:pointer;border:1px solid transparent;transition:all .15s}
+  .btn-primary{background:var(--teal);color:#fff}
+  .btn-primary:hover{background:var(--teal-dark)}
+  .btn-outline{background:#fff;color:var(--teal);border-color:var(--teal)}
+  .btn-outline:hover{background:var(--teal-tint)}
+  .btn-ghost{background:var(--ink);color:#fff}
+  .btn-ghost:hover{background:var(--ink-soft)}
+  .btn-danger{background:#fff;color:var(--red);border-color:var(--red)}
+  .btn-danger:hover{background:var(--red-tint)}
+  .btn-sm{padding:6px 13px;font-size:.78rem}
+
+  section.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:10px;padding:14px 22px;border-bottom:1px solid var(--line);background:linear-gradient(to bottom,#fbfcfe,#f7f9fc);flex-wrap:wrap}
+  .card-head .tick{width:4px;height:18px;border-radius:2px;background:var(--teal)}
+  .card-head h2{font-family:'Space Grotesk';font-size:.95rem;font-weight:600;color:var(--ink)}
+  .card-head .hint{margin-left:auto;font-size:.74rem;color:var(--muted)}
+  .card-body{padding:20px 22px 24px}
+
+  .grid{display:grid;gap:16px 20px}
+  .cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .span-2{grid-column:span 2}
+  .field label{display:flex;align-items:center;gap:6px;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .field input,.field select,.field textarea{width:100%;font:inherit;font-size:.88rem;color:var(--text);padding:9px 12px;border:1px solid var(--line-strong);border-radius:8px;background:#fff;transition:border-color .15s,box-shadow .15s;resize:vertical}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,124,114,.15)}
+  .field input:disabled,.field select:disabled,.field textarea:disabled{background:var(--disabled);color:#94a1b3;border-color:var(--line);cursor:not-allowed}
+  .field .num{font-variant-numeric:tabular-nums;text-align:right}
+  .pair{display:grid;grid-template-columns:1.3fr 1fr;gap:8px}
+  .help-link{font-size:.62rem;font-weight:600;letter-spacing:.05em;color:var(--teal);background:var(--teal-tint);border:none;border-radius:5px;padding:2px 7px;cursor:pointer}
+  .help-link:hover{background:#d5eae7}
+  .checkbox{display:flex;align-items:center;gap:8px;font-size:.86rem}
+  .checkbox input{width:16px;height:16px;accent-color:var(--teal);cursor:pointer}
+
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+  table{width:100%;border-collapse:collapse;font-size:.83rem}
+  thead th{font-size:.66rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 13px;background:#f7f9fc;border-bottom:1px solid var(--line);white-space:nowrap}
+  thead th.r,td.r{text-align:right}
+  thead th.c,td.c{text-align:center}
+  tbody td{padding:9px 13px;border-bottom:1px solid var(--line);white-space:nowrap}
+  tbody td.num{font-variant-numeric:tabular-nums}
+  tbody tr:hover{background:#f6faf9}
+  tbody tr.selected{background:var(--teal-tint)}
+  tbody tr:last-child td{border-bottom:none}
+  tfoot td{padding:10px 13px;font-weight:600;background:#f7f9fc;border-top:2px solid var(--line-strong);font-variant-numeric:tabular-nums}
+  .mono{font-variant-numeric:tabular-nums;letter-spacing:.01em}
+  .row-btn{width:30px;height:30px;border-radius:7px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--muted);font-size:.85rem}
+  .row-btn:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-tint)}
+  .row-btn.danger:hover{border-color:var(--red);color:var(--red);background:var(--red-tint)}
+  .subhead{font-family:'Space Grotesk';font-size:.88rem;font-weight:600;color:var(--ink);margin:22px 0 12px;display:flex;align-items:center;gap:8px}
+  .subhead::before{content:"";width:4px;height:15px;border-radius:2px;background:var(--teal)}
+  .pill{display:inline-block;font-size:.7rem;font-weight:600;border-radius:6px;padding:3px 9px}
+  .pill-y{background:var(--teal-tint);color:var(--teal)}
+  .pill-n{background:#eef1f5;color:#7c8aa0}
+
+  /* Action toolbar for entry view */
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:4px 0 20px}
+
+  /* Settlement grid */
+  .settle{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 20px}
+
+  /* Modals */
+  .overlay{position:fixed;inset:0;background:rgba(22,35,58,.5);backdrop-filter:blur(2px);display:none;place-items:center;z-index:100;padding:24px}
+  .overlay.on{display:grid}
+  .modal{background:#fff;border-radius:14px;box-shadow:var(--shadow-lg);width:min(1000px,100%);max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
+  .modal.sm{width:min(640px,100%)}
+  .modal-head{display:flex;align-items:center;gap:10px;padding:16px 24px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .modal-head .tick{width:4px;height:18px;border-radius:2px;background:var(--teal)}
+  .modal-head h3{font-family:'Space Grotesk';font-size:1.02rem;font-weight:600;color:var(--ink)}
+  .modal-close{margin-left:auto;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--muted);font-size:1rem}
+  .modal-close:hover{border-color:var(--red);color:var(--red)}
+  .modal-body{padding:20px 24px;overflow:auto}
+  .modal-foot{padding:14px 24px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px;background:#fbfcfe}
+
+  .savebar{position:fixed;bottom:0;left:248px;right:0;z-index:30;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:14px 32px;display:flex;align-items:center;gap:10px}
+  .savebar .status{margin-right:auto;font-size:.8rem;color:var(--muted)}
+  .savebar .status b{color:var(--teal);font-weight:600}
+
+  @media (max-width:1150px){.cols-4{grid-template-columns:repeat(2,minmax(0,1fr))}.cols-3{grid-template-columns:repeat(2,minmax(0,1fr))}.settle{grid-template-columns:1fr 1fr}}
+  @media (max-width:900px){
+    body{grid-template-columns:1fr}aside{display:none}.savebar{left:0;flex-wrap:wrap}
+    .cols-3,.cols-4,.settle{grid-template-columns:1fr}
+    .span-2{grid-column:span 1}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ══════════ Sidebar ══════════ -->
+<aside>
+  <div class="brand"><div class="brand-mark">RG</div><div class="brand-name">Richa Group</div></div>
+  <nav>
+    <a href="#">Dashboard</a>
+    <a href="#">Master <span class="caret">▾</span></a>
+    <div class="group">Transactions</div>
+    <a href="#" class="sub">Invoice <span class="caret">▾</span></a>
+    <a href="#" class="sub">Carton Details <span class="caret">▾</span></a>
+    <a href="#" class="sub">Shipment Planning</a>
+    <a href="#" class="sub active">Sales Register <span class="caret">▾</span></a>
+    <a href="#" class="sub">Doc Sent</a>
+    <a href="#" class="sub">Custom Paper</a>
+    <a href="#" class="sub">CHA Bill Entry</a>
+    <a href="#" class="sub">Buyer Order Maintenance</a>
+    <a href="#" class="sub">GSP <span class="caret">▾</span></a>
+    <div class="group">General</div>
+    <a href="#">Reports <span class="caret">▾</span></a>
+    <a href="#">Edit</a>
+    <a href="#">Logout</a>
+  </nav>
+</aside>
+
+<!-- ══════════ Main ══════════ -->
+<main>
+  <header class="topbar">
+    <div class="screen-switch" role="tablist" aria-label="Views">
+      <button class="on" data-view="list">1 · BOE List</button>
+      <button data-view="entry">2 · BOE Entry</button>
+      <button data-view="letter">3 · Letter to Bank</button>
+    </div>
+    <div class="top-right">
+      <button class="icon-btn" aria-label="Messages">✉<span class="dot"></span></button>
+      <button class="icon-btn" aria-label="Notifications">🔔<span class="dot"></span></button>
+      <div class="avatar">AK</div>
+    </div>
+  </header>
+
+  <div class="page">
+
+    <!-- ════════ VIEW 1 · List ════════ -->
+    <div class="view on" id="view-list">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / Sales Register / <b>Bill of Exchange</b></div>
+          <h1>Bill of Exchange</h1>
+        </div>
+        <button class="btn btn-primary" onclick="show('entry')">+ Add Bill of Exchange</button>
+      </div>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Search</h2></div>
+        <div class="card-body">
+          <div class="grid cols-4">
+            <div class="field"><label>From Date</label><input type="date" value="2013-01-04"></div>
+            <div class="field"><label>To Date</label><input type="date" value="2014-01-03"></div>
+            <div class="checkbox" style="padding-top:26px"><input type="checkbox" checked id="invno"><label for="invno" style="all:unset;cursor:pointer">Invoice No.</label></div>
+            <div class="field" style="align-self:end"><button class="btn btn-primary" style="width:100%">Search ⌕</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Bills</h2><span class="hint">4 records</span></div>
+        <div class="table-wrap" style="border:none;border-radius:0">
+          <table style="min-width:1050px">
+            <thead><tr>
+              <th class="c">#</th><th>Bill of Exchange No</th><th>Date</th><th class="r">Amount</th>
+              <th>Shipping Bill No</th><th>Cur.</th><th>Bank Ref. No</th><th class="r">LC/TT Number</th><th>Bank Name</th><th class="c">Actions</th>
+            </tr></thead>
+            <tbody>
+              <tr><td class="c">1</td><td class="mono">RE/1933/23-24</td><td>23-10-2023</td><td class="r num">55,522.68</td><td>—</td><td>—</td><td>—</td><td class="r num">0.00</td><td>HDFC Bank</td>
+                <td class="c"><button class="row-btn" onclick="show('entry')" title="Edit">✎</button> <button class="row-btn danger" title="Delete">🗑</button></td></tr>
+              <tr><td class="c">2</td><td class="mono">RE/1954/23-24</td><td>23-10-2023</td><td class="r num">15,770.24</td><td>—</td><td>—</td><td>—</td><td class="r num">0.00</td><td>HDFC Bank</td>
+                <td class="c"><button class="row-btn" onclick="show('entry')" title="Edit">✎</button> <button class="row-btn danger" title="Delete">🗑</button></td></tr>
+              <tr><td class="c">3</td><td class="mono">RE/2033/23-24</td><td>23-10-2023</td><td class="r num">51,233.95</td><td>—</td><td>—</td><td>—</td><td class="r num">0.00</td><td>HDFC Bank</td>
+                <td class="c"><button class="row-btn" onclick="show('entry')" title="Edit">✎</button> <button class="row-btn danger" title="Delete">🗑</button></td></tr>
+              <tr><td class="c">4</td><td class="mono">RE/2049/23-24</td><td>23-10-2023</td><td class="r num">26,365.25</td><td>—</td><td>—</td><td>—</td><td class="r num">0.00</td><td>HDFC Bank</td>
+                <td class="c"><button class="row-btn" onclick="show('entry')" title="Edit">✎</button> <button class="row-btn danger" title="Delete">🗑</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ════════ VIEW 2 · Entry ════════ -->
+    <div class="view" id="view-entry">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / Sales Register / Bill of Exchange / <b>Entry</b></div>
+          <h1>Bill of Exchange Entry <span class="chip">RE/ES/2294/23-24</span></h1>
+        </div>
+        <button class="btn btn-ghost" onclick="show('list')">← Back to List</button>
+      </div>
+
+      <!-- Reference & parties -->
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Reference &amp; Parties</h2></div>
+        <div class="card-body">
+          <div class="grid cols-4">
+            <div class="field"><label>Reference No &amp; Date</label>
+              <div class="pair"><input value="RE/ES/2294/23-24"><input type="date" disabled></div></div>
+            <div class="field"><label>Buyer Code &amp; Name <button class="help-link" onclick="openModal('m-buyer')">Help</button></label>
+              <div class="pair"><select><option selected>Anil</option></select><input disabled placeholder="—"></div></div>
+            <div class="field"><label>Report Buyer Code &amp; Name</label>
+              <div class="pair"><select><option selected>Choose one…</option></select><input disabled placeholder="—"></div></div>
+            <div class="field"><label>BOE in Favour Of</label>
+              <div class="pair"><select><option selected>N</option><option>Y</option></select><input disabled placeholder="—"></div></div>
+            <div class="field"><label>Drawee Code &amp; Name</label>
+              <div class="pair"><select disabled><option>—</option></select><input disabled placeholder="—"></div></div>
+            <div class="field"><label>Buyer A/C Code &amp; Name</label>
+              <div class="pair"><select disabled><option>—</option></select><input disabled placeholder="—"></div></div>
+            <div class="field"><label>Buyer Bank Code &amp; Name <button class="help-link" onclick="openModal('m-bank')">Bank</button></label>
+              <div class="pair"><select disabled><option>—</option></select><input disabled placeholder="—"></div></div>
+            <div class="field"><label>BOE Filed at Bank Code &amp; Name</label>
+              <div class="pair"><select disabled><option>—</option></select><input disabled placeholder="—"></div></div>
+            <div class="field span-2"><label>Drawn Under</label><textarea rows="2">115860.2</textarea></div>
+            <div class="field span-2"><label>Remarks</label><textarea rows="2" disabled placeholder="—"></textarea></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Payment & dates -->
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Payment &amp; Dates</h2></div>
+        <div class="card-body">
+          <div class="grid cols-4">
+            <div class="field"><label>Currency</label><input disabled placeholder="—"></div>
+            <div class="field"><label>Amount</label><input class="num" disabled placeholder="0.00"></div>
+            <div class="field"><label>Payment Days / INR</label>
+              <div class="pair"><input disabled placeholder="—"><input class="num" disabled placeholder="0.00"></div></div>
+            <div class="field"><label>Due Date</label><input type="date" value="2014-09-05"></div>
+            <div class="field"><label>Bank Ref. No &amp; Date</label>
+              <div class="pair"><input disabled placeholder="—"><input type="date" value="2014-09-05"></div></div>
+            <div class="field"><label>Place</label><input placeholder="—"></div>
+            <div class="field"><label>Payment Type</label><select><option selected>—</option></select></div>
+            <div class="field"><label>Number</label><input placeholder="—"></div>
+            <div class="field"><label>Date</label><input type="date" value="2013-03-12"></div>
+            <div class="field"><label>Max Expected Due Date</label><input type="date" value="2013-03-12"></div>
+            <div class="field"><label>Actual Due Date</label><input type="date" value="2013-03-12"></div>
+            <div class="field"><label>Attested Invoice Date</label><input type="date" value="2013-03-12"></div>
+            <div class="field"><label>Percentage (%)</label><input class="num" placeholder="0.00"></div>
+            <div class="field"><label>Less Commission for Reports</label><select><option selected>—</option></select></div>
+            <div class="field"><label>Paperless</label><select><option selected>—</option><option>Yes</option><option>No</option></select></div>
+            <div class="field"><label>Multi Format / Print with AWB</label>
+              <div class="pair"><select><option selected>—</option></select><select><option selected>—</option></select></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Invoices -->
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Tagged Invoices</h2>
+          <span class="hint">Scroll right for bank credit &amp; charges</span></div>
+        <div class="table-wrap" style="border:none;border-radius:0">
+          <table style="min-width:1500px">
+            <thead><tr>
+              <th class="c">#</th><th>Invoice No.</th><th>Invoice Date</th><th>Shipping Bill No.</th><th>S.B. Date</th>
+              <th class="c">E-BRC</th><th>E-BRC On</th><th>Terms</th><th class="r">Amount</th><th class="r">Payment Rcvd</th><th>Payment Adv Date</th>
+              <th class="r">Discount</th><th class="r">Bank Credit Amt</th><th>Bank Credit Date</th><th class="r">Bank Charges</th><th class="c">Actions</th>
+            </tr></thead>
+            <tbody>
+              <tr><td class="c">1</td><td class="mono">RE/1810/25-26</td><td>01-07-2025</td><td>—</td><td>—</td><td class="c"><span class="pill pill-y">Y</span></td><td>—</td><td>—</td><td class="r">—</td><td class="r">—</td><td>—</td><td class="r">—</td><td class="r num">0.00</td><td>—</td><td class="r num">0.00</td>
+                <td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+              <tr><td class="c">2</td><td class="mono">RE/1812/25-26</td><td>01-07-2025</td><td>—</td><td>—</td><td class="c"><span class="pill pill-y">Y</span></td><td>—</td><td>—</td><td class="r">—</td><td class="r">—</td><td>—</td><td class="r">—</td><td class="r num">0.00</td><td>—</td><td class="r num">0.00</td>
+                <td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+              <tr><td class="c">3</td><td class="mono">RE/1817/25-26</td><td>01-07-2025</td><td>—</td><td>—</td><td class="c"><span class="pill pill-n">N</span></td><td>—</td><td>—</td><td class="r">—</td><td class="r">—</td><td>—</td><td class="r">—</td><td class="r num">0.00</td><td>—</td><td class="r num">0.00</td>
+                <td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+              <tr><td class="c">4</td><td class="mono">RE/1820/25-26</td><td>02-07-2025</td><td>—</td><td>—</td><td class="c"><span class="pill pill-n">N</span></td><td>—</td><td>—</td><td class="r">—</td><td class="r">—</td><td>—</td><td class="r">—</td><td class="r num">0.00</td><td>—</td><td class="r num">0.00</td>
+                <td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+              <tr><td class="c">5</td><td class="mono">RE/1890/25-26</td><td>09-07-2025</td><td>—</td><td>—</td><td class="c"><span class="pill pill-y">Y</span></td><td>—</td><td>—</td><td class="r">—</td><td class="r">—</td><td>—</td><td class="r">—</td><td class="r num">0.00</td><td>—</td><td class="r num">0.00</td>
+                <td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+            </tbody>
+            <tfoot><tr><td colspan="8" style="text-align:right">Total</td><td class="r">0.00</td><td class="r">0.00</td><td></td><td class="r">0.00</td><td class="r">0.00</td><td></td><td class="r">0.00</td><td></td></tr></tfoot>
+          </table>
+        </div>
+        <div class="card-body" style="padding-top:16px">
+          <div class="toolbar">
+            <button class="btn btn-sm btn-outline" onclick="openModal('m-addinv')">+ Add Invoice</button>
+            <button class="btn btn-sm btn-outline" onclick="openModal('m-log')">Log Details</button>
+            <button class="btn btn-sm btn-outline" onclick="openModal('m-summary')">Bill of Exchange</button>
+            <button class="btn btn-sm btn-outline">Calculate Amount</button>
+            <button class="btn btn-sm btn-outline" onclick="openModal('m-inward')">Inward Details</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Payment & adjustment -->
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Payment &amp; Adjustment</h2>
+          <span class="hint">Lookup changes with adjustment type</span></div>
+        <div class="card-body">
+          <div class="grid cols-4" style="margin-bottom:18px">
+            <div class="field"><label>Conversion Rate</label><input class="num" value="1"></div>
+            <div class="field"><label>Amount</label><input class="num" value="2,50,000"></div>
+            <div class="field"><label>From Date</label><input type="date" value="2017-07-09"></div>
+            <div class="field"><label>Adjustment Required / Type</label>
+              <div class="pair">
+                <select><option selected>Yes</option><option>No</option></select>
+                <select id="adj-type" onchange="switchAdj(this.value)">
+                  <option value="advance" selected>Advance</option>
+                  <option value="currency">Currency</option>
+                  <option value="pcfc">PCFC</option>
+                </select>
+              </div></div>
+          </div>
+
+          <!-- Advance lookup -->
+          <div class="adj-table" id="adj-advance">
+            <div class="table-wrap">
+              <table style="min-width:900px">
+                <thead><tr><th class="c">#</th><th class="c">Pick</th><th class="r">Advance</th><th>Date</th><th>Buyer Code</th><th>Buyer Name</th><th>Cur.</th><th class="r">Cnv Rate</th><th class="r">Amount</th><th class="r">Balance</th></tr></thead>
+                <tbody>
+                  <tr class="selected"><td class="c">1</td><td class="c"><input type="checkbox" checked></td><td class="r num">5679</td><td>01-09-2023</td><td class="mono">ANN</td><td>Ann Taylor</td><td>US$</td><td class="r num">82.64500</td><td class="r num">5.63</td><td class="r num">5.63</td></tr>
+                  <tr><td class="c">2</td><td class="c"><input type="checkbox"></td><td class="r num">5692</td><td>18-09-2023</td><td class="mono">6048</td><td>Lucky Brand</td><td>US$</td><td class="r num">83.06500</td><td class="r num">4,39,928</td><td class="r num">4,39,928</td></tr>
+                  <tr><td class="c">3</td><td class="c"><input type="checkbox"></td><td class="r num">5702</td><td>28-09-2023</td><td class="mono">JILL</td><td>JILL</td><td>US$</td><td class="r num">83.11500</td><td class="r num">1,034.81</td><td class="r num">1,034.81</td></tr>
+                  <tr><td class="c">4</td><td class="c"><input type="checkbox"></td><td class="r num">5753</td><td>29-11-2023</td><td class="mono">Belk</td><td>Belk</td><td>US$</td><td class="r num">82.82000</td><td class="r num">35,904.81</td><td class="r num">35,904.81</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Currency booked lookup -->
+          <div class="adj-table" id="adj-currency" style="display:none">
+            <div class="table-wrap">
+              <table style="min-width:1050px">
+                <thead><tr><th class="c">#</th><th class="c">Pick</th><th class="r">Trx No</th><th>Date</th><th class="r">Amount</th><th class="r">Rate</th><th>From Date</th><th>To Date</th><th class="r">Balance</th><th class="r">INR</th><th class="r">Contract No</th></tr></thead>
+                <tbody>
+                  <tr class="selected"><td class="c">1</td><td class="c"><input type="checkbox" checked></td><td class="r num">4701</td><td>25-09-2024</td><td class="r num">50,000</td><td class="r num">113.9450</td><td>01-08-2025</td><td>29-09-2025</td><td class="r num">50,000.00</td><td class="r num">56,97,250.00</td><td class="r num">54479361</td></tr>
+                  <tr><td class="c">2</td><td class="c"><input type="checkbox"></td><td class="r num">4862</td><td>23-12-2024</td><td class="r num">2,50,000</td><td class="r num">86.3125</td><td>14-08-2025</td><td>12-09-2025</td><td class="r num">1,50,000.00</td><td class="r num">2,15,78,125.00</td><td class="r num">57479962</td></tr>
+                  <tr><td class="c">3</td><td class="c"><input type="checkbox"></td><td class="r num">4768</td><td>02-09-2024</td><td class="r num">2,50,000</td><td class="r num">85.6275</td><td>02-09-2025</td><td>30-09-2025</td><td class="r num">2,50,000.00</td><td class="r num">2,14,06,875.00</td><td class="r num">53639941</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- PCFC lookup -->
+          <div class="adj-table" id="adj-pcfc" style="display:none">
+            <div class="table-wrap">
+              <table style="min-width:760px">
+                <thead><tr><th class="c">#</th><th class="c">Pick</th><th>PCFC No.</th><th>Trx No.</th><th class="r">Amount</th><th class="r">Rate</th><th>Due Date</th><th class="r">Balance Amount</th></tr></thead>
+                <tbody>
+                  <tr class="selected"><td class="c">1</td><td class="c"><input type="checkbox" checked></td><td>—</td><td>—</td><td class="r">—</td><td class="r">—</td><td>—</td><td class="r">—</td></tr>
+                  <tr><td class="c">2</td><td class="c"><input type="checkbox"></td><td>—</td><td>—</td><td class="r">—</td><td class="r">—</td><td>—</td><td class="r">—</td></tr>
+                  <tr><td class="c">3</td><td class="c"><input type="checkbox"></td><td>—</td><td>—</td><td class="r">—</td><td class="r">—</td><td>—</td><td class="r">—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div style="display:flex;justify-content:flex-end;margin-top:14px">
+            <button class="btn btn-sm btn-primary">+ Add Payment</button>
+          </div>
+
+          <div class="subhead">Applied Adjustments</div>
+          <div class="table-wrap">
+            <table style="min-width:1150px">
+              <thead><tr>
+                <th class="c">#</th><th class="r">Conversion Rate</th><th class="r">Amount</th><th>Date</th><th class="r">INR Amount</th>
+                <th>Adjustment Type</th><th class="c">Required</th><th class="r">Number</th><th>Date</th><th class="r">Amount</th><th class="c">Actions</th>
+              </tr></thead>
+              <tbody>
+                <tr><td class="c">1</td><td class="r num">82.8257500</td><td class="r num">69,841.99</td><td>23-10-2023</td><td class="r num">57,84,715.00</td><td class="adj-label">Advance</td><td class="c"><span class="pill pill-y">Y</span></td><td class="r num">5679</td><td>23-10-2023</td><td class="r num">69,841.99</td><td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+                <tr><td class="c">2</td><td class="r num">82.8259600</td><td class="r num">2,07,182.96</td><td>23-10-2023</td><td class="r num">1,71,60,128</td><td class="adj-label">Advance</td><td class="c"><span class="pill pill-y">Y</span></td><td class="r num">5692</td><td>23-10-2023</td><td class="r num">2,07,182.96</td><td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+                <tr><td class="c">3</td><td class="r num">80.9800000</td><td class="r num">73,567.55</td><td>23-10-2023</td><td class="r num">59,57,500.00</td><td class="adj-label">Advance</td><td class="c"><span class="pill pill-y">Y</span></td><td class="r num">6702</td><td>23-10-2023</td><td class="r num">73,567.55</td><td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+                <tr><td class="c">4</td><td class="r num">83.2600000</td><td class="r num">62,702.30</td><td>23-10-2023</td><td class="r num">52,27,261.00</td><td class="adj-label">Advance</td><td class="c"><span class="pill pill-n">N</span></td><td class="r num">5753</td><td>23-10-2023</td><td class="r num">62,782.38</td><td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+                <tr><td class="c">5</td><td class="r num">83.2300000</td><td class="r num">20,779.91</td><td>23-10-2023</td><td class="r num">17,29,512.00</td><td class="adj-label">Advance</td><td class="c"><span class="pill pill-y">Y</span></td><td class="r num">5768</td><td>23-10-2023</td><td class="r num">20,779.91</td><td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+                <tr><td class="c">6</td><td class="r num">83.2400000</td><td class="r num">13,829.91</td><td>23-10-2023</td><td class="r num">11,51,141.00</td><td class="adj-label">Advance</td><td class="c"><span class="pill pill-n">N</span></td><td class="r num">6754</td><td>23-10-2023</td><td class="r num">4,148.52</td><td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settlement summary -->
+      <section class="card">
+        <div class="card-head"><span class="tick"></span><h2>Settlement Summary</h2></div>
+        <div class="card-body">
+          <div class="settle">
+            <div class="field"><label>Average Conversion Rate</label><input class="num" value="0.00" disabled></div>
+            <div class="field"><label>Actual Amount Received</label>
+              <div class="pair"><input class="num" disabled placeholder="0.00"><input class="num" disabled placeholder="0.00"></div></div>
+            <div class="field"><label>Net Amount</label><input class="num" disabled placeholder="0.00"></div>
+            <div class="field"><label>Commission</label>
+              <div class="pair"><input class="num" disabled placeholder="0.00"><input class="num" disabled placeholder="0.00"></div></div>
+            <div class="field"><label>Discount</label>
+              <div class="pair"><input class="num" disabled placeholder="0.00"><input class="num" disabled placeholder="0.00"></div></div>
+            <div class="field"><label>Realization Date</label><input type="date" disabled></div>
+            <div class="field"><label>Other Charges</label>
+              <div class="pair"><input class="num" disabled placeholder="0.00"><input class="num" disabled placeholder="0.00"></div></div>
+            <div class="field"><label>Bank Charges</label>
+              <div class="pair"><input class="num" disabled placeholder="0.00"><input class="num" disabled placeholder="0.00"></div></div>
+            <div class="field"><label>Full Received</label><input disabled placeholder="—"></div>
+            <div class="field span-2"><label>Other Remarks</label><input disabled placeholder="—"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ════════ VIEW 3 · Letter to Bank ════════ -->
+    <div class="view" id="view-letter">
+      <div class="page-head">
+        <div>
+          <div class="crumbs">TRX / Sales Register / <b>Letter to Bank</b></div>
+          <h1>Letter to Bank</h1>
+        </div>
+        <button class="btn btn-ghost" onclick="show('list')">← Back</button>
+      </div>
+
+      <section class="card" style="max-width:640px;margin-inline:auto">
+        <div class="card-head"><span class="tick"></span><h2>Letter Details</h2></div>
+        <div class="card-body">
+          <div class="grid cols-2" style="grid-template-columns:1fr 1fr">
+            <div class="field"><label>Letter to Bank For</label><select><option selected>Choose…</option></select></div>
+            <div class="field"><label>For Value For</label><input disabled placeholder="—"></div>
+          </div>
+          <div class="subhead">Documents</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Document</th><th class="r">Original</th><th class="r">Duplicate</th></tr></thead>
+              <tbody>
+                <tr><td>Invoice</td><td class="r"><input class="num" value="26" style="font:inherit;padding:6px 9px;border:1px solid var(--line-strong);border-radius:6px;width:90px;text-align:right"></td><td class="r"><input class="num" value="26" style="font:inherit;padding:6px 9px;border:1px solid var(--line-strong);border-radius:6px;width:90px;text-align:right"></td></tr>
+                <tr><td>Tpt Document</td><td class="r"><input class="num" value="0" style="font:inherit;padding:6px 9px;border:1px solid var(--line-strong);border-radius:6px;width:90px;text-align:right"></td><td class="r"><input class="num" value="20" style="font:inherit;padding:6px 9px;border:1px solid var(--line-strong);border-radius:6px;width:90px;text-align:right"></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="field" style="margin-top:16px"><label>FIRC</label><input disabled placeholder="—"></div>
+          <div style="display:flex;justify-content:flex-end;margin-top:18px">
+            <button class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Save bar -->
+  <div class="savebar">
+    <span class="status">Bill of Exchange · ref <b>RE/ES/2294/23-24</b></span>
+    <button class="btn btn-ghost" onclick="show('list')">Back</button>
+    <button class="btn btn-primary">Save</button>
+  </div>
+</main>
+
+<!-- ══════════ MODAL · Buyer lookup ══════════ -->
+<div class="overlay" id="m-buyer" role="dialog" aria-modal="true" aria-label="Buyer lookup">
+  <div class="modal sm">
+    <div class="modal-head"><span class="tick"></span><h3>Buyer Lookup</h3>
+      <button class="modal-close" onclick="closeModal('m-buyer')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="c">#</th><th>Buyer Name</th><th>Alias</th><th>Code</th></tr></thead>
+          <tbody>
+            <tr><td class="c">1</td><td>Abercrombie &amp; Fitch</td><td>Courier</td><td class="mono">6112</td></tr>
+            <tr><td class="c">2</td><td>Abercrombie &amp; Fitch Europe</td><td>Banking</td><td class="mono">5214</td></tr>
+            <tr><td class="c">3</td><td>Abercrombie &amp; Fitch Trading</td><td>Shipment (F)</td><td class="mono">2021</td></tr>
+            <tr><td class="c">4</td><td>Abercrombie &amp; Fitch Trading</td><td>Japan</td><td class="mono">ABERCROMBI</td></tr>
+            <tr><td class="c">5</td><td>Aberco Netherlands Distribution</td><td>—</td><td class="mono">2055</td></tr>
+            <tr><td class="c">6</td><td>Aberco Netherlands Distribution</td><td>Shipment (F)</td><td class="mono">2055</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-primary" onclick="closeModal('m-buyer')">Select Buyer</button></div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL · Select bank ══════════ -->
+<div class="overlay" id="m-bank" role="dialog" aria-modal="true" aria-label="Select bank">
+  <div class="modal">
+    <div class="modal-head"><span class="tick"></span><h3>Select Bank</h3>
+      <select style="margin-left:14px;font:inherit;font-size:.84rem;padding:6px 10px;border:1px solid var(--line-strong);border-radius:7px"><option selected>HDFC</option></select>
+      <button class="modal-close" onclick="closeModal('m-bank')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="table-wrap">
+        <table style="min-width:820px">
+          <thead><tr><th class="r">Ref No.</th><th>Ref Date</th><th>Buyer Name</th><th class="r">Amount</th><th>Bank Ref No.</th><th class="c">Paperless</th></tr></thead>
+          <tbody>
+            <tr><td class="r num">15117</td><td>20-10-2023</td><td>J.Crew Group, LLC</td><td class="r num">3,98,054.31</td><td class="mono">522BC73233040009</td><td class="c"><span class="pill pill-y">Yes</span></td></tr>
+            <tr><td class="r num">15118</td><td>20-10-2023</td><td>Abfico Netherlands Distribution B.V.</td><td class="r num">40,406.15</td><td class="mono">522BC73233040002</td><td class="c"><span class="pill pill-y">Yes</span></td></tr>
+            <tr><td class="r num">15119</td><td>20-10-2023</td><td>Abercrombie &amp; Fitch Trading</td><td class="r num">4,47,983.97</td><td class="mono">522BC73233040015</td><td class="c"><span class="pill pill-y">Yes</span></td></tr>
+            <tr><td class="r num">15120</td><td>20-10-2023</td><td>Abercrombie &amp; Fitch Trading</td><td class="r num">6,885.30</td><td class="mono">522BC73233040005</td><td class="c"><span class="pill pill-y">Yes</span></td></tr>
+            <tr><td class="r num">15121</td><td>20-10-2023</td><td>Abercrombie &amp; Fitch Trading</td><td class="r num">19,443.60</td><td class="mono">522BC73233040019</td><td class="c"><span class="pill pill-y">Yes</span></td></tr>
+            <tr><td class="r num">15122</td><td>20-10-2023</td><td>Abercrombie &amp; Fitch Trading</td><td class="r num">61,370.15</td><td class="mono">522BC73233040017</td><td class="c"><span class="pill pill-y">Yes</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid cols-2" style="grid-template-columns:1fr 1fr;margin-top:16px">
+        <div class="field"><label>LC/TT Number</label><input placeholder="—"></div>
+        <div class="field"><label>Bank Name</label><input placeholder="—"></div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-primary" onclick="closeModal('m-bank')">Select</button></div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL · Add Invoice ══════════ -->
+<div class="overlay" id="m-addinv" role="dialog" aria-modal="true" aria-label="Add invoice">
+  <div class="modal">
+    <div class="modal-head"><span class="tick"></span><h3>Add Invoice</h3>
+      <button class="modal-close" onclick="closeModal('m-addinv')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="table-wrap">
+        <table style="min-width:920px">
+          <thead><tr><th class="c">#</th><th>Invoice No.</th><th>Invoice Date</th><th class="r">SB No</th><th>SB Date</th><th class="c">E-BRC</th><th>E-BRC Need On</th><th class="r">Amount</th><th class="c">I Rcvd</th><th class="c">Actions</th></tr></thead>
+          <tbody>
+            <tr><td class="c">1</td><td class="mono">RE/1933/23-24</td><td>14-08-2023</td><td class="r num">3976693</td><td>16-09-2023</td><td class="c"><span class="pill pill-y">Y</span></td><td>06-11-2023</td><td class="r num">55,522.68</td><td class="c"><span class="pill pill-n">N</span></td><td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+            <tr><td class="c">2</td><td class="mono">RE/1954/23-24</td><td>17-08-2023</td><td class="r num">3976271</td><td>16-09-2023</td><td class="c"><span class="pill pill-y">Y</span></td><td>06-11-2023</td><td class="r num">15,770.24</td><td class="c"><span class="pill pill-n">N</span></td><td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+            <tr><td class="c">3</td><td class="mono">RE/2033/23-24</td><td>29-08-2025</td><td class="r num">3976233</td><td>16-09-2023</td><td class="c"><span class="pill pill-y">Y</span></td><td>06-11-2023</td><td class="r num">51,233.95</td><td class="c"><span class="pill pill-n">N</span></td><td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+            <tr><td class="c">4</td><td class="mono">RE/2045/23-24</td><td>29-08-2025</td><td class="r num">3975906</td><td>16-09-2023</td><td class="c"><span class="pill pill-y">Y</span></td><td>06-11-2023</td><td class="r num">26,365.25</td><td class="c"><span class="pill pill-n">N</span></td><td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+            <tr><td class="c">5</td><td class="mono">RE/2056/23-24</td><td>29-08-2025</td><td class="r num">4211513</td><td>27-09-2023</td><td class="c"><span class="pill pill-y">Y</span></td><td>06-11-2023</td><td class="r num">75,135.25</td><td class="c"><span class="pill pill-n">N</span></td><td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+            <tr><td class="c">6</td><td class="mono">RE/2069/23-24</td><td>05-09-2025</td><td class="r num">3919943</td><td>14-09-2023</td><td class="c"><span class="pill pill-y">Y</span></td><td>06-11-2023</td><td class="r num">25,222.50</td><td class="c"><span class="pill pill-n">N</span></td><td class="c"><button class="row-btn">✎</button> <button class="row-btn danger">🗑</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('m-addinv')">Cancel</button>
+      <button class="btn btn-primary" onclick="closeModal('m-addinv')">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL · Log Details ══════════ -->
+<div class="overlay" id="m-log" role="dialog" aria-modal="true" aria-label="Log details">
+  <div class="modal" style="width:min(1200px,100%)">
+    <div class="modal-head"><span class="tick"></span><h3>Log Details</h3>
+      <span class="hint" style="margin-left:12px;font-size:.74rem;color:var(--muted)">Empty follow-up date columns hidden for clarity</span>
+      <button class="modal-close" onclick="closeModal('m-log')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="table-wrap">
+        <table style="min-width:1120px">
+          <thead><tr>
+            <th class="c">#</th><th class="r">Ref No.</th><th>Bank Ref No.</th><th>Bank Ref Date</th><th class="c">FR</th>
+            <th class="r">RLZ Rate</th><th class="r">RLZ Amount</th><th class="c">YN1</th><th class="c">P/F/A</th><th>D Date 1</th>
+            <th>Log User</th><th>Log Date</th><th class="r">Log Time</th>
+          </tr></thead>
+          <tbody>
+            <tr><td class="c">1</td><td class="r num">15119</td><td>—</td><td>—</td><td class="c"><span class="pill pill-n">N</span></td><td class="r num">0.000000</td><td class="r num">0.00</td><td class="c"><span class="pill pill-n">N</span></td><td class="c">—</td><td>—</td><td>Gaura</td><td>20-10-2023</td><td class="r num">15:36:27</td></tr>
+            <tr><td class="c">2</td><td class="r num">15119</td><td>—</td><td>—</td><td class="c"><span class="pill pill-n">N</span></td><td class="r num">0.000000</td><td class="r num">0.00</td><td class="c"><span class="pill pill-n">N</span></td><td class="c">—</td><td>—</td><td>Gaura</td><td>20-10-2023</td><td class="r num">15:44:57</td></tr>
+            <tr><td class="c">3</td><td class="r num">15119</td><td>—</td><td>—</td><td class="c"><span class="pill pill-n">N</span></td><td class="r num">0.000000</td><td class="r num">0.00</td><td class="c"><span class="pill pill-n">N</span></td><td class="c">—</td><td>—</td><td>Sanja</td><td>23-10-2023</td><td class="r num">23:14:33</td></tr>
+            <tr><td class="c">4</td><td class="r num">15119</td><td class="mono">M</td><td>23-10-2023</td><td class="c"><span class="pill pill-n">N</span></td><td class="r num">82.57500</td><td class="r num">9,841.99</td><td class="c"><span class="pill pill-y">Y</span></td><td class="c">A</td><td>23-10-2023</td><td>Sanja</td><td>23-10-2023</td><td class="r num">11:47:35</td></tr>
+            <tr><td class="c">5</td><td class="r num">15119</td><td class="mono">572BC73233040</td><td>23-10-2023</td><td class="c"><span class="pill pill-y">Y</span></td><td class="r num">82.57500</td><td class="r num">9,841.99</td><td class="c"><span class="pill pill-y">Y</span></td><td class="c">A</td><td>23-10-2023</td><td>Sanja</td><td>01-11-2023</td><td class="r num">14:36:21</td></tr>
+            <tr><td class="c">6</td><td class="r num">15119</td><td class="mono">572BC73233040</td><td>23-10-2023</td><td class="c"><span class="pill pill-y">Y</span></td><td class="r num">82.57500</td><td class="r num">9,841.99</td><td class="c"><span class="pill pill-y">Y</span></td><td class="c">A</td><td>23-10-2023</td><td>ADI</td><td>28-11-2023</td><td class="r num">15:27:58</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-primary" onclick="closeModal('m-log')">Save</button></div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL · BOE Summary ══════════ -->
+<div class="overlay" id="m-summary" role="dialog" aria-modal="true" aria-label="Bill of exchange summary">
+  <div class="modal">
+    <div class="modal-head"><span class="tick"></span><h3>Bill of Exchange — Summary</h3>
+      <button class="modal-close" onclick="closeModal('m-summary')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="table-wrap">
+        <table style="min-width:940px">
+          <thead><tr><th class="r">Ref No.</th><th>Ref Date</th><th>Buyer Name</th><th class="r">Amount</th><th>Bank Ref No.</th><th class="c">Paperless</th><th class="r">Payment Rcvd</th><th class="r">Bank Charge</th><th class="r">Extra Amount</th><th class="c">BRC</th></tr></thead>
+          <tbody>
+            <tr><td class="r num">51309</td><td>03-04-2025</td><td>Nordstrom, Inc</td><td class="r num">1,29,967.56</td><td class="mono">572BC73251130001</td><td class="c"><span class="pill pill-y">Yes</span></td><td class="r num">1,29,967.56</td><td class="r num">0.00</td><td class="r num">0</td><td class="c"><span class="pill pill-y">Full</span></td></tr>
+            <tr><td class="r num">51310</td><td>03-04-2025</td><td>J. Crew Group, LLC</td><td class="r num">5,41,999.60</td><td class="mono">572BC73251130019</td><td class="c"><span class="pill pill-y">Yes</span></td><td class="r num">5,41,999.60</td><td class="r num">20,514.29</td><td class="r num">0</td><td class="c"><span class="pill pill-y">Full</span></td></tr>
+            <tr><td class="r num">51311</td><td>03-04-2025</td><td>Macy's Merchandising</td><td class="r num">6,15,695.51</td><td class="mono">572BC73251130013</td><td class="c"><span class="pill pill-y">Yes</span></td><td class="r num">6,15,695.51</td><td class="r num">7,262.44</td><td class="r num">−7,262.44</td><td class="c"><span class="pill pill-y">Full</span></td></tr>
+            <tr><td class="r num">51312</td><td>03-04-2025</td><td>Macy's Merchandising</td><td class="r num">3,08,562.64</td><td class="mono">572BC73251130014</td><td class="c"><span class="pill pill-y">Yes</span></td><td class="r num">3,08,562.64</td><td class="r num">3,715.90</td><td class="r num">−3,715.90</td><td class="c"><span class="pill pill-y">Full</span></td></tr>
+            <tr><td class="r num">51313</td><td>04-04-2025</td><td>Macy's Merchandising</td><td class="r num">2,81,692.66</td><td class="mono">572BC73251130001</td><td class="c"><span class="pill pill-y">Yes</span></td><td class="r num">2,81,692.66</td><td class="r num">3,286.02</td><td class="r num">−3,286.02</td><td class="c"><span class="pill pill-y">Full</span></td></tr>
+            <tr><td class="r num">51314</td><td>04-04-2025</td><td>J. Crew Group, LLC</td><td class="r num">4,33,200.84</td><td class="mono">572BC73251130007</td><td class="c"><span class="pill pill-y">Yes</span></td><td class="r num">4,33,200.84</td><td class="r num">6,973.21</td><td class="r num">0</td><td class="c"><span class="pill pill-y">Full</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('m-summary')">Close</button>
+      <button class="btn btn-primary" onclick="window.print()">🖨 Print</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MODAL · Inward Details ══════════ -->
+<div class="overlay" id="m-inward" role="dialog" aria-modal="true" aria-label="Inward details">
+  <div class="modal sm">
+    <div class="modal-head"><span class="tick"></span><h3>Inward Details</h3>
+      <button class="modal-close" onclick="closeModal('m-inward')" aria-label="Close">✕</button></div>
+    <div class="modal-body">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="c">#</th><th>Inward No</th><th>Date</th><th class="r">Amount</th><th class="r">Extra Amount</th></tr></thead>
+          <tbody>
+            <tr><td class="c">1</td><td class="mono">1910230049904231</td><td>18-10-2023</td><td class="r num">4,148.52</td><td class="r num">0.00</td></tr>
+            <tr><td class="c">2</td><td class="mono">171023104990483</td><td>16-10-2023</td><td class="r num">20,779.91</td><td class="r num">0.00</td></tr>
+            <tr><td class="c">3</td><td class="mono">0510231049903751</td><td>04-10-2023</td><td class="r num">73,567.55</td><td class="r num">0.00</td></tr>
+            <tr><td class="c">4</td><td class="mono">1610231049905465</td><td>13-10-2023</td><td class="r num">62,782.38</td><td class="r num">0.00</td></tr>
+            <tr><td class="c">5</td><td class="mono">2909231049903477</td><td>28-09-2023</td><td class="r num">2,07,182.96</td><td class="r num">0.00</td></tr>
+            <tr><td class="c">6</td><td class="mono">0310231049904650</td><td>02-10-2023</td><td class="r num">69,841.99</td><td class="r num">0.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:14px 18px;margin-top:16px">
+        <div class="field"><label>Buyer Name</label><input value="Abercrombie &amp; Fitch Trading Co., US"></div>
+        <div class="field"><label>Address</label><input value="New Albany, OH 43054-6301"></div>
+        <div class="field"><label>Remitter</label><select><option selected>1013</option></select></div>
+        <div class="field"><label>Tenor</label><input value="30 Days"></div>
+        <div class="field"><label>Country</label><input value="USA"></div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-primary" onclick="closeModal('m-inward')">Save</button></div>
+  </div>
+</div>
+
+<script>
+  // View switcher
+  const viewBtns = document.querySelectorAll('.screen-switch button');
+  function show(name){
+    document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === 'view-' + name));
+    viewBtns.forEach(b => b.classList.toggle('on', b.dataset.view === name));
+    window.scrollTo({top:0});
+  }
+  viewBtns.forEach(b => b.addEventListener('click', () => show(b.dataset.view)));
+
+  // Adjustment type switch
+  function switchAdj(type){
+    document.querySelectorAll('.adj-table').forEach(t => t.style.display = (t.id === 'adj-' + type) ? '' : 'none');
+    const label = type === 'advance' ? 'Advance' : type === 'currency' ? 'Currency' : 'PCFC';
+    document.querySelectorAll('.adj-label').forEach(td => td.textContent = label);
+  }
+
+  // Modals
+  function openModal(id){ document.getElementById(id).classList.add('on'); }
+  function closeModal(id){ document.getElementById(id).classList.remove('on'); }
+  document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e => { if(e.target === o) o.classList.remove('on'); }));
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') document.querySelectorAll('.overlay.on').forEach(o => o.classList.remove('on')); });
+
+  // Row selection highlight
+  document.querySelectorAll('tbody input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => cb.closest('tr').classList.toggle('selected', cb.checked));
+  });
+</script>
+</body>
+</html>

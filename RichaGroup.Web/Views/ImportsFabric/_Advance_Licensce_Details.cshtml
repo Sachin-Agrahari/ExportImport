@@ -1,0 +1,786 @@
+﻿@{
+	ViewData["Title"] = "Advance License Details";
+	ViewData["Heading"] = "Advance License Details";
+}
+
+
+
+<div class="bd_mainContainer">
+
+    <div class="page">
+
+        <section class="card">
+
+            @* <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Advance License Details</h2>
+                </div>
+
+
+                <div class="d-flex gap-2"> *@
+                   @*  @await Html.PartialAsync("Components/_UploadAndViewButtons") *@
+                    @* <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnAdd_AdvLicDetails">
+                        Add
+                    </button> *@
+            @*         <button class="btn btn-primary btn-sm" id="btnSave_BOEImport">Save</button>
+                </div>
+            </div> *@
+
+            @* <div class="card-head d-flex justify-content-end">
+                <div class="d-flex justify-content-end align-items-end">
+
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnAddItem_ImportDetal_AdvLicDetails">
+
+                        <i class="fa-solid fa-plus me-1"></i>
+                        Add Item
+
+                    </button>
+
+                </div>
+
+
+
+            </div> *@
+
+             <div class="card-body">
+
+                <div class="grid cols-6">
+
+                    <!-- Entry Number -->
+                    <div class="field">
+                        <label>Entry Number</label>
+                        <input type="text"
+                               id="txtEntryNo_AddAdvLicDetails"
+                               placeholder="Enter Entry Number..." />
+                    </div>
+
+                    <!-- Company Code -->
+                    <div class="field">
+                        <label>Company Code</label>
+                        <input type="text"
+                               id="txtCompanyCode_AddAdvLicDetails"
+                               placeholder="Enter Company Code..." />
+                    </div>
+
+                    <!-- Diary Serial -->
+                    <div class="field">
+                        <label>Diary Serial No.</label>
+                        <input type="text"
+                               id="txtDiarySerialNo_AddAdvLicDetails"
+                               placeholder="Enter Diary Serial No..." />
+                    </div>
+
+                    <!-- License Number -->
+                    <div class="field span-2">
+                        <label>License Number</label>
+                        <input type="text"
+                               id="txtLicenseNo_AddAdvLicDetails"
+                               placeholder="Enter License Number..." />
+                    </div>
+
+                    <!-- IGST -->
+                    <div class="field">
+                        <label>IGST</label>
+                        <select id="ddlIGST_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- License Date -->
+                    <div class="field">
+                        <label>License Date</label>
+                        <input type="text"
+                               id="txtLicenseDate_AddAdvLicDetails"
+                               placeholder="Select license date..." />
+                    </div>
+
+                    <!-- License Type -->
+                    <div class="field">
+                        <label>License Type</label>
+                        <input type="text"
+                               id="txtLicenseType_AddAdvLicDetails"
+                               value="SPL.ADV.LIC."
+                               placeholder="Enter License Type..." />
+                    </div>
+
+                    <!-- CLA File Number -->
+                    <div class="field span-2">
+                        <label>CLA File Number</label>
+                        <input type="text"
+                               id="txtCLAFileNo_AddAdvLicDetails"
+                               placeholder="Enter CLA File Number..." />
+                    </div>
+
+                    <!-- CLA File Date -->
+                    <div class="field">
+                        <label>CLA File Date</label>
+                        <input type="text"
+                               id="txtCLAFileDate_AddAdvLicDetails"
+                               placeholder="Select CLA file date..." />
+                    </div>
+
+                    <!-- Port -->
+                    <div class="field">
+                        <label>Port of Regn.</label>
+                        <input type="text"
+                               id="txtPort_AddAdvLicDetails"
+                               placeholder="Enter Port..." />
+                    </div>
+
+                    <!-- CHA -->
+                    <div class="field">
+                        <label>CHA Name</label>
+                        <input type="text"
+                               id="txtCHAName_AddAdvLicDetails"
+                               placeholder="Enter CHA Name..." />
+                    </div>
+
+                    <!-- SION -->
+                    <div class="field">
+                        <label>SION / NORMS</label>
+                        <input type="text"
+                               id="txtSionNorms_AddAdvLicDetails"
+                               placeholder="Enter SION / Norms..." />
+                    </div>
+
+                    <!-- Chip -->
+                    <div class="field">
+                        <label>Ch19</label>
+                        <select id="ddlChip_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- Norms Fixed -->
+                    <div class="field">
+                        <label>Norms Fixed</label>
+                        <select id="ddlNormsFixed_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- Norms Fixed Date -->
+                    <div class="field">
+                        <label>Norms Fixed Date</label>
+                        <input type="text"
+                               id="txtNormsFixedDate_AddAdvLicDetails"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <!-- Adv Fixation Applied -->
+                    <div class="field">
+                        <label>Adv. Fixation Applied</label>
+                        <select id="ddlAdvFixationApplied_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- Date Applied -->
+                    <div class="field">
+                        <label>Date Applied</label>
+                        <input type="text"
+                               id="txtDateApplied_AddAdvLicDetails"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <!-- Fixed -->
+                    <div class="field">
+                        <label>Fixed</label>
+                        <select id="ddlFixed_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- Fixed Date -->
+                    <div class="field">
+                        <label>Fixed Date</label>
+                        <input type="text"
+                               id="txtFixedDate_AddAdvLicDetails"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <!-- Meeting No -->
+                    <div class="field">
+                        <label>Meeting No.</label>
+                        <input type="text"
+                               id="txtMeetingNo_AddAdvLicDetails"
+                               placeholder="Enter Meeting No..." />
+                    </div>
+
+                    <!-- HQ File Number -->
+                    <div class="field span-2">
+                        <label>H.Q. File Number</label>
+                        <input type="text"
+                               id="txtHQFileNo_AddAdvLicDetails"
+                               placeholder="Enter H.Q. File Number..." />
+                    </div>
+
+                    <!-- License Status -->
+                    <div class="field">
+                        <label>License Status</label>
+                        <input type="text"
+                               id="txtLicenseStatus_AddAdvLicDetails"
+                               placeholder="Enter License Status..." />
+                    </div>
+
+                    <!-- Import Complete -->
+                    <div class="field">
+                        <label>Imp. Complete</label>
+                        <select id="ddlImportComplete_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- Import Complete Date -->
+                    <div class="field">
+                        <label>Imp. Complete Date</label>
+                        <input type="text"
+                               id="txtImportCompleteDate_AddAdvLicDetails"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <!-- License Recd Back On -->
+                    <div class="field">
+                        <label>Lic. Recd Back On</label>
+                        <input type="text"
+                               id="txtLicenseRecdBackOn_AddAdvLicDetails"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <!-- Surr Filed Date -->
+                    <div class="field">
+                        <label>Surr. Filed Date</label>
+                        <input type="text"
+                               id="txtSurrFiledDate_AddAdvLicDetails"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <!-- Surr Rcvd Date -->
+                    <div class="field">
+                        <label>Surr. Rcvd Date</label>
+                        <input type="text"
+                               id="txtSurrRcvdDate_AddAdvLicDetails"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <!-- Order Status -->
+                    <div class="field span-2">
+                        <label>Order Status</label>
+                        <input type="text"
+                               id="txtOrderStatus_AddAdvLicDetails"
+                               placeholder="Enter Order Status..." />
+                    </div>
+
+                    <!-- Balance To Be Shipped -->
+                    <div class="field">
+                        <label>Bal. to be Shipped</label>
+                        <select id="ddlBalToBeShipped_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- Duty Ready Payment -->
+                    <div class="field">
+                        <label>Duty Ready Payment</label>
+                        <select id="ddlDutyReadyPayment_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- Excess -->
+                    <div class="field">
+                        <label>Excess</label>
+                        <input type="text"
+                               id="txtExcess_AddAdvLicDetails"
+                               placeholder="Enter Excess..." />
+                    </div>
+
+                    <!-- Duty Paid -->
+                    <div class="field">
+                        <label>Duty Paid</label>
+                        <select id="ddlDutyPaid_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- Duty Paid On -->
+                    <div class="field">
+                        <label>Duty Paid On</label>
+                        <input type="text"
+                               id="txtDutyPaidOn_AddAdvLicDetails"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <!-- Confirmed By Merchant -->
+                    <div class="field">
+                        <label>Confirm By Merchant</label>
+                        <select id="ddlConfirmByMerchant_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- Mail Sent Date -->
+                    <div class="field">
+                        <label>Mail Sent Date</label>
+                        <input type="text"
+                               id="txtMailSentDate_AddAdvLicDetails"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <!-- Time -->
+                    <div class="field">
+                        <label>Time</label>
+                        <input type="text"
+                               id="txtTime_AddAdvLicDetails"
+                               placeholder="Enter Time..." />
+                    </div>
+
+                    <!-- Merchant -->
+                    <div class="field">
+                        <label>Merchant</label>
+                        <input type="text"
+                               id="txtMerchant_AddAdvLicDetails"
+                               placeholder="Enter Merchant..." />
+                    </div>
+
+                    <!-- Redemption Filed -->
+                    <div class="field">
+                        <label>Redemption Filed</label>
+                        <select id="ddlRedemptionFiled_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- Redemption Filed Date -->
+                    <div class="field">
+                        <label>Redemption Filed Date</label>
+                        <input type="text"
+                               id="txtRedemptionFiledDate_AddAdvLicDetails"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <!-- Deficiency Reason -->
+                    <div class="field span-2">
+                        <label>Deficiency Reason</label>
+                        <input type="text"
+                               id="txtDeficiencyReason_AddAdvLicDetails"
+                               placeholder="Enter Deficiency Reason..." />
+                    </div>
+
+                    <!-- Redemption Received -->
+                    <div class="field">
+                        <label>Redemption Rcvd.</label>
+                        <select id="ddlRedemptionRcvd_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- Redemption Received Date -->
+                    <div class="field">
+                        <label>Redemption Rcvd. Date</label>
+                        <input type="text"
+                               id="txtRedemptionRcvdDate_AddAdvLicDetails"
+                               placeholder="Select date..." />
+                    </div>
+                    <div class="field">
+                        <label>Bond Type</label>
+                        <input type="text"
+                               id="txtbondtype_AddAdvLicDetails"
+                               placeholder="Enter Bond Type....." />
+                    </div>
+                    <div class="field">
+                        <label>Bond No</label>
+                        <input type="text"
+                               id="txtbondno_AddAdvLicDetails"
+                               placeholder="Enter Bond No....." />
+                    </div>
+
+
+                    <!-- Bond Registered -->
+                    <div class="field">
+                        <label>Bond Registered</label>
+                        <select id="ddlBondRegistered_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- Bond Registered Date -->
+                    <div class="field">
+                        <label>Bond Registered Date</label>
+                        <input type="text"
+                               id="txtBondRegisteredDate_AddAdvLicDetails"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <!-- Bond Cancel Filed -->
+                    <div class="field">
+                        <label>Bond Cancel Filed</label>
+                        <select id="ddlBondCancelFiled_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- Bond Cancel Filed Date -->
+                    <div class="field">
+                        <label>Bond Cancel Filed Date</label>
+                        <input type="text"
+                               id="txtBondCancelFiledDate_AddAdvLicDetails"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <!-- Bond Cancelled -->
+                    <div class="field">
+                        <label>Bond Cancelled</label>
+                        <select id="ddlBondCancelled_AddAdvLicDetails">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <!-- Bond Cancelled Date -->
+                    <div class="field">
+                        <label>Bond Cancelled Date</label>
+                        <input type="text"
+                               id="txtBondCancelledDate_AddAdvLicDetails"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <!-- Bond Status -->
+                    <div class="field span-2">
+                        <label>Bond Status</label>
+                        <input type="text"
+                               id="txtBondStatus_AddAdvLicDetails"
+                               placeholder="Enter Bond Status..." />
+                    </div>
+
+                    <!-- Additional Status / Remarks -->
+                    <div class="field span-2">
+                        <label>Remarks</label>
+                        <input type="text"
+                               id="txtRemarks_AddAdvLicDetails"
+                               placeholder="Enter Remarks..." />
+                    </div>
+
+                </div>
+                <div class="d-flex justify-content-end mt-2 g-2">
+                     <button type="button"
+                            class="btn btn-primary btn-sm me-2"
+                            id="btnImport">
+                        <i class="fa-solid fa-file-import me-1"></i>
+                        Import Detail
+                    </button>
+
+                 <button type="button"
+                         class="btn btn-primary btn-sm me-2"
+                         id="btnExport">
+                        <i class="fa-solid fa-file-export me-1"></i>
+                        Export
+                    </button>
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+                </div>
+        </section>
+               
+    </div>
+</div>
+@* import modal open for the button click of import   *@
+<div class="modal fade"
+     id="addMenuModalImport"
+     tabindex="-1"
+     aria-labelledby="addMenuModalLabelImport"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-xxl">
+
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabelImport">
+                        Import Table Details
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="modal-body px-2">
+
+                <div class="card-body">
+
+                    <div class="table-wrap">
+
+                        <table id="tblImportDetailModal_AdvLicDetails"
+                               class="w-100">
+
+                            <thead>
+                                <tr>
+                                    <th>Buyer</th>
+                                    <th>Style</th>
+                                    <th>Wash Care Content</th>
+                                    <th>Tag Content</th>
+                                    <th>GSM</th>
+                                    <th>Key No</th>
+                                    <th>Itchs</th>
+                                    <th>Grmt Qty</th>
+                                    <th>UOM</th>
+                                    <th>Fabric Qty</th>
+                                    <th>CIF Inr</th>
+                                    <th>CIF Curr</th>
+                                    <th>Supplier</th>
+                                    <th>Imp Sl</th>
+                                    <th>Norms Fix</th>
+                                    <th>Norms Fix Dt</th>
+                                    <th>Import Grup</th>
+                                    <th>Suppl dt</th>
+                                    <th>Norms App</th>
+                                    <th>Norms App Dt</th>
+                                    <th>Norms Amt</th>
+                                    <th>Norms Amt Dt</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tblbodyImportDetal_AdvLicDetails">
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveImportDetail">
+                    Save
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@* edit pa open in import button table edit  *@
+
+<div class="modal fade" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                        Advance License Details edit
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+          <div class="modal-body px-2">
+                 @await Html.PartialAsync("_AdvanceLicensceDetailsAdd")
+        </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* export modal open click pa export button  *@
+<div class="modal fade"
+     id="addMenuModalExport"
+     tabindex="-1"
+     aria-labelledby="addMenuModalLabelExport"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-xxl">
+
+        <div class="modal-content modal-box">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabelExport">
+                        Export Table Details
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+
+            <!-- BODY -->
+            <div class="modal-body px-2">
+
+                <div class="card-body">
+
+                    <div class="table-wrap">
+
+                        <table id="tblAdvExport_AdvLicDetails"
+                               class="w-100">
+
+                            <thead>
+                                <tr>
+                                    <th>Style</th>
+                                    <th>Key Number</th>
+                                    <th>Buyer</th>
+                                    <th>Garment</th>
+                                    <th>Qty</th>
+                                    <th>GSM</th>
+                                    <th>Eitchs</th>
+                                    <th>Fob INR</th>
+                                    <th>Fob Currency</th>
+                                    <th>Lic S.No</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tblbodyAdvExport_AdvLicDetails">
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- BODY END -->
+
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveExport">
+
+                    <i class="fa-solid fa-floppy-disk me-1"></i>
+                    Save
+
+                </button>
+
+            </div>
+            <!-- FOOTER END -->
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="~/js/pages/importsfabric/advance_licensce_details.js" asp-append-version="true"></script>

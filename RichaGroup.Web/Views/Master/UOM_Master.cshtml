@@ -1,0 +1,164 @@
+﻿@{
+	ViewData["Title"] = "UOM Master";
+	ViewData["Heading"] = "UOM Master";
+}
+
+<div class="bd_mainContainer">
+	<div class="page">
+
+	
+		<section class="card">
+
+			<!-- HEADER -->
+			<div class="card-head">
+
+				<div>
+					<span class="tick"></span>
+					<h2 class="mt-2" id="txtHeaderMain">UOM Master</h2>
+				</div>
+
+				<div class="d-flex gap-2">
+					<div class="d-flex gap-2">
+						@await Html.PartialAsync("Components/_CheckBoxComponent")
+						@await Html.PartialAsync("Components/_UploadAndViewButtons")
+						<button class="btn btn-primary btn-sm"
+								id="btnAdd">
+							＋ Add
+						</button>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="card-body">
+
+				<div class="table-wrap table-responsive" style="max-height:790px; overflow-y:auto !important;">
+					<table id="tblUOMMaster" class="display" style="width:100%; height:100%">
+						<thead>
+							<tr>
+								<th style="width:50px !important;">Action</th>
+								<th>Unit of Msr</th>
+								<th>Description</th>
+								<th  style="text-align:right !important;">Conv . for Volume Weight</th>
+								<th  style="text-align:right !important;">Conv. for volumne CBM</th>
+
+							</tr>
+						</thead>
+						<tbody id="tblbodyUOM_Master" class="text-truncate"></tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+	</div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="addUomMasterModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-md">
+		<div class="modal-content modal-box">
+			<div class="modal-header">
+				<div class="modal-header-text">
+					<div class="modal-title" id="addMenuModalLabel">
+						UOM Master
+					</div>
+				</div>
+				<div class="d-flex gap-2">
+
+
+					<button type="button"
+							style=" "
+							class="modal-close"
+							data-bs-dismiss="modal"
+							aria-label="Close">
+						<svg viewBox="0 0 24 24">
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+					</button>
+				</div>
+				<div class="app-modal-header-actions">
+				</div>
+			</div>
+
+			<div class="modal-body p-2">
+			 
+				<div class="grid cols-3">
+
+					<div class="field">
+						<label for="txtUnitMsrUOM_Master" class="form-label">
+							Unit of Msr
+						</label>
+						<input type="text"
+							   id="txtUnitMsrUOM_Master" 
+							   placeholder="Enter Unit Msr" />
+					</div>
+					<div class="field span-2">
+						<label for="txtdescUOM_Master" class="form-label">
+							Description
+						</label>
+						<input type="text"
+							   id="txtdescUOM_Master" 
+							   placeholder="Enter description" />
+					</div>
+
+					<div class="field">
+						<label for="txtVolumnWtUOM_Master" class="form-label">
+							Volumn Weight
+						</label>
+						<input type="text"
+							   id="txtVolumnWtUOM_Master" 
+							   placeholder="Enter Volumne Weight" />
+					</div>
+					<div class="field">
+						<label for="txtVolumnCBMUOM_Master" class="form-label">
+							Volumn CBM
+						</label>
+						<input type="text"
+							   id="txtVolumnCBMUOM_Master" 
+							   placeholder="Enter Volumne CBM" />
+					</div>
+					
+
+				</div>
+
+			</div>
+
+			<div class="modal-footer">
+
+				<button type="button"
+						class="btn btn-primary btn-sm"
+						id="btnSave">
+
+					<svg width="14"
+						 height="14"
+						 viewBox="0 0 24 24"
+						 fill="none"
+						 stroke="currentColor"
+						 stroke-width="2"
+						 stroke-linecap="round"
+						 stroke-linejoin="round">
+
+						<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+						<polyline points="17 21 17 13 7 13 7 21"></polyline>
+						<polyline points="7 3 7 8 15 8"></polyline>
+
+					</svg>
+
+					Save
+				</button>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+<script src="~/js/pages/mastersjs/uom_master.js" asp-append-version="true"></script>

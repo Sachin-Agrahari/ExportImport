@@ -1,0 +1,224 @@
+﻿<!-- ==========================================
+     Expense Master Form
+========================================== -->
+
+<div class="p-3">
+
+    <!-- Expense Information -->
+    <div class="grid cols-4">
+
+        <!-- Serial No -->
+        <div class="field">
+            <label for="txtSerialNo" class="form-label">
+                Serial No.
+            </label>
+
+            <input type="text"
+                   id="txtSerialNo"
+                   class="form-control"
+                   placeholder="Enter Serial No" />
+        </div>
+
+        <!-- Bill No -->
+        <div class="field">
+            <label for="txtBillNo" class="form-label">
+                Bill No.
+                <span class="text-danger">*</span>
+            </label>
+
+            <input type="text"
+                   id="txtBillNo"
+                   class="form-control"
+                   placeholder="Enter Bill No" />
+        </div>
+
+        <!-- Bill Date -->
+        <div class="field">
+            <label for="txtBillDate" class="form-label">
+                Bill Date
+                <span class="text-danger">*</span>
+            </label>
+
+            <input type="text"
+                   id="txtBillDate"
+                   class="form-control"
+                   placeholder="Select Bill Date" />
+        </div>
+
+        <!-- CHA / Forwarder -->
+        <div class="field">
+            <label for="ddlCHAForwarder" class="form-label">
+                CHA / Forwarder
+                <span class="text-danger">*</span>
+            </label>
+
+            <select id="ddlCHAForwarder"
+                    class="form-select">
+
+                <option value="">--Choose One--</option>
+                <option value="CHA0569">CHA0569</option>
+                <option value="CHA0570">CHA0570</option>
+                <option value="FORWARDER001">FORWARDER001</option>
+
+            </select>
+        </div>
+
+        <!-- Payment Date -->
+        <div class="field">
+            <label for="txtPaymentDate" class="form-label">
+                Payment Date
+            </label>
+
+            <input type="text"
+                   id="txtPaymentDate"
+                   class="form-control"
+                   placeholder="Select Payment Date" />
+        </div>
+
+        <!-- Cheque No -->
+        <div class="field">
+            <label for="txtChequeNo" class="form-label">
+                Cheque No
+            </label>
+
+            <input type="text"
+                   id="txtChequeNo"
+                   class="form-control"
+                   placeholder="Enter Cheque No" />
+        </div>
+
+        <!-- Cheque Date -->
+        <div class="field">
+            <label for="txtChequeDate" class="form-label">
+                Cheque Date
+            </label>
+
+            <input type="text"
+                   id="txtChequeDate"
+                   class="form-control"
+                   placeholder="Select Cheque Date" />
+        </div>
+
+        <!-- Bill Amount -->
+        <div class="field">
+            <label for="txtBillAmount" class="form-label">
+                Bill Amount
+                <span class="text-danger">*</span>
+            </label>
+
+            <input type="text"
+                   id="txtBillAmount"
+                   class="form-control"
+                   placeholder="Enter Bill Amount" />
+        </div>
+
+        <!-- Expense Type -->
+        <div class="field">
+            <label for="ddlExpenseType" class="form-label">
+                Expense Type
+            </label>
+
+            <select id="ddlExpenseType" class="form-select"> 
+                <option value="">--Choose One--</option>
+                <option value="AIR FREIGHT DOMESTIC"> AIR FREIGHT DOMESTIC </option>
+                <option value="CHA CHARGES"> CHA CHARGES </option>
+                <option value="OTHER"> OTHER </option> 
+            </select>
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         Invoice Details
+    =========================================== -->
+
+    <div class="mt-4">
+
+        <div class="section-title mb-3">
+            Invoice Details
+        </div>
+
+        <div class="grid cols-5 align-items-end">
+
+            <!-- Invoice No -->
+            <div class="field">
+                <label for="txtInvoiceNo" class="form-label">
+                    Invoice No
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="text"
+                       id="txtInvoiceNo"
+                       class="form-control"
+                       placeholder="Enter Invoice No" />
+            </div>
+
+            <!-- Quantity -->
+            <div class="field">
+                <label for="txtQuantity" class="form-label">
+                    Quantity
+                </label>
+
+                <input type="text"
+                       id="txtQuantity"
+                       class="form-control"
+                       placeholder="Enter Quantity" />
+            </div>
+
+            <!-- Invoice Amount -->
+            <div class="field">
+                <label for="txtInvoiceAmount" class="form-label">
+                    Invoice Amount
+                </label>
+
+                <input type="text"
+                       id="txtInvoiceAmount"
+                       class="form-control"
+                       placeholder="Enter Invoice Amount" />
+            </div>
+
+            <!-- Amount -->
+            <div class="field">
+                <label for="txtAmount" class="form-label">
+                    Amount
+                </label>
+
+                <input type="text"
+                       id="txtAmount"
+                       class="form-control"
+                       placeholder="Enter Amount" />
+            </div>
+
+            <!-- Add Button -->
+            <div class="field">
+                <button type="button"
+                        class="btn btn-primary btn-sm w-auto"
+                        id="btnAddInvoice">
+                    ＋ Add
+                </button>
+            </div>
+
+        </div> 
+
+        <!-- Invoice Details Table -->
+        <div class="table-wrap mt-3"> 
+            <div class="table-responsive"> 
+                <table id="tblInvoiceDetails" class="table table-bordered table-sm align-middle mb-0" style="width:100%"> 
+                    <thead class="table-light"> 
+                        <tr>
+                            <th style="width: 80px;">Action</th>
+                            <th class="text-center">  S.No. </th> 
+                            <th> Invoice No </th> 
+                            <th class="text-end"> Quantity </th>
+                            <th class="text-end"> Invoice Amount </th> 
+                            <th class="text-end"> Amount </th> 
+                        </tr> 
+                    </thead> 
+                    <tbody id="tblbodyInvoiceDetails">
+                    </tbody>  
+                </table> 
+            </div> 
+        </div> 
+    </div> 
+</div>

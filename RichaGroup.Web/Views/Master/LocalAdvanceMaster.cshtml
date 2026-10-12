@@ -1,0 +1,278 @@
+﻿@{
+	ViewData["Title"] = "Local Advance Master";
+}
+
+<div class="bd_mainContainer">
+    <div class="page">
+
+       
+        <section class="card">
+
+            <!-- HEADER -->
+            <div class="card-head">
+
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Local Advance Master</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <div class="d-flex gap-2">
+                        @await Html.PartialAsync("Components/_CheckBoxComponent")
+                        @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                        <button class="btn btn-primary btn-sm"
+                                id="btnAdd">
+                            ＋ Add
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="card-body">
+
+                <div class="table-wrap">
+                    <table id="tblLocalMaster" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width:50px !important;">Action</th>
+                                <th style="width:50px !important; text-align:right !important;">S.No</th>
+                                <th style=" text-align:right !important;">Advance Number</th>
+                                <th>Buyer Name</th>
+                                <th>Status</th>
+                                <th>Manual Adjustment</th>
+                                <th>Invoice Adjustment</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblbodyLocalMaster" class="text-truncate"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade" id="addLocalAdvanceModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addMenuModalLabel">
+                        Local Advance Master
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    @*                     @await Html.PartialAsync("Components/_UploadAndViewButtons") *@
+                    <button type="button"
+                            style=" "
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+
+                </div>
+                <div class="app-modal-header-actions">
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+
+               
+                    <div class="grid cols-4">
+
+                        <div class="field">
+
+                            <label for="txtAdvanceNumber" class="form-label">
+                                @* <span class="text-danger">*</span> *@
+                                Advance Number
+                            </label>
+
+
+                            <input type="text"
+                                   id="txtAdvanceNumber"
+                                   class="form-control"
+                                   placeholder="Enter Advance Number" />
+
+
+                        </div>
+
+                        <div class="field">
+
+                            <label for="txtDate" class="form-label">
+
+                                Date
+                                <span class="text-danger">*</span>
+                            </label>
+
+
+                            <input type="text"
+                                   id="txtDate"
+                                   class="form-control"
+                                   placeholder="Select Date" />
+
+
+                        </div>
+
+                        <div class="field">
+
+                            <label for="ddlbuyerName" class="form-label">
+                                Buyer Name
+                            </label>
+
+                            <select id="ddlbuyerName"
+                                    class="form-select">
+
+                                <option value="">--Choose One--</option>
+                                <option value="3">3</option>
+                                <option value="34">34</option>
+                                <option value="35">35</option>
+
+                            </select>
+
+                        </div>
+                        <div class="field">
+
+                            <label for="txtAccountNumber" class="form-label">
+
+                                Account Number
+                                <span class="text-danger">*</span>
+                            </label>
+
+
+                            <input type="text"
+                                   id="txtAccountNumber"
+                                   class="form-control"
+                                   placeholder="Enter Account Number" />
+
+
+                        </div>
+                        <div class="field">
+
+                            <label for="txtManualAdjustment" class="form-label">
+                                @* <span class="text-danger">*</span> *@
+                                Manual Adjustment
+                            </label>
+
+
+                            <input type="text"
+                                   id="txtManualAdjustment"
+                                   class="form-control"
+                                   placeholder="Enter Manual Adjustment" />
+
+
+                        </div>
+                        <div class="field">
+
+                            <label for="txtInvoiceAdjustment" class="form-label">
+                                @* <span class="text-danger">*</span> *@
+                                Invoice Adjustment
+                            </label>
+
+
+                            <input type="text"
+                                   id="txtInvoiceAdjustment"
+                                   class="form-control"
+                                   placeholder="Enter Invoice Adjustment" />
+
+
+                        </div>
+                        <div class="field">
+
+                            <label for="txtBalanceAmount" class="form-label">
+                                @* <span class="text-danger">*</span> *@
+                                Balance Amount
+                            </label>
+
+
+                            <input type="text"
+                                   id="txtBalanceAmount"
+                                   class="form-control"
+                                   placeholder="Enter Balance Amount" />
+
+
+                        </div>
+                        <div class="field">
+
+                            <label for="txtremarks" class="form-label">
+                                @* <span class="text-danger">*</span> *@
+                                Remarks
+                            </label>
+
+
+                            <input type="text"
+                                   id="txtremarks"
+                                   class="form-control"
+                                   placeholder="Enter Remarks" />
+
+
+                        </div>
+
+
+
+                        <div class="field">
+
+                            <label for="ddlLocation" class="form-label">
+
+                                Location
+                                <span class="text-danger">*</span>
+                            </label>
+
+
+                            <select id="ddlLocation"
+                                    class="form-select">
+
+                                <option value="">--Choose One--</option>
+                                <option value="Gurugram">Gurgram</option>
+                                <option value="Mumbai">Mumbai</option>
+                                <option value="Goa">Goa</option>
+
+                            </select>
+
+
+                        </div>
+                    </div>
+                
+            </div>
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/js/pages/mastersjs/localadvancemaster.js" asp-append-version="true"></script>

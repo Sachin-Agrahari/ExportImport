@@ -1,0 +1,773 @@
+﻿@{
+    ViewData["Title"] = "Advances Payment Received";
+    ViewData["Heading"] = "Advances Payment Received";
+}
+
+<style>
+
+.sum-tile {
+    background:linear-gradient(to bottom, var(--teal) 0%, rgba(119, 172, 240, 0.85) 100%) !important;
+    border:1px solid var(--teal);
+    border-radius: 12px;
+    color: #fff;
+    padding: 12px 18px;
+    min-width: 170px;
+}
+.sum-tile .lbl {
+    font-size: .88rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--teal-dark);
+    margin-bottom: 4px;
+}
+.sum-tile.accent b {
+    color: #5fd4c4;
+}
+</style>
+
+<div class="bd_mainContainer">
+
+    <div class="page">  
+     <!-- ADVANCE DETAILS -->
+        <section class="card">
+
+            <div class="card-head">
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Adv Payment Recvd</h2>
+                </div>
+
+
+                <div class="d-flex gap-2">
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave"
+                            title="Save">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+
+                   @*  <button type="button"
+                            class="btn btn-cancel-custom"
+                            id="btnCancel">
+                        ✕ Cancel
+                    </button> *@
+
+                    <button class="btn btn-outline-danger btn-sm" style="padding:0px 10px" id="btnBack">
+                        ← Back
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="grid cols-5">
+
+                    <div class="field">
+                        <label class="form-label">Advance No.</label>
+                        <input type="text"
+                               id="txtAdvanceNo_AdvPaymentRecvd"
+                               class="form-control"
+                               placeholder="Enter Advance No..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Date</label>
+                        <input type="text" id="txtDate_AdvPaymentRecvd" class="form-control" placeholder="Select Date..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Buyer</label>
+                        <select id="ddlBuyer_AdvPaymentRecvd" class="form-select select2-field">
+                            <option value="">Select Buyer</option>
+                            <option value="AEO">AEO</option>
+                            <option value="J.CREW">J. CREW</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Amount</label>
+                        <input type="text" id="txtAmount_AdvPaymentRecvd" class="form-control" placeholder="Enter Amount..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Currency</label>
+                        <select id="ddlCurrency_AdvPaymentRecvd" class="form-select select2-field">
+                            <option value="">Select Currency</option>
+                            <option value="US$">US$</option>
+                            <option value="EURO">EURO</option>
+                            <option value="UK£">UK£</option>
+                            <option value="INR">INR</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Avg. Rate</label>
+                        <input type="text" id="txtAvgRate_AdvPaymentRecvd" class="form-control" placeholder="Enter Average Rate..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Amount INR</label>
+                        <input type="text" id="txtAmountINR_AdvPaymentRecvd" class="form-control" placeholder="Amount INR..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">BOE Adjust.</label>
+                        <input type="text" id="txtBOEAdjust_AdvPaymentRecvd" class="form-control" placeholder="BOE Adjustment..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Balance Amt.</label>
+                        <input type="text" id="txtBalanceAmt_AdvPaymentRecvd" class="form-control" placeholder="Balance Amount..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">IRM Number</label>
+                        <input type="text" id="txtIRMNo_AdvPaymentRecvd" class="form-control" placeholder="Enter IRM Number..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">IRM Date</label>
+                        <input type="text" id="txtIRMDate_AdvPaymentRecvd" class="form-control" placeholder="Select IRM Date..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Credit Advice No.</label>
+                        <input type="text" id="txtCreditAdviceNo_AdvPaymentRecvd" class="form-control" placeholder="Credit Advice No..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Advice Date</label>
+                        <input type="text" id="txtAdviceDate_AdvPaymentRecvd" class="form-control" placeholder="Select Advice Date..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Payment Against Export</label>
+                        <select id="ddlPaymentAgainstExport_AdvPaymentRecvd" class="form-select select2-field">
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Option</label>
+                        <input type="text" id="txtOption_AdvPaymentRecvd" class="form-control" value="INVOICE NO" placeholder="Enter Option..." />
+                    </div>
+ 
+                    <div class="field">
+                        <label class="form-label">Invoice Dtl</label>
+
+                        <div class="d-flex gap-2">
+                            <select id="ddlInvoiceDtl_AdvPaymentRecvd" class="form-select select2-field flex-grow-1">
+                                <option value="">Select</option>
+                                <option value="Y">Y</option>
+                                <option value="N">N</option>
+                            </select>
+
+                            <button type="button"
+                                    class="btn btn-primary btn-sm"
+                                    id="addInvDtls">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- MANUAL / EXTRA RADIO -->
+                    <div class="field"> 
+                        <label class="form-label">Adjustment Type</label> 
+                        <div class="d-flex justify-content-start align-item-center mt-3"> 
+                            <label class="adjustment-radio me-3">
+                                <input type="radio" name="adjustmentType_AdvPaymentRecvd" id="rdoManualAdj_AdvPaymentRecvd" value="Manual" /> 
+                                <span>Manual Adjustment</span>
+                            </label>
+
+                            <label class="adjustment-radio">
+                                <input type="radio" name="adjustmentType_AdvPaymentRecvd" id="rdoExtraAdj_AdvPaymentRecvd" value="Extra" /> 
+                                <span>Extra Adjustment</span>
+                            </label> 
+                        </div> 
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Adjustment Amount</label> 
+                        <input type="text" id="txtAdjustmentAmount_AdvPaymentRecvd" class="form-control" value="0.00" placeholder="Adjustment Amount..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Bank</label> 
+                        <input type="text" id="txtBank_AdvPaymentRecvd" class="form-control" value="HDFC BANK-BNK05" placeholder="Enter Bank..." />
+                    </div>
+
+                    <div class="field d-flex align-items-end">
+
+                        <button type="button"
+                                class="btn btn-primary btn-sm"
+                                id="btnAdd_AdvPaymentRecvd">
+                            Add
+                        </button>
+
+                    </div>
+                </div>
+             
+               <div class="table-wrap mt-2">
+
+                    <table id="tbl_AdvPaymentRecvd"
+                           class="display table table-sm table-bordered text-nowrap mb-0"
+                           style="min-width:1250px; width:100%;">
+                
+                        <thead>
+                
+                            <tr class="groups">
+                                <th colspan="8"></th>
+                
+                                <th colspan="2" class="gline">
+                                    Received
+                                </th>
+                
+                                <th colspan="2" class="gline">
+                                    Manual Adjustment
+                                </th>
+                
+                                <th colspan="2" class="gline">
+                                    Extra Adjustment
+                                </th>
+                            </tr>
+                
+                            <tr>
+                                <th>Action</th>
+                                <th>S.No</th>
+                                <th class="r">Cnv. Rate</th>
+                                <th class="r">Amount</th>
+                                <th>TT Number</th>
+                                <th class="c">Y</th>
+                                <th class="c">FW</th>
+                                <th class="r">TRW</th>
+                               
+                
+                                <th class="r">Amount</th>
+                                <th>Date</th>
+                
+                                <th>Date</th>
+                                <th class="r">Amount</th>
+                
+                                <th>Date</th>
+                                <th class="r">Amount</th>
+                            </tr>
+                
+                        </thead>
+                
+                        <tbody id="tblbody_AdvPaymentRecvd"></tbody>
+                
+                    </table>
+                
+                </div>
+
+                 <div class="d-flex g-3 justify-content-end flex-wrap mt-3" style="gap: 14px;">
+                         <div class="sum-tile"><div class="lbl">Advance Received</div><b>0.00</b></div>
+                         <div class="sum-tile"><div class="lbl">Tagged Invoice</div><b>0.00</b></div>
+                       
+                         <div class="sum-tile accent"><div class="lbl">Extra Amount</div><b>0.00</b></div>
+                           <div class="sum-tile"><div class="lbl">Bank Charges</div><b>0.00</b></div>
+                 </div>
+                @*     <thead>
+                        <tr>
+                            <th>Conv. Rate</th>
+                            <th>Amount</th>
+                            <th>TT Number</th>
+                            <th>Y</th>
+                            <th>F / W. Trx</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tblbodyAdvPaymentRecvd">
+                    </tbody>
+                         
+                </table> *@
+            
+            </div>
+        </section>
+         
+        @* <section class="card">
+            <div class="card-head">
+                Manual Adjustment
+            </div>
+            <div class="card-body" style="padding: 9px 22px 11px !important;">
+
+                <div class="grid cols-4">
+
+                    <div class="field">
+                        <label class="form-label">Date</label>
+                        <input type="text" id="txtManualAdjDate1" class="form-control manual-adjustment-date form-Flatdate" placeholder="Select Date..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Amount</label>
+                        <input type="text" id="txtManualAdjAmt1" class="form-control  text-end" value="0.00" placeholder="0.00" />
+                    </div>
+                     
+                    <div class="field">
+                        <label class="form-label">Date</label>
+                        <input type="text" id="txtManualAdjDate2" class="form-control manual-adjustment-date form-Flatdate" placeholder="Select Date..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Amount</label>
+                        <input type="text" id="txtManualAdjAmt2" class="form-control  text-end" value="0.00" placeholder="0.00" />
+                    </div>
+                     
+                </div>
+                
+                <div class="grid cols-2 mt-3">
+                    <div class="field"></div>
+                    <div class="field">
+                        <div class="grid cols-3">
+                             
+                            <div class="field d-flex justify-content-end">
+                                <label class="form-label">
+                                    Advance Received : <span class="fw-bold" id="txtExtraAmount_AdvPaymentRecvd">43064.40</span>
+                                </label> 
+                            </div>
+
+                            <div class="field d-flex justify-content-end">
+                                <label class="form-label"> 
+                                    Tagged Invoice : <span class="fw-bold" id="txtExtraAmount_AdvPaymentRecvd">43089.40</span>
+                                </label> 
+                            </div>
+
+                            <div class="field d-flex justify-content-end">
+                                <label class="form-label"> 
+                                    Extra Amount : <span class="fw-bold" id="txtExtraAmount_AdvPaymentRecvd">-25.00</span>
+                                </label> 
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section> *@
+  
+    </div>
+</div>
+
+
+<div class="modal fade" id="addInvoiceDtls" tabindex="-1" aria-labelledby="addInvoiceDtls" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addInvoiceDtlsLabel">
+                        Add Invoice Details
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+
+                    <button type="button"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                <div class="invoice-details-table-wrap">
+
+                    <table id="tblInvoiceDetails_AdvPaymentRecvd"
+                           class="table table-sm table-bordered align-middle mb-0">
+
+                        <thead>
+                            <tr>
+                                <th style="width:80px;">S. No</th>
+                                <th>Inv_No</th>
+                                <th class="text-end">Inv Amt</th>
+                                <th style="width:80px;">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tblbodyInvoiceDetails_AdvPaymentRecvd">
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade"
+     id="editAdvPaymentModal"
+     tabindex="-1"
+     aria-labelledby="editAdvPaymentModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content modal-box">
+
+            <div class="modal-header">
+
+                <div class="modal-header-text">
+                    <div class="modal-title"
+                         id="editAdvPaymentModalLabel">
+                        Edit Advance Payment
+                    </div>
+                </div>
+
+                <button type="button"
+                        class="modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </button>
+
+            </div>
+
+
+            <div class="modal-body p-3">
+
+                <div class="row g-3">
+
+                    <!-- Cnv Rate -->
+                    <div class="col-md-3">
+                        <label for="txtAdv_CnvRate"
+                               class="form-label">
+                            Cnv. Rate
+                        </label>
+
+                        <input type="text"
+                               id="txtAdv_CnvRate"
+                               class="form-control">
+                    </div>
+
+
+                    <!-- Amount -->
+                    <div class="col-md-3">
+                        <label for="txtAdv_Amount"
+                               class="form-label">
+                            Amount
+                        </label>
+
+                        <input type="text"
+                               id="txtAdv_Amount"
+                               class="form-control">
+                    </div>
+
+
+                    <!-- TT Number -->
+                    <div class="col-md-3">
+                        <label for="txtAdv_TTNumber"
+                               class="form-label">
+                            TT Number
+                        </label>
+
+                        <input type="text"
+                               id="txtAdv_TTNumber"
+                               class="form-control">
+                    </div>
+
+
+                    <!-- Y -->
+                    <div class="col-md-3">
+                        <label for="ddlAdv_Y"
+                               class="form-label">
+                            Y
+                        </label>
+
+                        <select id="ddlAdv_Y"
+                                class="form-control">
+
+                            <option value="">Select</option>
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+
+                        </select>
+                    </div>
+
+
+                    <!-- FW -->
+                    <div class="col-md-3">
+                        <label for="ddlAdv_FW"
+                               class="form-label">
+                            FW
+                        </label>
+
+                        <select id="ddlAdv_FW"
+                                class="form-control">
+
+                            <option value="">Select</option>
+                            <option value="F">F</option>
+                            <option value="P">P</option>
+
+                        </select>
+                    </div>
+
+
+                    <!-- TRW -->
+                    <div class="col-md-3">
+                        <label for="txtAdv_TRW"
+                               class="form-label">
+                            TRW
+                        </label>
+
+                        <input type="text"
+                               id="txtAdv_TRW"
+                               class="form-control">
+                    </div>
+
+
+                    <!-- Received Amount -->
+                    <div class="col-md-3">
+                        <label for="txtAdv_ReceivedAmount"
+                               class="form-label">
+                            Received Amount
+                        </label>
+
+                        <input type="text"
+                               id="txtAdv_ReceivedAmount"
+                               class="form-control">
+                    </div>
+
+
+                    <!-- Received Date -->
+                    <div class="col-md-3">
+                        <label for="txtAdv_ReceivedDate"
+                               class="form-label">
+                            Received Date
+                        </label>
+
+                        <input type="text"
+                               id="txtAdv_ReceivedDate"
+                               class="form-control"
+                               placeholder="dd-mm-yyyy">
+                    </div>
+
+
+                    <!-- Manual Date -->
+                    <div class="col-md-3">
+                        <label for="txtAdv_ManualDate"
+                               class="form-label">
+                            Manual Adjustment Date
+                        </label>
+
+                        <input type="text"
+                               id="txtAdv_ManualDate"
+                               class="form-control"
+                               placeholder="dd-mm-yyyy">
+                    </div>
+
+
+                    <!-- Manual Amount -->
+                    <div class="col-md-3">
+                        <label for="txtAdv_ManualAmount"
+                               class="form-label">
+                            Manual Adjustment Amount
+                        </label>
+
+                        <input type="text"
+                               id="txtAdv_ManualAmount"
+                               class="form-control">
+                    </div>
+
+
+                    <!-- Extra Date -->
+                    <div class="col-md-3">
+                        <label for="txtAdv_ExtraDate"
+                               class="form-label">
+                            Extra Adjustment Date
+                        </label>
+
+                        <input type="text"
+                               id="txtAdv_ExtraDate"
+                               class="form-control"
+                               placeholder="dd-mm-yyyy">
+                    </div>
+
+
+                    <!-- Extra Amount -->
+                    <div class="col-md-3">
+                        <label for="txtAdv_ExtraAmount"
+                               class="form-label">
+                            Extra Adjustment Amount
+                        </label>
+
+                        <input type="text"
+                               id="txtAdv_ExtraAmount"
+                               class="form-control">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSaveAdvPayment">
+
+                    Save
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@* open a modal after select a f according to select ok *@
+<div class="modal fade"
+     id="advanceFModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Advance F Help</h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <table class="table table-bordered"
+                       id="tblAdvanceF">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Transaction No</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Rate</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Balance</th>
+                            <th>INR</th>
+                            <th>Contract No#</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tblbodyAdvanceF"></tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* after P then show this modal  *@
+
+<div class="modal fade"
+     id="advancePModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Advance P Help</h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <table class="table table-bordered"
+                       id="tblAdvanceP">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>PCFC No</th>
+                            <th>Transaction No</th>
+                            <th>Rate</th>
+                            <th>Due Date</th>
+                            <th>Balance Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tblbodyAdvanceP"></tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/pages/banking/advance_payment_recived.js" asp-append-version="true"></script>

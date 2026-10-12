@@ -1,0 +1,788 @@
+﻿@{
+    bool isGeneral = ViewBag.isGeneral;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="bd_mainContainer" id="route-po" data-po-type="@ViewBag.PoType">
+    <div class="page">
+
+      
+        <section class="card">
+
+            <div class="card-head">
+
+                <div class="d-flex flex-row">
+
+                    <h2 class="mt-2" id="txtHeaderMain">@(ViewBag.Title)</h2>
+                </div>
+               <div class="d-flex gap-2">
+
+                    <div class="d-flex gap-2">
+                        <span id="headerMode" class="badge rounded-pill text-bg-warning text-white p-auto m-auto fs-6">
+                            Edit Mode
+                        </span>
+                        <span id="headerStatusBadge" class="badge rounded-pill text-bg-success p-auto m-auto fs-6">
+                            Fresh
+                        </span>
+                       
+                        <div class="d-flex gap-2">
+                            @await Html.PartialAsync("Components/_CheckBoxComponent")
+                            @await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+                        </div>
+                        <!-- ADD -->
+                        <button type="button"
+                                class="btn btn-primary btn-sm "
+                                title="Add">
+
+                            <svg width="17" height="17"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round">
+
+                                <path d="M12 5v14" />
+                                <path d="M5 12h14" />
+
+                            </svg>
+
+                            <span>Add</span>
+                        </button>
+                        <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Save" id="btnSave">
+                            @* <img src="~/assets/icons/save.svg" alt="save-icon" /> *@
+                            <img src="~/assets/icon/save.svg" alt="save-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                            <span>Save</span>
+                        </button>
+
+                        <button class="btn btn-secondary btn-sm  d-flex flex-row align-center justify-content-center" title="Print" id="btnPrint">
+
+                            <img src="~/assets/icon/print.svg" alt="print-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                            <span>Print</span>
+                        </button>
+                     @*    <button class="btn-outline-danger btn-sm d-flex flex-row align-center justify-content-center" title="Refresh" id="btnClear">
+
+                            <img src="~/assets/icon/refresh.svg" alt="refresh-icon" class="w-50 h-50 white-icon" />
+                            <span>Refresh</span>
+                        </button> *@
+                    </div>
+
+                </div>
+
+            </div>
+ 
+
+            <div class="card-body">
+
+                <div class="grid cols-6">
+
+                    <!-- PURCHASE ORDER INFORMATION -->
+                    <div class="field">
+                        <label for="fabricModeSelect" class="form-label">Fabric</label>
+                        <select id="fabricModeSelect" class="form-select">
+                            <option value="process">Processing</option>
+                            <option value="Grey">Grey</option>
+                            @* <option value="pending">Pending</option> *@
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="purchaseTypeSelect" class="form-label">Purchase Type:</label>
+                        <select id="purchaseTypeSelect" class="form-select">
+                            <option value="imported">Imported</option>
+                            <option value="local">Local</option>
+                            @* <option value="indent">Indent</option> *@
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="statusSelect" class="form-label">Status:</label>
+
+                        <select id="statusSelect" class="form-select" disabled>
+                            <option value="fresh" selected>Fresh</option>
+                            <option value="process">ReProcessing</option>
+                            @* <option value="closed">Closed</option>
+                            <option value="cancelled">Cancelled</option> *@
+                        </select>
+                    </div>
+
+                    <div style="margin-left:auto;display:flex;gap:6px;align-items:center;">
+                        <button class="btn btn-primary d-flex align-items-center justify-content-start p-2" id="btnImportDetails">
+                            <img src="~/assets/icon/import.svg" class="white-icon" />
+                            <span class="mt-0">  Import Details </span>
+                        </button>
+                    </div>
+                </div>
+
+                <hr class="my-3 mt-3 rounded-4 text-primary">
+
+                <div class="grid cols-6 mt-0">
+                    <div class="col-12" style="margin-top:-5px">
+                        <div class="gap-1 d-flex align-items-center justify-content-start">
+                            <input type="checkbox" id="checkbox-PoNo" />
+                            <label class="form-label">PO No. <span class="text-danger">*</span></label>
+                        </div>
+
+                        <div class="field">
+                            <input type="text" id="poNumber" class="form-control" value="PI26-00889" readonly />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="importPoNumber" class="form-label">Import PO No.</label>
+                        <input type="text" id="importPoNumber" class="form-control" placeholder="Enter Import PO No...." />
+                    </div>
+                    <div class="field">
+                        <label for="orderDate" class="form-label">
+                            Order Date
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" id="orderDate" class="form-control form-Flatdate" placeholder="Select Order Date..." />
+                    </div>
+                    <div class="field">
+                        <label for="vendorSelect" class="form-label">
+                            Vendor
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select id="vendorSelect" class="form-select">
+                            <option value="">— Select Vendor —</option>
+                            <option value="1">SUDARSHAN BOOK DISTRIBUTORS (N)</option>
+                            <option value="2">ORIENT ACCESSORIES LTD</option>
+                            <option value="3">METRO GARMENT SUPPLIERS</option>
+                            <option value="4">NATIONAL TEXTILE CORP</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="ReqSelect" class="form-label">
+                            Req No
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <select id="ReqSelect" class="form-select">
+                            <option value="">4556</option>
+                            <option value="1">54345</option>
+                            <option value="2">2356</option>
+                            <option value="3">3789</option>
+                            <option value="4">43647</option>
+                        </select>
+                    </div>
+                    <div class="col-2 addButton">
+                        @{
+                            if (!isGeneral)
+                            {
+                                <button class="btn btn-primary btn-sm mt-3" id="btnQueryExe">
+                                    Execute
+                                </button>
+                            }
+                            else
+                            {
+                                <div class="card-header-right-group">
+                                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center mt-3 pt-2" id="btnAddItemInline">
+                                        <img src="~/assets/icon/plus.svg" class="white-icon" />
+                                        Add
+                                    </button>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+
+                <hr class="my-3 mt-3 rounded-4 text-primary">
+
+                <div class="grid cols-6">
+                    <div class="field">
+                        <label for="deliveryDate" class="form-label">Delivery Date <span class="text-danger">*</span></label>
+                        <input type="text" id="deliveryDate" class="form-control form-Flatdate"
+                               placeholder="Select delivery date..." />
+                    </div>
+                    <div class="field">
+                        <label for="endDate" class="form-label">End Date</label>
+                        <input type="text" id="endDate" class="form-control form-Flatdate"
+                               placeholder="Select End date..." />
+                    </div>
+                    <div class="field">
+                        <label for="poCoordinatorSelect" class="form-label">PO Coordinator <span class="text-danger">*</span></label>
+                        <select id="poCoordinatorSelect" class="form-select">
+                            <option value="kapil">KAPIL</option>
+                            <option value="rahul">RAHUL</option>
+                            <option value="priya">PRIYA</option>
+                            <option value="amit">AMIT</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="deliveryUnitSelect" class="form-label">Delivery At (Unit) <span class="text-danger">*</span></label>
+                        <select id="deliveryUnitSelect" class="form-select">
+                            <option value="unit239">UNIT-239</option>
+                            <option value="unit101">UNIT-101</option>
+                            <option value="unit145">UNIT-145</option>
+                            <option value="unit302">UNIT-302</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="ddlconcern_Person" class="form-label">Concern Person<span class="text-danger">*</span></label>
+                        <select id="ddlconcern_Person" class="form-select">
+                            <option value="akash">Akash</option>
+                            <option value="sachine">Sachine</option>
+                            <option value="nkhil">Nikhil</option>
+                            <option value="aman">Aman</option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="card">
+            <div class="card-head">
+
+                <div>
+                    <span class="tick"></span>
+                    <h2 class="mt-2">Fabric PO Details</h2>
+                </div>
+
+                <div class="d-flex gap-2">
+
+                    <div class="d-flex gap-2">
+                        @if (!isGeneral)
+                        {
+                            <button class="btn btn-primary btn-sm" id="btnBuyerPO">
+                                Buyer PO
+                            </button>
+
+                            <button class="btn btn-secondary btn-sm d-flex flex-row align-center justify-content-center" id="btnInstruction">
+
+                                <img src="~/assets/icon/info.svg" alt="info" class="w-100 h-100 white-icon me-1" />
+                                <span class="p-0"> Instruction </span>
+                            </button>
+
+                        }
+                        <button type="button" class="btn btn-primary btn-sm" title="Add">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 5v14" />
+                                <path d="M5 12h14" />
+                            </svg>
+                            <span>Add</span>
+                        </button>
+
+                        <button type="button" class="btn btn-primary btn-sm" title="@(isGeneral ? "Copy" : "Copy Row")">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 5v14" />
+                                <path d="M5 12h14" />
+                            </svg>
+                            <span>Copy</span>
+                        </button>
+
+                        <button type="button" class="btn btn-primary btn-sm" title="@(isGeneral ? "Delete" : "Delete Row")">
+                            <span>Delete</span>
+                        </button>
+                        <button type="button"
+                                class="btn btn-primary btn-sm"
+                                title="Refresh">
+
+                            <svg width="17" height="17"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round">
+
+                                <path d="M3 11a9 9 0 1 1 2.64 6.36" />
+                                <polyline points="3 3 3 11 11 11" />
+
+                            </svg>
+
+                            <span>Refresh</span>
+                        </button>
+                        <button type="button" id="btnSummaryChecker" class="btn btn-primary btn-sm" title="View">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 5v14" />
+                                <path d="M5 12h14" />
+                            </svg>
+                            <span>Summary Checker</span>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+                <div class="table-wrap">
+                    <table id="poTable" class="display table-design" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <input type="checkbox" id="selectAll" />
+                                </th>
+                                <th>Fabric</th>
+                                <th>Print</th>
+                                <th>Colour</th>
+                                <th>Quality</th>
+                                <th class="td-number">Total Required</th>
+                                <th class="td-number">Current Qty</th>
+                                <th>Delivery Date</th>
+                                <th class="td-number">Rate</th>
+                                <th>Req No.</th>
+                                <th>UOM</th>
+                                <th>Po Already</th>
+                                <th class="td-number">Extra %</th>
+                                <th class="td-number">Extra Qty</th>
+                                <th>Remark</th>
+                                <th>Style</th>
+                                <th>Buyer</th>
+                                <th>Item Supplier</th>
+                               
+                               
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
+<!-- ADD fabric MODAL - General only -->
+@if (isGeneral)
+{
+
+
+    <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content modal-box">
+                <div class="modal-header">
+                    <div class="modal-header-text">
+                        <div class="modal-title" id="addItemModalTitle">
+                            Add Fabric
+                        </div>
+                    </div>
+
+                    <div class="app-modal-header-actions">
+
+                        <button type="button"
+                                style="    margin-top: 12px;"
+                                class="modal-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="modal-body p-2">
+
+
+                    <div class="grid cols-4 mt-1">
+
+                        <div class="field">
+                            <label class="form-label">Buyer</label>
+                            <select id="buyerSelect" class="form-select">
+                                <option value="">— Select Buyer —</option>
+                                <option value="1">H&amp;M</option>
+                                <option value="2">ZARA</option>
+                                <option value="3">GAP INC</option>
+                                <option value="4">NEXT RETAIL</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Style</label>
+                            <select id="styleSelect" class="form-select">
+                                <option value="">— Select Style —</option>
+                                <option value="1">ST-2024-001</option>
+                                <option value="2">ST-2024-002</option>
+                                <option value="3">ST-2024-003</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Key No.</label>
+                            <select id="keyNoSelect" class="form-select">
+                                <option value="">— Select Key No. —</option>
+                                <option value="1">2024-001</option>
+                                <option value="2">2024-002</option>
+                                <option value="3">2024-003</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">E.D.P. No.</label>
+                            <select id="edpNoSelect" class="form-select">
+                                <option value="">— Select E.D.P. No. —</option>
+                                <option value="1">001</option>
+                                <option value="2">002</option>
+                                <option value="3">003</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">fabric <span class="req">*</span></label>
+                            <select id="modalfabricSelect" class="form-select">
+                                <option value="">— Select —</option>
+                                <option value="button">Button</option>
+                                <option value="zipper">Zipper</option>
+                                <option value="label">Label</option>
+                                <option value="thread">Thread</option>
+                                <option value="elastic">Elastic</option>
+                                <option value="tape">Tape</option>
+                                <option value="hook">Hook</option>
+                                <option value="velcro">Velcro</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Type <span class="req">*</span></label>
+                            <select id="modalTypeSelect" class="form-select">
+                                <option value="">— Select —</option>
+                                <option value="standard">Standard</option>
+                                <option value="premium">Premium</option>
+                                <option value="special">Special</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Size</label>
+                            <select id="modalSizeSelect" class="form-select">
+                                <option value="">— Select —</option>
+                                <option value="xs">XS</option>
+                                <option value="s">S</option>
+                                <option value="m">M</option>
+                                <option value="l">L</option>
+                                <option value="xl">XL</option>
+                                <option value="18L">18L</option>
+                                <option value="20MM">20MM</option>
+                                <option value="25MM">25MM</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Colour</label>
+                            <select id="modalColourSelect" class="form-select">
+                                <option value="">— Select —</option>
+                                <option value="BL9121">BL9121 Blue Heaven</option>
+                                <option value="GR5547">GR5547 Frosted Grey</option>
+                                <option value="GR7708">GR7708 Burnished Gold</option>
+                                <option value="RD1001">RD1001 Cherry Red</option>
+                                <option value="WH2020">WH2020 Pure White</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Concern Person</label>
+                            <select id="modalConcernPersonSelect" class="form-select">
+                                <option value="">— Select Person —</option>
+                                <option value="kapil">KAPIL</option>
+                                <option value="rahul">RAHUL</option>
+                                <option value="priya">PRIYA</option>
+                                <option value="amit">AMIT</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Rate</label>
+                            <input type="number" id="modalRateInput" class="form-control" min="0" step="1" placeholder="0" />
+                        </div>
+
+                        <div class="field">
+                            <label class="form-label">Current Quantity</label>
+                            <input type="number" id="modalCurrentQty" class="form-control" min="0" step="1" placeholder="0" />
+                        </div>
+
+                    </div>
+
+          
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-primary btn-sm"
+                            id="btnSave">
+
+                        <svg width="14"
+                             height="14"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+
+                        </svg>
+
+                        Save
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+
+<!-- IMPORT MODAL -->
+
+
+
+
+
+
+<div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="addimportModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="addimportModal">
+                        Import Details
+                    </div>
+                </div>
+
+                <div class="app-modal-header-actions">
+
+                    <button type="button"
+                            style="    margin-top: 12px;"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+               
+                <div class="grid cols-3 mt-3" style="gap:10px">
+                    <div class="field">
+                        <label class="form-label">Country of Origin</label>
+                        <select id="importCountry" class="form-select">
+                            <option value="CN">China</option>
+                            <option value="BD">Bangladesh</option>
+                            <option value="VN">Vietnam</option>
+                            <option value="IN">India</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Port of Entry</label>
+                        <input type="text" id="portOfEntry" class="form-control"
+                               placeholder="e.g. JNPT Mumbai" />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Shipment Date</label>
+                        <input type="text" id="shipmentDate" class="form-control form-Flatdate"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Bill of Lading No.</label>
+                        <input type="text" id="blNumber" class="form-control"
+                               placeholder="BL number..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Invoice No.</label>
+                        <input type="text" id="invoiceNo" class="form-control"
+                               placeholder="Invoice number..." />
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Customs Duty %</label>
+                        <input type="number" id="customsDuty" class="form-control"
+                               min="0" step="0.01" placeholder="0.00" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="SummaryCheckerModal" tabindex="-1" aria-labelledby="SummaryCheckerModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-box">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <div class="modal-title" id="SummaryCheckerModal">
+                        Summary Checker
+                    </div>
+                </div>
+
+                <div class="app-modal-header-actions">
+
+                    <button type="button"
+                            style="    margin-top: 12px;"
+                            class="modal-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body p-2" style="font-family: Arial, sans-serif; font-size: 13px; color: #000; width: 100%;">
+
+                <!-- Top Section: Summary Title -->
+                <div style="font-weight: bold; font-style: italic; font-size: 15px; margin-bottom: 2px;">Summary</div>
+
+                <!-- First Table: Summary -->
+                <table style="width: 100%; border-collapse: collapse; border: 2px solid #000; margin-bottom: 25px;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid #000; padding: 6px 8px; vertical-align: middle; text-align: left; width: 25%; font-weight: bold;">Item Code</th>
+                            <th style="border: 1px solid #000; padding: 6px 8px; vertical-align: middle; text-align: center;">Sizes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Row 1: BUNGEE CORD -->
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 6px 8px; vertical-align: middle; text-align: left; font-weight: bold;">BUNGEE CORD</td>
+                            <td style="border: 1px solid #000; padding: 0; vertical-align: middle; width: 75%;">
+                                <table style="width: 100%; border-collapse: collapse; margin: 0;">
+                                    <tr>
+                                        <td style="border-right: 1px solid #000; border-bottom: 1px solid #000; padding: 6px 8px; text-align: center; width: 15%; font-weight: bold;">COLOUR</td>
+                                        <td style="border-right: 1px solid #000; border-bottom: 1px solid #000; padding: 6px 8px; text-align: center; width: 15%;"></td>
+                                        <td style="border-bottom: 1px solid #000; padding: 6px 8px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: 1px solid #000; padding: 6px 8px; text-align: center;">- 2</td>
+                                        <td style="border-right: 1px solid #000; padding: 6px 8px; text-align: center;">40</td>
+                                        <td style="padding: 6px 8px;"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <!-- Row 2: ZIPPER NYLON -->
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 6px 8px; vertical-align: middle; text-align: left; font-weight: bold;">ZIPPER NYLON</td>
+                            <td style="border: 1px solid #000; padding: 0; vertical-align: middle;">
+                                <table style="width: 100%; border-collapse: collapse; margin: 0;">
+                                    <tr>
+                                        <td style="border-right: 1px solid #000; border-bottom: 1px solid #000; padding: 6px 8px; text-align: center; width: 15%; font-weight: bold;">COLOUR</td>
+                                        <td style="border-right: 1px solid #000; border-bottom: 1px solid #000; padding: 6px 8px; text-align: center; width: 15%; font-weight: bold;">27 CM</td>
+                                        <td style="border-bottom: 1px solid #000; padding: 6px 8px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: 1px solid #000; padding: 6px 8px; text-align: center;">- 2</td>
+                                        <td style="border-right: 1px solid #000; padding: 6px 8px; text-align: center;">40</td>
+                                        <td style="padding: 6px 8px;"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Second Table: Accessory -->
+                <table style="width: 80%; border-collapse: collapse; border: 2px solid #000; margin-bottom: 25px;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid #000; padding: 6px 8px; vertical-align: middle; text-align: left; width: 30%; font-weight: bold;">Accessory</th>
+                            <th style="border: 1px solid #000; padding: 6px 8px; vertical-align: middle; text-align: left; width: 55%; font-weight: bold;">Item Details</th>
+                            <th style="border: 1px solid #000; padding: 6px 8px; vertical-align: middle; text-align: right; width: 15%; font-weight: bold;">Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 6px 8px; vertical-align: middle; text-align: left; font-weight: bold;">BUNGEE CORD</td>
+                            <td style="border: 1px solid #000; padding: 6px 8px; vertical-align: middle; text-align: left;"></td>
+                            <td style="border: 1px solid #000; padding: 6px 8px; vertical-align: middle; text-align: right;">40.00</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 6px 8px; vertical-align: middle; text-align: left; font-weight: bold;">ZIPPER</td>
+                            <td style="border: 1px solid #000; padding: 6px 8px; vertical-align: middle; text-align: left;">NYLON</td>
+                            <td style="border: 1px solid #000; padding: 6px 8px; vertical-align: middle; text-align: right;">40.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+            @* 	<div class="modal-footer">
+
+				<button type="button"
+						class="btn btn-primary btn-sm"
+						id="btnSave">
+
+					<svg width="14"
+						 height="14"
+						 viewBox="0 0 24 24"
+						 fill="none"
+						 stroke="currentColor"
+						 stroke-width="2"
+						 stroke-linecap="round"
+						 stroke-linejoin="round">
+
+						<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+						<polyline points="17 21 17 13 7 13 7 21"></polyline>
+						<polyline points="7 3 7 8 15 8"></polyline>
+
+					</svg>
+
+					Save
+				</button>
+
+			</div> *@
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script type="module" src="~/js/pages/import/fabric.js" asp-append-version="true"></script>
+@* <script  src="~/js/pages/PO/Fabric.js" asp-append-version="true"></script> *@

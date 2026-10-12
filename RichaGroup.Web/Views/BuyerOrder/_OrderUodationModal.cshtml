@@ -1,0 +1,401 @@
+﻿@* Partial: _OrderDetailsPartial.cshtml
+   Built from the scanned order screen. Uses the same grid / field / pair markup as the GR/LC partial.
+   Struck-out fields on the scan (OBA/NA, MR Name, Age Grp) are intentionally left out.
+   Add these helpers once to your shared CSS if you don't have them:
+     .grid.cols-6 .span-2 { grid-column: span 2; }
+     .grid.cols-6 .span-3 { grid-column: span 3; }
+     .grid.cols-6 .span-6 { grid-column: 1 / -1; }
+     .form-section { margin: 1.25rem 0 .5rem; font-weight: 600; }
+*@
+
+@* ───────────── Article ───────────── *@
+ 
+<div class="grid cols-6">
+    <div class="field">
+        <label>Style</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Article No</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field span-2">
+        <label>Description</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Weight</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Qty (PCS)</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field span-6">
+        <label>Remarks</label>
+        <textarea rows="2"></textarea>
+    </div>
+</div>
+
+@* ───────────── Order & pricing ───────────── *@
+<hr />
+<div class="grid cols-6">
+    <div class="field">
+        <label>Key Po</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>PO Value</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Rate</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Actual Rate</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Currency</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Type</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>Mode</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div>
+    @* <div class="field">
+        <label>Category</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div> *@
+    <div class="field">
+        <label>Projected</label>
+        <select>
+            <option selected>No</option>
+            <option>Yes</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Payment Due (days)</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Payment Due On</label>
+        <input type="text" class="form-Flatdate" disabled>
+    </div>
+    <div class="field">
+        <label>Payment Type</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>Open A/C</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div>
+</div>
+
+@* ───────────── Merchants ───────────── *@
+<hr />
+<div class="grid cols-6">
+    <div class="field">
+        <label>Commission</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Sample Merchant</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Production Merchant</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Hanger Type</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div>
+</div>
+
+@* ───────────── Product ───────────── *@
+<hr />
+<div class="grid cols-6">
+    <div class="field">
+        <label>EDP</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Sample EDP</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Segment</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Gender</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Fibre</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Made</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>Loom</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Folio No</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>HS Code</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>GST HSN</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Adult to Child Conversion</label>
+        <select>
+            <option selected>No</option>
+            <option>Yes</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Open</label>
+        <select>
+            <option selected>No</option>
+            <option>Yes</option>
+        </select>
+    </div>
+</div>
+
+@* ───────────── Shipment & duty drawback ───────────── *@
+<hr />
+<div class="grid cols-6">
+    <div class="field">
+        <label>Shipment Date</label>
+        <input type="text" class="form-Flatdate" disabled>
+    </div>
+    <div class="field">
+        <label>Upto</label>
+        <input type="text" class="form-Flatdate" disabled>
+    </div>
+    <div class="field">
+        <label>Other</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Unit</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Endorsement Adj</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>DBK Less</label>
+        <select>
+            <option selected>No</option>
+            <option>Yes</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>DBK</label>
+        <select>
+            <option selected>Yes</option>
+            <option>No</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Fabric Import</label>
+        <select>
+            <option selected>No</option>
+            <option>Yes</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Accessories Import</label>
+        <select>
+            <option selected>No</option>
+            <option>Yes</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Sample EDP</label>
+        <select>
+            <option selected>No</option>
+            <option>Yes</option>
+        </select>
+    </div>
+</div>
+
+@* ───────────── Quantities ───────────── *@
+<hr />
+<div class="grid cols-6">
+    <div class="field">
+        <label>Adjusted Qty</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Shipped</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Balance</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Endorsed</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field span-2">
+        <label>Remarks</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+</div>
+
+@* ───────────── Letter of credit ───────────── *@
+<hr />
+<div class="grid cols-6">
+    <div class="field">
+        <label>LC</label>
+        <select>
+            <option selected>Yes</option>
+            <option>No</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>LC Number</label>
+        <select disabled>
+            <option>&mdash;</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>LC Open</label>
+        <select>
+            <option selected>Open</option>
+            <option>Not open</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>LC Value</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>LC Expiry</label>
+        <input type="text" class="form-Flatdate" disabled>
+    </div>
+    <div class="field">
+        <label>FOB Place</label>
+        <select>
+            <option selected>Choose one&hellip;</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>Forex LC Required</label>
+        <select>
+            <option selected>No</option>
+            <option>Yes</option>
+        </select>
+    </div>
+
+    @* LC type group (bracketed as "LC Type" on the scan) *@
+    <div class="field">
+        <label>LC Authenticated</label>
+        <select>
+            <option selected>No</option>
+            <option>Yes</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>LC Irrevocable</label>
+        <select>
+            <option selected>No</option>
+            <option>Yes</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>LC Transferable</label>
+        <select>
+            <option selected>No</option>
+            <option>Yes</option>
+        </select>
+    </div>
+    <div class="field">
+        <label>LC Transfer Permitted</label>
+        <select>
+            <option selected>No</option>
+            <option>Yes</option>
+        </select>
+    </div>
+</div>
+
+@* ───────────── Notify parties ───────────── *@
+<hr />
+<div class="grid cols-6">
+    <div class="field">
+        <label>Notify 1</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Notify 2</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Notify 3</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Notify 4</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Sea Notify</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+    <div class="field">
+        <label>Air Notify</label>
+        <input disabled placeholder="&mdash;">
+    </div>
+</div>

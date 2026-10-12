@@ -1,0 +1,138 @@
+﻿@{
+	ViewData["Title"] = "Airline Master";
+	ViewData["Heading"] = "Airline Details Master";
+}
+<div class="bd_mainContainer">
+	<div class="page">
+
+
+
+		<section class="card">
+
+             <div class="card-head">
+                 <div>
+                     <span class="tick"></span>
+                    <h2 class="mt-2" id="txtHeaderMain">Airline Master</h2>
+                 </div>
+
+				<div class="d-flex gap-2">
+					<div class="d-flex gap-2">
+						@await Html.PartialAsync("Components/_CheckBoxComponent")
+						@await Html.PartialAsync("Components/_UploadAndViewButtons")
+						<button class="btn btn-primary btn-sm"
+								id="btnAdd">
+							＋ Add
+						</button>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="card-body">
+
+				<div class="table-wrap">
+					<table id="tblFlyingMaster" class="display" style="width:100%">
+						<thead>
+							<tr>
+								<th style="width:50px !important;">Action</th>
+								<th>Code</th>
+								<th>AirLine</th>
+							</tr>
+						</thead>
+						<tbody id="tblbodyFlying_Master"></tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+	</div>
+</div>
+
+
+
+<div class="modal fade" id="addAirineMasterModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-md">
+		<div class="modal-content modal-box">
+			<div class="modal-header">
+				<div class="modal-header-text">
+					<div class="modal-title" id="addMenuModalLabel">
+						Airline Master
+					</div>
+				</div>
+				<div class="d-flex gap-2">
+
+
+
+					<button type="button"
+							style=" "
+							class="modal-close"
+							data-bs-dismiss="modal"
+							aria-label="Close">
+						<svg viewBox="0 0 24 24">
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+					</button>
+				</div>
+				<div class="app-modal-header-actions">
+				</div>
+			</div>
+
+			<div class="modal-body p-2">
+
+					<div class="grid">
+						<div class="field">
+							<label for="txtCodeFlying_Master" class="form-label">
+								Code
+							</label>
+							<input type="text"
+								   id="txtCodeFlying_Master" 
+								   placeholder="Enter Code" />
+						</div>
+
+						<div class="field">
+							<label for="txtAirlineFlying_Master" class="form-label">
+								Name
+							</label>
+							<input type="text" id="txtAirlineFlying_Master" placeholder="Enter Airline" />
+						</div>
+
+					</div>
+
+				
+			</div>
+
+			<div class="modal-footer">
+
+				<button type="button"
+						class="btn btn-primary btn-sm"
+						id="btnSave">
+
+					<svg width="14"
+						 height="14"
+						 viewBox="0 0 24 24"
+						 fill="none"
+						 stroke="currentColor"
+						 stroke-width="2"
+						 stroke-linecap="round"
+						 stroke-linejoin="round">
+
+						<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+						<polyline points="17 21 17 13 7 13 7 21"></polyline>
+						<polyline points="7 3 7 8 15 8"></polyline>
+
+					</svg>
+
+					Save
+				</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<script src="~/js/pages/mastersjs/Airline_Master.js" asp-append-version="true"></script>

@@ -1,0 +1,94 @@
+﻿
+:root {
+    --ink: #16233a;
+    --ink-soft: #22334f;
+    --ink-primary: #5a96ff;
+    --paper: #f3f5f8;
+    --card: #ffffff;
+    --line: #dde3ec;
+    --line-strong: #c6cfdc;
+    --text: #243044;
+    --text-color-white: #fff;
+    --bg-white: #fff;
+    --muted: #4a5360;
+    /*    --teal: #4891f1;*/
+    --teal: #257DEF;
+    --teal-dark: #263f60;
+    --sidebar-text-color: #00328d;
+    /*    --teal-tint: #669fff;*/
+    --teal-tint: #257DEF;
+    --teal-tint-light: #a6caf9a3;
+    --amber: #b45309;
+    --amber-tint: #fdf3e3;
+    --red: #b3363d;
+    --red-tint: #fbebec;
+    --disabled: #eef1f5;
+    --radius: 10px;
+    --sidebarsubmenuColor: aliceblue;
+    --submenu-font: verdana;
+    --shadow: 0 1px 2px rgba(22,35,58,.06), 0 4px 14px rgba(22,35,58,.05);
+    --shadow-lg: 0 8px 20px rgba(22,35,58,.14), 0 20px 60px rgba(22,35,58,.18);
+    font-size: 16px;
+    --text-color-header-table: #fff;
+    --font-body: 'IBM Plex Sans',system-ui,sans-serif;
+    /*    this font-head useed in sub heading summary all the thing most of the time use this font-family ok*/
+    --font-head: 'Roboto';
+    --clr-primary: #3683bb;
+    --clr-primary-dark: #124d77;
+    --clr-primary-deeper: #1a3c53;
+    --clr-primary-light: #80c4f5;
+    --clr-primary-pale: #f0f1fc;
+    --clr-primary-ghost: #f2f4ff;
+    --clr-neutral: #111111;
+    --clr-neutral-mid: #222222;
+    --clr-neutral-soft: #444444;
+    --clr-neutral-light: #888888;
+    --clr-neutral-faint: #cccccc;
+    --clr-white: #ffffff;
+    --clr-surface: #f7f8fc;
+    --clr-surface-2: #edeef5;
+    --clr-border: rgba(113, 137, 255, 0.12);
+    --clr-border-mid: rgba(113, 137, 255, 0.25);
+    --clr-border-dark: rgba(17, 17, 17, 0.08);
+    --clr-accent: #ff8c42;
+    --clr-accent-deep: #d96e20;
+    --clr-accent-pale: #ffffff;
+    --clr-danger: #d93025;
+    --clr-filter-bg: #fbe6cb;
+    --clr-filter-border: #f0c98f;
+    --clr-danger-pale: #fdecea;
+    --shadow-md: 0 4px 18px rgba(113, 137, 255, 0.15);
+    --shadow-lg: 0 8px 36px rgba(113, 137, 255, 0.2);
+    --shadow-card: 0 2px 12px rgba(113, 137, 255, 0.1);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --font-head: "Segoe UI Semibold", "Segoe UI", Calibri, Arial, sans-serif;
+    --font-body: "Segoe UI", Calibri, Arial, sans-serif;
+    /*    --font-head: "Manrope-bold";
+    --font-body: "manrope-regular ";*/
+    --ctrl-h: 36px;
+    --sb-w: 233px;
+    --sb-col: 52px;
+    --sb-w-collapsed: 68px;
+    --foot-h: 34px;
+    --font-size-base: 1rem;
+    --font-size-form: 1rem;
+    /*    for - color-adjust search engine*/
+    --clr-se-primary: #4C5FD5;
+    --clr-se-primary-dark: #3A48B0;
+    --clr-se-accent: #17B0A3;
+    --clr-se-accent-ghost: rgba(23, 176, 163, 0.12);
+    --clr-se-surface: #F5F7FC;
+    --clr-se-border: #E1E5F5;
+    --clr-se-text: #2B2E4A;
+    --clr-se-text-soft: #6B7099;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../../assets/fonts/roboto/roboto-variablefont_wdth,wght.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+}

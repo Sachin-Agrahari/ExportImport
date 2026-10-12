@@ -1,0 +1,315 @@
+@{
+    ViewData["Title"] = "Bill of Exchange";
+    ViewData["Heading"] = "Bill of Exchange";
+}
+
+<link rel="stylesheet" href="~/css/pages/bill-of-exchange.css" asp-append-version="true">
+
+<!-- ════════ Tab switcher ════════ -->
+<div class="card boe-tabbar">
+    <div class="card-head">
+        <div class="screen-switch" role="tablist" aria-label="Views">
+            <button type="button" class="on" data-view="list">
+                1 &middot; BOE List
+            </button>
+            <button type="button" data-view="entry" id="btnBOEEntry">
+                2 &middot; BOE Entry
+            </button>
+            <button type="button" data-view="letter">
+                3 &middot; Letter to Bank
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ════════ VIEW 1 &middot; List ════════ -->
+<div class="view on" id="view-list">
+
+    <section class="card">
+        <div class="card-head">
+            <div>
+                <span class="tick"></span>
+                <h2 class="mt-2" id="txtHeaderMain">Bill of Exchange</h2>
+            </div>
+
+            <div class="d-flex gap-2">
+                @await Html.PartialAsync("Components/_CheckBoxComponent")
+                @await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnAdd">
+                    ＋ Add
+                </button>
+
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave"
+                        title="Save">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="grid cols-4">
+                <div class="field">
+                    <label>From Date</label>
+                    <input type="text" class="form-Flatdate" id="txtFromDate" placeholder="DD/MM/YYYY" />
+                </div>
+
+                <div class="field">
+                    <label>To Date</label>
+                    <input type="text" class="form-Flatdate" id="txtToDate" placeholder="DD/MM/YYYY" />
+                </div>
+
+                <span class="checkbox" style="padding-top:26px">
+                    <input type="checkbox" checked id="invno">
+                    <label for="invno" style="all:unset;cursor:pointer">Invoice No.</label>
+                </span>
+
+            </div>
+
+            <div class="table-wrap mt-4" style="border:none;border-radius:0">
+                <table style="min-width:1050px">
+                    <thead>
+                        <tr>
+                            <th class="c" width="80px">Actions</th>
+                            <th>Bill of Exchange No</th>
+                            <th>Date</th>
+                            <th class="r">Amount</th>
+                            <th>Shipping Bill No</th>
+                            <th>Cur.</th>
+                            <th>Bank Ref. No</th>
+                            <th class="r">LC/TT Number</th>
+                            <th>Bank Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblbodyBOEList">
+                        <!-- rows rendered from boeListData via renderBOEListTable() -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+</div>
+ 
+<!-- ════════ VIEW 2 &middot; Entry ════════ -->
+<div class="view" id="view-entry">
+
+    <section class="card">
+        <div class="card-body">
+
+            @await Html.PartialAsync("_EntrFormBOE")
+ 
+        </div>
+    </section>
+
+    <!-- Invoices -->
+    <section class="card">
+        <div class="card-head">
+            <div>
+                <h2>Tagged Invoices</h2>
+            </div>
+
+            <div class="d-flex gap-2">
+
+                <button class="btn btn-sm btn-outline" id="btnAddInv">
+                    + Add Invoice
+                </button>
+
+                <button class="btn btn-sm btn-outline" id="btnLogDtls">
+                    Log Details
+                </button>
+
+                <button class="btn btn-sm btn-outline" id="btnBillOfExchange">
+                    Bill of Exchange
+                </button>
+
+                <button class="btn btn-sm btn-outline" id="btnCalcAmt">
+                    Calculate Amount
+                </button>
+
+                <button class="btn btn-sm btn-outline" id="btnInwardDtls">
+                    Inward Details
+                </button>
+                 
+                <button class="btn btn-sm btn-outline" id="btnPaymentAdjustment">
+                    + Payment Adjustment 
+                </button>
+
+            </div>
+        </div>
+        <div class="table-wrap" style="border:none;border-radius:0; overflow:auto;">
+            <table style="min-width:1500px">
+                <thead>
+                    <tr>
+                        <th class="c">Actions</th>
+                        <th>Invoice No.</th>
+                        <th>Invoice Date</th>
+                        <th>Shipping Bill No.</th>
+                        <th>S.B. Date</th>
+                        <th class="c">E-BRC</th>
+                        <th>E-BRC Dt</th>
+                        <th>Terms</th>
+                        <th class="r">Amount</th>
+                        <th class="r">Payment Rcvd</th>
+                        <th>Payment Adv Date</th>
+                        <th class="r">Discount</th>
+                        <th class="r">Bank Credit Amt</th>
+                        <th class="r">Bank Credit Adv No</th>
+                        <th>Bank Credit Date</th>
+                        <th class="r">Bank Charges</th> 
+                        <th class="r">TT/LC</th> 
+                        <th class="r">TTDt / LC Dt</th> 
+                        <th class="r">Tt Amt</th> 
+                        <th class="r">LC No </th> 
+                        <th class="r">Ircvd</th> 
+
+                    </tr>
+                </thead>
+
+                <tbody id="tblbodyTaggedInvoices">
+                    <!-- rows rendered from taggedInvoicesData via renderTaggedInvoicesTable() -->
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="8" style="text-align:right">Total</td>
+                        <td class="r">0.00</td>
+                        <td class="r">0.00</td>
+                        <td></td>
+                        <td class="r">0.00</td>
+                        <td class="r">0.00</td>
+                        <td></td>
+                        <td class="r">0.00</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+
+            </table>
+        </div>
+    </section>
+  
+    <section class="card">
+ 
+        <div class="card-body"> 
+
+            @await Html.PartialAsync("_SettlementSummary")
+            
+        </div>
+    </section>
+</div>
+
+
+<!-- ════════ VIEW 3 &middot; Letter to Bank ════════ -->
+<div class="view" id="view-letter">
+    <section class="card">
+        <div class="card-head">
+            <div>
+                <span class="tick"></span>
+                <h2 class="mt-2" id="txtHeaderMain">Letter Details</h2>
+            </div>
+            <div class="d-flex gap-2">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        id="btnSave"
+                        title="Save">
+
+                    <svg width="14"
+                         height="14"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+
+                    </svg>
+
+                    Save
+                </button>
+
+                <button type="button"
+                        class="btn btn-cancel-custom"
+                        id="btnCancel">
+                    ✕ Cancel
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="grid cols-2" style="grid-template-columns:1fr 1fr">
+                <div class="field">
+                    <label>Letter to Bank For</label>
+                    <select>
+                        <option selected>Choose&hellip;</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>For Value For</label>
+                    <input disabled placeholder="&mdash;">
+                </div>
+            </div>
+
+            <div class="subhead">Documents</div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Document</th>
+                            <th class="r">Original</th>
+                            <th class="r">Duplicate</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="letterToBank"> </tbody>
+                </table>
+            </div>
+
+            <div class="field mt-3">
+                <label>FIRC</label>
+                <input disabled placeholder="&mdash;">
+            </div>
+
+        </div>
+    </section>
+</div>
+
+
+@section Modals {
+ 
+    @await Html.PartialAsync("_ModalSection")
+    
+}
+
+@section Scripts {
+    <script src="~/js/pages/bill-of-exchange.js" asp-append-version="true"></script>
+}

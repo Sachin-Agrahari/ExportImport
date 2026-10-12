@@ -1,0 +1,272 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="bd_mainContainer" id="route-advance-licence-detail">
+
+    <div class="page">
+
+        <section class="card">
+
+            <!-- HEADER -->
+            <div class="card-head">
+
+                <div class="d-flex flex-row " style="width:auto;">
+
+                    <h2 class="mt-2" id="txtHeaderMain">Advance Licence</h2>
+                </div>
+
+                <div class="d-flex gap-2">  
+                    @await Html.PartialAsync("Components/_CheckBoxComponent")
+                    @await Html.PartialAsync("Components/_UploadAndViewButtons")
+
+
+                    <button class="btn btn-primary btn-sm d-flex flex-row align-center justify-content-center" title="Save" id="btnSave">
+                        @* <img src="~/assets/icons/save.svg" alt="save-icon" /> *@
+                        <img src="~/assets/icon/save.svg" alt="save-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Save</span>
+                    </button>
+
+                    <button class="btn btn-secondary btn-sm  d-flex flex-row align-center justify-content-center" title="Print" id="btnPrint">
+
+                        <img src="~/assets/icon/print.svg" alt="print-icon" class="w-75 h-75 mt-1 me-1 white-icon" />
+                        <span>Print</span>
+                    </button>
+                    <button class="btn-outline-danger d-flex flex-row align-center justify-content-center" title="Refresh" id="btnClear">
+
+                        <img src="~/assets/icon/refresh.svg" alt="refresh-icon" class="w-50 h-50 me-1 white-icon" />
+                        <span>Clear</span>
+                    </button>
+
+                </div>
+             </div>
+
+             
+            <div class="card-body">
+
+                <div class="grid cols-6">
+
+                    <div class="field">
+                        <label class="form-label">Licence# <span class="text-danger">*</span></label>
+                        <input type="text" id="txtLicenceNo"
+                               class="form-control"
+                               value="0510282911" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Full Use</label>
+                        <select id="ddlFullUse" class="form-select">
+                            <option value="0">NO</option>
+                            <option value="1">YES</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Curr</label>
+                        <select id="ddlCurrency" class="form-select">
+                            <option value="1">US$</option>
+                            <option value="2">EUR</option>
+                            <option value="3">GBP</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Port Register</label>
+                        <select id="ddlPortRegister" class="form-select">
+                            <option value="">— Select Port —</option>
+                            <option value="1">NHAVA SHEVA</option>
+                            <option value="2">MUNDRA</option>
+                            <option value="3">CHENNAI</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">DGFT ECOM No.</label>
+                        <select id="ddlDgftEcomNo" class="form-select">
+                            <option value="">— Select —</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label class="form-label">DGFT File#</label>
+                        <input type="file" id="File_Dgft" class="file-upload form-control" />
+
+                    </div>
+                    <div class="field">
+                        <label class="form-label">CLA File No.</label>
+                        <input type="text" id="txtClaFileNo" class="form-control" />
+                    </div>
+                    <div class="field span-2">
+                        <label class="form-label">Remark</label>
+                        <input type="text" id="txtRemark" class="form-control" />
+
+                    </div>
+
+                    <div class="field">
+                        <label class="form-label">Lic Date</label>
+                        <input type="text" id="txtLicDate"
+                               class="form-control datePicker"
+                               value="02/02/2011"
+                               placeholder="Select date..." />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">FOB in Rs.</label>
+                        <input type="number" id="txtFobRs"
+                               class="form-control"
+                               value="0" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">CIF Rs.</label>
+                        <input type="number" id="txtCifRs"
+                               class="form-control" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">US$</label>
+                        <input type="number" id="txtCifUsd"
+                               class="form-control" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">US$</label>
+                        <input type="number" id="txtFobUsd1"
+                               class="form-control"
+                               value="0" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">BG / BV</label>
+                        <input type="number" id="txtBgBv"
+                               class="form-control"
+                               value="0.00" />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Port Reg. Date</label>
+                        <input type="text" id="txtPortRegDate"
+                               class="form-control datePicker"
+                               value="01/09/2026"
+                               placeholder="Select date..." />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Recvd</label>
+                        <input type="text" id="txtRecvd"
+                               class="form-control datePicker"
+                               value="01/09/2026"
+                               placeholder="Select date..." />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">Diary Sr. No.</label>
+                        <input type="text" id="txtDiarySrNo"
+                               class="form-control"
+                               value="687" />
+                    </div>
+
+                    <div class="field">
+                        <div class="col-8 gap-0 d-inline-flex flex-row justify-content-center align-items-center" style="margin-left:-65px;">
+                            <input type="checkbox" id="chkExpiryDt" checked />
+                            <label class="form-label" style="margin-left:-60px;">Expiry Dt</label>
+                        </div>
+                        <input type="text" id="txtExpiryDt"
+                               class="form-control"
+                               value="01/08/2012"
+                               placeholder="Select date..." />
+                    </div>
+                    <div class="field">
+                        <div class="col-9 gap-0 d-inline-flex flex-row justify-content-center align-items-center" style="margin-left:-75px;">
+                            <input type="checkbox" id="chkEODCApply" checked />
+                            <label class="form-label" style="margin-left:-70px;">EODC Apply</label>
+                        </div>
+
+                        <input type="text" id="txtEodcApply"
+                               class="form-control"
+                               value="01/09/2026"
+                               placeholder="Select date..." />
+                    </div>
+                    <div class="field">
+                        <label class="form-label">BOND Cnd</label>
+                        <input type="text" id="txtBondCnd"
+                               class="form-control"
+                               value="01/09/2026"
+                               placeholder="Select date..." />
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center justify-content-start">
+
+                        <div class="col-8 d-flex flex-row align-items-end">
+                            <div class=" border border-primary border-opacity-10 bg-primary bg-opacity-10 rounded p-1">
+                                <input type="checkbox" id="chkBond" />
+                                <label for="chkBond">BOND</label>
+                            </div>
+                        </div>
+
+                        <div class="col-0 d-flex justify-content-start align-items-end">
+                            <button class="btn btn-primary btn-sm" id="btnCopy">
+                                <span class="d-flex align-content-center justify-content-center"> Copy </span>
+                            </button>
+                        </div>
+                    </div>
+
+            
+                </div>
+            </div>
+
+        </section>
+
+        <section class="card">
+            <div class="card-body">
+                <div class="table-wrap">
+                        <table class="table-component table-component--bordered">
+                            <thead>
+                                <tr>
+                                    <th>Objection</th>
+                                    <th>Received</th>
+                                    <th>Clear</th>
+                                    <th>Nature</th>
+                                    <th>Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" class="table-input table-input-text" /></td>
+                                    <td><input type="text" class="table-input table-input-text datePicker" placeholder="Select date..." /></td>
+                                    <td><input type="text" class="table-input table-input-text datePicker" placeholder="Select date..." /></td>
+                                    <td><input type="text" class="table-input table-input-text" /></td>
+                                    <td><input type="text" class="table-input table-input-text" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    
+                </div>
+            </div>
+
+        </section>
+
+        <section class="card">
+            <div class="card-body">
+                <div class="table-wrap">
+                    <table class="table-component table-component--bordered">
+                        <thead>
+                            <tr>
+                                <th>Req_No</th>
+                                <th>Buyer</th>
+                                <th>Style</th>
+                                <th>Req Item</th>
+                                <th>Process</th>
+                                <th>Req Qty</th>
+                                <th>Req UOM</th>
+                                <th>Exptlem</th>
+                                <th>Imptlem</th>
+                                <th>UOM</th>
+                                <th>GSM</th>
+                                <th>Norms</th>
+                                <th>TSQM(APL)</th>
+                                <th>TAVG(APL)</th>
+                                <th>TQTY(APL)</th>
+                                <th>Total Qty(APE)</th>
+                                <th>TAVG (APE)</th>
+                                <th>Norm Fixed Avg.</th>
+                                <th>Avg. Apprd By Norm</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </div>    
+</div>
+<script type="module" src="~/js/pages/import/advancelicence.js" asp-append-version="true"></script>
+
